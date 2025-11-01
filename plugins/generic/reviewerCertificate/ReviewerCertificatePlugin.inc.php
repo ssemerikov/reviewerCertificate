@@ -22,7 +22,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $success = parent::register($category, $path, $mainContextId);
 
         if ($success && $this->getEnabled($mainContextId)) {
-            // Register DAOs
+            // Import and register DAOs
+            $this->import('classes.CertificateDAO');
             $certificateDao = new CertificateDAO();
             DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
@@ -264,23 +265,19 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     }
 
     /**
-     * @copydoc Plugin::getInstallSchemaFile()
+     * Get the installation migration file for this plugin
+     * @return string Path to schema file
      */
-    public function getInstallSchemaFile() {
-        return $this->getPluginPath() . '/schema.xml';
+    public function getInstallMigration() {
+        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'schema.xml';
     }
 
     /**
-     * Get the JavaScript URL for this plugin.
+     * Get the installation schema file (for OJS 3.3.x compatibility)
+     * Note: This method may be deprecated in OJS 3.4.x
+     * @return string Path to schema file
      */
-    public function getJavaScriptURL($request) {
-        return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/js';
-    }
-
-    /**
-     * Get the CSS URL for this plugin.
-     */
-    public function getStyleSheetURL($request) {
-        return $request->getBaseUrl() . '/' . $this->getPluginPath() . '/css';
+    public function getInstallDataFile() {
+        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'schema.xml';
     }
 }
