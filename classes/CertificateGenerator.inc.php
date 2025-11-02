@@ -11,7 +11,8 @@
  * @brief Generates PDF certificates for reviewers
  */
 
-require_once('lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php');
+// Load TCPDF library using absolute path
+require_once(Core::getBaseDir() . '/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php');
 
 class CertificateGenerator {
 
