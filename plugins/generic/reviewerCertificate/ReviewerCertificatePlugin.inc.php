@@ -32,6 +32,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
             HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
             HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+
+            // Register custom Smarty modifiers to avoid deprecation warnings
+            HookRegistry::register('TemplateManager::fetch', array($this, 'registerSmartyModifiers'));
         }
 
         return $success;
@@ -116,6 +119,29 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             define('HANDLER_CLASS', 'CertificateHandler');
             return true;
         }
+
+        return false;
+    }
+
+    /**
+     * Register custom Smarty modifiers
+     */
+    public function registerSmartyModifiers($hookName, $params) {
+        $templateMgr = $params[0];
+        $smarty = $templateMgr->getSmarty();
+
+        // Register basename modifier
+        $smarty->registerPlugin('modifier', 'basename', function($path) {
+            return basename($path);
+        });
+
+        // Register date modifier
+        $smarty->registerPlugin('modifier', 'date', function($timestamp, $format = 'Y-m-d H:i:s') {
+            if (is_numeric($timestamp)) {
+                return date($format, $timestamp);
+            }
+            return date($format, strtotime($timestamp));
+        });
 
         return false;
     }
