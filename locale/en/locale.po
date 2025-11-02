@@ -188,6 +188,18 @@ msgstr "Certificate Valid"
 msgid "plugins.generic.reviewerCertificate.verify.invalid"
 msgstr "Certificate Invalid"
 
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "The certificate code you entered is not valid or does not exist in our system."
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Reviewer Name"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Journal Name"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Date Issued"
+
 # Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Batch Certificate Generation"

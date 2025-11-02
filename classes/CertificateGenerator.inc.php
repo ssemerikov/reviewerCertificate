@@ -137,7 +137,7 @@ class CertificateGenerator {
 
         // Set margins
         $pdf->SetMargins(15, 15, 15);
-        $pdf->SetAutoPageBreak(true, 15);
+        $pdf->SetAutoPageBreak(false); // Disable auto page break to keep everything on one page
 
         // Add a page
         $pdf->AddPage();

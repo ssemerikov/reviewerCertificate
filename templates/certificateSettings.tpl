@@ -9,6 +9,59 @@
 <script>
 	$(function() {ldelim}
 		$('#certificateSettingsForm').pkpHandler('$.pkp.controllers.form.AjaxFormHandler');
+
+		// Initialize color picker from RGB values
+		function rgbToHex(r, g, b) {ldelim}
+			return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+		{rdelim}
+
+		function hexToRgb(hex) {ldelim}
+			var result = /^#?([a-f\d]{ldelim}2{rdelim})([a-f\d]{ldelim}2{rdelim})([a-f\d]{ldelim}2{rdelim})$/i.exec(hex);
+			return result ? {ldelim}
+				r: parseInt(result[1], 16),
+				g: parseInt(result[2], 16),
+				b: parseInt(result[3], 16)
+			{rdelim} : null;
+		{rdelim}
+
+		// Set initial color picker value from RGB inputs
+		var r = parseInt($('#textColorR').val()) || 0;
+		var g = parseInt($('#textColorG').val()) || 0;
+		var b = parseInt($('#textColorB').val()) || 0;
+		$('#colorPicker').val(rgbToHex(r, g, b));
+		$('#colorPreview').css('background-color', rgbToHex(r, g, b));
+
+		// Update RGB values when color picker changes
+		$('#colorPicker').on('input change', function() {ldelim}
+			var rgb = hexToRgb($(this).val());
+			if (rgb) {ldelim}
+				$('#textColorR').val(rgb.r);
+				$('#textColorG').val(rgb.g);
+				$('#textColorB').val(rgb.b);
+				$('#colorPreview').css('background-color', $(this).val());
+			{rdelim}
+		{rdelim});
+
+		// Update color picker when RGB values change manually
+		$('#textColorR, #textColorG, #textColorB').on('input change', function() {ldelim}
+			var r = parseInt($('#textColorR').val()) || 0;
+			var g = parseInt($('#textColorG').val()) || 0;
+			var b = parseInt($('#textColorB').val()) || 0;
+			$('#colorPicker').val(rgbToHex(r, g, b));
+			$('#colorPreview').css('background-color', rgbToHex(r, g, b));
+		{rdelim});
+
+		// Fix for "Use default template" link
+		$(document).on('click', 'a[href="#"]', function(e) {ldelim}
+			if ($(this).text().indexOf('{translate key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate" escape="js"}') >= 0) {ldelim}
+				e.preventDefault();
+				var defaultTemplate = $('#defaultBodyTemplate').val();
+				$('#bodyTemplate').val(defaultTemplate);
+				// Trigger change event if using TinyMCE or similar
+				$('#bodyTemplate').trigger('change');
+				return false;
+			{rdelim}
+		{rdelim});
 	{rdelim});
 </script>
 
@@ -81,6 +134,11 @@
 		{* Text Color *}
 		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.textColor" description="plugins.generic.reviewerCertificate.settings.textColorDescription"}
 			<div class="pkp_helpers_clear">
+				<div style="margin-bottom: 10px;">
+					<label for="colorPicker">Color Picker:</label>
+					<input type="color" id="colorPicker" style="width: 60px; height: 30px; border: 1px solid #ccc; cursor: pointer;" />
+					<span id="colorPreview" style="display: inline-block; width: 30px; height: 30px; border: 1px solid #ccc; margin-left: 5px; vertical-align: middle;"></span>
+				</div>
 				<div style="float:left; margin-right: 10px;">
 					<label for="textColorR">R:</label>
 					{fbvElement type="text" id="textColorR" value=$textColorR|default:0 size=$fbvStyles.size.SMALL inline=true}
