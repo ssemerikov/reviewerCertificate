@@ -303,13 +303,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     }
 
     /**
-     * Generate unique certificate code
-     */
-    private function generateCertificateCode($reviewAssignment) {
-        return strtoupper(substr(md5($reviewAssignment->getId() . time()), 0, 12));
-    }
-
-    /**
      * Send certificate notification email
      */
     private function sendCertificateNotification($reviewAssignment) {
