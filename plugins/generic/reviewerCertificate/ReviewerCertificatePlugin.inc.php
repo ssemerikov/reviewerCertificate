@@ -32,12 +32,34 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
             HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
             HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-
-            // Load locale files
-            $this->addLocaleData();
         }
 
         return $success;
+    }
+
+    /**
+     * Load locale data for this plugin
+     * @copydoc Plugin::loadLocaleData()
+     */
+    public function loadLocaleData($locale = null) {
+        if ($locale == null) {
+            $locale = AppLocale::getLocale();
+        }
+
+        $localePath = $this->getPluginPath() . '/locale/' . $locale . '/locale.xml';
+        if (file_exists($localePath)) {
+            AppLocale::requireComponents(LOCALE_COMPONENT_PKP_COMMON, $locale);
+            AppLocale::registerLocaleFile($locale, $localePath);
+        }
+
+        // Try generic locale if specific not found
+        $genericLocale = substr($locale, 0, 2);
+        if ($genericLocale !== $locale) {
+            $genericLocalePath = $this->getPluginPath() . '/locale/' . $genericLocale . '/locale.xml';
+            if (file_exists($genericLocalePath)) {
+                AppLocale::registerLocaleFile($locale, $genericLocalePath);
+            }
+        }
     }
 
     /**
