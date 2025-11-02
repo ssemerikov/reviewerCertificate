@@ -85,8 +85,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         switch ($request->getUserVar('verb')) {
             case 'settings':
                 $context = $request->getContext();
-                $templateMgr = TemplateManager::getManager($request);
-                $templateMgr->register_function('plugin_url', array($this, 'smartyPluginUrl'));
 
                 $this->import('classes.form.CertificateSettingsForm');
                 $form = new CertificateSettingsForm($this, $context->getId());
