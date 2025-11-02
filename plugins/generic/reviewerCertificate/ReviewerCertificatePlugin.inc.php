@@ -207,6 +207,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $certificate->setReviewerId($reviewAssignment->getReviewerId());
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
         $certificate->setReviewId($reviewAssignment->getId());
+        $certificate->setContextId(Application::get()->getRequest()->getContext()->getId());
         $certificate->setDateIssued(Core::getCurrentDate());
         $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
