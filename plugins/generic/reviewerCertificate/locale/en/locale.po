@@ -1,0 +1,209 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2024-01-01 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Reviewer Certificate Plugin"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Enables reviewers to generate and download personalized PDF certificates of recognition after completing reviews."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Certificate of Review"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Peer Review Certificate"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Your Certificate is Ready!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Thank you for completing this review. You can now download your certificate of recognition."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Download Certificate"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Certificate Settings"
+
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Configure certificate templates and eligibility criteria for reviewers."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Certificate Template Settings"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Background Image"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Upload a background image for the certificate (JPG or PNG, recommended size: 2100x2970 pixels for A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Current background image"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Header Text"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "The main heading displayed at the top of the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Header text is required"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Certificate Body Template"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "The main content of the certificate. Use template variables to insert dynamic content."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Certificate body template is required"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Footer Text"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Optional text displayed at the bottom of the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Available Template Variables"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Use these variables in your templates to insert dynamic content:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Default template"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Use default template"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Appearance Settings"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Font Family"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Font Size"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Text Color (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Specify the text color using RGB values (0-255 for each component)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Eligibility Criteria"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Minimum Completed Reviews"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "The minimum number of completed reviews required before a reviewer can receive a certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Minimum reviews must be a number greater than or equal to 1"
+
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Verification Options"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Include QR code for certificate verification"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Preview Certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Invalid image type. Please upload a JPG or PNG file."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "File upload failed. Please try again."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "This review has not been completed yet. Certificates are only available for completed reviews."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "No certificate code provided"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Invalid certificate code. This certificate could not be verified."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "No reviewers selected for batch certificate generation"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Access denied. You do not have permission to download this certificate."
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "Your Review Certificate is Ready"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "Dear {$reviewerName},\n\nThank you for completing your peer review. Your certificate of recognition is now available for download.\n\nYou can download your certificate at: {$certificateUrl}\n\nThank you for your valuable contribution to our journal.\n\nSincerely,\nThe Editorial Team"
+
+# Verification
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Verify Certificate"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Enter a certificate code to verify its authenticity"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Certificate Code"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Verify Certificate"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Certificate Valid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Certificate Invalid"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Batch Certificate Generation"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Generate certificates for multiple reviewers at once"
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} certificate(s) generated successfully"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Total Certificates Issued"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Total Downloads"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Average Downloads per Certificate"
