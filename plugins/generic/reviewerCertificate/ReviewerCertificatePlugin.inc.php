@@ -13,7 +13,6 @@
 
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.core.JSONMessage');
-import('lib.pkp.classes.i18n.AppLocale');
 
 class ReviewerCertificatePlugin extends GenericPlugin {
 
@@ -23,49 +22,19 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     public function register($category, $path, $mainContextId = null) {
         $success = parent::register($category, $path, $mainContextId);
 
-        if ($success) {
-            // Load locale data
-            $this->loadLocaleData();
+        if ($success && $this->getEnabled($mainContextId)) {
+            // Import and register DAOs
+            $this->import('classes.CertificateDAO');
+            $certificateDao = new CertificateDAO();
+            DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
-            if ($this->getEnabled($mainContextId)) {
-                // Import and register DAOs
-                $this->import('classes.CertificateDAO');
-                $certificateDao = new CertificateDAO();
-                DAORegistry::registerDAO('CertificateDAO', $certificateDao);
-
-                // Register hooks
-                HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
-                HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-            }
+            // Register hooks
+            HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
+            HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
+            HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
         }
 
         return $success;
-    }
-
-    /**
-     * Load locale data for this plugin
-     * @copydoc Plugin::loadLocaleData()
-     */
-    public function loadLocaleData($locale = null) {
-        if ($locale == null) {
-            $locale = AppLocale::getLocale();
-        }
-
-        $localePath = $this->getPluginPath() . '/locale/' . $locale . '/locale.xml';
-        if (file_exists($localePath)) {
-            AppLocale::requireComponents(LOCALE_COMPONENT_PKP_COMMON, $locale);
-            AppLocale::registerLocaleFile($locale, $localePath);
-        }
-
-        // Try generic locale if specific not found
-        $genericLocale = substr($locale, 0, 2);
-        if ($genericLocale !== $locale) {
-            $genericLocalePath = $this->getPluginPath() . '/locale/' . $genericLocale . '/locale.xml';
-            if (file_exists($genericLocalePath)) {
-                AppLocale::registerLocaleFile($locale, $genericLocalePath);
-            }
-        }
     }
 
     /**
