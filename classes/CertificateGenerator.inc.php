@@ -247,16 +247,17 @@ class CertificateGenerator {
      * @param $pdf TCPDF
      */
     private function addQRCode($pdf) {
-        $request = Application::get()->getRequest();
-
         // Determine verification URL
         if ($this->previewMode) {
-            // Use sample URL for preview
-            $verificationUrl = $request->url(null, 'certificate', 'verify', 'PREVIEW12345');
+            // Use sample URL for preview - don't call url() in preview mode to avoid router errors
+            $request = Application::get()->getRequest();
+            $baseUrl = $request->getBaseUrl();
+            $verificationUrl = $baseUrl . '/index.php/index/certificate/verify/PREVIEW12345';
         } else {
             if (!$this->certificate) {
                 return;
             }
+            $request = Application::get()->getRequest();
             $verificationUrl = $request->url(null, 'certificate', 'verify', $this->certificate->getCertificateCode());
         }
 
@@ -377,11 +378,11 @@ class CertificateGenerator {
      * @return string
      */
     private function getDefaultBodyTemplate() {
-        return "This certificate is awarded to\n\n" .
-               "{{$reviewerName}}\n\n" .
-               "In recognition of their valuable contribution as a peer reviewer for\n\n" .
-               "{{$journalName}}\n\n" .
-               "Review completed on {{$reviewDate}}\n\n" .
-               "Manuscript: {{$submissionTitle}}";
+        return 'This certificate is awarded to' . "\n\n" .
+               '{{$reviewerName}}' . "\n\n" .
+               'In recognition of their valuable contribution as a peer reviewer for' . "\n\n" .
+               '{{$journalName}}' . "\n\n" .
+               'Review completed on {{$reviewDate}}' . "\n\n" .
+               'Manuscript: {{$submissionTitle}}';
     }
 }
