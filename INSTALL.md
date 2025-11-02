@@ -5,7 +5,8 @@
 - **OJS**: 3.3.x or 3.4.x
 - **PHP**: 7.3 or higher
 - **PHP Extensions**: GD or Imagick, mbstring, zip
-- **Shell Access**: For installing TCPDF library
+
+**Note**: TCPDF library (v6.10.0) is bundled with the plugin - no additional installation required!
 
 ## Installation Steps
 
@@ -16,57 +17,17 @@ Clone or download the plugin to your OJS installation:
 ```bash
 cd /path/to/ojs/plugins/generic/
 git clone https://github.com/ssemerikov/plugin.git reviewerCertificate
-cd reviewerCertificate
 ```
 
-### Step 2: Install TCPDF Library
+Or download and extract the ZIP file to `plugins/generic/reviewerCertificate/`
 
-The plugin requires TCPDF for PDF generation. Install it in the plugin's `lib/` directory:
+### Step 2: Set Permissions
 
 ```bash
-cd lib/
-wget https://github.com/tecnickcom/TCPDF/archive/refs/tags/6.6.5.tar.gz
-tar -xzf 6.6.5.tar.gz
-mv TCPDF-6.6.5 tcpdf
-rm 6.6.5.tar.gz
+chmod -R 755 /path/to/ojs/plugins/generic/reviewerCertificate/
 ```
 
-**Verify installation:**
-```bash
-ls tcpdf/tcpdf.php
-# Should show: tcpdf/tcpdf.php
-```
-
-#### Alternative: Manual Download
-
-If `wget` is not available on your server:
-
-1. Download TCPDF from: https://github.com/tecnickcom/TCPDF/releases/tag/6.6.5
-2. Extract the archive
-3. Upload the extracted folder to: `/plugins/generic/reviewerCertificate/lib/`
-4. Rename the folder to `tcpdf`
-5. Verify `tcpdf/tcpdf.php` exists
-
-#### Alternative: Use OJS's TCPDF (if available)
-
-If your OJS installation already has TCPDF, the plugin will automatically detect and use it. Check if it exists:
-
-```bash
-ls /path/to/ojs/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php
-```
-
-If this file exists, you can skip installing TCPDF in the plugin directory.
-
-### Step 3: Set Permissions
-
-Ensure proper file permissions:
-
-```bash
-cd /path/to/ojs/plugins/generic/reviewerCertificate/
-chmod -R 755 .
-```
-
-### Step 4: Enable the Plugin
+### Step 3: Enable the Plugin
 
 1. Log in to OJS as **Administrator** or **Journal Manager**
 2. Navigate to: **Settings → Website → Plugins**
@@ -74,7 +35,7 @@ chmod -R 755 .
 4. Click the **checkbox** to enable it
 5. Click **Settings** to configure certificate options
 
-### Step 5: Configure Certificate Settings
+### Step 4: Configure Certificate Settings
 
 1. In the plugin settings:
    - Set certificate template text
@@ -84,21 +45,25 @@ chmod -R 755 .
 2. Click **Preview Certificate** to test your design
 3. Save settings
 
+## What's Included
+
+The plugin comes with:
+- ✅ TCPDF 6.10.0 library (in `lib/tcpdf/`)
+- ✅ All required fonts
+- ✅ QR code generation support
+- ✅ Complete PDF generation system
+
 ## Troubleshooting
 
 ### Error: "TCPDF library not found"
 
-This means TCPDF is not installed. Follow Step 2 above to install it.
+This should not happen with the bundled version. If you see this error:
 
-**Quick fix:**
-```bash
-cd /path/to/ojs/plugins/generic/reviewerCertificate/lib/
-wget https://github.com/tecnickcom/TCPDF/archive/refs/tags/6.6.5.tar.gz
-tar -xzf 6.6.5.tar.gz
-mv TCPDF-6.6.5 tcpdf
-```
+1. Verify the `lib/tcpdf/` directory exists in the plugin
+2. Check that `lib/tcpdf/tcpdf.php` file exists
+3. Ensure proper file permissions (755 or 755 for directories, 644 for files)
 
-### Error: "Permission denied"
+### Permission Issues
 
 Set proper permissions:
 ```bash
@@ -114,7 +79,7 @@ chmod -R 775 /path/to/ojs/files/journals/[JOURNAL_ID]/reviewerCertificate/
 chown -R www-data:www-data /path/to/ojs/files/journals/[JOURNAL_ID]/reviewerCertificate/
 ```
 
-(Replace `www-data` with your web server user, might be `apache`, `nginx`, etc.)
+(Replace `www-data` with your web server user)
 
 ### Plugin Not Appearing
 
@@ -134,6 +99,40 @@ git pull origin main
 
 Then clear OJS cache in the admin interface.
 
+## Technical Details
+
+### TCPDF Integration
+
+The plugin includes TCPDF 6.10.0 in the `lib/tcpdf/` directory. The CertificateGenerator class automatically detects and loads TCPDF from:
+
+1. Plugin's bundled TCPDF (primary): `lib/tcpdf/tcpdf.php`
+2. OJS 3.4 location (fallback): `lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php`
+3. OJS 3.3 location (fallback): `lib/pkp/lib/tcpdf/tcpdf.php`
+
+This ensures maximum compatibility across different OJS installations.
+
+### File Structure
+
+```
+reviewerCertificate/
+├── classes/
+│   ├── Certificate.inc.php
+│   ├── CertificateDAO.inc.php
+│   ├── CertificateGenerator.inc.php
+│   └── form/
+├── controllers/
+├── locale/
+├── lib/
+│   └── tcpdf/              ← TCPDF library (bundled)
+│       ├── tcpdf.php
+│       ├── fonts/
+│       ├── config/
+│       └── ...
+├── templates/
+├── ReviewerCertificatePlugin.inc.php
+└── version.xml
+```
+
 ## Uninstallation
 
 1. Disable the plugin in OJS admin
@@ -142,24 +141,11 @@ Then clear OJS cache in the admin interface.
    rm -rf /path/to/ojs/plugins/generic/reviewerCertificate/
    ```
 
-The plugin's database tables will remain. To remove them, run:
+The plugin's database tables will remain. To remove them:
 
 ```sql
 DROP TABLE IF EXISTS certificates;
 ```
-
-## About PEAR Packages
-
-**You do NOT need to install these PEAR packages:**
-- ❌ File_PDF (0.3.3) - Too old, limited features
-- ❌ XML_fo2pdf (0.98) - Requires Java/Apache FOP, unnecessary
-
-**This plugin uses TCPDF** which is modern, actively maintained, and provides all necessary features including:
-- QR codes
-- Custom fonts
-- Images/backgrounds
-- Unicode support
-- Professional PDF output
 
 ## Support
 

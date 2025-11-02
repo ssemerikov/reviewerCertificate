@@ -23,41 +23,41 @@ The Reviewer Certificate Plugin enables reviewers to generate and download perso
   - GD or Imagick (for image processing)
   - mbstring
   - zip
-- **TCPDF Library**: Included with OJS
+- **TCPDF Library**: ✅ Bundled with plugin (v6.10.0) - no additional installation required!
 
 ## Installation
 
-### Method 1: Manual Installation
+### Quick Install (Recommended)
+
+1. Clone or download the plugin:
+   ```bash
+   cd /path/to/ojs/plugins/generic/
+   git clone https://github.com/ssemerikov/plugin.git reviewerCertificate
+   ```
+
+2. Set permissions:
+   ```bash
+   chmod -R 755 reviewerCertificate/
+   ```
+
+3. Enable in OJS:
+   - Log in as Administrator
+   - Go to **Settings → Website → Plugins**
+   - Find "Reviewer Certificate Plugin"
+   - Click **Enable**
+
+4. Configure and use:
+   - Click **Settings** to customize certificate templates
+   - Click **Preview Certificate** to test your design
+
+**That's it!** The plugin includes TCPDF library, so no additional dependencies need to be installed.
+
+### Manual Installation
 
 1. Download the plugin package
-2. Extract the contents to your OJS installation directory:
-   ```
-   plugins/generic/reviewerCertificate/
-   ```
-
-3. Ensure proper file permissions:
-   ```bash
-   chmod -R 755 plugins/generic/reviewerCertificate/
-   ```
-
-4. Log in to OJS as Site Administrator or Journal Manager
-
-5. Navigate to: **Settings > Website > Plugins > Plugin Gallery**
-
-6. Find "Reviewer Certificate Plugin" in the list
-
-7. Click **Enable** to activate the plugin
-
-8. The plugin will automatically create the required database tables
-
-### Method 2: Git Installation
-
-```bash
-cd /path/to/ojs
-cd plugins/generic
-git clone [repository-url] reviewerCertificate
-cd reviewerCertificate
-```
+2. Extract to: `plugins/generic/reviewerCertificate/`
+3. Set permissions: `chmod -R 755 plugins/generic/reviewerCertificate/`
+4. Enable in OJS admin interface
 
 Then follow steps 4-8 from Method 1.
 
