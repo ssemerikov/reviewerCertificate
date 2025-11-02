@@ -248,6 +248,43 @@ class CertificateDAO extends DAO {
     }
 
     /**
+     * Get certificate statistics for a context
+     * @param $contextId int
+     * @return array Statistics array with 'total', 'downloads', and 'reviewers' counts
+     */
+    public function getStatisticsByContext($contextId) {
+        // Total certificates
+        $result = $this->retrieve(
+            'SELECT COUNT(*) AS total FROM reviewer_certificates WHERE context_id = ?',
+            array((int) $contextId)
+        );
+        $row = $result->current();
+        $total = $row ? $row->total : 0;
+
+        // Total downloads
+        $result = $this->retrieve(
+            'SELECT SUM(download_count) AS downloads FROM reviewer_certificates WHERE context_id = ?',
+            array((int) $contextId)
+        );
+        $row = $result->current();
+        $downloads = $row && $row->downloads ? $row->downloads : 0;
+
+        // Unique reviewers
+        $result = $this->retrieve(
+            'SELECT COUNT(DISTINCT reviewer_id) AS reviewers FROM reviewer_certificates WHERE context_id = ?',
+            array((int) $contextId)
+        );
+        $row = $result->current();
+        $reviewers = $row ? $row->reviewers : 0;
+
+        return array(
+            'total' => $total,
+            'downloads' => $downloads,
+            'reviewers' => $reviewers
+        );
+    }
+
+    /**
      * Get the insert ID for the last inserted certificate
      * @return int
      */

@@ -101,8 +101,22 @@
 	<message key="plugins.generic.reviewerCertificate.batch.title">Batch Certificate Generation</message>
 	<message key="plugins.generic.reviewerCertificate.batch.description">Generate certificates for multiple reviewers at once</message>
 	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certificate(s) generated successfully</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Select Reviewers</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">completed reviews</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">No eligible reviewers found</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Hold Ctrl (Cmd on Mac) to select multiple reviewers</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generate Certificates</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Generating certificates...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Please select at least one reviewer</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certificate(s) generated successfully</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Failed to generate certificates</message>
 
 	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Certificate Statistics</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">View statistics for issued certificates</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Total Certificates</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Total Downloads</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Unique Reviewers</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total Certificates Issued</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total Downloads</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Average Downloads per Certificate</message>

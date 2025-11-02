@@ -133,9 +133,61 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 echo $pdfContent;
                 exit;
 
+            case 'generateBatch':
+                $context = $request->getContext();
+                $reviewerIds = $request->getUserVar('reviewerIds');
+
+                if (!is_array($reviewerIds) || empty($reviewerIds)) {
+                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.batch.noSelection'));
+                }
+
+                $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
+                $certificateDao = DAORegistry::getDAO('CertificateDAO');
+                $this->import('classes.Certificate');
+
+                $generated = 0;
+                foreach ($reviewerIds as $reviewerId) {
+                    // Get all completed reviews for this reviewer
+                    $reviewAssignments = $reviewAssignmentDao->getByUserId($reviewerId);
+
+                    while ($reviewAssignment = $reviewAssignments->next()) {
+                        if ($reviewAssignment->getDateCompleted() &&
+                            $reviewAssignment->getSubmission()->getContextId() == $context->getId()) {
+
+                            // Check if certificate already exists
+                            $existing = $certificateDao->getByReviewId($reviewAssignment->getId());
+                            if (!$existing) {
+                                // Create certificate
+                                $certificate = new Certificate();
+                                $certificate->setReviewerId($reviewerId);
+                                $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
+                                $certificate->setReviewId($reviewAssignment->getId());
+                                $certificate->setContextId($context->getId());
+                                $certificate->setDateIssued(Core::getCurrentDate());
+                                $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
+                                $certificate->setDownloadCount(0);
+
+                                $certificateDao->insertObject($certificate);
+                                $generated++;
+                            }
+                        }
+                    }
+                }
+
+                return new JSONMessage(true, array('generated' => $generated));
+
             default:
                 return parent::manage($args, $request);
         }
+    }
+
+    /**
+     * Generate certificate code
+     * @param $reviewAssignment ReviewAssignment
+     * @return string
+     */
+    private function generateCertificateCode($reviewAssignment) {
+        return strtoupper(substr(md5($reviewAssignment->getId() . time() . uniqid()), 0, 12));
     }
 
     /**

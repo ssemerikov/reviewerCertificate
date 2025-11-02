@@ -179,6 +179,113 @@
 	</p>
 </form>
 
+<!-- Certificate Statistics -->
+<div class="section" style="margin-top: 40px;">
+	<h2>{translate key="plugins.generic.reviewerCertificate.statistics.title"}</h2>
+	<p class="description">{translate key="plugins.generic.reviewerCertificate.statistics.description"}</p>
+
+	<div class="statistics-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin: 20px 0;">
+		<div class="stat-card" style="background: #f5f5f5; padding: 20px; border-radius: 5px; text-align: center;">
+			<h3 style="font-size: 2em; margin: 0; color: #007bff;">{$totalCertificates|default:0}</h3>
+			<p style="margin: 5px 0 0 0; color: #666;">{translate key="plugins.generic.reviewerCertificate.statistics.totalCertificates"}</p>
+		</div>
+		<div class="stat-card" style="background: #f5f5f5; padding: 20px; border-radius: 5px; text-align: center;">
+			<h3 style="font-size: 2em; margin: 0; color: #28a745;">{$totalDownloads|default:0}</h3>
+			<p style="margin: 5px 0 0 0; color: #666;">{translate key="plugins.generic.reviewerCertificate.statistics.totalDownloads"}</p>
+		</div>
+		<div class="stat-card" style="background: #f5f5f5; padding: 20px; border-radius: 5px; text-align: center;">
+			<h3 style="font-size: 2em; margin: 0; color: #ffc107;">{$uniqueReviewers|default:0}</h3>
+			<p style="margin: 5px 0 0 0; color: #666;">{translate key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers"}</p>
+		</div>
+	</div>
+</div>
+
+<!-- Batch Certificate Generation -->
+<div class="section" style="margin-top: 40px; padding: 20px; background: #f9f9f9; border-radius: 5px;">
+	<h2>{translate key="plugins.generic.reviewerCertificate.batch.title"}</h2>
+	<p class="description">{translate key="plugins.generic.reviewerCertificate.batch.description"}</p>
+
+	<form id="batchGenerateForm" style="margin-top: 20px;">
+		<div style="margin-bottom: 15px;">
+			<label>{translate key="plugins.generic.reviewerCertificate.batch.selectReviewers"}</label>
+			<select id="batchReviewers" name="reviewerIds[]" multiple size="10" style="width: 100%; padding: 10px;">
+				{if $eligibleReviewers}
+					{foreach from=$eligibleReviewers item=reviewer}
+						<option value="{$reviewer.id}">{$reviewer.name} ({$reviewer.completedReviews} {translate key="plugins.generic.reviewerCertificate.batch.completedReviews"})</option>
+					{/foreach}
+				{else}
+					<option disabled>{translate key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers"}</option>
+				{/if}
+			</select>
+			<p class="description" style="margin-top: 5px;">{translate key="plugins.generic.reviewerCertificate.batch.selectMultipleHint"}</p>
+		</div>
+
+		<button type="button" id="generateBatchBtn" class="pkp_button" style="background: #28a745; color: white;">
+			{translate key="plugins.generic.reviewerCertificate.batch.generate"}
+		</button>
+		<span id="batchProgress" style="margin-left: 15px; display: none;">
+			<span class="pkp_spinner"></span> {translate key="plugins.generic.reviewerCertificate.batch.generating"}
+		</span>
+	</form>
+
+	<div id="batchResult" style="margin-top: 20px; display: none;"></div>
+</div>
+
+<script>
+$(document).ready(function() {ldelim}
+	$('#generateBatchBtn').on('click', function() {ldelim}
+		var selectedReviewers = $('#batchReviewers').val();
+		if (!selectedReviewers || selectedReviewers.length === 0) {ldelim}
+			alert('{translate key="plugins.generic.reviewerCertificate.batch.noSelection" escape="js"}');
+			return;
+		{rdelim}
+
+		// Show progress
+		$('#batchProgress').show();
+		$('#generateBatchBtn').prop('disabled', true);
+
+		$.ajax({ldelim}
+			url: '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="generateBatch" escape=false}',
+			type: 'POST',
+			data: {ldelim}
+				reviewerIds: selectedReviewers,
+				csrfToken: '{$smarty.session.csrfToken}'
+			{rdelim},
+			success: function(response) {ldelim}
+				$('#batchProgress').hide();
+				$('#generateBatchBtn').prop('disabled', false);
+
+				var data = JSON.parse(response);
+				if (data.status) {ldelim}
+					$('#batchResult').html(
+						'<div style="padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">' +
+						'<strong>Success!</strong> ' + data.content.generated + ' {translate key="plugins.generic.reviewerCertificate.batch.certificatesGenerated" escape="js"}' +
+						'</div>'
+					).show();
+					// Reload page after 2 seconds to refresh statistics
+					setTimeout(function() {ldelim} location.reload(); {rdelim}, 2000);
+				{rdelim} else {ldelim}
+					$('#batchResult').html(
+						'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
+						'<strong>Error:</strong> ' + (data.content || 'Failed to generate certificates') +
+						'</div>'
+					).show();
+				{rdelim}
+			{rdelim},
+			error: function() {ldelim}
+				$('#batchProgress').hide();
+				$('#generateBatchBtn').prop('disabled', false);
+				$('#batchResult').html(
+					'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
+					'<strong>Error:</strong> {translate key="plugins.generic.reviewerCertificate.batch.error" escape="js"}' +
+					'</div>'
+				).show();
+			{rdelim}
+		{rdelim});
+	{rdelim});
+{rdelim});
+</script>
+
 <style>
 .template-variables {
 	display: grid;

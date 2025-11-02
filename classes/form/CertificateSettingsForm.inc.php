@@ -177,7 +177,71 @@ class CertificateSettingsForm extends Form {
             $templateMgr->assign('backgroundImageName', basename($backgroundImage));
         }
 
+        // Statistics
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        $statistics = $certificateDao->getStatisticsByContext($this->contextId);
+        $templateMgr->assign('totalCertificates', $statistics['total']);
+        $templateMgr->assign('totalDownloads', $statistics['downloads']);
+        $templateMgr->assign('uniqueReviewers', $statistics['reviewers']);
+
+        // Eligible reviewers for batch generation
+        $eligibleReviewers = $this->getEligibleReviewers();
+        $templateMgr->assign('eligibleReviewers', $eligibleReviewers);
+
         return parent::fetch($request, $template, $display);
+    }
+
+    /**
+     * Get eligible reviewers for batch certificate generation
+     * @return array
+     */
+    private function getEligibleReviewers() {
+        $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
+        $userDao = DAORegistry::getDAO('UserDAO');
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+
+        // Get all completed review assignments for this context
+        $result = $reviewAssignmentDao->getByContextId($this->contextId);
+
+        $reviewers = array();
+        $reviewerCounts = array();
+
+        while ($reviewAssignment = $result->next()) {
+            if ($reviewAssignment->getDateCompleted()) {
+                $reviewerId = $reviewAssignment->getReviewerId();
+
+                // Count reviews per reviewer
+                if (!isset($reviewerCounts[$reviewerId])) {
+                    $reviewerCounts[$reviewerId] = 0;
+                }
+                $reviewerCounts[$reviewerId]++;
+
+                // Check if certificate already exists for this review
+                $certificate = $certificateDao->getByReviewId($reviewAssignment->getId());
+                if (!$certificate) {
+                    // This review doesn't have a certificate yet
+                    if (!isset($reviewers[$reviewerId])) {
+                        $user = $userDao->getById($reviewerId);
+                        if ($user) {
+                            $reviewers[$reviewerId] = array(
+                                'id' => $reviewerId,
+                                'name' => $user->getFullName(),
+                                'completedReviews' => 0,
+                                'missingCertificates' => 0
+                            );
+                        }
+                    }
+                    $reviewers[$reviewerId]['missingCertificates']++;
+                }
+            }
+        }
+
+        // Update completed reviews count
+        foreach ($reviewers as $reviewerId => $data) {
+            $reviewers[$reviewerId]['completedReviews'] = $reviewerCounts[$reviewerId];
+        }
+
+        return array_values($reviewers);
     }
 
     /**
