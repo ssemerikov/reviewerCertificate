@@ -265,19 +265,11 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     }
 
     /**
-     * Get the installation migration file for this plugin
-     * @return string Path to schema file
+     * Get the installation migration for this plugin
+     * @return \Illuminate\Database\Migrations\Migration
      */
     public function getInstallMigration() {
-        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'schema.xml';
-    }
-
-    /**
-     * Get the installation schema file (for OJS 3.3.x compatibility)
-     * Note: This method may be deprecated in OJS 3.4.x
-     * @return string Path to schema file
-     */
-    public function getInstallDataFile() {
-        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'schema.xml';
+        $this->import('classes.migration.ReviewerCertificateInstallMigration');
+        return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
     }
 }
