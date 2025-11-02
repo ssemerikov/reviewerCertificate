@@ -35,9 +35,9 @@
 		$('#colorPicker').on('input change', function() {ldelim}
 			var rgb = hexToRgb($(this).val());
 			if (rgb) {ldelim}
-				$('#textColorR').val(rgb.r);
-				$('#textColorG').val(rgb.g);
-				$('#textColorB').val(rgb.b);
+				$('#textColorR').val(rgb.r).trigger('change');
+				$('#textColorG').val(rgb.g).trigger('change');
+				$('#textColorB').val(rgb.b).trigger('change');
 				$('#colorPreview').css('background-color', $(this).val());
 			{rdelim}
 		{rdelim});
@@ -51,15 +51,16 @@
 			$('#colorPreview').css('background-color', rgbToHex(r, g, b));
 		{rdelim});
 
-		// Fix for "Use default template" link
-		$(document).on('click', 'a[href="#"]', function(e) {ldelim}
-			if ($(this).text().indexOf('{translate key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate" escape="js"}') >= 0) {ldelim}
-				e.preventDefault();
-				var defaultTemplate = $('#defaultBodyTemplate').val();
-				$('#bodyTemplate').val(defaultTemplate);
-				// Trigger change event if using TinyMCE or similar
-				$('#bodyTemplate').trigger('change');
-				return false;
+		// Ensure RGB values are updated from color picker before form submit
+		$('#certificateSettingsForm').on('submit', function() {ldelim}
+			var colorPickerVal = $('#colorPicker').val();
+			if (colorPickerVal) {ldelim}
+				var rgb = hexToRgb(colorPickerVal);
+				if (rgb) {ldelim}
+					$('#textColorR').val(rgb.r);
+					$('#textColorG').val(rgb.g);
+					$('#textColorB').val(rgb.b);
+				{rdelim}
 			{rdelim}
 		{rdelim});
 	{rdelim});

@@ -182,6 +182,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $this->addScript($request);
             $templateMgr->assign('showCertificateButton', true);
             $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', $reviewAssignment->getId()));
+
+            // Include the certificate button template
+            $output =& $params[2];
+            $output .= $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
         }
 
         return false;
