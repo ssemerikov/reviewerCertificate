@@ -165,6 +165,12 @@ class CertificateSettingsForm extends Form {
 
         $templateMgr->assign('defaultBodyTemplate', $defaultBodyTemplate);
 
+        // Assign background image filename separately to avoid Smarty modifier deprecation
+        $backgroundImage = $this->getData('backgroundImage');
+        if ($backgroundImage) {
+            $templateMgr->assign('backgroundImageName', basename($backgroundImage));
+        }
+
         return parent::fetch($request, $template, $display);
     }
 

@@ -26,7 +26,7 @@
 		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.backgroundImage" description="plugins.generic.reviewerCertificate.settings.backgroundImageDescription"}
 			<input type="file" id="backgroundImage" name="backgroundImage" accept="image/*" class="pkp_form_file" />
 			{if $backgroundImage}
-				<p class="description">{translate key="plugins.generic.reviewerCertificate.settings.currentImage"}: {$backgroundImage|basename}</p>
+				<p class="description">{translate key="plugins.generic.reviewerCertificate.settings.currentImage"}: {$backgroundImageName}</p>
 			{/if}
 		{/fbvFormSection}
 
