@@ -147,11 +147,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $generated = 0;
                 foreach ($reviewerIds as $reviewerId) {
                     // Use direct SQL query for OJS 3.4 compatibility
+                    // Note: review_id is the primary key in review_assignments table
                     $result = $certificateDao->retrieve(
-                        'SELECT ra.review_assignment_id, ra.reviewer_id, ra.submission_id
+                        'SELECT ra.review_id, ra.reviewer_id, ra.submission_id
                          FROM review_assignments ra
                          LEFT JOIN submissions s ON ra.submission_id = s.submission_id
-                         LEFT JOIN reviewer_certificates rc ON ra.review_assignment_id = rc.review_id
+                         LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
                          WHERE ra.reviewer_id = ?
                                AND s.context_id = ?
                                AND ra.date_completed IS NOT NULL
@@ -164,11 +165,11 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         $certificate = new Certificate();
                         $certificate->setReviewerId($row->reviewer_id);
                         $certificate->setSubmissionId($row->submission_id);
-                        $certificate->setReviewId($row->review_assignment_id);
+                        $certificate->setReviewId($row->review_id);
                         $certificate->setContextId($context->getId());
                         $certificate->setDateIssued(Core::getCurrentDate());
                         // Generate code without review assignment object
-                        $certificate->setCertificateCode(strtoupper(substr(md5($row->review_assignment_id . time() . uniqid()), 0, 12)));
+                        $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                         $certificate->setDownloadCount(0);
 
                         $certificateDao->insertObject($certificate);

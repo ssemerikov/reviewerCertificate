@@ -199,13 +199,14 @@ class CertificateSettingsForm extends Form {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
 
         // Use direct database query for OJS 3.4 compatibility
+        // Note: review_id is the primary key in review_assignments table
         $result = $certificateDao->retrieve(
             'SELECT DISTINCT ra.reviewer_id,
                     COUNT(*) as completed_reviews,
                     SUM(CASE WHEN rc.certificate_id IS NULL THEN 1 ELSE 0 END) as missing_certificates
              FROM review_assignments ra
              LEFT JOIN submissions s ON ra.submission_id = s.submission_id
-             LEFT JOIN reviewer_certificates rc ON ra.review_assignment_id = rc.review_id
+             LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
              WHERE s.context_id = ?
                    AND ra.date_completed IS NOT NULL
              GROUP BY ra.reviewer_id
