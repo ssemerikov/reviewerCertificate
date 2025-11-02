@@ -30,8 +30,9 @@ class CertificateHandler extends Handler {
         );
         $this->addRoleAssignment(
             array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
-            array('verify', 'manage', 'generateBatch')
+            array('manage', 'generateBatch')
         );
+        // Make verify publicly accessible (no role restriction)
     }
 
     /**
@@ -132,43 +133,40 @@ class CertificateHandler extends Handler {
      * Verify certificate
      * @param $args array
      * @param $request Request
-     * @return JSONMessage
      */
     public function verify($args, $request) {
-        $certificateCode = isset($args[0]) ? $args[0] : null;
+        // Get certificate code from URL path or query parameter
+        $certificateCode = isset($args[0]) ? $args[0] : $request->getUserVar('code');
 
-        if (!$certificateCode) {
-            return new JSONMessage(false, array(
-                'valid' => false,
-                'message' => __('plugins.generic.reviewerCertificate.error.noCertificateCode')
-            ));
+        $templateMgr = TemplateManager::getManager($request);
+        $templateMgr->assign('certificateCode', $certificateCode);
+
+        if ($certificateCode) {
+            // Lookup certificate
+            $certificateDao = DAORegistry::getDAO('CertificateDAO');
+            $certificate = $certificateDao->getByCertificateCode($certificateCode);
+
+            if ($certificate) {
+                // Get reviewer and context information
+                $userDao = DAORegistry::getDAO('UserDAO');
+                $reviewer = $userDao->getById($certificate->getReviewerId());
+
+                $contextDao = Application::getContextDAO();
+                $context = $contextDao->getById($certificate->getContextId());
+
+                // Assign valid certificate data to template
+                $templateMgr->assign('isValid', true);
+                $templateMgr->assign('reviewerName', $reviewer->getFullName());
+                $templateMgr->assign('dateIssued', $certificate->getDateIssued());
+                $templateMgr->assign('journalName', $context->getLocalizedName());
+            } else {
+                // Invalid certificate
+                $templateMgr->assign('isValid', false);
+            }
         }
 
-        // Lookup certificate
-        $certificateDao = DAORegistry::getDAO('CertificateDAO');
-        $certificate = $certificateDao->getByCertificateCode($certificateCode);
-
-        if (!$certificate) {
-            return new JSONMessage(false, array(
-                'valid' => false,
-                'message' => __('plugins.generic.reviewerCertificate.error.invalidCertificate')
-            ));
-        }
-
-        // Get reviewer and context information
-        $userDao = DAORegistry::getDAO('UserDAO');
-        $reviewer = $userDao->getById($certificate->getReviewerId());
-
-        $contextDao = Application::getContextDAO();
-        $context = $contextDao->getById($certificate->getContextId());
-
-        return new JSONMessage(true, array(
-            'valid' => true,
-            'reviewerName' => $reviewer->getFullName(),
-            'dateIssued' => $certificate->getDateIssued(),
-            'journalName' => $context->getLocalizedName(),
-            'certificateCode' => $certificate->getCertificateCode()
-        ));
+        // Display verification page
+        return $templateMgr->display($this->plugin->getTemplateResource('verify.tpl'));
     }
 
     /**
