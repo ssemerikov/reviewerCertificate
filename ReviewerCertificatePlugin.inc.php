@@ -99,6 +99,40 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
                 return new JSONMessage(true, $form->fetch($request));
 
+            case 'preview':
+                $context = $request->getContext();
+                $this->import('classes.CertificateGenerator');
+
+                // Create a sample certificate for preview
+                $generator = new CertificateGenerator();
+
+                // Get current settings
+                $templateSettings = array(
+                    'backgroundImage' => $this->getSetting($context->getId(), 'backgroundImage'),
+                    'headerText' => $this->getSetting($context->getId(), 'headerText') ?: 'Certificate of Recognition',
+                    'bodyTemplate' => $this->getSetting($context->getId(), 'bodyTemplate') ?: $this->getDefaultBodyTemplate(),
+                    'footerText' => $this->getSetting($context->getId(), 'footerText') ?: '',
+                    'fontFamily' => $this->getSetting($context->getId(), 'fontFamily') ?: 'helvetica',
+                    'fontSize' => $this->getSetting($context->getId(), 'fontSize') ?: 12,
+                    'textColorR' => $this->getSetting($context->getId(), 'textColorR') ?: 0,
+                    'textColorG' => $this->getSetting($context->getId(), 'textColorG') ?: 0,
+                    'textColorB' => $this->getSetting($context->getId(), 'textColorB') ?: 0,
+                    'includeQRCode' => $this->getSetting($context->getId(), 'includeQRCode') ?: false,
+                );
+
+                $generator->setContext($context);
+                $generator->setTemplateSettings($templateSettings);
+                $generator->setPreviewMode(true); // Enable preview mode with sample data
+
+                // Generate and output PDF
+                $pdfContent = $generator->generatePDF();
+
+                header('Content-Type: application/pdf');
+                header('Content-Disposition: inline; filename="certificate-preview.pdf"');
+                header('Content-Length: ' . strlen($pdfContent));
+                echo $pdfContent;
+                exit;
+
             default:
                 return parent::manage($args, $request);
         }
@@ -268,5 +302,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     public function getInstallMigration() {
         $this->import('classes.migration.ReviewerCertificateInstallMigration');
         return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
+    }
+
+    /**
+     * Get default body template
+     * @return string
+     */
+    private function getDefaultBodyTemplate() {
+        return "This certificate is awarded to\n\n" .
+               "{{\$reviewerName}}\n\n" .
+               "In recognition of their valuable contribution as a peer reviewer for\n\n" .
+               "{{\$journalName}}\n\n" .
+               "Review completed on {{\$reviewDate}}\n\n" .
+               "Manuscript: {{\$submissionTitle}}";
     }
 }

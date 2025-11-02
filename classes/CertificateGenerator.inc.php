@@ -57,6 +57,9 @@ class CertificateGenerator {
     /** @var array */
     private $templateSettings;
 
+    /** @var bool */
+    private $previewMode = false;
+
     /**
      * Constructor
      */
@@ -101,6 +104,14 @@ class CertificateGenerator {
      */
     public function setTemplateSettings($settings) {
         $this->templateSettings = $settings;
+    }
+
+    /**
+     * Set preview mode
+     * @param $previewMode bool
+     */
+    public function setPreviewMode($previewMode) {
+        $this->previewMode = $previewMode;
     }
 
     /**
@@ -224,9 +235,10 @@ class CertificateGenerator {
         }
 
         // Certificate code
-        if ($this->certificate) {
+        if ($this->certificate || $this->previewMode) {
+            $code = $this->previewMode ? 'PREVIEW12345' : $this->certificate->getCertificateCode();
             $pdf->SetFont($pdf->getFontFamily(), '', 8);
-            $pdf->Cell(0, 5, 'Certificate Code: ' . $this->certificate->getCertificateCode(), 0, 1, 'C');
+            $pdf->Cell(0, 5, 'Certificate Code: ' . $code, 0, 1, 'C');
         }
     }
 
@@ -235,12 +247,18 @@ class CertificateGenerator {
      * @param $pdf TCPDF
      */
     private function addQRCode($pdf) {
-        if (!$this->certificate) {
-            return;
-        }
-
         $request = Application::get()->getRequest();
-        $verificationUrl = $request->url(null, 'certificate', 'verify', $this->certificate->getCertificateCode());
+
+        // Determine verification URL
+        if ($this->previewMode) {
+            // Use sample URL for preview
+            $verificationUrl = $request->url(null, 'certificate', 'verify', 'PREVIEW12345');
+        } else {
+            if (!$this->certificate) {
+                return;
+            }
+            $verificationUrl = $request->url(null, 'certificate', 'verify', $this->certificate->getCertificateCode());
+        }
 
         // Position QR code in bottom right corner
         $pdf->write2DBarcode(
@@ -267,41 +285,63 @@ class CertificateGenerator {
     private function getTemplateVariables() {
         $variables = array();
 
-        // Reviewer information
-        if ($this->reviewer) {
-            $variables['reviewerName'] = $this->reviewer->getFullName();
-            $variables['reviewerFirstName'] = $this->reviewer->getGivenName();
-            $variables['reviewerLastName'] = $this->reviewer->getFamilyName();
-        }
+        // If in preview mode, use sample data
+        if ($this->previewMode) {
+            $variables['reviewerName'] = 'Dr. Jane Smith';
+            $variables['reviewerFirstName'] = 'Jane';
+            $variables['reviewerLastName'] = 'Smith';
+            $variables['submissionTitle'] = 'Sample Article Title: A Study on Research Methods';
+            $variables['submissionId'] = '12345';
+            $variables['reviewDate'] = date('F j, Y');
+            $variables['reviewYear'] = date('Y');
+            $variables['certificateCode'] = 'PREVIEW12345';
+            $variables['dateIssued'] = date('F j, Y');
 
-        // Submission information
-        if ($this->submission) {
-            $variables['submissionTitle'] = $this->submission->getLocalizedTitle();
-            $variables['submissionId'] = $this->submission->getId();
-        }
+            if ($this->context) {
+                $variables['journalName'] = $this->context->getLocalizedName();
+                $variables['journalAcronym'] = $this->context->getLocalizedData('acronym');
+            } else {
+                $variables['journalName'] = 'Sample Journal Name';
+                $variables['journalAcronym'] = 'SJN';
+            }
+        } else {
+            // Use real data
+            // Reviewer information
+            if ($this->reviewer) {
+                $variables['reviewerName'] = $this->reviewer->getFullName();
+                $variables['reviewerFirstName'] = $this->reviewer->getGivenName();
+                $variables['reviewerLastName'] = $this->reviewer->getFamilyName();
+            }
 
-        // Context information
-        if ($this->context) {
-            $variables['journalName'] = $this->context->getLocalizedName();
-            $variables['journalAcronym'] = $this->context->getLocalizedData('acronym');
-        }
+            // Submission information
+            if ($this->submission) {
+                $variables['submissionTitle'] = $this->submission->getLocalizedTitle();
+                $variables['submissionId'] = $this->submission->getId();
+            }
 
-        // Review information
-        if ($this->reviewAssignment) {
-            $dateCompleted = $this->reviewAssignment->getDateCompleted();
-            if ($dateCompleted) {
-                $variables['reviewDate'] = date('F j, Y', strtotime($dateCompleted));
-                $variables['reviewYear'] = date('Y', strtotime($dateCompleted));
+            // Context information
+            if ($this->context) {
+                $variables['journalName'] = $this->context->getLocalizedName();
+                $variables['journalAcronym'] = $this->context->getLocalizedData('acronym');
+            }
+
+            // Review information
+            if ($this->reviewAssignment) {
+                $dateCompleted = $this->reviewAssignment->getDateCompleted();
+                if ($dateCompleted) {
+                    $variables['reviewDate'] = date('F j, Y', strtotime($dateCompleted));
+                    $variables['reviewYear'] = date('Y', strtotime($dateCompleted));
+                }
+            }
+
+            // Certificate information
+            if ($this->certificate) {
+                $variables['certificateCode'] = $this->certificate->getCertificateCode();
+                $variables['dateIssued'] = date('F j, Y', strtotime($this->certificate->getDateIssued()));
             }
         }
 
-        // Certificate information
-        if ($this->certificate) {
-            $variables['certificateCode'] = $this->certificate->getCertificateCode();
-            $variables['dateIssued'] = date('F j, Y', strtotime($this->certificate->getDateIssued()));
-        }
-
-        // Current date
+        // Current date (always set)
         $variables['currentDate'] = date('F j, Y');
         $variables['currentYear'] = date('Y');
 
@@ -313,7 +353,7 @@ class CertificateGenerator {
      * @param $text string
      * @param $variables array
      * @return string
-     */
+     */ 
     private function replaceVariables($text, $variables) {
         foreach ($variables as $key => $value) {
             $text = str_replace('{{$' . $key . '}}', $value, $text);

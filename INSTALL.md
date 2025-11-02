@@ -10,7 +10,9 @@
 
 ## Installation Steps
 
-### Step 1: Download/Clone the Plugin
+### Step 1: Install the Plugin
+
+Clone or download the plugin to your OJS installation:
 
 ```bash
 cd /path/to/ojs/plugins/generic/
