@@ -12,6 +12,7 @@
  */
 
 import('classes.handler.Handler');
+import('lib.pkp.classes.core.JSONMessage');
 
 class CertificateHandler extends Handler {
 

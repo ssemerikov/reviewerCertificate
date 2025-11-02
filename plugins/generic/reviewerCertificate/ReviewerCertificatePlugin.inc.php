@@ -12,6 +12,7 @@
  */
 
 import('lib.pkp.classes.plugins.GenericPlugin');
+import('lib.pkp.classes.core.JSONMessage');
 
 class ReviewerCertificatePlugin extends GenericPlugin {
 
