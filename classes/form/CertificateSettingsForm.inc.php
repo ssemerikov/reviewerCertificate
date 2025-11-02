@@ -80,7 +80,13 @@ class CertificateSettingsForm extends Form {
             'includeQRCode'
         ));
 
-        // Handle file upload for background image
+        // Preserve existing background image if no new upload
+        $existingBackgroundImage = $this->plugin->getSetting($this->contextId, 'backgroundImage');
+        if ($existingBackgroundImage) {
+            $this->setData('backgroundImage', $existingBackgroundImage);
+        }
+
+        // Handle file upload for background image (will override existing if new file uploaded)
         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
             $this->handleBackgroundImageUpload();
         }
