@@ -122,8 +122,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         // Check if this was a file upload (regular POST instead of AJAX)
                         // If file was uploaded, redirect back to settings instead of returning JSON
                         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
-                            // File was uploaded - redirect back to settings page
-                            $request->redirect(null, 'management', 'settings', null, array('path' => 'plugin', 'category' => 'generic', 'plugin' => $this->getName()));
+                            // File was uploaded - redirect back to Website Settings > Plugins tab
+                            $request->redirect(null, 'management', 'settings', 'website', null, array('uid' => uniqid()));
                         }
 
                         return new JSONMessage(true);
@@ -349,13 +349,30 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
             $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($templateVar->getId());
 
+            // Log the type for debugging
+            error_log('ReviewerCertificate: Review assignments is ' . gettype($reviewAssignments) .
+                     (is_array($reviewAssignments) ? ' with ' . count($reviewAssignments) . ' items' : ''));
+
             // Find the review assignment for the current user
+            // Handle both DAOResultFactory (object with next()) and array return types
             if ($reviewAssignments) {
-                while ($ra = $reviewAssignments->next()) {
-                    if ($ra->getReviewerId() == $user->getId()) {
-                        $reviewAssignment = $ra;
-                        error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
-                        break;
+                if (is_array($reviewAssignments)) {
+                    // OJS 3.4+ returns array
+                    foreach ($reviewAssignments as $ra) {
+                        if ($ra->getReviewerId() == $user->getId()) {
+                            $reviewAssignment = $ra;
+                            error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
+                            break;
+                        }
+                    }
+                } else {
+                    // OJS 3.3 and earlier returns DAOResultFactory
+                    while ($ra = $reviewAssignments->next()) {
+                        if ($ra->getReviewerId() == $user->getId()) {
+                            $reviewAssignment = $ra;
+                            error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
+                            break;
+                        }
                     }
                 }
             }

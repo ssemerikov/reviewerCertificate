@@ -263,7 +263,6 @@ class CertificateGenerator {
     private function addQRCode($pdf) {
         // Build verification URL manually to avoid component router context issues
         $request = Application::get()->getRequest();
-        $baseUrl = $request->getBaseUrl();
         $contextPath = $this->context ? $this->context->getPath() : 'index';
 
         // Determine verification code
@@ -276,9 +275,14 @@ class CertificateGenerator {
             $code = $this->certificate->getCertificateCode();
         }
 
-        // Build full verification URL manually
-        // Format: baseUrl/contextPath/certificate/verify/CODE
-        $verificationUrl = $baseUrl . '/' . $contextPath . '/certificate/verify/' . $code;
+        // Build full verification URL using OJS URL builder
+        // This ensures proper format with /index.php/ included
+        $verificationUrl = $request->url(
+            $contextPath,
+            'certificate',
+            'verify',
+            $code
+        );
 
         error_log('ReviewerCertificate: QR code URL: ' . $verificationUrl);
 
