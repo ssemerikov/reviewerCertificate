@@ -17,6 +17,8 @@ import('lib.pkp.classes.form.validation.FormValidatorPost');
 import('lib.pkp.classes.form.validation.FormValidatorCSRF');
 import('lib.pkp.classes.form.validation.FormValidatorCustom');
 
+use APP\facades\Repo;
+
 class CertificateSettingsForm extends Form {
 
     /** @var ReviewerCertificatePlugin */

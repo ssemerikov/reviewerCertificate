@@ -14,6 +14,8 @@
 import('classes.handler.Handler');
 import('lib.pkp.classes.core.JSONMessage');
 
+use APP\facades\Repo;
+
 class CertificateHandler extends Handler {
 
     /** @var ReviewerCertificatePlugin */

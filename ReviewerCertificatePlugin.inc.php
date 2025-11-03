@@ -14,6 +14,8 @@
 import('lib.pkp.classes.plugins.GenericPlugin');
 import('lib.pkp.classes.core.JSONMessage');
 
+use APP\facades\Repo;
+
 class ReviewerCertificatePlugin extends GenericPlugin {
 
     /**
@@ -51,6 +53,27 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function getDescription() {
         return __('plugins.generic.reviewerCertificate.description');
+    }
+
+    /**
+     * @copydoc Plugin::getInstallEmailTemplatesFile()
+     */
+    public function getInstallEmailTemplatesFile() {
+        return ($this->getPluginPath() . DIRECTORY_SEPARATOR . 'emailTemplates.xml');
+    }
+
+    /**
+     * @copydoc Plugin::getCanEnable()
+     */
+    public function getCanEnable() {
+        return true;
+    }
+
+    /**
+     * @copydoc Plugin::getCanDisable()
+     */
+    public function getCanDisable() {
+        return true;
     }
 
     /**

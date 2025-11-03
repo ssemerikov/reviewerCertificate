@@ -210,7 +210,49 @@ msgstr "Generate certificates for multiple reviewers at once"
 msgid "plugins.generic.reviewerCertificate.batch.generated"
 msgstr "{$count} certificate(s) generated successfully"
 
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Select Reviewers"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "completed reviews"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "No eligible reviewers found"
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Hold Ctrl (Cmd on Mac) to select multiple reviewers"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Generate Certificates"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Generating certificates..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Please select at least one reviewer"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificate(s) generated successfully"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Failed to generate certificates"
+
 # Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Certificate Statistics"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "View statistics for issued certificates"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total Certificates"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total Downloads"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Unique Reviewers"
+
 msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
 msgstr "Total Certificates Issued"
 

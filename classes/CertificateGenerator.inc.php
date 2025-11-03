@@ -37,6 +37,8 @@ if (!$tcpdfLoaded) {
     );
 }
 
+use APP\facades\Repo;
+
 class CertificateGenerator {
 
     /** @var ReviewAssignment */
@@ -261,16 +263,17 @@ class CertificateGenerator {
     private function addQRCode($pdf) {
         // Determine verification URL
         if ($this->previewMode) {
-            // Use sample URL for preview - don't call url() in preview mode to avoid router errors
-            $request = Application::get()->getRequest();
+            // Build URL manually for preview mode to avoid router context issues
             $baseUrl = $request->getBaseUrl();
-            $verificationUrl = $baseUrl . '/index.php/index/certificate/verify/PREVIEW12345';
+            $contextPath = $this->context ? $this->context->getPath() : 'index';
+            $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/PREVIEW12345';
         } else {
             if (!$this->certificate) {
                 return;
             }
-            $request = Application::get()->getRequest();
-            $verificationUrl = $request->url(null, 'certificate', 'verify', $this->certificate->getCertificateCode());
+            $baseUrl = $request->getBaseUrl();
+            $contextPath = $this->context ? $this->context->getPath() : 'index';
+            $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/' . $this->certificate->getCertificateCode();
         }
 
         // Position QR code in bottom right corner
