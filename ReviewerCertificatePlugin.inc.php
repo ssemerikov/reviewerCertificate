@@ -126,7 +126,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         // If file was uploaded, redirect back to website settings plugins page instead of returning JSON
                         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
                             // File was uploaded - redirect back to Website Settings > Plugins tab
-                            $request->redirect(null, 'management', 'settings', 'website', null, array('uid' => uniqid()));
+                            $request->redirect(null, 'management', 'settings', 'website', 'plugins');
                         }
 
                         return new JSONMessage(true);

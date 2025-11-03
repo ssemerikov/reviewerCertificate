@@ -275,14 +275,11 @@ class CertificateGenerator {
             $code = $this->certificate->getCertificateCode();
         }
 
-        // Build full verification URL using OJS URL builder
-        // This ensures proper format with /index.php/ included
-        $verificationUrl = $request->url(
-            $contextPath,
-            'certificate',
-            'verify',
-            $code
-        );
+        // Build full verification URL manually
+        // We can't use $request->url() here because it may be called from component router context
+        // which requires path to be null, but we need to specify the page/op
+        $baseUrl = $request->getBaseUrl();
+        $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/' . $code;
 
         error_log('ReviewerCertificate: QR code URL: ' . $verificationUrl);
 
