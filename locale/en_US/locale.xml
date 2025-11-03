@@ -22,8 +22,8 @@
 	<!-- Dashboard messages -->
 	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Your Certificate is Ready!</message>
 	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Thank you for completing this review. You can now download your certificate of recognition.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Your certificate will be generated automatically when you click the download button.</message>
 	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Download Certificate</message>
-	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Your certificate will be generated automatically when you access the download link.</message>
 
 	<!-- Settings form -->
 	<message key="plugins.generic.reviewerCertificate.settings">Certificate Settings</message>
