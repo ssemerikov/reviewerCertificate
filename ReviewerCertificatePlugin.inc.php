@@ -240,30 +240,46 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $templateMgr = $params[0];
         $template = $params[1];
 
-        // Check if this is the reviewer dashboard
-        if ($template !== 'reviewer/review/reviewCompleted.tpl' &&
-            $template !== 'reviewer/review/step3.tpl') {
+        // Check if this is the reviewer dashboard - support multiple template patterns for OJS 3.4
+        $reviewerTemplates = array(
+            'reviewer/review/reviewCompleted.tpl',
+            'reviewer/review/step3.tpl',
+            'reviewer/review/step4.tpl',  // Additional pattern for some OJS versions
+        );
+
+        if (!in_array($template, $reviewerTemplates)) {
             return false;
         }
 
         $reviewAssignment = $templateMgr->getTemplateVars('reviewAssignment');
 
+        // Ensure review exists and is completed
         if (!$reviewAssignment || !$reviewAssignment->getDateCompleted()) {
             return false;
         }
 
-        // Check if certificate exists
+        // Check if certificate exists or if reviewer is eligible
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         $certificate = $certificateDao->getByReviewId($reviewAssignment->getId());
 
-        if ($certificate || $this->isEligibleForCertificate($reviewAssignment)) {
+        // Only show button if certificate exists or reviewer is eligible
+        $isEligible = $this->isEligibleForCertificate($reviewAssignment);
+
+        if ($certificate || $isEligible) {
+            // Load CSS and JS assets
             $this->addScript($request);
+
+            // Assign template variables
             $templateMgr->assign('showCertificateButton', true);
+            $templateMgr->assign('certificateExists', (bool)$certificate);
             $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', $reviewAssignment->getId()));
 
             // Include the certificate button template
             $output =& $params[2];
-            $output .= $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
+            $additionalContent = $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
+
+            // Wrap in a div for easier styling and debugging
+            $output .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
         }
 
         return false;

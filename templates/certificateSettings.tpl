@@ -10,6 +10,31 @@
 	$(function() {ldelim}
 		$('#certificateSettingsForm').pkpHandler('$.pkp.controllers.form.AjaxFormHandler');
 
+		// Handle background image preview
+		$('#backgroundImage').on('change', function(e) {ldelim}
+			var file = e.target.files[0];
+			if (file) {ldelim}
+				// Validate file type
+				if (!file.type.match('image.*')) {ldelim}
+					alert('Please select an image file (JPEG or PNG)');
+					$(this).val('');
+					return;
+				{rdelim}
+				// Validate file size (max 5MB)
+				if (file.size > 5 * 1024 * 1024) {ldelim}
+					alert('Image file size must be less than 5MB');
+					$(this).val('');
+					return;
+				{rdelim}
+				// Show filename
+				var fileName = file.name;
+				if ($('#imagePreviewText').length === 0) {ldelim}
+					$(this).after('<p id="imagePreviewText" class="description" style="color: #28a745; margin-top: 5px;"></p>');
+				{rdelim}
+				$('#imagePreviewText').text('Selected: ' + fileName);
+			{rdelim}
+		{rdelim});
+
 		// Initialize color picker from RGB values
 		function rgbToHex(r, g, b) {ldelim}
 			return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
@@ -32,36 +57,32 @@
 		$('#colorPreview').css('background-color', rgbToHex(r, g, b));
 
 		// Update RGB values when color picker changes
-		$('#colorPicker').on('input change', function() {ldelim}
+		// Use 'change' and 'blur' events to ensure values are set before form serialization
+		$('#colorPicker').on('input change blur', function() {ldelim}
 			var rgb = hexToRgb($(this).val());
 			if (rgb) {ldelim}
-				$('#textColorR').val(rgb.r).trigger('change');
-				$('#textColorG').val(rgb.g).trigger('change');
-				$('#textColorB').val(rgb.b).trigger('change');
+				$('#textColorR').val(rgb.r);
+				$('#textColorG').val(rgb.g);
+				$('#textColorB').val(rgb.b);
 				$('#colorPreview').css('background-color', $(this).val());
 			{rdelim}
 		{rdelim});
 
 		// Update color picker when RGB values change manually
-		$('#textColorR, #textColorG, #textColorB').on('input change', function() {ldelim}
-			var r = parseInt($('#textColorR').val()) || 0;
-			var g = parseInt($('#textColorG').val()) || 0;
-			var b = parseInt($('#textColorB').val()) || 0;
+		$('#textColorR, #textColorG, #textColorB').on('input change blur', function() {ldelim}
+			// Get values and constrain to 0-255 range
+			var r = Math.max(0, Math.min(255, parseInt($('#textColorR').val()) || 0));
+			var g = Math.max(0, Math.min(255, parseInt($('#textColorG').val()) || 0));
+			var b = Math.max(0, Math.min(255, parseInt($('#textColorB').val()) || 0));
+
+			// Update the input values if they were out of range
+			$('#textColorR').val(r);
+			$('#textColorG').val(g);
+			$('#textColorB').val(b);
+
+			// Update color picker and preview
 			$('#colorPicker').val(rgbToHex(r, g, b));
 			$('#colorPreview').css('background-color', rgbToHex(r, g, b));
-		{rdelim});
-
-		// Ensure RGB values are updated from color picker before form submit
-		$('#certificateSettingsForm').on('submit', function() {ldelim}
-			var colorPickerVal = $('#colorPicker').val();
-			if (colorPickerVal) {ldelim}
-				var rgb = hexToRgb(colorPickerVal);
-				if (rgb) {ldelim}
-					$('#textColorR').val(rgb.r);
-					$('#textColorG').val(rgb.g);
-					$('#textColorB').val(rgb.b);
-				{rdelim}
-			{rdelim}
 		{rdelim});
 	{rdelim});
 </script>
@@ -94,7 +115,7 @@
 			{fbvElement type="textarea" id="bodyTemplate" value=$bodyTemplate height=$fbvStyles.height.TALL rich=false}
 			<p class="description">
 				{translate key="plugins.generic.reviewerCertificate.settings.defaultTemplate"}:
-				<a href="#" onclick="$('#bodyTemplate').val($('#defaultBodyTemplate').val()); return false;">
+				<a href="#" onclick="$('[id^=bodyTemplate]').not('#defaultBodyTemplate').val($('#defaultBodyTemplate').val()); return false;">
 					{translate key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate"}
 				</a>
 			</p>
@@ -244,37 +265,71 @@ $(document).ready(function() {ldelim}
 		$('#batchProgress').show();
 		$('#generateBatchBtn').prop('disabled', true);
 
+		// Get CSRF token from the form
+		var csrfToken = $('#certificateSettingsForm input[name="csrfToken"]').val();
+
+		// Debug logging
+		if (console && console.log) {ldelim}
+			console.log('Batch certificate generation started');
+			console.log('Selected reviewers:', selectedReviewers);
+			console.log('CSRF token present:', !!csrfToken);
+		{rdelim}
+
 		$.ajax({ldelim}
 			url: '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="generateBatch" escape=false}',
 			type: 'POST',
 			data: {ldelim}
 				reviewerIds: selectedReviewers,
-				csrfToken: '{$smarty.session.csrfToken}'
+				csrfToken: csrfToken
 			{rdelim},
 			success: function(response) {ldelim}
 				$('#batchProgress').hide();
 				$('#generateBatchBtn').prop('disabled', false);
 
-				var data = JSON.parse(response);
-				if (data.status) {ldelim}
-					$('#batchResult').html(
-						'<div style="padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">' +
-						'<strong>Success!</strong> ' + data.content.generated + ' {translate key="plugins.generic.reviewerCertificate.batch.certificatesGenerated" escape="js"}' +
-						'</div>'
-					).show();
-					// Reload page after 2 seconds to refresh statistics
-					setTimeout(function() {ldelim} location.reload(); {rdelim}, 2000);
-				{rdelim} else {ldelim}
+				// Debug logging
+				if (console && console.log) {ldelim}
+					console.log('Batch generation response:', response);
+				{rdelim}
+
+				try {ldelim}
+					var data = typeof response === 'string' ? JSON.parse(response) : response;
+					if (data.status) {ldelim}
+						var generatedCount = data.content && data.content.generated ? data.content.generated : 0;
+						$('#batchResult').html(
+							'<div style="padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">' +
+							'<strong>Success!</strong> ' + generatedCount + ' {translate key="plugins.generic.reviewerCertificate.batch.certificatesGenerated" escape="js"}' +
+							'</div>'
+						).show();
+						// Reload page after 2 seconds to refresh statistics
+						setTimeout(function() {ldelim} location.reload(); {rdelim}, 2000);
+					{rdelim} else {ldelim}
+						$('#batchResult').html(
+							'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
+							'<strong>Error:</strong> ' + (data.content || 'Failed to generate certificates') +
+							'</div>'
+						).show();
+					{rdelim}
+				{rdelim} catch (e) {ldelim}
+					if (console && console.error) {ldelim}
+						console.error('Failed to parse response:', e);
+					{rdelim}
 					$('#batchResult').html(
 						'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
-						'<strong>Error:</strong> ' + (data.content || 'Failed to generate certificates') +
+						'<strong>Error:</strong> Invalid response format' +
 						'</div>'
 					).show();
 				{rdelim}
 			{rdelim},
-			error: function() {ldelim}
+			error: function(xhr, status, error) {ldelim}
 				$('#batchProgress').hide();
 				$('#generateBatchBtn').prop('disabled', false);
+
+				// Debug logging
+				if (console && console.error) {ldelim}
+					console.error('Batch generation failed:', status, error);
+					console.error('Response:', xhr.responseText);
+				{rdelim}
+
 				$('#batchResult').html(
 					'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
 					'<strong>Error:</strong> {translate key="plugins.generic.reviewerCertificate.batch.error" escape="js"}' +
