@@ -170,9 +170,10 @@ class CertificateHandler extends Handler {
         }
 
         // Display verification page
-        // Use direct template path since plugin reference may not be set at this point
-        $templatePath = 'plugins/generic/reviewerCertificate/templates/verify.tpl';
-        return $templateMgr->display($templatePath);
+        // Use plugin-specific template path format for OJS
+        // The template file is in plugins/generic/reviewerCertificate/templates/verify.tpl
+        $pluginPath = Core::getBaseDir() . '/plugins/generic/reviewerCertificate/templates/verify.tpl';
+        return $templateMgr->display($pluginPath);
     }
 
     /**
