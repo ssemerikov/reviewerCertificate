@@ -261,23 +261,26 @@ class CertificateGenerator {
      * @param $pdf TCPDF
      */
     private function addQRCode($pdf) {
-        // Get request object
+        // Build verification URL manually to avoid component router context issues
         $request = Application::get()->getRequest();
+        $baseUrl = $request->getBaseUrl();
+        $contextPath = $this->context ? $this->context->getPath() : 'index';
 
-        // Determine verification URL
+        // Determine verification code
         if ($this->previewMode) {
-            // Build URL manually for preview mode to avoid router context issues
-            $baseUrl = $request->getBaseUrl();
-            $contextPath = $this->context ? $this->context->getPath() : 'index';
-            $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/PREVIEW12345';
+            $code = 'PREVIEW12345';
         } else {
             if (!$this->certificate) {
                 return;
             }
-            $baseUrl = $request->getBaseUrl();
-            $contextPath = $this->context ? $this->context->getPath() : 'index';
-            $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/' . $this->certificate->getCertificateCode();
+            $code = $this->certificate->getCertificateCode();
         }
+
+        // Build full verification URL manually
+        // Format: baseUrl/contextPath/certificate/verify/CODE
+        $verificationUrl = $baseUrl . '/' . $contextPath . '/certificate/verify/' . $code;
+
+        error_log('ReviewerCertificate: QR code URL: ' . $verificationUrl);
 
         // Position QR code in bottom right corner
         $pdf->write2DBarcode(

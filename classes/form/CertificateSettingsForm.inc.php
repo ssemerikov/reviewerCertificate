@@ -69,6 +69,8 @@ class CertificateSettingsForm extends Form {
      * @copydoc Form::readInputData()
      */
     public function readInputData() {
+        error_log('ReviewerCertificate: readInputData called');
+
         $this->readUserVars(array(
             'headerText',
             'bodyTemplate',
@@ -84,13 +86,23 @@ class CertificateSettingsForm extends Form {
 
         // Preserve existing background image if no new upload
         $existingBackgroundImage = $this->plugin->getSetting($this->contextId, 'backgroundImage');
+        error_log('ReviewerCertificate: Existing background image: ' . ($existingBackgroundImage ? $existingBackgroundImage : 'none'));
+
         if ($existingBackgroundImage) {
             $this->setData('backgroundImage', $existingBackgroundImage);
         }
 
         // Handle file upload for background image (will override existing if new file uploaded)
+        error_log('ReviewerCertificate: Checking for file upload. isset: ' . (isset($_FILES['backgroundImage']) ? 'yes' : 'no'));
+        if (isset($_FILES['backgroundImage'])) {
+            error_log('ReviewerCertificate: File error code: ' . $_FILES['backgroundImage']['error']);
+        }
+
         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
+            error_log('ReviewerCertificate: File upload detected, calling handleBackgroundImageUpload');
             $this->handleBackgroundImageUpload();
+        } else if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] != UPLOAD_ERR_NO_FILE) {
+            error_log('ReviewerCertificate: File upload error: ' . $_FILES['backgroundImage']['error']);
         }
     }
 
@@ -101,19 +113,33 @@ class CertificateSettingsForm extends Form {
         $request = Application::get()->getRequest();
         $context = $request->getContext();
 
+        error_log('ReviewerCertificate: handleBackgroundImageUpload called');
+        error_log('ReviewerCertificate: FILES array: ' . print_r($_FILES, true));
+
         // Validate file type
-        $allowedTypes = array('image/jpeg', 'image/png', 'image/jpg');
+        $allowedTypes = array('image/jpeg', 'image/png', 'image/jpg', 'image/gif');
         $fileType = $_FILES['backgroundImage']['type'];
 
         if (!in_array($fileType, $allowedTypes)) {
+            error_log('ReviewerCertificate: Invalid file type: ' . $fileType);
             $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.invalidImageType'));
+            return;
+        }
+
+        // Validate file size (max 5MB)
+        if ($_FILES['backgroundImage']['size'] > 5 * 1024 * 1024) {
+            error_log('ReviewerCertificate: File too large: ' . $_FILES['backgroundImage']['size']);
+            $this->addError('backgroundImage', 'File size must be less than 5MB');
             return;
         }
 
         // Create upload directory if it doesn't exist
         $uploadDir = Core::getBaseDir() . '/files/journals/' . $context->getId() . '/reviewerCertificate';
+        error_log('ReviewerCertificate: Upload directory: ' . $uploadDir);
+
         if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+            $result = mkdir($uploadDir, 0755, true);
+            error_log('ReviewerCertificate: Directory created: ' . ($result ? 'yes' : 'no'));
         }
 
         // Generate unique filename
@@ -121,10 +147,14 @@ class CertificateSettingsForm extends Form {
         $filename = 'background_' . time() . '.' . $extension;
         $targetPath = $uploadDir . '/' . $filename;
 
+        error_log('ReviewerCertificate: Target path: ' . $targetPath);
+
         // Move uploaded file
         if (move_uploaded_file($_FILES['backgroundImage']['tmp_name'], $targetPath)) {
+            error_log('ReviewerCertificate: File uploaded successfully to: ' . $targetPath);
             $this->setData('backgroundImage', $targetPath);
         } else {
+            error_log('ReviewerCertificate: File upload failed. Temp file: ' . $_FILES['backgroundImage']['tmp_name']);
             $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.uploadFailed'));
         }
     }

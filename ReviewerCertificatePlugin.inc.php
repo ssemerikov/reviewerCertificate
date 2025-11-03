@@ -253,21 +253,35 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $templateMgr = $params[0];
         $template = $params[1];
 
+        error_log('ReviewerCertificate: addCertificateButton called for template: ' . $template);
+
         // Check if this is the reviewer dashboard - support multiple template patterns for OJS 3.4
         $reviewerTemplates = array(
             'reviewer/review/reviewCompleted.tpl',
             'reviewer/review/step3.tpl',
-            'reviewer/review/step4.tpl',  // Additional pattern for some OJS versions
+            'reviewer/review/step4.tpl',
+            'reviewer/review/reviewStepHeader.tpl',  // Template used during review process
         );
 
         if (!in_array($template, $reviewerTemplates)) {
             return false;
         }
 
+        error_log('ReviewerCertificate: Template matched reviewer dashboard (' . $template . ')');
+
         $reviewAssignment = $templateMgr->getTemplateVars('reviewAssignment');
 
         // Ensure review exists and is completed
-        if (!$reviewAssignment || !$reviewAssignment->getDateCompleted()) {
+        if (!$reviewAssignment) {
+            error_log('ReviewerCertificate: No review assignment found in template');
+            return false;
+        }
+
+        error_log('ReviewerCertificate: Review ID: ' . $reviewAssignment->getId());
+        error_log('ReviewerCertificate: Date completed: ' . ($reviewAssignment->getDateCompleted() ? $reviewAssignment->getDateCompleted() : 'not completed'));
+
+        if (!$reviewAssignment->getDateCompleted()) {
+            error_log('ReviewerCertificate: Review not completed yet');
             return false;
         }
 
@@ -275,10 +289,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         $certificate = $certificateDao->getByReviewId($reviewAssignment->getId());
 
+        error_log('ReviewerCertificate: Certificate exists: ' . ($certificate ? 'yes' : 'no'));
+
         // Only show button if certificate exists or reviewer is eligible
         $isEligible = $this->isEligibleForCertificate($reviewAssignment);
 
+        error_log('ReviewerCertificate: Reviewer eligible: ' . ($isEligible ? 'yes' : 'no'));
+
         if ($certificate || $isEligible) {
+            error_log('ReviewerCertificate: Adding certificate button to page');
+
             // Load CSS and JS assets
             $this->addScript($request);
 
@@ -293,6 +313,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             // Wrap in a div for easier styling and debugging
             $output .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
+
+            error_log('ReviewerCertificate: Certificate button added successfully');
+        } else {
+            error_log('ReviewerCertificate: Button not added - certificate does not exist and reviewer not eligible');
         }
 
         return false;

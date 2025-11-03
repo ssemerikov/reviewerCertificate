@@ -13,8 +13,10 @@
 
 import('classes.handler.Handler');
 import('lib.pkp.classes.core.JSONMessage');
+import('lib.pkp.classes.security.Role');
 
 use APP\facades\Repo;
+use PKP\security\Role;
 
 class CertificateHandler extends Handler {
 
@@ -27,11 +29,11 @@ class CertificateHandler extends Handler {
     public function __construct() {
         parent::__construct();
         $this->addRoleAssignment(
-            array(ROLE_ID_REVIEWER),
+            array(Role::ROLE_ID_REVIEWER),
             array('download', 'preview')
         );
         $this->addRoleAssignment(
-            array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
+            array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
             array('manage', 'generateBatch')
         );
         // Make verify publicly accessible (no role restriction)
