@@ -125,8 +125,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         // Check if this was a file upload (regular POST instead of AJAX)
                         // If file was uploaded, redirect back to website settings plugins page instead of returning JSON
                         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
-                            // File was uploaded - redirect back to Website Settings > Plugins tab
-                            $request->redirect(null, 'management', 'settings', 'website', 'plugins');
+                            // File was uploaded - redirect back to Website Settings
+                            // Note: We can't control which tab opens - that's handled by JavaScript
+                            $request->redirect(null, 'management', 'settings', 'website');
                         }
 
                         return new JSONMessage(true);
@@ -230,9 +231,17 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setDownloadCount(0);
 
                                 error_log("ReviewerCertificate: Inserting certificate into database");
-                                $certificateDao->insertObject($certificate);
-                                $generated++;
-                                error_log("ReviewerCertificate: Certificate created successfully, total generated: $generated");
+                                try {
+                                    $insertResult = $certificateDao->insertObject($certificate);
+                                    error_log("ReviewerCertificate: insertObject() returned: " . var_export($insertResult, true));
+                                    $generated++;
+                                    error_log("ReviewerCertificate: Certificate created successfully, total generated: $generated");
+                                } catch (Throwable $insertError) {
+                                    error_log("ReviewerCertificate: insertObject() error: " . $insertError->getMessage());
+                                    error_log("ReviewerCertificate: insertObject() error type: " . get_class($insertError));
+                                    error_log("ReviewerCertificate: insertObject() stack trace: " . $insertError->getTraceAsString());
+                                    // Continue with next certificate even if this one fails
+                                }
                             }
                             error_log("ReviewerCertificate: Processed $rowCount reviews for reviewer $reviewerId");
                         } else {
@@ -247,9 +256,11 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     $response->setContent(array('generated' => $generated));
                     return $response;
 
-                } catch (Exception $e) {
+                } catch (Throwable $e) {
+                    // Catch both Exception and Error objects (PHP 7+)
                     error_log('ReviewerCertificate batch generation error: ' . $e->getMessage());
                     error_log('ReviewerCertificate batch generation stack trace: ' . $e->getTraceAsString());
+                    error_log('ReviewerCertificate batch generation error type: ' . get_class($e));
                     return new JSONMessage(false, 'Error generating certificates: ' . $e->getMessage());
                 }
 
@@ -290,10 +301,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             define('HANDLER_CLASS', 'CertificateHandler');
 
             // Get the handler instance and set the plugin reference
-            $page = $params[2];
-            if (is_object($page)) {
-                error_log('ReviewerCertificate: Setting plugin reference on handler');
-                $page->setPlugin($this);
+            $handler = $params[2];
+            error_log('ReviewerCertificate: Handler object type: ' . gettype($handler) . ', is_object: ' . (is_object($handler) ? 'yes' : 'no'));
+            if (is_object($handler)) {
+                error_log('ReviewerCertificate: Handler class: ' . get_class($handler));
+                if (method_exists($handler, 'setPlugin')) {
+                    $handler->setPlugin($this);
+                    error_log('ReviewerCertificate: Plugin reference set on handler successfully');
+                } else {
+                    error_log('ReviewerCertificate: WARNING - Handler does not have setPlugin() method!');
+                }
+            } else {
+                error_log('ReviewerCertificate: WARNING - params[2] is not an object, cannot set plugin reference');
             }
 
             return true;
@@ -311,6 +330,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $template = $params[1];
 
         error_log('ReviewerCertificate: addCertificateButton called for template: ' . $template);
+
+        // Exclude our own verify template to prevent interference with Smarty path resolution
+        if (strpos($template, 'verify.tpl') !== false) {
+            error_log('ReviewerCertificate: Skipping verify.tpl to prevent template path interference');
+            return false;
+        }
 
         // Check if this is the reviewer dashboard - support multiple template patterns for OJS 3.4
         $reviewerTemplates = array(
@@ -433,11 +458,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             // Include the certificate button template
             $output =& $params[2];
+            error_log('ReviewerCertificate: Output param type: ' . gettype($output) . ', length before: ' . (is_string($output) ? strlen($output) : 'N/A'));
+
             $additionalContent = $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
+            error_log('ReviewerCertificate: Additional content length: ' . strlen($additionalContent));
+            error_log('ReviewerCertificate: Additional content preview: ' . substr($additionalContent, 0, 200));
 
             // Wrap in a div for easier styling and debugging
             $output .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
 
+            error_log('ReviewerCertificate: Output length after: ' . (is_string($output) ? strlen($output) : 'N/A'));
             error_log('ReviewerCertificate: Certificate button added successfully');
         } else {
             error_log('ReviewerCertificate: Button not added - certificate does not exist and reviewer not eligible');
@@ -475,21 +505,19 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $minimumReviews = 1;
         }
 
-        // Count completed reviews for this reviewer using direct SQL query (OJS 3.4 compatible)
-        $certificateDao = DAORegistry::getDAO('CertificateDAO');
-        $result = $certificateDao->retrieve(
-            'SELECT COUNT(*) as count FROM review_assignments ra
-             INNER JOIN submissions s ON ra.submission_id = s.submission_id
-             WHERE ra.reviewer_id = ?
-             AND s.context_id = ?
-             AND ra.date_completed IS NOT NULL',
-            array((int) $reviewAssignment->getReviewerId(), (int) $context->getId())
+        // Count completed reviews for this reviewer
+        // In OJS 3.4, getCompletedReviewCountByReviewerId() doesn't exist
+        // Use custom SQL query instead
+        $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
+        $result = $reviewAssignmentDao->retrieve(
+            'SELECT COUNT(*) AS count FROM review_assignments WHERE reviewer_id = ? AND date_completed IS NOT NULL',
+            array((int) $reviewAssignment->getReviewerId())
         );
 
         $row = $result->current();
         $completedReviews = $row ? (int) $row->count : 0;
 
-        error_log('ReviewerCertificate: Reviewer ' . $reviewAssignment->getReviewerId() . ' has ' . $completedReviews . ' completed reviews, minimum required: ' . $minimumReviews);
+        error_log("ReviewerCertificate: Reviewer {$reviewAssignment->getReviewerId()} has {$completedReviews} completed reviews (minimum required: {$minimumReviews})");
 
         return $completedReviews >= $minimumReviews;
     }

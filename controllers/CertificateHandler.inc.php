@@ -179,10 +179,28 @@ class CertificateHandler extends Handler {
         }
 
         // Display verification page
-        // Use plugin-specific template path format for OJS
-        // The template file is in plugins/generic/reviewerCertificate/templates/verify.tpl
-        $pluginPath = Core::getBaseDir() . '/plugins/generic/reviewerCertificate/templates/verify.tpl';
-        return $templateMgr->display($pluginPath);
+        // Use the plugin's template resource to avoid Smarty path resolution issues
+        if ($this->plugin) {
+            $templateResource = $this->plugin->getTemplateResource('verify.tpl');
+            error_log('ReviewerCertificate: Using template resource: ' . $templateResource);
+            return $templateMgr->display($templateResource);
+        } else {
+            // Fallback: construct absolute path
+            // Plugin reference wasn't set - use absolute path as last resort
+            error_log('ReviewerCertificate: Plugin not set, using absolute path fallback');
+            $pluginPath = dirname(__FILE__) . '/../templates/verify.tpl';
+            error_log('ReviewerCertificate: Absolute template path: ' . $pluginPath);
+
+            // Check if file exists
+            if (file_exists($pluginPath)) {
+                error_log('ReviewerCertificate: Template file exists, displaying with file: prefix');
+                return $templateMgr->display('file:' . $pluginPath);
+            } else {
+                error_log('ReviewerCertificate: ERROR - Template file not found at: ' . $pluginPath);
+                echo '<p>Error: Certificate verification template not found.</p>';
+                return;
+            }
+        }
     }
 
     /**
