@@ -292,10 +292,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             define('HANDLER_CLASS', 'CertificateHandler');
 
             // Get the handler instance and set the plugin reference
-            $page = $params[2];
-            if (is_object($page)) {
-                error_log('ReviewerCertificate: Setting plugin reference on handler');
-                $page->setPlugin($this);
+            $handler = $params[2];
+            error_log('ReviewerCertificate: Handler object type: ' . gettype($handler) . ', is_object: ' . (is_object($handler) ? 'yes' : 'no'));
+            if (is_object($handler)) {
+                error_log('ReviewerCertificate: Handler class: ' . get_class($handler));
+                if (method_exists($handler, 'setPlugin')) {
+                    $handler->setPlugin($this);
+                    error_log('ReviewerCertificate: Plugin reference set on handler successfully');
+                } else {
+                    error_log('ReviewerCertificate: WARNING - Handler does not have setPlugin() method!');
+                }
+            } else {
+                error_log('ReviewerCertificate: WARNING - params[2] is not an object, cannot set plugin reference');
             }
 
             return true;
@@ -441,11 +449,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             // Include the certificate button template
             $output =& $params[2];
+            error_log('ReviewerCertificate: Output param type: ' . gettype($output) . ', length before: ' . (is_string($output) ? strlen($output) : 'N/A'));
+
             $additionalContent = $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
+            error_log('ReviewerCertificate: Additional content length: ' . strlen($additionalContent));
+            error_log('ReviewerCertificate: Additional content preview: ' . substr($additionalContent, 0, 200));
 
             // Wrap in a div for easier styling and debugging
             $output .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
 
+            error_log('ReviewerCertificate: Output length after: ' . (is_string($output) ? strlen($output) : 'N/A'));
             error_log('ReviewerCertificate: Certificate button added successfully');
         } else {
             error_log('ReviewerCertificate: Button not added - certificate does not exist and reviewer not eligible');

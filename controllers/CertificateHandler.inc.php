@@ -185,10 +185,21 @@ class CertificateHandler extends Handler {
             error_log('ReviewerCertificate: Using template resource: ' . $templateResource);
             return $templateMgr->display($templateResource);
         } else {
-            // Fallback: use direct template name
-            // Smarty will search in plugin template directories
-            error_log('ReviewerCertificate: Plugin not set, using fallback template path');
-            return $templateMgr->display('reviewerCertificate:verify.tpl');
+            // Fallback: construct absolute path
+            // Plugin reference wasn't set - use absolute path as last resort
+            error_log('ReviewerCertificate: Plugin not set, using absolute path fallback');
+            $pluginPath = dirname(__FILE__) . '/../templates/verify.tpl';
+            error_log('ReviewerCertificate: Absolute template path: ' . $pluginPath);
+
+            // Check if file exists
+            if (file_exists($pluginPath)) {
+                error_log('ReviewerCertificate: Template file exists, displaying with file: prefix');
+                return $templateMgr->display('file:' . $pluginPath);
+            } else {
+                error_log('ReviewerCertificate: ERROR - Template file not found at: ' . $pluginPath);
+                echo '<p>Error: Certificate verification template not found.</p>';
+                return;
+            }
         }
     }
 
