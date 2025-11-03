@@ -292,7 +292,16 @@
 
 <script>
 $(document).ready(function() {ldelim}
+	// Debug: Log that script is loaded
+	if (console && console.log) {ldelim}
+		console.log('ReviewerCertificate: Batch generation script loaded');
+	{rdelim}
+
 	$('#generateBatchBtn').on('click', function() {ldelim}
+		if (console && console.log) {ldelim}
+			console.log('ReviewerCertificate: Generate batch button clicked');
+		{rdelim}
+
 		var selectedReviewers = $('#batchReviewers').val();
 		if (!selectedReviewers || selectedReviewers.length === 0) {ldelim}
 			alert('{translate key="plugins.generic.reviewerCertificate.batch.noSelection" escape="js"}');
@@ -303,18 +312,22 @@ $(document).ready(function() {ldelim}
 		$('#batchProgress').show();
 		$('#generateBatchBtn').prop('disabled', true);
 
-		// Get CSRF token from the form
+		// Get CSRF token from the main form
 		var csrfToken = $('#certificateSettingsForm input[name="csrfToken"]').val();
+
+		// Build the URL
+		var ajaxUrl = '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="generateBatch" escape=false}';
 
 		// Debug logging
 		if (console && console.log) {ldelim}
-			console.log('Batch certificate generation started');
-			console.log('Selected reviewers:', selectedReviewers);
-			console.log('CSRF token present:', !!csrfToken);
+			console.log('ReviewerCertificate: Batch certificate generation started');
+			console.log('ReviewerCertificate: Selected reviewers:', selectedReviewers);
+			console.log('ReviewerCertificate: CSRF token present:', !!csrfToken);
+			console.log('ReviewerCertificate: AJAX URL:', ajaxUrl);
 		{rdelim}
 
 		$.ajax({ldelim}
-			url: '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="generateBatch" escape=false}',
+			url: ajaxUrl,
 			type: 'POST',
 			data: {ldelim}
 				reviewerIds: selectedReviewers,

@@ -24,6 +24,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     public function register($category, $path, $mainContextId = null) {
         $success = parent::register($category, $path, $mainContextId);
 
+        error_log('ReviewerCertificate: Plugin register called - success=' . ($success ? 'true' : 'false') . ', enabled=' . ($this->getEnabled($mainContextId) ? 'true' : 'false'));
+
         if ($success && $this->getEnabled($mainContextId)) {
             // Import and register DAOs
             $this->import('classes.CertificateDAO');
@@ -34,6 +36,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
             HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
             HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+
+            error_log('ReviewerCertificate: Hooks registered - LoadHandler, TemplateManager::display, reviewassignmentdao::_updateobject');
         }
 
         return $success;
@@ -242,14 +246,30 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function setupHandler($hookName, $params) {
         $page = $params[0];
-        $op = $params[1];
+        $op = isset($params[1]) ? $params[1] : null;
 
         error_log('ReviewerCertificate: setupHandler called with page=' . $page . ', op=' . ($op ? $op : 'null'));
 
         if ($page == 'certificate') {
             error_log('ReviewerCertificate: Setting up CertificateHandler');
             $this->import('controllers.CertificateHandler');
+
+            // Check if handler class file was loaded
+            if (!class_exists('CertificateHandler')) {
+                error_log('ReviewerCertificate: ERROR - CertificateHandler class not found after import!');
+                return false;
+            }
+
+            error_log('ReviewerCertificate: CertificateHandler class loaded successfully');
             define('HANDLER_CLASS', 'CertificateHandler');
+
+            // Get the handler instance and set the plugin reference
+            $page = $params[2];
+            if (is_object($page)) {
+                error_log('ReviewerCertificate: Setting plugin reference on handler');
+                $page->setPlugin($this);
+            }
+
             return true;
         }
 
@@ -280,24 +300,64 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
         error_log('ReviewerCertificate: Template matched reviewer dashboard (' . $template . ')');
 
-        // Try multiple variable names used in different OJS versions/templates
-        $reviewAssignment = $templateMgr->getTemplateVars('reviewAssignment');
-        if (!$reviewAssignment) {
-            $reviewAssignment = $templateMgr->getTemplateVars('submission'); // Try alternate variable
+        // Get template variable - might be ReviewAssignment or Submission object
+        $templateVar = $templateMgr->getTemplateVars('reviewAssignment');
+        if (!$templateVar) {
+            $templateVar = $templateMgr->getTemplateVars('submission');
         }
 
-        // Debug: Log all available template variables
-        if (!$reviewAssignment) {
+        // Debug: Log all available template variables if nothing found
+        if (!$templateVar) {
             $allVars = $templateMgr->getTemplateVars();
             error_log('ReviewerCertificate: Available template vars: ' . implode(', ', array_keys($allVars)));
-        }
-
-        // Ensure review exists and is completed
-        if (!$reviewAssignment) {
-            error_log('ReviewerCertificate: No review assignment found in template');
+            error_log('ReviewerCertificate: No review assignment or submission found in template');
             return false;
         }
 
+        // Check the type of object we received
+        $reviewAssignment = null;
+
+        if ($templateVar instanceof \APP\submission\Submission) {
+            // Template variable is a Submission - need to fetch ReviewAssignment from database
+            error_log('ReviewerCertificate: Template variable is Submission (ID: ' . $templateVar->getId() . ')');
+
+            // Get current user
+            $user = $request->getUser();
+            if (!$user) {
+                error_log('ReviewerCertificate: No user logged in');
+                return false;
+            }
+
+            // Fetch review assignments for this submission
+            $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
+            $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($templateVar->getId());
+
+            // Find the review assignment for the current user
+            if ($reviewAssignments) {
+                while ($ra = $reviewAssignments->next()) {
+                    if ($ra->getReviewerId() == $user->getId()) {
+                        $reviewAssignment = $ra;
+                        error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
+                        break;
+                    }
+                }
+            }
+
+            if (!$reviewAssignment) {
+                error_log('ReviewerCertificate: No review assignment found for current user on submission ' . $templateVar->getId());
+                return false;
+            }
+        } elseif (method_exists($templateVar, 'getDateCompleted') && method_exists($templateVar, 'getReviewerId')) {
+            // Template variable is already a ReviewAssignment
+            $reviewAssignment = $templateVar;
+            error_log('ReviewerCertificate: Template variable is ReviewAssignment (ID: ' . $reviewAssignment->getId() . ')');
+        } else {
+            // Unknown object type
+            error_log('ReviewerCertificate: Template variable is neither Submission nor ReviewAssignment (type: ' . get_class($templateVar) . ')');
+            return false;
+        }
+
+        // Now we have a valid ReviewAssignment object - check if review is completed
         error_log('ReviewerCertificate: Review ID: ' . $reviewAssignment->getId());
         error_log('ReviewerCertificate: Date completed: ' . ($reviewAssignment->getDateCompleted() ? $reviewAssignment->getDateCompleted() : 'not completed'));
 
