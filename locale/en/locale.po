@@ -32,6 +32,9 @@ msgstr "Your Certificate is Ready!"
 msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
 msgstr "Thank you for completing this review. You can now download your certificate of recognition."
 
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Your certificate will be generated when you complete this review. Thank you for your valuable contribution to our journal."
+
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Download Certificate"
 

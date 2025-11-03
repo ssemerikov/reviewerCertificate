@@ -178,7 +178,9 @@ class CertificateHandler extends Handler {
         }
 
         // Display verification page
-        return $templateMgr->display($this->plugin->getTemplateResource('verify.tpl'));
+        // Use direct template path since plugin reference may not be set at this point
+        $templatePath = 'plugins/generic/reviewerCertificate/templates/verify.tpl';
+        return $templateMgr->display($templatePath);
     }
 
     /**
