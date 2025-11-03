@@ -49,10 +49,15 @@
 			{rdelim} : null;
 		{rdelim}
 
+		// Use attribute selectors to handle OJS's dynamic ID suffixes
+		var $rInput = $('input[id^="textColorR"]');
+		var $gInput = $('input[id^="textColorG"]');
+		var $bInput = $('input[id^="textColorB"]');
+
 		// Set initial color picker value from RGB inputs
-		var r = parseInt($('#textColorR').val()) || 0;
-		var g = parseInt($('#textColorG').val()) || 0;
-		var b = parseInt($('#textColorB').val()) || 0;
+		var r = parseInt($rInput.val()) || 0;
+		var g = parseInt($gInput.val()) || 0;
+		var b = parseInt($bInput.val()) || 0;
 		$('#colorPicker').val(rgbToHex(r, g, b));
 		$('#colorPreview').css('background-color', rgbToHex(r, g, b));
 
@@ -61,24 +66,24 @@
 		$('#colorPicker').on('input change blur', function() {ldelim}
 			var rgb = hexToRgb($(this).val());
 			if (rgb) {ldelim}
-				$('#textColorR').val(rgb.r);
-				$('#textColorG').val(rgb.g);
-				$('#textColorB').val(rgb.b);
+				$rInput.val(rgb.r);
+				$gInput.val(rgb.g);
+				$bInput.val(rgb.b);
 				$('#colorPreview').css('background-color', $(this).val());
 			{rdelim}
 		{rdelim});
 
 		// Update color picker when RGB values change manually
-		$('#textColorR, #textColorG, #textColorB').on('input change blur', function() {ldelim}
+		$rInput.add($gInput).add($bInput).on('input change blur', function() {ldelim}
 			// Get values and constrain to 0-255 range
-			var r = Math.max(0, Math.min(255, parseInt($('#textColorR').val()) || 0));
-			var g = Math.max(0, Math.min(255, parseInt($('#textColorG').val()) || 0));
-			var b = Math.max(0, Math.min(255, parseInt($('#textColorB').val()) || 0));
+			var r = Math.max(0, Math.min(255, parseInt($rInput.val()) || 0));
+			var g = Math.max(0, Math.min(255, parseInt($gInput.val()) || 0));
+			var b = Math.max(0, Math.min(255, parseInt($bInput.val()) || 0));
 
 			// Update the input values if they were out of range
-			$('#textColorR').val(r);
-			$('#textColorG').val(g);
-			$('#textColorB').val(b);
+			$rInput.val(r);
+			$gInput.val(g);
+			$bInput.val(b);
 
 			// Update color picker and preview
 			$('#colorPicker').val(rgbToHex(r, g, b));

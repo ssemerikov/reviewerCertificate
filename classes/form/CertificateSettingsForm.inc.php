@@ -250,9 +250,9 @@ class CertificateSettingsForm extends Form {
         $this->plugin->updateSetting($this->contextId, 'minimumReviews', (int) $this->getData('minimumReviews'), 'int');
         $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
 
-        if ($this->getData('backgroundImage')) {
-            $this->plugin->updateSetting($this->contextId, 'backgroundImage', $this->getData('backgroundImage'), 'string');
-        }
+        // Always save background image setting (preserves existing or saves new upload)
+        $backgroundImage = $this->getData('backgroundImage');
+        $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage ? $backgroundImage : '', 'string');
 
         parent::execute(...$functionArgs);
     }

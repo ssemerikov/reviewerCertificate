@@ -168,39 +168,52 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $this->import('classes.Certificate');
 
                 $generated = 0;
-                foreach ($reviewerIds as $reviewerId) {
-                    // Use direct SQL query for OJS 3.4 compatibility
-                    // Note: review_id is the primary key in review_assignments table
-                    $result = $certificateDao->retrieve(
-                        'SELECT ra.review_id, ra.reviewer_id, ra.submission_id
-                         FROM review_assignments ra
-                         LEFT JOIN submissions s ON ra.submission_id = s.submission_id
-                         LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
-                         WHERE ra.reviewer_id = ?
-                               AND s.context_id = ?
-                               AND ra.date_completed IS NOT NULL
-                               AND rc.certificate_id IS NULL',
-                        array((int) $reviewerId, (int) $context->getId())
-                    );
+                $errors = array();
 
-                    foreach ($result as $row) {
-                        // Create certificate
-                        $certificate = new Certificate();
-                        $certificate->setReviewerId($row->reviewer_id);
-                        $certificate->setSubmissionId($row->submission_id);
-                        $certificate->setReviewId($row->review_id);
-                        $certificate->setContextId($context->getId());
-                        $certificate->setDateIssued(Core::getCurrentDate());
-                        // Generate code without review assignment object
-                        $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
-                        $certificate->setDownloadCount(0);
+                try {
+                    foreach ($reviewerIds as $reviewerId) {
+                        // Use direct SQL query for OJS 3.4 compatibility
+                        // Note: review_id is the primary key in review_assignments table
+                        $result = $certificateDao->retrieve(
+                            'SELECT ra.review_id, ra.reviewer_id, ra.submission_id
+                             FROM review_assignments ra
+                             LEFT JOIN submissions s ON ra.submission_id = s.submission_id
+                             LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
+                             WHERE ra.reviewer_id = ?
+                                   AND s.context_id = ?
+                                   AND ra.date_completed IS NOT NULL
+                                   AND rc.certificate_id IS NULL',
+                            array((int) $reviewerId, (int) $context->getId())
+                        );
 
-                        $certificateDao->insertObject($certificate);
-                        $generated++;
+                        if ($result) {
+                            foreach ($result as $row) {
+                                // Create certificate
+                                $certificate = new Certificate();
+                                $certificate->setReviewerId($row->reviewer_id);
+                                $certificate->setSubmissionId($row->submission_id);
+                                $certificate->setReviewId($row->review_id);
+                                $certificate->setContextId($context->getId());
+                                $certificate->setDateIssued(Core::getCurrentDate());
+                                // Generate code without review assignment object
+                                $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
+                                $certificate->setDownloadCount(0);
+
+                                $certificateDao->insertObject($certificate);
+                                $generated++;
+                            }
+                        }
                     }
-                }
 
-                return new JSONMessage(true, array('generated' => $generated));
+                    // Return response in format expected by JavaScript
+                    $response = new JSONMessage(true);
+                    $response->setContent(array('generated' => $generated));
+                    return $response;
+
+                } catch (Exception $e) {
+                    error_log('ReviewerCertificate batch generation error: ' . $e->getMessage());
+                    return new JSONMessage(false, 'Error generating certificates: ' . $e->getMessage());
+                }
 
             default:
                 return parent::manage($args, $request);
