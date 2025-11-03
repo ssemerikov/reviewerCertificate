@@ -114,6 +114,14 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     $form->readInputData();
                     if ($form->validate()) {
                         $form->execute();
+
+                        // Check if this was a file upload (regular POST instead of AJAX)
+                        // If file was uploaded, redirect back to settings instead of returning JSON
+                        if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
+                            // File was uploaded - redirect back to settings page
+                            $request->redirect(null, 'management', 'settings', null, array('path' => 'plugin', 'category' => 'generic', 'plugin' => $this->getName()));
+                        }
+
                         return new JSONMessage(true);
                     }
                 } else {
@@ -236,7 +244,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $page = $params[0];
         $op = $params[1];
 
+        error_log('ReviewerCertificate: setupHandler called with page=' . $page . ', op=' . ($op ? $op : 'null'));
+
         if ($page == 'certificate') {
+            error_log('ReviewerCertificate: Setting up CertificateHandler');
             $this->import('controllers.CertificateHandler');
             define('HANDLER_CLASS', 'CertificateHandler');
             return true;
@@ -269,7 +280,17 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
         error_log('ReviewerCertificate: Template matched reviewer dashboard (' . $template . ')');
 
+        // Try multiple variable names used in different OJS versions/templates
         $reviewAssignment = $templateMgr->getTemplateVars('reviewAssignment');
+        if (!$reviewAssignment) {
+            $reviewAssignment = $templateMgr->getTemplateVars('submission'); // Try alternate variable
+        }
+
+        // Debug: Log all available template variables
+        if (!$reviewAssignment) {
+            $allVars = $templateMgr->getTemplateVars();
+            error_log('ReviewerCertificate: Available template vars: ' . implode(', ', array_keys($allVars)));
+        }
 
         // Ensure review exists and is completed
         if (!$reviewAssignment) {
