@@ -43,6 +43,14 @@ class CertificateHandler extends Handler {
      * @copydoc PKPHandler::authorize()
      */
     public function authorize($request, &$args, $roleAssignments) {
+        // Get the requested operation
+        $op = $request->getRequestedOp();
+
+        // Make verify operation publicly accessible - no authorization required
+        if ($op == 'verify') {
+            return true;
+        }
+
         import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
         $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
 

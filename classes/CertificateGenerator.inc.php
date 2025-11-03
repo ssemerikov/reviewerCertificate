@@ -277,8 +277,8 @@ class CertificateGenerator {
         }
 
         // Build full verification URL manually
-        // Format: baseUrl/contextPath/certificate/verify/CODE
-        $verificationUrl = $baseUrl . '/' . $contextPath . '/certificate/verify/' . $code;
+        // Format: baseUrl/index.php/contextPath/certificate/verify/CODE
+        $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/' . $code;
 
         error_log('ReviewerCertificate: QR code URL: ' . $verificationUrl);
 
