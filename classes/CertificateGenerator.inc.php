@@ -261,20 +261,26 @@ class CertificateGenerator {
      * @param $pdf TCPDF
      */
     private function addQRCode($pdf) {
-        // Get request object
+        // Build verification URL manually to avoid component router context issues
         $request = Application::get()->getRequest();
+        $baseUrl = $request->getBaseUrl();
+        $contextPath = $this->context ? $this->context->getPath() : 'index';
 
-        // Determine verification URL using OJS's URL routing
+        // Determine verification code
         if ($this->previewMode) {
-            // Use request's url() method for proper URL building
-            $verificationUrl = $request->url(null, 'certificate', 'verify', 'PREVIEW12345');
+            $code = 'PREVIEW12345';
         } else {
             if (!$this->certificate) {
                 return;
             }
-            // Use request's url() method for proper URL building
-            $verificationUrl = $request->url(null, 'certificate', 'verify', $this->certificate->getCertificateCode());
+            $code = $this->certificate->getCertificateCode();
         }
+
+        // Build full verification URL manually
+        // Format: baseUrl/contextPath/certificate/verify/CODE
+        $verificationUrl = $baseUrl . '/' . $contextPath . '/certificate/verify/' . $code;
+
+        error_log('ReviewerCertificate: QR code URL: ' . $verificationUrl);
 
         // Position QR code in bottom right corner
         $pdf->write2DBarcode(

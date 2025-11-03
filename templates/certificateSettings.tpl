@@ -8,9 +8,13 @@
  *}
 <script>
 	$(function() {ldelim}
+		// Flag to track if file is selected
+		var fileSelected = false;
+
+		// Initially setup as AJAX form
 		$('#certificateSettingsForm').pkpHandler('$.pkp.controllers.form.AjaxFormHandler');
 
-		// Handle background image preview
+		// Handle background image preview and file selection
 		$('#backgroundImage').on('change', function(e) {ldelim}
 			var file = e.target.files[0];
 			if (file) {ldelim}
@@ -32,7 +36,36 @@
 					$(this).after('<p id="imagePreviewText" class="description" style="color: #28a745; margin-top: 5px;"></p>');
 				{rdelim}
 				$('#imagePreviewText').text('Selected: ' + fileName);
+
+				// Disable AJAX submission when file is selected
+				fileSelected = true;
+				console.log('ReviewerCertificate: File selected, will use regular form submission');
+			{rdelim} else {ldelim}
+				fileSelected = false;
+				if ($('#imagePreviewText').length) {ldelim}
+					$('#imagePreviewText').remove();
+				{rdelim}
 			{rdelim}
+		{rdelim});
+
+		// Intercept form submission BEFORE AjaxFormHandler
+		$('#certificateSettingsForm').on('submit.fileUpload', function(e) {ldelim}
+			if (fileSelected) {ldelim}
+				console.log('ReviewerCertificate: File selected - destroying AjaxFormHandler for regular submission');
+				// Stop event propagation to prevent AjaxFormHandler from handling it
+				e.stopImmediatePropagation();
+
+				// Unbind AjaxFormHandler
+				$(this).off('.pkpHandler');
+
+				// Submit form normally
+				console.log('ReviewerCertificate: Submitting form with regular POST');
+				this.submit();
+
+				// Prevent default to avoid double submission
+				return false;
+			{rdelim}
+			// For non-file submissions, let AJAX handler process it
 		{rdelim});
 
 		// Initialize color picker from RGB values

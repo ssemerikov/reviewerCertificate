@@ -259,14 +259,15 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $reviewerTemplates = array(
             'reviewer/review/reviewCompleted.tpl',
             'reviewer/review/step3.tpl',
-            'reviewer/review/step4.tpl',  // Additional pattern for some OJS versions
+            'reviewer/review/step4.tpl',
+            'reviewer/review/reviewStepHeader.tpl',  // Template used during review process
         );
 
         if (!in_array($template, $reviewerTemplates)) {
             return false;
         }
 
-        error_log('ReviewerCertificate: Template matched reviewer dashboard');
+        error_log('ReviewerCertificate: Template matched reviewer dashboard (' . $template . ')');
 
         $reviewAssignment = $templateMgr->getTemplateVars('reviewAssignment');
 
