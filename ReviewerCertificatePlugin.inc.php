@@ -107,7 +107,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * @copydoc Plugin::manage()
      */
     public function manage($args, $request) {
-        switch ($request->getUserVar('verb')) {
+        $verb = $request->getUserVar('verb');
+        error_log('ReviewerCertificate: manage() called with verb: ' . ($verb ? $verb : 'null'));
+
+        switch ($verb) {
             case 'settings':
                 $context = $request->getContext();
 
@@ -120,10 +123,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         $form->execute();
 
                         // Check if this was a file upload (regular POST instead of AJAX)
-                        // If file was uploaded, redirect back to settings instead of returning JSON
+                        // If file was uploaded, redirect back to website settings plugins page instead of returning JSON
                         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
-                            // File was uploaded - redirect back to settings page
-                            $request->redirect(null, 'management', 'settings', null, array('path' => 'plugin', 'category' => 'generic', 'plugin' => $this->getName()));
+                            // File was uploaded - redirect back to website settings plugins page
+                            $request->redirect(null, 'management', 'settings', 'website');
                         }
 
                         return new JSONMessage(true);
@@ -169,12 +172,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 exit;
 
             case 'generateBatch':
+                error_log('ReviewerCertificate: generateBatch called');
                 $context = $request->getContext();
                 $reviewerIds = $request->getUserVar('reviewerIds');
 
+                error_log('ReviewerCertificate: Reviewer IDs received: ' . print_r($reviewerIds, true));
+
                 if (!is_array($reviewerIds) || empty($reviewerIds)) {
+                    error_log('ReviewerCertificate: No reviewer IDs provided or not an array');
                     return new JSONMessage(false, __('plugins.generic.reviewerCertificate.batch.noSelection'));
                 }
+
+                error_log('ReviewerCertificate: Starting batch generation for ' . count($reviewerIds) . ' reviewers');
 
                 $certificateDao = DAORegistry::getDAO('CertificateDAO');
                 $this->import('classes.Certificate');
@@ -184,6 +193,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
                 try {
                     foreach ($reviewerIds as $reviewerId) {
+                        error_log('ReviewerCertificate: Processing reviewer ID: ' . $reviewerId);
                         // Use direct SQL query for OJS 3.4 compatibility
                         // Note: review_id is the primary key in review_assignments table
                         $result = $certificateDao->retrieve(
@@ -217,13 +227,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         }
                     }
 
+                    error_log('ReviewerCertificate: Batch generation completed - generated ' . $generated . ' certificates');
+
                     // Return response in format expected by JavaScript
                     $response = new JSONMessage(true);
                     $response->setContent(array('generated' => $generated));
                     return $response;
 
                 } catch (Exception $e) {
-                    error_log('ReviewerCertificate batch generation error: ' . $e->getMessage());
+                    error_log('ReviewerCertificate: Batch generation error: ' . $e->getMessage());
+                    error_log('ReviewerCertificate: Stack trace: ' . $e->getTraceAsString());
                     return new JSONMessage(false, 'Error generating certificates: ' . $e->getMessage());
                 }
 
@@ -333,12 +346,27 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($templateVar->getId());
 
             // Find the review assignment for the current user
+            // Handle both array and iterator results
             if ($reviewAssignments) {
-                while ($ra = $reviewAssignments->next()) {
-                    if ($ra->getReviewerId() == $user->getId()) {
-                        $reviewAssignment = $ra;
-                        error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
-                        break;
+                if (is_array($reviewAssignments)) {
+                    // It's an array - iterate directly
+                    error_log('ReviewerCertificate: Review assignments is array with ' . count($reviewAssignments) . ' items');
+                    foreach ($reviewAssignments as $ra) {
+                        if ($ra->getReviewerId() == $user->getId()) {
+                            $reviewAssignment = $ra;
+                            error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
+                            break;
+                        }
+                    }
+                } else {
+                    // It's an iterator (DAOResultFactory) - use next()
+                    error_log('ReviewerCertificate: Review assignments is iterator');
+                    while ($ra = $reviewAssignments->next()) {
+                        if ($ra->getReviewerId() == $user->getId()) {
+                            $reviewAssignment = $ra;
+                            error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
+                            break;
+                        }
                     }
                 }
             }
