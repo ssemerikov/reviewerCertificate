@@ -230,16 +230,20 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                                 $certificate->setDownloadCount(0);
 
-                                error_log("ReviewerCertificate: *** CODE_VERSION_2024110323 *** Inserting certificate into database");
+                                error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** About to insert certificate for review_id=" . $row->review_id);
+                                error_log("ReviewerCertificate: Certificate data: reviewer_id=" . $row->reviewer_id . ", submission_id=" . $row->submission_id);
+
                                 try {
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Calling insertObject() NOW");
                                     $insertResult = $certificateDao->insertObject($certificate);
-                                    error_log("ReviewerCertificate: *** NEW_CODE *** insertObject() returned: " . var_export($insertResult, true));
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** insertObject() SUCCESS! Result: " . var_export($insertResult, true));
                                     $generated++;
-                                    error_log("ReviewerCertificate: *** NEW_CODE *** Certificate created successfully, total generated: $generated");
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Certificate created, total: $generated");
                                 } catch (Throwable $insertError) {
-                                    error_log("ReviewerCertificate: *** NEW_CODE *** insertObject() error: " . $insertError->getMessage());
-                                    error_log("ReviewerCertificate: *** NEW_CODE *** insertObject() error type: " . get_class($insertError));
-                                    error_log("ReviewerCertificate: *** NEW_CODE *** insertObject() stack trace: " . $insertError->getTraceAsString());
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** insertObject() FAILED!");
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Error: " . $insertError->getMessage());
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Error type: " . get_class($insertError));
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Stack trace: " . $insertError->getTraceAsString());
                                     // Continue with next certificate even if this one fails
                                 }
                             }
