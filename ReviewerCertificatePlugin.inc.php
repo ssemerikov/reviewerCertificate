@@ -418,9 +418,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
             $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($templateVar->getId());
 
-            // Log the type for debugging
-                     (is_array($reviewAssignments) ? ' with ' . count($reviewAssignments) . ' items' : ''));
-
             // Find the review assignment for the current user
             // Handle both DAOResultFactory (object with next()) and array return types
             if ($reviewAssignments) {
