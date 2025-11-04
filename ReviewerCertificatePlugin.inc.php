@@ -213,9 +213,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
                         // Use direct SQL query for OJS 3.4 compatibility
                         // Note: review_id is the primary key in review_assignments table
-                        $queryStartTime = microtime(true);
-                        error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Executing SQL query for reviewer $reviewerId at " . date('H:i:s'));
-
                         $result = $certificateDao->retrieve(
                             'SELECT ra.review_id, ra.reviewer_id, ra.submission_id
                              FROM review_assignments ra
@@ -228,19 +225,15 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                             array((int) $reviewerId, (int) $context->getId())
                         );
 
-                        $queryDuration = round((microtime(true) - $queryStartTime) * 1000, 2);
-                        error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** SQL query completed in {$queryDuration}ms, result type: " . gettype($result));
-
                         if ($result) {
                             $rowCount = 0;
                             foreach ($result as $row) {
                                 $rowCount++;
-                                error_log("ReviewerCertificate: Creating certificate for review_id: {$row->review_id}");
 
                                 // Double-check if certificate already exists (defensive programming)
                                 $existingCert = $certificateDao->getByReviewId($row->review_id);
                                 if ($existingCert) {
-                                    error_log("ReviewerCertificate: *** SKIPPED *** Certificate already exists for review_id={$row->review_id} (ID={$existingCert->getCertificateId()})");
+                                    error_log("ReviewerCertificate: Skipped review_id={$row->review_id} - certificate already exists");
                                     continue;
                                 }
 
@@ -255,20 +248,14 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                                 $certificate->setDownloadCount(0);
 
-                                error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** About to insert certificate for review_id=" . $row->review_id);
-                                error_log("ReviewerCertificate: Certificate data: reviewer_id=" . $row->reviewer_id . ", submission_id=" . $row->submission_id . ", code=" . $certificate->getCertificateCode());
-
                                 $startTime = microtime(true);
                                 try {
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Using FRESH MYSQLI connection - completely independent from OJS");
-
-                                    // Create fresh mysqli connection using OJS config (like CLI version that works)
+                                    // Create fresh mysqli connection using OJS config
+                                    // This bypasses OJS DAO infrastructure which has performance issues in web context
                                     $dbHost = Config::getVar('database', 'host');
                                     $dbUser = Config::getVar('database', 'username');
                                     $dbPass = Config::getVar('database', 'password');
                                     $dbName = Config::getVar('database', 'name');
-
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Creating fresh mysqli connection to $dbName@$dbHost");
 
                                     $dbConn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
@@ -276,22 +263,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                         throw new Exception("Connection failed: " . $dbConn->connect_error);
                                     }
 
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Fresh connection created successfully");
-
-                                    // Use direct mysqli prepare/execute like CLI version (proven to work in 1-5ms)
+                                    // Use direct mysqli prepare/execute
                                     $insertSql = "INSERT INTO reviewer_certificates
                                                   (reviewer_id, submission_id, review_id, context_id, template_id,
                                                    date_issued, certificate_code, download_count)
                                                   VALUES (?, ?, ?, ?, NULL, ?, ?, 0)";
 
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Preparing statement...");
                                     $stmt = $dbConn->prepare($insertSql);
 
                                     if (!$stmt) {
                                         throw new Exception("Failed to prepare statement: " . $dbConn->error);
                                     }
 
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Binding parameters...");
                                     $reviewerId = (int) $certificate->getReviewerId();
                                     $submissionId = (int) $certificate->getSubmissionId();
                                     $reviewId = (int) $certificate->getReviewId();
@@ -308,15 +291,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                         $certCode
                                     );
 
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Executing INSERT NOW...");
                                     $executeResult = $stmt->execute();
 
                                     if ($executeResult) {
                                         $insertId = $dbConn->insert_id;
-                                        $duration = round((microtime(true) - $startTime) * 1000, 2);
-                                        error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** FRESH MYSQLI INSERT SUCCESS in {$duration}ms! ID: $insertId");
                                         $generated++;
-                                        error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Certificate created, total: $generated");
+                                        error_log("ReviewerCertificate: Created certificate ID $insertId for review_id={$row->review_id} (code: $certCode)");
                                     } else {
                                         throw new Exception("Execute failed: " . $stmt->error);
                                     }
@@ -325,19 +305,17 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                     $dbConn->close();
 
                                 } catch (Throwable $insertError) {
-                                    $duration = isset($startTime) ? round((microtime(true) - $startTime) * 1000, 2) : 'N/A';
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** FRESH MYSQLI INSERT FAILED after {$duration}ms!");
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Error: " . $insertError->getMessage());
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Error type: " . get_class($insertError));
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1900 *** Stack trace: " . $insertError->getTraceAsString());
+                                    error_log("ReviewerCertificate: Failed to create certificate for review_id={$row->review_id}: " . $insertError->getMessage());
 
                                     // Check if it's a lock timeout error
                                     if (strpos($insertError->getMessage(), 'Lock wait timeout') !== false) {
-                                        error_log("ReviewerCertificate: *** LOCK TIMEOUT DETECTED *** Another process may be holding a lock on reviewer_certificates table");
+                                        error_log("ReviewerCertificate: Lock timeout detected - another process may be holding a lock");
                                         $errors[] = "Lock timeout for review_id {$row->review_id} - please try again";
                                     } else if (strpos($insertError->getMessage(), 'Duplicate entry') !== false) {
-                                        error_log("ReviewerCertificate: *** DUPLICATE ENTRY *** Certificate may already exist for review_id {$row->review_id}");
+                                        error_log("ReviewerCertificate: Duplicate entry detected for review_id {$row->review_id}");
                                         $errors[] = "Certificate already exists for review_id {$row->review_id}";
+                                    } else {
+                                        $errors[] = "Failed to create certificate for review_id {$row->review_id}";
                                     }
                                     // Continue with next certificate even if this one fails
                                 }
