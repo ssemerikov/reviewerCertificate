@@ -221,13 +221,13 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
                                 // Create certificate
                                 $certificate = new Certificate();
-                                $certificate->setReviewerId($rowData['reviewer_id']);
-                                $certificate->setSubmissionId($rowData['submission_id']);
-                                $certificate->setReviewId($rowData['review_id']);
+                                $certificate->setReviewerId($row->reviewer_id);
+                                $certificate->setSubmissionId($row->submission_id);
+                                $certificate->setReviewId($row->review_id);
                                 $certificate->setContextId($context->getId());
                                 $certificate->setDateIssued(Core::getCurrentDate());
                                 // Generate code without review assignment object
-                                $certificate->setCertificateCode(strtoupper(substr(md5($rowData['review_id'] . time() . uniqid()), 0, 12)));
+                                $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                                 $certificate->setDownloadCount(0);
 
                                 error_log("ReviewerCertificate: *** CODE_VERSION_2024110323 *** Inserting certificate into database");
