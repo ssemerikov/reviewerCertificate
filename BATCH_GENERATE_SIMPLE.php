@@ -72,20 +72,33 @@ $contextId = (int) $argv[1];
 $reviewerIds = array_slice($argv, 2);
 
 echo "Database: $dbName@$dbHost\n";
+echo "User: $dbUser\n";
 echo "Journal/Context ID: $contextId\n";
 echo "Reviewer IDs: " . implode(', ', $reviewerIds) . "\n";
 echo "Total reviewers: " . count($reviewerIds) . "\n\n";
 
+// Enable error reporting
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 // Connect to database
-$conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+echo "Attempting database connection...\n";
+flush();
+
+$conn = @new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
 if ($conn->connect_error) {
     echo "ERROR: Database connection failed\n";
-    echo "Error: " . $conn->connect_error . "\n\n";
+    echo "Error (#" . $conn->connect_errno . "): " . $conn->connect_error . "\n";
+    echo "\nPlease check:\n";
+    echo "  - Database host: $dbHost\n";
+    echo "  - Database user: $dbUser\n";
+    echo "  - Database name: $dbName\n";
+    echo "  - Password is set: " . (empty($dbPass) ? "NO" : "YES") . "\n\n";
     exit(1);
 }
 
-echo "✓ Database connected\n\n";
+echo "✓ Database connected successfully\n\n";
 echo "Starting certificate generation...\n";
 echo str_repeat('-', 80) . "\n\n";
 
