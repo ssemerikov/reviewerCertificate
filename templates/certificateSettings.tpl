@@ -346,17 +346,31 @@ $(document).ready(function() {ldelim}
 					var data = typeof response === 'string' ? JSON.parse(response) : response;
 					if (data.status) {ldelim}
 						var generatedCount = data.content && data.content.generated ? data.content.generated : 0;
-						$('#batchResult').html(
-							'<div style="padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724;">' +
-							'<strong>Success!</strong> ' + generatedCount + ' {translate key="plugins.generic.reviewerCertificate.batch.certificatesGenerated" escape="js"}' +
-							'</div>'
-						).show();
-						// Reload page after 2 seconds to refresh statistics
-						setTimeout(function() {ldelim} location.reload(); {rdelim}, 2000);
+
+						// Show success message
+						if (generatedCount > 0) {ldelim}
+							$('#batchResult').html(
+								'<div style="padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724; margin-bottom: 15px;">' +
+								'<strong>✓ Success!</strong> Generated ' + generatedCount + ' certificate(s). Reviewers can now download their certificates.' +
+								'</div>'
+							).show();
+						{rdelim} else {ldelim}
+							$('#batchResult').html(
+								'<div style="padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; color: #856404; margin-bottom: 15px;">' +
+								'<strong>⚠ No certificates generated.</strong> Selected reviewers either already have certificates or don\'t have completed reviews.' +
+								'</div>'
+							).show();
+						{rdelim}
+
+						// Clear the selection
+						$('#batchReviewers').val(null).trigger('change');
+
+						// Don't reload page - let user continue working
+						// Statistics will update on next settings open
 					{rdelim} else {ldelim}
 						$('#batchResult').html(
 							'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
-							'<strong>Error:</strong> ' + (data.content || 'Failed to generate certificates') +
+							'<strong>✗ Error:</strong> ' + (data.content || 'Failed to generate certificates') +
 							'</div>'
 						).show();
 					{rdelim}

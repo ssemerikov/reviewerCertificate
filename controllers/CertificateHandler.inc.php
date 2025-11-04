@@ -67,6 +67,17 @@ class CertificateHandler extends Handler {
     }
 
     /**
+     * Get the plugin instance
+     * @return ReviewerCertificatePlugin
+     */
+    private function getPlugin() {
+        if (!$this->plugin) {
+            $this->plugin = PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
+        }
+        return $this->plugin;
+    }
+
+    /**
      * Download certificate
      * @param $args array
      * @param $request Request
@@ -179,15 +190,16 @@ class CertificateHandler extends Handler {
         }
 
         // Display verification page
-        // Use the plugin's template resource to avoid Smarty path resolution issues
-        if ($this->plugin) {
-            $templateResource = $this->plugin->getTemplateResource('verify.tpl');
+        // Get plugin instance and use its template resource
+        $plugin = $this->getPlugin();
+        if ($plugin) {
+            $templateResource = $plugin->getTemplateResource('verify.tpl');
             error_log('ReviewerCertificate: Using template resource: ' . $templateResource);
             return $templateMgr->display($templateResource);
         } else {
             // Fallback: construct absolute path
-            // Plugin reference wasn't set - use absolute path as last resort
-            error_log('ReviewerCertificate: Plugin not set, using absolute path fallback');
+            // Plugin not available - use absolute path as last resort
+            error_log('ReviewerCertificate: Plugin not available, using absolute path fallback');
             $pluginPath = dirname(__FILE__) . '/../templates/verify.tpl';
             error_log('ReviewerCertificate: Absolute template path: ' . $pluginPath);
 
@@ -211,7 +223,8 @@ class CertificateHandler extends Handler {
      */
     private function generateAndOutputPDF($reviewAssignment, $certificate, $context) {
         // Load generator
-        $this->plugin->import('classes.CertificateGenerator');
+        $plugin = $this->getPlugin();
+        $plugin->import('classes.CertificateGenerator');
         $generator = new CertificateGenerator();
 
         // Set up generator
@@ -242,7 +255,8 @@ class CertificateHandler extends Handler {
      * @param $context Context
      */
     private function generatePreviewPDF($context) {
-        $this->plugin->import('classes.CertificateGenerator');
+        $plugin = $this->getPlugin();
+        $plugin->import('classes.CertificateGenerator');
         $generator = new CertificateGenerator();
 
         // Create mock objects for preview
@@ -279,6 +293,7 @@ class CertificateHandler extends Handler {
      */
     private function getTemplateSettings($context) {
         $settings = array();
+        $plugin = $this->getPlugin();
 
         $settingNames = array(
             'backgroundImage',
@@ -295,7 +310,7 @@ class CertificateHandler extends Handler {
         );
 
         foreach ($settingNames as $name) {
-            $settings[$name] = $this->plugin->getSetting($context->getId(), $name);
+            $settings[$name] = $plugin->getSetting($context->getId(), $name);
         }
 
         return $settings;

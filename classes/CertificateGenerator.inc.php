@@ -79,9 +79,7 @@ class CertificateGenerator {
         // Load related objects
         // Use Repo facade for OJS 3.4 compatibility
         $this->reviewer = Repo::user()->get($reviewAssignment->getReviewerId());
-
-        $submissionDao = DAORegistry::getDAO('SubmissionDAO');
-        $this->submission = $submissionDao->getById($reviewAssignment->getSubmissionId());
+        $this->submission = Repo::submission()->get($reviewAssignment->getSubmissionId());
     }
 
     /**
@@ -331,9 +329,10 @@ class CertificateGenerator {
             // Use real data
             // Reviewer information
             if ($this->reviewer) {
+                // OJS 3.4 compatibility: Use localized methods or pass null for default locale
                 $variables['reviewerName'] = $this->reviewer->getFullName();
-                $variables['reviewerFirstName'] = $this->reviewer->getGivenName();
-                $variables['reviewerLastName'] = $this->reviewer->getFamilyName();
+                $variables['reviewerFirstName'] = $this->reviewer->getLocalizedGivenName();
+                $variables['reviewerLastName'] = $this->reviewer->getLocalizedFamilyName();
             }
 
             // Submission information
