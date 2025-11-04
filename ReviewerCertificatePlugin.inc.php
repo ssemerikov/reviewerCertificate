@@ -254,35 +254,41 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                                 $certificate->setDownloadCount(0);
 
-                                error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** About to insert certificate for review_id=" . $row->review_id);
+                                error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** About to insert certificate for review_id=" . $row->review_id);
                                 error_log("ReviewerCertificate: Certificate data: reviewer_id=" . $row->reviewer_id . ", submission_id=" . $row->submission_id . ", code=" . $certificate->getCertificateCode());
-
-                                // Register shutdown function to catch fatal errors
-                                register_shutdown_function(function() use ($row) {
-                                    $error = error_get_last();
-                                    if ($error && in_array($error['type'], [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR])) {
-                                        error_log("ReviewerCertificate: *** FATAL ERROR during insert for review_id={$row->review_id} ***");
-                                        error_log("ReviewerCertificate: Fatal error: " . $error['message'] . " in " . $error['file'] . " on line " . $error['line']);
-                                    }
-                                });
 
                                 $startTime = microtime(true);
                                 try {
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** Calling insertObject() NOW at " . date('H:i:s'));
-                                    @error_log(""); // Flush error log buffer
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** Using update() method for INSERT");
 
-                                    $insertResult = $certificateDao->insertObject($certificate);
+                                    // WORKAROUND: Use update() instead of retrieve() for INSERT
+                                    // retrieve() is for SELECT queries, update() is for INSERT/UPDATE/DELETE
+                                    $certificateDao->update(
+                                        'INSERT INTO reviewer_certificates
+                                            (reviewer_id, submission_id, review_id, context_id, template_id, date_issued, certificate_code, download_count)
+                                        VALUES (?, ?, ?, ?, NULL, ?, ?, 0)',
+                                        array(
+                                            (int) $certificate->getReviewerId(),
+                                            (int) $certificate->getSubmissionId(),
+                                            (int) $certificate->getReviewId(),
+                                            (int) $certificate->getContextId(),
+                                            $certificate->getDateIssued(),
+                                            $certificate->getCertificateCode()
+                                        )
+                                    );
+
+                                    $insertId = $certificateDao->getInsertId();
 
                                     $duration = round((microtime(true) - $startTime) * 1000, 2);
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** insertObject() SUCCESS in {$duration}ms! Result: " . var_export($insertResult, true));
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** Direct INSERT SUCCESS in {$duration}ms! ID: $insertId");
                                     $generated++;
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** Certificate created, total: $generated");
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** Certificate created, total: $generated");
                                 } catch (Throwable $insertError) {
                                     $duration = isset($startTime) ? round((microtime(true) - $startTime) * 1000, 2) : 'N/A';
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** insertObject() FAILED after {$duration}ms!");
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** Error: " . $insertError->getMessage());
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** Error type: " . get_class($insertError));
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_1500 *** Stack trace: " . $insertError->getTraceAsString());
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** INSERT FAILED after {$duration}ms!");
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** Error: " . $insertError->getMessage());
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** Error type: " . get_class($insertError));
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1700 *** Stack trace: " . $insertError->getTraceAsString());
 
                                     // Check if it's a lock timeout error
                                     if (strpos($insertError->getMessage(), 'Lock wait timeout') !== false) {
