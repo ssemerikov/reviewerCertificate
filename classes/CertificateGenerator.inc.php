@@ -79,9 +79,7 @@ class CertificateGenerator {
         // Load related objects
         // Use Repo facade for OJS 3.4 compatibility
         $this->reviewer = Repo::user()->get($reviewAssignment->getReviewerId());
-
-        $submissionDao = DAORegistry::getDAO('SubmissionDAO');
-        $this->submission = $submissionDao->getById($reviewAssignment->getSubmissionId());
+        $this->submission = Repo::submission()->get($reviewAssignment->getSubmissionId());
     }
 
     /**
