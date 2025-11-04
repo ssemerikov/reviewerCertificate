@@ -93,6 +93,11 @@
 	<message key="plugins.generic.reviewerCertificate.verify.button">Verify Certificate</message>
 	<message key="plugins.generic.reviewerCertificate.verify.valid">Certificate Valid</message>
 	<message key="plugins.generic.reviewerCertificate.verify.invalid">Certificate Invalid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">The certificate code you entered is not valid or does not exist in our system.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Certificate Code</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Reviewer Name</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Journal Name</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Date Issued</message>
 
 	<!-- Batch generation -->
 	<message key="plugins.generic.reviewerCertificate.batch.title">Batch Certificate Generation</message>

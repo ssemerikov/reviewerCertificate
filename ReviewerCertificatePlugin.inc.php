@@ -174,6 +174,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             case 'generateBatch':
                 error_log('ReviewerCertificate: generateBatch called');
+
+                // Increase execution time limit for batch operations to prevent timeouts
+                $oldMaxExecutionTime = ini_get('max_execution_time');
+                set_time_limit(300); // 5 minutes for batch operations
+                error_log("ReviewerCertificate: Increased max_execution_time from $oldMaxExecutionTime to 300 seconds");
+
                 $context = $request->getContext();
                 $reviewerIds = $request->getUserVar('reviewerIds');
 
@@ -193,12 +199,22 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $errors = array();
 
                 try {
+                    // Set database lock wait timeout to fail fast if there are locks
+                    // This prevents hanging for 50+ seconds on locked tables
+                    try {
+                        $certificateDao->update('SET SESSION innodb_lock_wait_timeout = 10');
+                        error_log('ReviewerCertificate: Set innodb_lock_wait_timeout to 10 seconds');
+                    } catch (Exception $e) {
+                        error_log('ReviewerCertificate: Could not set lock timeout: ' . $e->getMessage());
+                    }
                     foreach ($reviewerIds as $reviewerId) {
                         error_log("ReviewerCertificate: Processing reviewer ID: $reviewerId");
 
                         // Use direct SQL query for OJS 3.4 compatibility
                         // Note: review_id is the primary key in review_assignments table
-                        error_log("ReviewerCertificate: Executing SQL query for reviewer $reviewerId");
+                        $queryStartTime = microtime(true);
+                        error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Executing SQL query for reviewer $reviewerId at " . date('H:i:s'));
+
                         $result = $certificateDao->retrieve(
                             'SELECT ra.review_id, ra.reviewer_id, ra.submission_id
                              FROM review_assignments ra
@@ -211,7 +227,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                             array((int) $reviewerId, (int) $context->getId())
                         );
 
-                        error_log('ReviewerCertificate: SQL query executed, result type: ' . gettype($result));
+                        $queryDuration = round((microtime(true) - $queryStartTime) * 1000, 2);
+                        error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** SQL query completed in {$queryDuration}ms, result type: " . gettype($result));
 
                         if ($result) {
                             $rowCount = 0;
@@ -230,20 +247,31 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                                 $certificate->setDownloadCount(0);
 
-                                error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** About to insert certificate for review_id=" . $row->review_id);
-                                error_log("ReviewerCertificate: Certificate data: reviewer_id=" . $row->reviewer_id . ", submission_id=" . $row->submission_id);
+                                error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** About to insert certificate for review_id=" . $row->review_id);
+                                error_log("ReviewerCertificate: Certificate data: reviewer_id=" . $row->reviewer_id . ", submission_id=" . $row->submission_id . ", code=" . $certificate->getCertificateCode());
 
                                 try {
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Calling insertObject() NOW");
+                                    $startTime = microtime(true);
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Calling insertObject() NOW at " . date('H:i:s'));
+
                                     $insertResult = $certificateDao->insertObject($certificate);
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** insertObject() SUCCESS! Result: " . var_export($insertResult, true));
+
+                                    $duration = round((microtime(true) - $startTime) * 1000, 2);
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** insertObject() SUCCESS in {$duration}ms! Result: " . var_export($insertResult, true));
                                     $generated++;
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Certificate created, total: $generated");
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Certificate created, total: $generated");
                                 } catch (Throwable $insertError) {
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** insertObject() FAILED!");
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Error: " . $insertError->getMessage());
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Error type: " . get_class($insertError));
-                                    error_log("ReviewerCertificate: *** VERSION_20251104_0815 *** Stack trace: " . $insertError->getTraceAsString());
+                                    $duration = round((microtime(true) - $startTime) * 1000, 2);
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** insertObject() FAILED after {$duration}ms!");
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Error: " . $insertError->getMessage());
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Error type: " . get_class($insertError));
+                                    error_log("ReviewerCertificate: *** VERSION_20251104_1400 *** Stack trace: " . $insertError->getTraceAsString());
+
+                                    // Check if it's a lock timeout error
+                                    if (strpos($insertError->getMessage(), 'Lock wait timeout') !== false) {
+                                        error_log("ReviewerCertificate: *** LOCK TIMEOUT DETECTED *** Another process may be holding a lock on reviewer_certificates table");
+                                        $errors[] = "Lock timeout for review_id {$row->review_id} - please try again";
+                                    }
                                     // Continue with next certificate even if this one fails
                                 }
                             }
