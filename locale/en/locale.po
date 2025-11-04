@@ -194,6 +194,9 @@ msgstr "Certificate Invalid"
 msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
 msgstr "The certificate code you entered is not valid or does not exist in our system."
 
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Certificate Code"
+
 msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
 msgstr "Reviewer Name"
 

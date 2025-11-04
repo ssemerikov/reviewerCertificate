@@ -89,7 +89,9 @@ class CertificateHandler extends Handler {
 
         if (!$reviewId || !$user) {
             error_log('Certificate download failed: Missing review ID or user');
-            $request->getDispatcher()->handle404();
+            http_response_code(404);
+            fatalError('Not found');
+            return;
         }
 
         // Get review assignment
@@ -98,13 +100,17 @@ class CertificateHandler extends Handler {
 
         if (!$reviewAssignment) {
             error_log('Certificate download failed: Review assignment not found');
-            $request->getDispatcher()->handle404();
+            http_response_code(404);
+            fatalError('Review assignment not found');
+            return;
         }
 
         // Validate access - user must be the reviewer
         if ($reviewAssignment->getReviewerId() != $user->getId()) {
-            error_log('Certificate download failed: Access denied for user ' . $user->getId());
-            $request->getDispatcher()->handle403();
+            error_log('Certificate download failed: Access denied for user ' . $user->getId() . ', review belongs to reviewer ' . $reviewAssignment->getReviewerId());
+            http_response_code(403);
+            fatalError(__('plugins.generic.reviewerCertificate.error.accessDenied'));
+            return;
         }
 
         // Check if review is completed
