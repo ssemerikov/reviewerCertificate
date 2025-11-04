@@ -473,23 +473,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 // Output is NULL or not a string - use alternative injection method
                 error_log('ReviewerCertificate: Output buffer not available (type: ' . gettype($params[2]) . '), using template state');
 
-                // Register a state variable that the template can use
-                // This is a workaround for templates that don't have an output buffer yet
-                $templateMgr->register_outputfilter(function($output, $template) use ($additionalContent) {
-                    // Inject before the closing body tag if it exists
-                    if (stripos($output, '</body>') !== false) {
-                        $output = str_ireplace('</body>',
-                            '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div></body>',
-                            $output);
-                        error_log('ReviewerCertificate: Injected via output filter before </body>');
-                    } else {
-                        // No body tag, append at end
-                        $output .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
-                        error_log('ReviewerCertificate: Injected via output filter at end');
-                    }
-                    return $output;
-                });
-                error_log('ReviewerCertificate: Registered output filter for button injection');
+                // params[2] is NULL - we can't modify it
+                // Instead, just echo the HTML directly since we're in a template display hook
+                // The hook is called during template rendering, so output will be captured
+                error_log('ReviewerCertificate: Using direct echo output method');
+                echo '<div class="reviewer-certificate-wrapper" style="margin: 20px 0;">' . $additionalContent . '</div>';
+                error_log('ReviewerCertificate: Button HTML echoed directly');
             }
 
             error_log('ReviewerCertificate: Certificate button injection complete');
