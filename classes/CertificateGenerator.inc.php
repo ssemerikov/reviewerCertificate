@@ -168,8 +168,6 @@ class CertificateGenerator {
         $backgroundImage = $this->getTemplateSetting('backgroundImage');
 
         if ($backgroundImage) {
-            error_log("ReviewerCertificate: Background image path: " . $backgroundImage);
-            error_log("ReviewerCertificate: File exists: " . (file_exists($backgroundImage) ? 'yes' : 'no'));
 
             if (file_exists($backgroundImage)) {
                 // Get page dimensions
@@ -179,13 +177,11 @@ class CertificateGenerator {
                 // Add background image
                 try {
                     $pdf->Image($backgroundImage, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 300, '', false, false, 0);
-                    error_log("ReviewerCertificate: Background image added successfully");
                 } catch (Exception $e) {
                     error_log("ReviewerCertificate: Error adding background image: " . $e->getMessage());
                 }
             }
         } else {
-            error_log("ReviewerCertificate: No background image configured");
         }
     }
 
@@ -279,7 +275,6 @@ class CertificateGenerator {
         $baseUrl = $request->getBaseUrl();
         $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/' . $code;
 
-        error_log('ReviewerCertificate: QR code URL: ' . $verificationUrl);
 
         // Position QR code in bottom right corner
         $pdf->write2DBarcode(

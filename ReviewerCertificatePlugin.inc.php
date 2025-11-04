@@ -25,8 +25,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     public function register($category, $path, $mainContextId = null) {
         $success = parent::register($category, $path, $mainContextId);
 
-        error_log('ReviewerCertificate: Plugin register called - success=' . ($success ? 'true' : 'false') . ', enabled=' . ($this->getEnabled($mainContextId) ? 'true' : 'false'));
-
         if ($success && $this->getEnabled($mainContextId)) {
             // Import and register DAOs
             $this->import('classes.CertificateDAO');
@@ -37,8 +35,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
             HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
             HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-
-            error_log('ReviewerCertificate: Hooks registered - LoadHandler, TemplateManager::display, reviewassignmentdao::_updateobject');
         }
 
         return $success;
@@ -109,7 +105,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function manage($args, $request) {
         $verb = $request->getUserVar('verb');
-        error_log('ReviewerCertificate: manage() called with verb: ' . ($verb ? $verb : 'null'));
 
         switch ($verb) {
             case 'settings':
@@ -174,24 +169,15 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 exit;
 
             case 'generateBatch':
-                error_log('ReviewerCertificate: generateBatch called');
-
                 // Increase execution time limit for batch operations to prevent timeouts
-                $oldMaxExecutionTime = ini_get('max_execution_time');
                 set_time_limit(300); // 5 minutes for batch operations
-                error_log("ReviewerCertificate: Increased max_execution_time from $oldMaxExecutionTime to 300 seconds");
 
                 $context = $request->getContext();
                 $reviewerIds = $request->getUserVar('reviewerIds');
 
-                error_log('ReviewerCertificate: Reviewer IDs received: ' . print_r($reviewerIds, true));
-
                 if (!is_array($reviewerIds) || empty($reviewerIds)) {
-                    error_log('ReviewerCertificate: No reviewer IDs provided or not an array');
                     return new JSONMessage(false, __('plugins.generic.reviewerCertificate.batch.noSelection'));
                 }
-
-                error_log('ReviewerCertificate: Starting batch generation for ' . count($reviewerIds) . ' reviewers');
 
                 $certificateDao = DAORegistry::getDAO('CertificateDAO');
                 $this->import('classes.Certificate');
@@ -201,15 +187,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
                 try {
                     // Set database lock wait timeout to fail fast if there are locks
-                    // This prevents hanging for 50+ seconds on locked tables
                     try {
                         $certificateDao->update('SET SESSION innodb_lock_wait_timeout = 10');
-                        error_log('ReviewerCertificate: Set innodb_lock_wait_timeout to 10 seconds');
                     } catch (Exception $e) {
                         error_log('ReviewerCertificate: Could not set lock timeout: ' . $e->getMessage());
                     }
                     foreach ($reviewerIds as $reviewerId) {
-                        error_log("ReviewerCertificate: Processing reviewer ID: $reviewerId");
 
                         // Use direct SQL query for OJS 3.4 compatibility
                         // Note: review_id is the primary key in review_assignments table
@@ -233,7 +216,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 // Double-check if certificate already exists (defensive programming)
                                 $existingCert = $certificateDao->getByReviewId($row->review_id);
                                 if ($existingCert) {
-                                    error_log("ReviewerCertificate: Skipped review_id={$row->review_id} - certificate already exists");
                                     continue;
                                 }
 
@@ -320,9 +302,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                     // Continue with next certificate even if this one fails
                                 }
                             }
-                            error_log("ReviewerCertificate: Processed $rowCount reviews for reviewer $reviewerId");
-                        } else {
-                            error_log("ReviewerCertificate: No completed reviews found for reviewer $reviewerId");
                         }
                     }
 
@@ -360,12 +339,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function setupHandler($hookName, $params) {
         $page = $params[0];
-        $op = isset($params[1]) ? $params[1] : null;
-
-        error_log('ReviewerCertificate: setupHandler called with page=' . $page . ', op=' . ($op ? $op : 'null'));
 
         if ($page == 'certificate') {
-            error_log('ReviewerCertificate: Setting up CertificateHandler');
             $this->import('controllers.CertificateHandler');
 
             // Check if handler class file was loaded
@@ -374,22 +349,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 return false;
             }
 
-            error_log('ReviewerCertificate: CertificateHandler class loaded successfully');
             define('HANDLER_CLASS', 'CertificateHandler');
 
             // Get the handler instance and set the plugin reference
             $handler = $params[2];
-            error_log('ReviewerCertificate: Handler object type: ' . gettype($handler) . ', is_object: ' . (is_object($handler) ? 'yes' : 'no'));
-            if (is_object($handler)) {
-                error_log('ReviewerCertificate: Handler class: ' . get_class($handler));
-                if (method_exists($handler, 'setPlugin')) {
-                    $handler->setPlugin($this);
-                    error_log('ReviewerCertificate: Plugin reference set on handler successfully');
-                } else {
-                    error_log('ReviewerCertificate: WARNING - Handler does not have setPlugin() method!');
-                }
-            } else {
-                error_log('ReviewerCertificate: WARNING - params[2] is not an object, cannot set plugin reference');
+            if (is_object($handler) && method_exists($handler, 'setPlugin')) {
+                $handler->setPlugin($this);
             }
 
             return true;
@@ -406,11 +371,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $templateMgr = $params[0];
         $template = $params[1];
 
-        error_log('ReviewerCertificate: addCertificateButton called for template: ' . $template);
 
         // Exclude our own verify template to prevent interference with Smarty path resolution
         if (strpos($template, 'verify.tpl') !== false) {
-            error_log('ReviewerCertificate: Skipping verify.tpl to prevent template path interference');
             return false;
         }
 
@@ -426,7 +389,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             return false;
         }
 
-        error_log('ReviewerCertificate: Template matched reviewer dashboard (' . $template . ')');
 
         // Get template variable - might be ReviewAssignment or Submission object
         $templateVar = $templateMgr->getTemplateVars('reviewAssignment');
@@ -437,8 +399,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         // Debug: Log all available template variables if nothing found
         if (!$templateVar) {
             $allVars = $templateMgr->getTemplateVars();
-            error_log('ReviewerCertificate: Available template vars: ' . implode(', ', array_keys($allVars)));
-            error_log('ReviewerCertificate: No review assignment or submission found in template');
             return false;
         }
 
@@ -447,12 +407,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
         if ($templateVar instanceof \APP\submission\Submission) {
             // Template variable is a Submission - need to fetch ReviewAssignment from database
-            error_log('ReviewerCertificate: Template variable is Submission (ID: ' . $templateVar->getId() . ')');
 
             // Get current user
             $user = $request->getUser();
             if (!$user) {
-                error_log('ReviewerCertificate: No user logged in');
                 return false;
             }
 
@@ -461,7 +419,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($templateVar->getId());
 
             // Log the type for debugging
-            error_log('ReviewerCertificate: Review assignments is ' . gettype($reviewAssignments) .
                      (is_array($reviewAssignments) ? ' with ' . count($reviewAssignments) . ' items' : ''));
 
             // Find the review assignment for the current user
@@ -472,7 +429,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     foreach ($reviewAssignments as $ra) {
                         if ($ra->getReviewerId() == $user->getId()) {
                             $reviewAssignment = $ra;
-                            error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
                             break;
                         }
                     }
@@ -481,7 +437,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     while ($ra = $reviewAssignments->next()) {
                         if ($ra->getReviewerId() == $user->getId()) {
                             $reviewAssignment = $ra;
-                            error_log('ReviewerCertificate: Found ReviewAssignment (ID: ' . $reviewAssignment->getId() . ') for user ' . $user->getId());
                             break;
                         }
                     }
@@ -489,25 +444,19 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             }
 
             if (!$reviewAssignment) {
-                error_log('ReviewerCertificate: No review assignment found for current user on submission ' . $templateVar->getId());
                 return false;
             }
         } elseif (method_exists($templateVar, 'getDateCompleted') && method_exists($templateVar, 'getReviewerId')) {
             // Template variable is already a ReviewAssignment
             $reviewAssignment = $templateVar;
-            error_log('ReviewerCertificate: Template variable is ReviewAssignment (ID: ' . $reviewAssignment->getId() . ')');
         } else {
             // Unknown object type
-            error_log('ReviewerCertificate: Template variable is neither Submission nor ReviewAssignment (type: ' . get_class($templateVar) . ')');
             return false;
         }
 
         // Now we have a valid ReviewAssignment object - check if review is completed
-        error_log('ReviewerCertificate: Review ID: ' . $reviewAssignment->getId());
-        error_log('ReviewerCertificate: Date completed: ' . ($reviewAssignment->getDateCompleted() ? $reviewAssignment->getDateCompleted() : 'not completed'));
 
         if (!$reviewAssignment->getDateCompleted()) {
-            error_log('ReviewerCertificate: Review not completed yet');
             return false;
         }
 
@@ -515,15 +464,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         $certificate = $certificateDao->getByReviewId($reviewAssignment->getId());
 
-        error_log('ReviewerCertificate: Certificate exists: ' . ($certificate ? 'yes' : 'no'));
 
         // Only show button if certificate exists or reviewer is eligible
         $isEligible = $this->isEligibleForCertificate($reviewAssignment);
 
-        error_log('ReviewerCertificate: Reviewer eligible: ' . ($isEligible ? 'yes' : 'no'));
 
         if ($certificate || $isEligible) {
-            error_log('ReviewerCertificate: Adding certificate button to page');
 
             // Load CSS and JS assets
             $this->addScript($request);
@@ -535,7 +481,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             // Fetch the button HTML
             $additionalContent = $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
-            error_log('ReviewerCertificate: Button HTML generated, length: ' . strlen($additionalContent));
 
             // Instead of trying to modify params[2] (which is NULL),
             // we need to use template manager's state to inject content
@@ -545,22 +490,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             // Try to append to output if it exists
             if (isset($params[2]) && is_string($params[2])) {
                 $params[2] .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
-                error_log('ReviewerCertificate: Appended to existing output buffer');
             } else {
                 // Output is NULL or not a string - use alternative injection method
-                error_log('ReviewerCertificate: Output buffer not available (type: ' . gettype($params[2]) . '), using template state');
 
                 // params[2] is NULL - we can't modify it
                 // Instead, just echo the HTML directly since we're in a template display hook
                 // The hook is called during template rendering, so output will be captured
-                error_log('ReviewerCertificate: Using direct echo output method');
                 echo '<div class="reviewer-certificate-wrapper" style="margin: 20px 0;">' . $additionalContent . '</div>';
-                error_log('ReviewerCertificate: Button HTML echoed directly');
             }
 
-            error_log('ReviewerCertificate: Certificate button injection complete');
         } else {
-            error_log('ReviewerCertificate: Button not added - certificate does not exist and reviewer not eligible');
         }
 
         return false;
@@ -607,7 +546,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $row = $result->current();
         $completedReviews = $row ? (int) $row->count : 0;
 
-        error_log("ReviewerCertificate: Reviewer {$reviewAssignment->getReviewerId()} has {$completedReviews} completed reviews (minimum required: {$minimumReviews})");
 
         return $completedReviews >= $minimumReviews;
     }
