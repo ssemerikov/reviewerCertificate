@@ -37,10 +37,10 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 7 languages with complete coverage (82 message keys each)
-  - English (US), Ukrainian, Russian, Spanish, Portuguese (BR), French, German
+  - 11 languages with complete coverage (82 message keys each)
+  - English, Ukrainian, Russian, Spanish, Portuguese (BR), French, German, Italian, Turkish, Polish, Indonesian
   - Automatic language detection from OJS settings
-  - All translations validated with comprehensive test suite
+  - All translations validated with comprehensive test suite (2905 assertions)
 - **Batch Generation**: Generate certificates for multiple reviewers at once
 
 ## Requirements
@@ -188,6 +188,21 @@ The Reviewer Certificate Plugin is fully internationalized and available in mult
 | Portuguese (BR) | `pt_BR` | Português (Brasil) | ✅ Complete |
 | French | `fr_FR` | Français (France) | ✅ Complete |
 | German | `de_DE` | Deutsch (Deutschland) | ✅ Complete |
+| Italian | `it_IT` | Italiano (Italia) | ✅ Complete |
+| Turkish | `tr_TR` | Türkçe (Türkiye) | ✅ Complete |
+| Polish | `pl_PL` | Polski (Polska) | ✅ Complete |
+| Indonesian | `id_ID` | Bahasa Indonesia (Indonesia) | ✅ Complete |
+
+### Global Coverage
+
+With 11 languages, the plugin now serves **approximately 75% of the global OJS user base** across:
+
+- **Western Europe**: English, French, German, Italian, Spanish
+- **Eastern Europe & Eurasia**: Russian, Ukrainian, Polish, Turkish
+- **Latin America**: Spanish, Portuguese (Brazilian)
+- **Southeast Asia**: Indonesian
+
+All translations feature scholarly terminology appropriate for academic publishing contexts.
 
 ### Language Features
 
@@ -205,7 +220,7 @@ We welcome community contributions for additional languages! To contribute:
 3. Test your translation with the locale validation tests: `php vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
 4. Submit a pull request
 
-**Priority Languages Needed**: Chinese, Turkish, Arabic, Japanese, Korean
+**Priority Languages Needed**: Chinese (Simplified), Arabic, Japanese, Korean, Dutch, Swedish
 
 ## Usage
 

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/id_ID/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Indonesian
+  * NOTE: This translation uses formal Indonesian appropriate for academic publishing.
+  -->
+
+<locale name="id_ID" full_name="Bahasa Indonesia (Indonesia)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Plugin Sertifikat Mitra Bestari</message>
+	<message key="plugins.generic.reviewerCertificate.description">Memungkinkan mitra bestari untuk menghasilkan dan mengunduh sertifikat PDF penghargaan yang dipersonalisasi setelah menyelesaikan tinjauan.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Sertifikat Tinjauan</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Sertifikat Tinjauan Sejawat</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Sertifikat Anda sudah siap!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Terima kasih telah menyelesaikan tinjauan ini. Anda sekarang dapat mengunduh sertifikat penghargaan Anda.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Sertifikat Anda akan dibuat secara otomatis saat Anda mengklik tombol unduh.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Unduh Sertifikat</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Pengaturan Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Konfigurasi templat sertifikat dan kriteria kelayakan untuk mitra bestari.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Pengaturan Templat Sertifikat</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Gambar Latar Belakang</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Unggah gambar latar belakang untuk sertifikat (JPG atau PNG, ukuran yang disarankan: 2100x2970 piksel untuk A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Gambar latar belakang saat ini</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Teks Judul</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Judul utama yang ditampilkan di bagian atas sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Teks judul wajib diisi</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Templat Isi Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Konten utama sertifikat. Gunakan variabel templat untuk menyisipkan konten dinamis.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Templat isi sertifikat wajib diisi</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Teks Footer</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Teks opsional yang ditampilkan di bagian bawah sertifikat</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Variabel Templat yang Tersedia</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Gunakan variabel-variabel ini dalam templat Anda untuk menyisipkan konten dinamis:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Templat bawaan</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Gunakan templat bawaan</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Pengaturan Tampilan</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Jenis Huruf</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Ukuran Huruf</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Warna Teks (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Tentukan warna teks menggunakan nilai RGB (0-255 untuk setiap komponen)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Kriteria Kelayakan</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Tinjauan Selesai Minimum</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Jumlah minimum tinjauan yang diselesaikan yang diperlukan sebelum mitra bestari dapat menerima sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Jumlah minimum tinjauan harus berupa angka yang lebih besar atau sama dengan 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Opsi Verifikasi</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Sertakan kode QR untuk verifikasi sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Pratinjau Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Jenis gambar tidak valid. Harap unggah file JPG atau PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Pengunggahan file gagal. Harap coba lagi.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Tinjauan ini belum diselesaikan. Sertifikat hanya tersedia untuk tinjauan yang sudah selesai.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Tidak ada kode sertifikat yang diberikan</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Kode sertifikat tidak valid. Sertifikat ini tidak dapat diverifikasi.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Tidak ada mitra bestari yang dipilih untuk pembuatan sertifikat batch</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Akses ditolak. Anda tidak memiliki izin untuk mengunduh sertifikat ini.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Tidak ada konteks jurnal yang tersedia. Pastikan Anda mengakses dari jurnal yang valid.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Akses basis data saat ini tidak tersedia. Harap hubungi administrator sistem.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Verifikasi Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Masukkan kode sertifikat untuk memverifikasi keasliannya</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Kode Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Verifikasi Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Sertifikat Valid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Sertifikat Tidak Valid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Kode sertifikat yang Anda masukkan tidak valid atau tidak ada dalam sistem kami.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Kode Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Nama Mitra Bestari</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Nama Jurnal</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Tanggal Penerbitan</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Pembuatan Sertifikat Batch</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Buat sertifikat untuk beberapa mitra bestari sekaligus. Pilih mitra bestari dari daftar di bawah ini yang telah menyelesaikan tinjauan tetapi belum memiliki sertifikat.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Pilih Mitra Bestari</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">tinjauan selesai</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Tidak ada mitra bestari yang memenuhi syarat. Semua mitra bestari memiliki sertifikat untuk tinjauan mereka yang sudah selesai.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Tahan Ctrl (Windows/Linux) atau Cmd (Mac) untuk memilih beberapa mitra bestari</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Buat Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Membuat sertifikat...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Harap pilih setidaknya satu mitra bestari</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">sertifikat berhasil dibuat</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Terjadi kesalahan saat membuat sertifikat. Harap coba lagi.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} sertifikat berhasil dibuat</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Statistik Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Ikhtisar pembuatan dan penggunaan sertifikat di jurnal Anda</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Total Sertifikat yang Diterbitkan</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Total Unduhan</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Mitra Bestari Unik dengan Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total Sertifikat yang Diterbitkan</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total Unduhan</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Rata-rata Unduhan per Sertifikat</message>
+</locale>

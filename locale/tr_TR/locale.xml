@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/tr_TR/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Turkish
+  * NOTE: This translation uses formal Turkish ("Siz") appropriate for academic publishing.
+  * Turkish-specific characters: ı, ğ, ü, ş, ö, ç, İ
+  -->
+
+<locale name="tr_TR" full_name="Türkçe (Türkiye)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Hakem Sertifikası Eklentisi</message>
+	<message key="plugins.generic.reviewerCertificate.description">Hakemlerin değerlendirmeleri tamamladıktan sonra kişiselleştirilmiş PDF takdir sertifikaları oluşturmalarına ve indirmelerine olanak tanır.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Değerlendirme Sertifikası</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Hakem Değerlendirmesi Sertifikası</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Sertifikanız hazır!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Bu değerlendirmeyi tamamladığınız için teşekkür ederiz. Artık takdir sertifikanızı indirebilirsiniz.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">İndirme düğmesine tıkladığınızda sertifikanız otomatik olarak oluşturulacaktır.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Sertifikayı İndir</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Sertifika Ayarları</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Hakemler için sertifika şablonlarını ve uygunluk kriterlerini yapılandırın.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Sertifika Şablonu Ayarları</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Arka Plan Resmi</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Sertifika için bir arka plan resmi yükleyin (JPG veya PNG, önerilen boyut: A4 için 2100x2970 piksel)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Mevcut arka plan resmi</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Başlık Metni</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Sertifikanın üst kısmında görüntülenen ana başlık</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Başlık metni gereklidir</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Sertifika Gövde Şablonu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Sertifikanın ana içeriği. Dinamik içerik eklemek için şablon değişkenlerini kullanın.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Sertifika gövde şablonu gereklidir</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Alt Bilgi Metni</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Sertifikanın alt kısmında görüntülenen isteğe bağlı metin</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Kullanılabilir Şablon Değişkenleri</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Dinamik içerik eklemek için şablonlarınızda bu değişkenleri kullanın:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Varsayılan şablon</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Varsayılan şablonu kullan</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Görünüm Ayarları</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Yazı Tipi Ailesi</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Yazı Tipi Boyutu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Metin Rengi (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">RGB değerlerini kullanarak metin rengini belirtin (her bileşen için 0-255)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Uygunluk Kriterleri</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minimum Tamamlanmış Değerlendirme</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Bir hakemin sertifika alabilmesi için gereken minimum tamamlanmış değerlendirme sayısı</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Minimum değerlendirme sayısı 1'den büyük veya eşit bir sayı olmalıdır</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Doğrulama Seçenekleri</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Sertifika doğrulaması için QR kodu ekle</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Sertifikayı Önizle</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Geçersiz resim türü. Lütfen bir JPG veya PNG dosyası yükleyin.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Dosya yükleme başarısız oldu. Lütfen tekrar deneyin.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Bu değerlendirme henüz tamamlanmadı. Sertifikalar yalnızca tamamlanmış değerlendirmeler için kullanılabilir.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Sertifika kodu sağlanmadı</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Geçersiz sertifika kodu. Bu sertifika doğrulanamadı.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Toplu sertifika oluşturma için hakem seçilmedi</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Erişim reddedildi. Bu sertifikayı indirme yetkiniz yok.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Dergi bağlamı mevcut değil. Lütfen geçerli bir dergiden eriştiğinizden emin olun.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Veritabanı erişimi şu anda kullanılamıyor. Lütfen sistem yöneticisiyle iletişime geçin.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Sertifikayı Doğrula</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Özgünlüğünü doğrulamak için bir sertifika kodu girin</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Sertifika Kodu</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Sertifikayı Doğrula</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Geçerli Sertifika</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Geçersiz Sertifika</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Girdiğiniz sertifika kodu geçersiz veya sistemimizde mevcut değil.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Sertifika Kodu</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Hakem Adı</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Dergi Adı</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Verilme Tarihi</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Toplu Sertifika Oluşturma</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Birden fazla hakem için aynı anda sertifika oluşturun. Değerlendirmeleri tamamlamış ancak henüz sertifikaları olmayan hakemleri aşağıdaki listeden seçin.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Hakemleri Seç</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">tamamlanmış değerlendirme</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Uygun hakem bulunamadı. Tüm hakemlerin tamamlanmış değerlendirmeleri için sertifikaları var.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Birden fazla hakem seçmek için Ctrl (Windows/Linux) veya Cmd (Mac) tuşunu basılı tutun</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Sertifikaları Oluştur</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Sertifikalar oluşturuluyor...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Lütfen en az bir hakem seçin</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">sertifika başarıyla oluşturuldu</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Sertifikalar oluşturulurken bir hata oluştu. Lütfen tekrar deneyin.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} sertifika başarıyla oluşturuldu</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Sertifika İstatistikleri</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Derginizdeki sertifika oluşturma ve kullanım genel bakışı</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Toplam Verilen Sertifika</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Toplam İndirme</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Sertifikalı Benzersiz Hakem</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Toplam Verilen Sertifika</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Toplam İndirme</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Sertifika Başına Ortalama İndirme</message>
+</locale>
