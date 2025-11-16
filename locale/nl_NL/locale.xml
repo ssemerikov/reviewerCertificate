@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/nl_NL/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Dutch
+  * NOTE: This translation uses formal Dutch ("u") appropriate for academic publishing.
+  * Suitable for Netherlands, Belgium (Flanders), and Suriname.
+  -->
+
+<locale name="nl_NL" full_name="Nederlands (Nederland)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Recensentencertificaat Plugin</message>
+	<message key="plugins.generic.reviewerCertificate.description">Stelt recensenten in staat om gepersonaliseerde PDF-certificaten van erkenning te genereren en te downloaden na het voltooien van beoordelingen.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Beoordelingscertificaat</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Certificaat van Peer Review</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Uw certificaat is klaar!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Bedankt voor het voltooien van deze beoordeling. U kunt nu uw certificaat van erkenning downloaden.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Uw certificaat wordt automatisch gegenereerd wanneer u op de downloadknop klikt.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Certificaat Downloaden</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Certificaatinstellingen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Configureer certificaatsjablonen en geschiktheidscriteria voor recensenten.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Certificaatsjablooninstellingen</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Achtergrondafbeelding</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Upload een achtergrondafbeelding voor het certificaat (JPG of PNG, aanbevolen grootte: 2100x2970 pixels voor A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Huidige achtergrondafbeelding</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Koptekst</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">De hoofdtitel bovenaan het certificaat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Koptekst is verplicht</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Certificaat Hoofdtekstsjabloon</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">De hoofdinhoud van het certificaat. Gebruik sjabloonvariabelen om dynamische inhoud in te voegen.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Hoofdtekstsjabloon is verplicht</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Voettekst</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Optionele tekst onderaan het certificaat</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Beschikbare Sjabloonvariabelen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Gebruik deze variabelen in uw sjablonen om dynamische inhoud in te voegen:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Standaardsjabloon</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Standaardsjabloon gebruiken</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Weergave-instellingen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Lettertypefamilie</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Lettergrootte</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Tekstkleur (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Specificeer de tekstkleur met RGB-waarden (0-255 voor elk component)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Geschiktheidscriteria</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minimaal Voltooide Beoordelingen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Het minimale aantal voltooide beoordelingen voordat een recensent een certificaat kan ontvangen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Het minimale aantal beoordelingen moet een getal groter dan of gelijk aan 1 zijn</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Verificatie-opties</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">QR-code voor certificaatverificatie opnemen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Certificaat Voorvertonen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Ongeldig afbeeldingstype. Upload een JPG- of PNG-bestand.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Bestandsupload mislukt. Probeer het opnieuw.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Deze beoordeling is nog niet voltooid. Certificaten zijn alleen beschikbaar voor voltooide beoordelingen.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Geen certificaatcode opgegeven</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Ongeldige certificaatcode. Dit certificaat kon niet worden geverifieerd.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Geen recensenten geselecteerd voor batch certificaatgeneratie</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Toegang geweigerd. U heeft geen toestemming om dit certificaat te downloaden.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Geen tijdschriftcontext beschikbaar. Zorg ervoor dat u toegang heeft vanuit een geldig tijdschrift.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Databasetoegang is momenteel niet beschikbaar. Neem contact op met de systeembeheerder.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Certificaat Verifiëren</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Voer een certificaatcode in om de authenticiteit te verifiëren</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Certificaatcode</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Certificaat Verifiëren</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Geldig Certificaat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Ongeldig Certificaat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">De certificaatcode die u heeft ingevoerd is ongeldig of bestaat niet in ons systeem.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Certificaatcode</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Naam Recensent</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Tijdschriftnaam</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Uitgiftedatum</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Batch Certificaatgeneratie</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Genereer certificaten voor meerdere recensenten tegelijk. Selecteer recensenten uit de onderstaande lijst die beoordelingen hebben voltooid maar nog geen certificaten hebben.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Recensenten Selecteren</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">voltooide beoordelingen</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Geen geschikte recensenten gevonden. Alle recensenten hebben certificaten voor hun voltooide beoordelingen.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Houd Ctrl (Windows/Linux) of Cmd (Mac) ingedrukt om meerdere recensenten te selecteren</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Certificaten Genereren</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Certificaten genereren...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Selecteer ten minste één recensent</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certificaat/certificaten succesvol gegenereerd</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Er is een fout opgetreden bij het genereren van certificaten. Probeer het opnieuw.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certificaat/certificaten succesvol gegenereerd</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Certificaatstatistieken</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Overzicht van certificaatgeneratie en -gebruik in uw tijdschrift</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Totaal Uitgegeven Certificaten</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Totaal Downloads</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Unieke Recensenten met Certificaten</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Totaal Uitgegeven Certificaten</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Totaal Downloads</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Gemiddelde Downloads per Certificaat</message>
+</locale>

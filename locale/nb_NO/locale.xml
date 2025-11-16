@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/nb_NO/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Norwegian Bokmål
+  * NOTE: This translation uses formal Norwegian Bokmål appropriate for academic publishing.
+  * Norwegian-specific characters: æ, ø, å
+  -->
+
+<locale name="nb_NO" full_name="Norsk Bokmål (Norge)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Plugin for Fagfellesesertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.description">Lar fagfeller generere og laste ned personaliserte PDF-sertifikater for anerkjennelse etter fullført fagfellevurdering.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Fagfellevurderingssertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Sertifikat for Fagfellevurdering</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Sertifikatet ditt er klart!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Takk for at du fullførte denne vurderingen. Du kan nå laste ned sertifikatet ditt for anerkjennelse.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Sertifikatet ditt vil bli generert automatisk når du klikker på nedlastingsknappen.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Last ned Sertifikat</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Sertifikatinnstillinger</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Konfigurer sertifikatmaler og kvalifikasjonskriterier for fagfeller.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Innstillinger for Sertifikatmal</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Bakgrunnsbilde</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Last opp et bakgrunnsbilde for sertifikatet (JPG eller PNG, anbefalt størrelse: 2100x2970 piksler for A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Gjeldende bakgrunnsbilde</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Overskriftstekst</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Hovedtittelen som vises øverst på sertifikatet</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Overskriftstekst er påkrevd</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Mal for Sertifikatinnhold</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Hovedinnholdet i sertifikatet. Bruk malvariabler for å sette inn dynamisk innhold.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Mal for sertifikatinnhold er påkrevd</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Bunntekst</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Valgfri tekst som vises nederst på sertifikatet</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Tilgjengelige Malvariabler</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Bruk disse variablene i malene dine for å sette inn dynamisk innhold:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Standardmal</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Bruk standardmal</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Utseendeinnstillinger</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Skriftfamilie</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Skriftstørrelse</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Tekstfarge (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Spesifiser tekstfargen ved hjelp av RGB-verdier (0-255 for hver komponent)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Kvalifikasjonskriterier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minimum Fullførte Vurderinger</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Minimumsantall fullførte vurderinger som kreves før en fagfelle kan motta et sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Minimumsantall vurderinger må være et tall større enn eller lik 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Verifikasjonsalternativer</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Inkluder QR-kode for sertifikatverifisering</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Forhåndsvis Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Ugyldig bildetype. Vennligst last opp en JPG- eller PNG-fil.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Filopplasting mislyktes. Vennligst prøv igjen.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Denne vurderingen er ikke fullført ennå. Sertifikater er kun tilgjengelige for fullførte vurderinger.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Ingen sertifikatkode oppgitt</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Ugyldig sertifikatkode. Dette sertifikatet kunne ikke verifiseres.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Ingen fagfeller valgt for massegenerering av sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Tilgang nektet. Du har ikke tillatelse til å laste ned dette sertifikatet.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Ingen tidsskriftkontekst tilgjengelig. Vennligst sørg for at du får tilgang fra et gyldig tidsskrift.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Databasetilgang er for øyeblikket utilgjengelig. Vennligst kontakt systemadministratoren.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Verifiser Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Skriv inn en sertifikatkode for å verifisere ekthet</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Sertifikatkode</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Verifiser Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Gyldig Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Ugyldig Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Sertifikatkoden du skrev inn er ugyldig eller finnes ikke i vårt system.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Sertifikatkode</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Navn på Fagfelle</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Tidsskriftnavn</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Utstedelsesdato</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Massegenerering av Sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generer sertifikater for flere fagfeller samtidig. Velg fagfeller fra listen nedenfor som har fullført vurderinger, men som ennå ikke har sertifikater.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Velg Fagfeller</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">fullførte vurderinger</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Ingen kvalifiserte fagfeller funnet. Alle fagfeller har sertifikater for sine fullførte vurderinger.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Hold Ctrl (Windows/Linux) eller Cmd (Mac) inne for å velge flere fagfeller</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generer Sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Genererer sertifikater...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Vennligst velg minst én fagfelle</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">sertifikat/sertifikater generert</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">En feil oppstod under generering av sertifikater. Vennligst prøv igjen.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} sertifikat/sertifikater generert</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Sertifikatstatistikk</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Oversikt over sertifikatgenerering og -bruk i tidsskriftet ditt</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Totalt Utstedte Sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Totale Nedlastinger</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Unike Fagfeller med Sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Totalt Utstedte Sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Totale Nedlastinger</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Gjennomsnittlige Nedlastinger per Sertifikat</message>
+</locale>
