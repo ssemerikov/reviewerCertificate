@@ -19,4 +19,12 @@
 	<lazy-load>1</lazy-load>
 	<class>ReviewerCertificatePlugin</class>
 	<sitewide>0</sitewide>
+
+	<!-- OJS version compatibility -->
+	<compatibility>
+		<application>ojs2</application>
+		<version>3.3.0.0</version>
+		<version>3.4.0.0</version>
+		<version>3.5.0.0</version>
+	</compatibility>
 </version>

@@ -16,13 +16,13 @@ This plugin was developed with the assistance of **Claude Code (Sonnet 4.5)**, a
 
 - **Code Architecture**: Designing the plugin structure and component organization
 - **Implementation**: Writing PHP classes, controllers, and data access objects
-- **OJS Integration**: Ensuring compatibility with OJS 3.3.x and 3.4.x APIs
-- **Database Design**: Creating the migration system and schema
-- **Testing & Debugging**: Identifying and fixing compatibility issues
+- **OJS Integration**: Ensuring compatibility with OJS 3.3.x, 3.4.x, and 3.5.x APIs
+- **Database Design**: Creating the migration system and schema with automatic fallback for legacy versions
+- **Testing & Debugging**: Comprehensive test suite with 120 tests across all OJS versions
 - **Documentation**: Creating comprehensive user and technical documentation
 - **Code Review**: Analyzing code quality and identifying potential improvements
 
-The iterative development approach with Claude Code enabled rapid prototyping, thorough testing across OJS versions, and production-ready code quality.
+The iterative development approach with Claude Code enabled rapid prototyping, thorough testing across OJS versions (3.3, 3.4, 3.5), and production-ready code quality.
 
 ## Features
 
@@ -37,13 +37,21 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 
 ## Requirements
 
-- **OJS Version**: 3.3.x or 3.4.x
-- **PHP**: 7.3 or higher
+- **OJS Version**: 3.3.x, 3.4.x, or 3.5.x
+- **PHP**: 7.3 or higher (PHP 8.0+ recommended for OJS 3.5)
 - **Required PHP Extensions**:
   - GD or Imagick (for image processing)
   - mbstring
   - zip
 - **TCPDF Library**: ✅ Bundled with plugin (v6.10.0) - no additional installation required!
+
+### Version Compatibility
+
+| OJS Version | Support Status | Notes |
+|-------------|----------------|-------|
+| 3.3.x | ✅ Fully Supported | Automatic migration with SQL fallback |
+| 3.4.x | ✅ Fully Supported | Modern Laravel migration |
+| 3.5.x | ✅ Fully Supported | Latest features, PHP 8+ optimized |
 
 ## Installation
 
@@ -283,10 +291,14 @@ The plugin creates these tables:
 
 ## Compatibility
 
-- **OJS 3.3.x**: Fully compatible
-- **OJS 3.4.x**: Fully compatible
-- **PHP 7.3+**: Required
-- **PHP 8.0+**: Compatible
+- **OJS 3.3.x**: ✅ Fully compatible with automatic SQL fallback
+- **OJS 3.4.x**: ✅ Fully compatible with modern Laravel migration
+- **OJS 3.5.x**: ✅ Fully compatible with latest features
+- **PHP 7.3+**: Required (minimum)
+- **PHP 8.0+**: Recommended (especially for OJS 3.5)
+- **PHP 8.2+**: Fully tested and supported
+
+**Tested on:** PHP 7.3, 7.4, 8.0, 8.1, 8.2 across all OJS versions
 
 ## Support
 
