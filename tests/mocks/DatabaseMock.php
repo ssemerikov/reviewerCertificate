@@ -192,7 +192,7 @@ class DatabaseMock
      * @param string $idField
      * @return array|null
      */
-    public function getById(string $table, int $id, string $idField = null): ?array
+    public function getById(string $table, int $id, ?string $idField = null): ?array
     {
         if ($idField === null) {
             if ($table === 'reviewer_certificates') {

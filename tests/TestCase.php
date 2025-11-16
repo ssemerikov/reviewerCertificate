@@ -74,8 +74,8 @@ abstract class TestCase extends PHPUnitTestCase
         string $lastName = 'Reviewer',
         string $email = 'test@example.com'
     ) {
-        $user = $this->getMockBuilder('PKPUser')
-            ->disableOriginalConstructor()
+        $user = $this->getMockBuilder('stdClass')
+            ->addMethods(['getId', 'getFirstName', 'getLastName', 'getFullName', 'getEmail'])
             ->getMock();
 
         $user->method('getId')->willReturn($userId);
@@ -101,8 +101,8 @@ abstract class TestCase extends PHPUnitTestCase
         string $name = 'Test Journal',
         string $acronym = 'TJ'
     ) {
-        $context = $this->getMockBuilder('Context')
-            ->disableOriginalConstructor()
+        $context = $this->getMockBuilder('stdClass')
+            ->addMethods(['getId', 'getName', 'getLocalizedName', 'getAcronym'])
             ->getMock();
 
         $context->method('getId')->willReturn($contextId);
@@ -127,8 +127,8 @@ abstract class TestCase extends PHPUnitTestCase
         string $title = 'Test Manuscript',
         int $contextId = 1
     ) {
-        $submission = $this->getMockBuilder('Submission')
-            ->disableOriginalConstructor()
+        $submission = $this->getMockBuilder('stdClass')
+            ->addMethods(['getId', 'getLocalizedTitle', 'getCurrentPublication', 'getData'])
             ->getMock();
 
         $submission->method('getId')->willReturn($submissionId);
@@ -155,8 +155,8 @@ abstract class TestCase extends PHPUnitTestCase
      */
     protected function createMockPublication(string $title = 'Test Manuscript')
     {
-        $publication = $this->getMockBuilder('Publication')
-            ->disableOriginalConstructor()
+        $publication = $this->getMockBuilder('stdClass')
+            ->addMethods(['getLocalizedTitle', 'getData'])
             ->getMock();
 
         $publication->method('getLocalizedTitle')->willReturn($title);
@@ -183,10 +183,10 @@ abstract class TestCase extends PHPUnitTestCase
         int $reviewId = 1,
         int $submissionId = 1,
         int $reviewerId = 1,
-        string $dateCompleted = null
+        ?string $dateCompleted = null
     ) {
-        $review = $this->getMockBuilder('ReviewAssignment')
-            ->disableOriginalConstructor()
+        $review = $this->getMockBuilder('stdClass')
+            ->addMethods(['getId', 'getSubmissionId', 'getReviewerId', 'getDateCompleted'])
             ->getMock();
 
         $review->method('getId')->willReturn($reviewId);
@@ -285,7 +285,7 @@ abstract class TestCase extends PHPUnitTestCase
      * @param string $version Minimum required version
      * @param string $message
      */
-    protected function requireOJSVersion(string $version, string $message = null): void
+    protected function requireOJSVersion(string $version, ?string $message = null): void
     {
         if (version_compare($this->getOJSVersion(), $version, '<')) {
             $this->markTestSkipped(
@@ -300,7 +300,7 @@ abstract class TestCase extends PHPUnitTestCase
      * @param string $version Maximum version
      * @param string $message
      */
-    protected function requireOJSVersionBelow(string $version, string $message = null): void
+    protected function requireOJSVersionBelow(string $version, ?string $message = null): void
     {
         if (version_compare($this->getOJSVersion(), $version, '>=')) {
             $this->markTestSkipped(

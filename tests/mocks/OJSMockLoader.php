@@ -30,6 +30,9 @@ class OJSMockLoader
         // Define OJS constants
         self::defineConstants();
 
+        // Define OJS global functions
+        self::defineGlobalFunctions();
+
         // Load base classes
         self::loadBaseClasses();
 
@@ -70,10 +73,48 @@ class OJSMockLoader
     }
 
     /**
+     * Define OJS global functions
+     */
+    private static function defineGlobalFunctions(): void
+    {
+        // import() function - OJS uses this to load class files
+        if (!function_exists('import')) {
+            function import($classPath) {
+                // Mock implementation - in real OJS, this loads class files
+                // For testing, we rely on the autoloader in bootstrap.php
+                return true;
+            }
+        }
+
+        // __() function - OJS translation function
+        if (!function_exists('__')) {
+            function __($key, $params = [], $locale = null) {
+                // Mock translation - just return the key
+                return $key;
+            }
+        }
+    }
+
+    /**
      * Load OJS base classes (or create mocks)
      */
     private static function loadBaseClasses(): void
     {
+        // Create Core class
+        if (!class_exists('Core')) {
+            eval('
+                class Core {
+                    public static function getCurrentDate() {
+                        return date("Y-m-d H:i:s");
+                    }
+
+                    public static function getBaseDir() {
+                        return BASE_SYS_DIR;
+                    }
+                }
+            ');
+        }
+
         // Create DataObject base class
         if (!class_exists('DataObject')) {
             eval('
@@ -104,6 +145,19 @@ class OJSMockLoader
             eval('
                 class GenericPlugin {
                     private $_pluginSettings = [];
+                    private $_enabled = true;
+
+                    public function register($category, $path, $mainContextId = null) {
+                        return true;
+                    }
+
+                    public function getEnabled($contextId = null) {
+                        return $this->_enabled;
+                    }
+
+                    public function setEnabled($enabled) {
+                        $this->_enabled = $enabled;
+                    }
 
                     public function getSetting($contextId, $name) {
                         return $this->_pluginSettings[$contextId][$name] ?? null;
@@ -119,6 +173,19 @@ class OJSMockLoader
 
                     public function getTemplatePath() {
                         return BASE_SYS_DIR . \'/templates/\';
+                    }
+
+                    public function getCanEnable() {
+                        return true;
+                    }
+
+                    public function getCanDisable() {
+                        return true;
+                    }
+
+                    public function import($classPath) {
+                        // Mock import - rely on autoloader
+                        return true;
                     }
                 }
             ');
