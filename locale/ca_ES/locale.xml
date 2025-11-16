@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/ca_ES/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Catalan
+  * NOTE: This translation uses formal Catalan appropriate for academic publishing.
+  * Catalan-specific characters: à, è, é, í, ï, ò, ó, ú, ü, ç, l·l
+  * Suitable for Catalonia, Valencia, Balearic Islands.
+  -->
+
+<locale name="ca_ES" full_name="Català (Catalunya)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Complement de Certificats de Revisors</message>
+	<message key="plugins.generic.reviewerCertificate.description">Permet als revisors generar i descarregar certificats PDF personalitzats de reconeixement després de completar les revisions.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Certificat de Revisió</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Certificat de Revisió per Parells</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">El vostre certificat està llest!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Gràcies per completar aquesta revisió. Ara podeu descarregar el vostre certificat de reconeixement.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">El vostre certificat es generarà automàticament quan feu clic al botó de descàrrega.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Descarregar Certificat</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Configuració de Certificats</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Configureu les plantilles de certificats i els criteris d'elegibilitat per als revisors.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Configuració de la Plantilla de Certificat</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Imatge de Fons</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Carregueu una imatge de fons per al certificat (JPG o PNG, mida recomanada: 2100x2970 píxels per A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Imatge de fons actual</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Text de Capçalera</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">El títol principal que es mostra a la part superior del certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">El text de capçalera és obligatori</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Plantilla del Cos del Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">El contingut principal del certificat. Utilitzeu variables de plantilla per inserir contingut dinàmic.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">La plantilla del cos del certificat és obligatòria</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Text del Peu de Pàgina</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Text opcional que es mostra a la part inferior del certificat</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Variables de Plantilla Disponibles</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Utilitzeu aquestes variables a les vostres plantilles per inserir contingut dinàmic:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Plantilla per defecte</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Utilitzar plantilla per defecte</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Configuració d'Aparença</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Família de Tipus de Lletra</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Mida del Tipus de Lletra</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Color del Text (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Especifiqueu el color del text utilitzant valors RGB (0-255 per a cada component)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Criteris d'Elegibilitat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Revisions Completades Mínimes</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">El nombre mínim de revisions completades requerides abans que un revisor pugui rebre un certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">El nombre mínim de revisions ha de ser un número més gran o igual a 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Opcions de Verificació</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Incloure codi QR per a la verificació del certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Previsualitzar Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Tipus d'imatge no vàlid. Si us plau, carregueu un fitxer JPG o PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">La càrrega del fitxer ha fallat. Si us plau, torneu-ho a provar.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Aquesta revisió encara no s'ha completat. Els certificats només estan disponibles per a revisions completades.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">No s'ha proporcionat cap codi de certificat</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Codi de certificat no vàlid. Aquest certificat no s'ha pogut verificar.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">No s'han seleccionat revisors per a la generació massiva de certificats</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Accés denegat. No teniu permís per descarregar aquest certificat.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">No hi ha cap context de revista disponible. Assegureu-vos que accediu des d'una revista vàlida.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">L'accés a la base de dades no està disponible actualment. Si us plau, contacteu amb l'administrador del sistema.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Verificar Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Introduïu un codi de certificat per verificar-ne l'autenticitat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Codi del Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Verificar Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Certificat Vàlid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Certificat No Vàlid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">El codi de certificat que heu introduït no és vàlid o no existeix al nostre sistema.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Codi del Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Nom del Revisor</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Nom de la Revista</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Data d'Emissió</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Generació Massiva de Certificats</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Genereu certificats per a múltiples revisors alhora. Seleccioneu revisors de la llista a continuació que hagin completat revisions però que encara no tinguin certificats.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Seleccionar Revisors</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">revisions completades</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">No s'han trobat revisors elegibles. Tots els revisors tenen certificats per a les seves revisions completades.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Mantingueu premut Ctrl (Windows/Linux) o Cmd (Mac) per seleccionar múltiples revisors</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generar Certificats</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Generant certificats...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Si us plau, seleccioneu almenys un revisor</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certificat/s generat/s amb èxit</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">S'ha produït un error en generar els certificats. Si us plau, torneu-ho a provar.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certificat/s generat/s amb èxit</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Estadístiques de Certificats</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Resum de la generació i ús de certificats a la vostra revista</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Total de Certificats Emesos</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Total de Descàrregues</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Revisors Únics amb Certificats</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total de Certificats Emesos</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total de Descàrregues</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Mitjana de Descàrregues per Certificat</message>
+</locale>
