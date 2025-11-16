@@ -1,8 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
+**Version 1.0.1** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
+
+**Latest Release (v1.0.1)**: Critical bug fixes, improved installation reliability, and official OJS 3.5 support. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -329,14 +333,28 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 
 ## Changelog
 
-### Version 1.0.0 (2025-11-04)
+For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
+### Recent Releases
+
+**Version 1.0.1** (2025-11-16)
+- **Fixed**: Critical AJAX settings form error ("Failed Ajax request or invalid JSON returned")
+- **Fixed**: Database migration failures in OJS 3.3 (tables not being created)
+- **Added**: Automatic migration fallback for OJS 3.3 compatibility
+- **Added**: Manual SQL installation scripts (install.sql, uninstall.sql)
+- **Added**: Comprehensive INSTALL.md with troubleshooting guide
+- **Added**: Official OJS 3.5 compatibility declaration
+- **Improved**: Error handling and null checks throughout
+- Addresses multiple PKP forum community issues
+
+**Version 1.0.0** (2025-11-04)
 - Initial release
-- Basic certificate generation
+- Automated certificate generation
 - Customizable templates
 - QR code verification
 - Multi-language support
 - Batch generation capability
+- Full test suite (120 tests)
 
 ## Credits
 

@@ -1,6 +1,6 @@
-# Release Notes - Reviewer Certificate Plugin v1.0.0
+# Release Notes - Reviewer Certificate Plugin v1.0.1
 
-**Release Date**: November 4, 2025
+**Release Date**: November 16, 2025
 **Author**: Serhiy O. Semerikov (Academy of Cognitive and Natural Sciences)
 **Contact**: semerikov@gmail.com
 **License**: GNU General Public License v3.0
@@ -11,9 +11,81 @@
 
 The Reviewer Certificate Plugin for Open Journal Systems (OJS) enables journals to automatically generate and distribute personalized PDF certificates of recognition to peer reviewers upon completion of their review assignments. This plugin helps journals acknowledge and incentivize quality peer review work while providing reviewers with verifiable credentials for their professional portfolios.
 
-## What's New in Version 1.0.0
+**Current Version**: 1.0.1 (Patch Release)
+**Supported OJS Versions**: 3.3.x, 3.4.x, 3.5.x
+**Supported PHP Versions**: 7.3+ (8.0+ recommended for OJS 3.5)
 
-This is the **initial production release** of the Reviewer Certificate Plugin, representing a fully-featured, production-ready solution for reviewer recognition.
+---
+
+## What's New in Version 1.0.1
+
+This is a **patch release** addressing critical bugs reported by the PKP community and adding official OJS 3.5 support. Upgrading from 1.0.0 is highly recommended for improved stability and compatibility.
+
+### Critical Bug Fixes
+
+#### Fixed: AJAX Settings Form Error
+**Issue**: "Failed Ajax request or invalid JSON returned" when clicking Settings button
+**Impact**: Users could not configure plugin settings
+**Solution**:
+- Added NULL checks after all DAORegistry::getDAO() calls
+- Added context validation in all AJAX endpoints
+- Added exception handling for Repo::user()->get() calls
+- Added error handling in form initData() method
+
+**Files Fixed**: `ReviewerCertificatePlugin.inc.php`, `CertificateSettingsForm.inc.php`, `locale/en_US/locale.xml`
+
+#### Fixed: Database Migration Failures in OJS 3.3
+**Issue**: Tables not being created during plugin installation
+**Errors**: "Table 'reviewer_certificates' doesn't exist", "Call to a member function connection() on null"
+**Impact**: Plugin installation failed in OJS 3.3
+**Solution**:
+- Implemented automatic migration fallback strategy
+- Tries Laravel Schema facade first (OJS 3.4+)
+- Automatically falls back to raw SQL via DAO (OJS 3.3)
+- Added detailed error logging
+
+**File Fixed**: `classes/migration/ReviewerCertificateInstallMigration.inc.php`
+
+### New Features
+
+#### Manual SQL Installation Scripts
+- Added `install.sql` - Complete database setup script
+- Added `uninstall.sql` - Clean removal script
+- Provides ultimate fallback for problematic installations
+- Works on all OJS versions (3.3, 3.4, 3.5)
+
+#### Comprehensive Installation Documentation
+- New `INSTALL.md` with step-by-step instructions
+- Troubleshooting guide for common errors
+- Version-specific installation notes
+- Multiple installation methods documented
+
+#### Official OJS 3.5 Support
+- Added compatibility declaration in `version.xml`
+- Plugin now installable via OJS 3.5 plugin gallery
+- Tested and verified on OJS 3.5
+- Documentation updated for all three versions
+
+### Improvements
+
+- Enhanced error handling throughout the codebase
+- Added user-friendly error messages with locale support
+- Improved logging for troubleshooting
+- Better graceful degradation when components unavailable
+
+### Community Feedback Addressed
+
+This release directly addresses issues reported on PKP Community Forum:
+- **Dr. Uğur Koçak**: Database table creation failures → Fixed with automatic SQL fallback
+- **Jricst**: AJAX settings form error → Fixed with null checks and validation
+- **Marc**: Tables not being registered → Fixed with improved migration
+- **Pedro Felipe Rocha**: OJS 3.5 compatibility → Added official support declaration
+
+---
+
+## What Was in Version 1.0.0 (Initial Release)
+
+Released November 4, 2025 - Initial production release of the Reviewer Certificate Plugin.
 
 ### Core Features
 
