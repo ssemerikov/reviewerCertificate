@@ -1,164 +1,112 @@
-# Installation Instructions
+# Reviewer Certificate Plugin - Installation Guide
 
-**Author**: Serhiy O. Semerikov (Academy of Cognitive and Natural Sciences)
-**Contact**: semerikov@gmail.com
-**Development**: Built with Claude Code (Sonnet 4.5) by Anthropic
+## Quick Install (Recommended)
 
-## Prerequisites
+### Method 1: Automatic Installation via OJS
 
-- **OJS**: 3.3.x or 3.4.x
-- **PHP**: 7.3 or higher
-- **PHP Extensions**: GD or Imagick, mbstring, zip
+1. **Upload the plugin:**
+   ```bash
+   cd /path/to/ojs/plugins/generic/
+   git clone https://github.com/ssemerikov/reviewerCertificate.git
+   # OR upload and extract the ZIP file
+   ```
 
-**Note**: TCPDF library (v6.10.0) is bundled with the plugin - no additional installation required!
+2. **Set permissions:**
+   ```bash
+   chmod -R 755 reviewerCertificate/
+   chown -R www-data:www-data reviewerCertificate/  # Adjust user as needed
+   ```
 
-## Installation Steps
+3. **Enable the plugin:**
+   - Log in to OJS as Administrator
+   - Go to **Settings → Website → Plugins**
+   - Find "Reviewer Certificate Plugin"
+   - Click **Enable**
+   - The database tables will be created automatically
 
-### Step 1: Install the Plugin
+4. **Configure:**
+   - Click **Settings** to customize certificate templates
+   - Click **Preview Certificate** to test your design
 
-Clone or download the plugin to your OJS installation:
+---
+
+## Manual Installation (If Automatic Fails)
+
+If you encounter errors like "Table 'reviewer_certificates' doesn't exist" or migration failures, follow these steps:
+
+### Step 1: Install Plugin Files
 
 ```bash
 cd /path/to/ojs/plugins/generic/
-git clone https://github.com/ssemerikov/plugin.git reviewerCertificate
+git clone https://github.com/ssemerikov/reviewerCertificate.git
+chmod -R 755 reviewerCertificate/
 ```
 
-Or download and extract the ZIP file to `plugins/generic/reviewerCertificate/`
+### Step 2: Create Database Tables Manually
 
-### Step 2: Set Permissions
-
-```bash
-chmod -R 755 /path/to/ojs/plugins/generic/reviewerCertificate/
-```
-
-### Step 3: Enable the Plugin
-
-1. Log in to OJS as **Administrator** or **Journal Manager**
-2. Navigate to: **Settings → Website → Plugins**
-3. Find "Reviewer Certificate Plugin" in the list
-4. Click the **checkbox** to enable it
-5. Click **Settings** to configure certificate options
-
-### Step 4: Configure Certificate Settings
-
-1. In the plugin settings:
-   - Set certificate template text
-   - Choose fonts and colors
-   - Set minimum completed reviews requirement
-   - Enable QR code verification (optional)
-2. Click **Preview Certificate** to test your design
-3. Save settings
-
-## What's Included
-
-The plugin comes with:
-- ✅ TCPDF 6.10.0 library (in `lib/tcpdf/`)
-- ✅ All required fonts
-- ✅ QR code generation support
-- ✅ Complete PDF generation system
-
-## Troubleshooting
-
-### Error: "TCPDF library not found"
-
-This should not happen with the bundled version. If you see this error:
-
-1. Verify the `lib/tcpdf/` directory exists in the plugin
-2. Check that `lib/tcpdf/tcpdf.php` file exists
-3. Ensure proper file permissions (755 or 755 for directories, 644 for files)
-
-### Permission Issues
-
-Set proper permissions:
-```bash
-chmod -R 755 /path/to/ojs/plugins/generic/reviewerCertificate/
-```
-
-### Background Images Not Working
-
-Create upload directory with proper permissions:
-```bash
-mkdir -p /path/to/ojs/files/journals/[JOURNAL_ID]/reviewerCertificate/
-chmod -R 775 /path/to/ojs/files/journals/[JOURNAL_ID]/reviewerCertificate/
-chown -R www-data:www-data /path/to/ojs/files/journals/[JOURNAL_ID]/reviewerCertificate/
-```
-
-(Replace `www-data` with your web server user)
-
-### Plugin Not Appearing
-
-1. Clear OJS cache:
-   - **Settings → Website → Clear Data Cache**
-2. Check file permissions
-3. Check OJS error logs: `/path/to/ojs/files/error.log`
-
-## Updating
-
-To update the plugin to the latest version:
+**Option A: Using MySQL Command Line**
 
 ```bash
 cd /path/to/ojs/plugins/generic/reviewerCertificate/
-git pull origin main
+mysql -u [username] -p [database_name] < install.sql
 ```
 
-Then clear OJS cache in the admin interface.
+**Option B: Using phpMyAdmin**
 
-## Technical Details
+1. Open phpMyAdmin
+2. Select your OJS database
+3. Go to the **SQL** tab
+4. Copy and paste the contents of `install.sql`
+5. Click **Go**
 
-### TCPDF Integration
+### Step 3: Verify Installation
 
-The plugin includes TCPDF 6.10.0 in the `lib/tcpdf/` directory. The CertificateGenerator class automatically detects and loads TCPDF from:
-
-1. Plugin's bundled TCPDF (primary): `lib/tcpdf/tcpdf.php`
-2. OJS 3.4 location (fallback): `lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php`
-3. OJS 3.3 location (fallback): `lib/pkp/lib/tcpdf/tcpdf.php`
-
-This ensures maximum compatibility across different OJS installations.
-
-### File Structure
-
-```
-reviewerCertificate/
-├── classes/
-│   ├── Certificate.inc.php
-│   ├── CertificateDAO.inc.php
-│   ├── CertificateGenerator.inc.php
-│   └── form/
-├── controllers/
-├── locale/
-├── lib/
-│   └── tcpdf/              ← TCPDF library (bundled)
-│       ├── tcpdf.php
-│       ├── fonts/
-│       ├── config/
-│       └── ...
-├── templates/
-├── ReviewerCertificatePlugin.inc.php
-└── version.xml
-```
-
-## Uninstallation
-
-1. Disable the plugin in OJS admin
-2. Remove the plugin directory:
-   ```bash
-   rm -rf /path/to/ojs/plugins/generic/reviewerCertificate/
-   ```
-
-The plugin's database tables will remain. To remove them:
+Check that tables were created:
 
 ```sql
-DROP TABLE IF EXISTS certificates;
+SHOW TABLES LIKE 'reviewer_certificate%';
 ```
+
+You should see:
+- `reviewer_certificate_templates`
+- `reviewer_certificates`
+- `reviewer_certificate_settings`
+
+### Step 4: Enable Plugin in OJS
+
+1. Log in to OJS as Administrator
+2. Go to **Settings → Website → Plugins**
+3. Find "Reviewer Certificate Plugin"
+4. Click **Enable**
+5. Click **Settings** to configure
+
+---
+
+## Troubleshooting
+
+### Error: "Table 'reviewer_certificates' doesn't exist"
+
+**Cause:** Database migration failed to run automatically.
+
+**Solution:** Install tables manually using `install.sql`.
+
+### Error: "Failed Ajax request or invalid JSON returned"
+
+**Cause:** Database tables are missing.
+
+**Solution:**
+1. Run the manual SQL installation (see above)
+2. Refresh the page
+3. Try enabling the plugin again
+
+### Error: "Call to a member function connection() on null"
+
+**Cause:** OJS 3.3 migration system issue.
+
+**Solution:** Use manual SQL installation instead of command-line migration.
+
+---
 
 ## Support
 
-- **Issues**: https://github.com/ssemerikov/plugin/issues
-- **Documentation**: See README.md
-- **OJS Forums**: https://forum.pkp.sfu.ca/
-
-## License
-
-GNU General Public License v3.0
-
-Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Sciences
+Report issues at: https://github.com/ssemerikov/reviewerCertificate/issues

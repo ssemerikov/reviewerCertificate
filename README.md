@@ -52,7 +52,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 1. Clone or download the plugin:
    ```bash
    cd /path/to/ojs/plugins/generic/
-   git clone https://github.com/ssemerikov/plugin.git reviewerCertificate
+   git clone https://github.com/ssemerikov/reviewerCertificate.git
    ```
 
 2. Set permissions:
@@ -65,6 +65,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
    - Go to **Settings → Website → Plugins**
    - Find "Reviewer Certificate Plugin"
    - Click **Enable**
+   - Database tables will be created automatically
 
 4. Configure and use:
    - Click **Settings** to customize certificate templates
@@ -72,14 +73,23 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 
 **That's it!** The plugin includes TCPDF library, so no additional dependencies need to be installed.
 
-### Manual Installation
+### Manual Installation (If Automatic Fails)
 
-1. Download the plugin package
-2. Extract to: `plugins/generic/reviewerCertificate/`
-3. Set permissions: `chmod -R 755 plugins/generic/reviewerCertificate/`
-4. Enable in OJS admin interface
+If you encounter database errors like "Table 'reviewer_certificates' doesn't exist":
 
-Then follow steps 4-8 from Method 1.
+1. Download and install plugin files (see above)
+
+2. **Create database tables manually:**
+   ```bash
+   cd /path/to/ojs/plugins/generic/reviewerCertificate/
+   mysql -u [username] -p [database_name] < install.sql
+   ```
+
+   Or use phpMyAdmin to run the SQL from `install.sql`
+
+3. Enable the plugin in OJS admin interface
+
+📖 **See [INSTALL.md](INSTALL.md) for detailed installation instructions and troubleshooting.**
 
 ## Configuration
 
