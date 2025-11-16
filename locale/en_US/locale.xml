@@ -85,6 +85,8 @@
 	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Invalid certificate code. This certificate could not be verified.</message>
 	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">No reviewers selected for batch certificate generation</message>
 	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Access denied. You do not have permission to download this certificate.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">No journal context available. Please ensure you are accessing this from a valid journal.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Database access is currently unavailable. Please contact the system administrator.</message>
 
 	<!-- Verification -->
 	<message key="plugins.generic.reviewerCertificate.verify.title">Verify Certificate</message>

@@ -52,17 +52,33 @@ class CertificateSettingsForm extends Form {
      * @copydoc Form::initData()
      */
     public function initData() {
-        $this->setData('headerText', $this->plugin->getSetting($this->contextId, 'headerText'));
-        $this->setData('bodyTemplate', $this->plugin->getSetting($this->contextId, 'bodyTemplate'));
-        $this->setData('footerText', $this->plugin->getSetting($this->contextId, 'footerText'));
-        $this->setData('fontFamily', $this->plugin->getSetting($this->contextId, 'fontFamily'));
-        $this->setData('fontSize', $this->plugin->getSetting($this->contextId, 'fontSize'));
-        $this->setData('textColorR', $this->plugin->getSetting($this->contextId, 'textColorR'));
-        $this->setData('textColorG', $this->plugin->getSetting($this->contextId, 'textColorG'));
-        $this->setData('textColorB', $this->plugin->getSetting($this->contextId, 'textColorB'));
-        $this->setData('minimumReviews', $this->plugin->getSetting($this->contextId, 'minimumReviews'));
-        $this->setData('includeQRCode', $this->plugin->getSetting($this->contextId, 'includeQRCode'));
-        $this->setData('backgroundImage', $this->plugin->getSetting($this->contextId, 'backgroundImage'));
+        try {
+            $this->setData('headerText', $this->plugin->getSetting($this->contextId, 'headerText') ?? '');
+            $this->setData('bodyTemplate', $this->plugin->getSetting($this->contextId, 'bodyTemplate') ?? '');
+            $this->setData('footerText', $this->plugin->getSetting($this->contextId, 'footerText') ?? '');
+            $this->setData('fontFamily', $this->plugin->getSetting($this->contextId, 'fontFamily') ?? 'helvetica');
+            $this->setData('fontSize', $this->plugin->getSetting($this->contextId, 'fontSize') ?? 12);
+            $this->setData('textColorR', $this->plugin->getSetting($this->contextId, 'textColorR') ?? 0);
+            $this->setData('textColorG', $this->plugin->getSetting($this->contextId, 'textColorG') ?? 0);
+            $this->setData('textColorB', $this->plugin->getSetting($this->contextId, 'textColorB') ?? 0);
+            $this->setData('minimumReviews', $this->plugin->getSetting($this->contextId, 'minimumReviews') ?? 1);
+            $this->setData('includeQRCode', $this->plugin->getSetting($this->contextId, 'includeQRCode') ?? false);
+            $this->setData('backgroundImage', $this->plugin->getSetting($this->contextId, 'backgroundImage') ?? '');
+        } catch (Exception $e) {
+            error_log('ReviewerCertificate: Error initializing form data: ' . $e->getMessage());
+            // Set default values on error
+            $this->setData('headerText', '');
+            $this->setData('bodyTemplate', '');
+            $this->setData('footerText', '');
+            $this->setData('fontFamily', 'helvetica');
+            $this->setData('fontSize', 12);
+            $this->setData('textColorR', 0);
+            $this->setData('textColorG', 0);
+            $this->setData('textColorB', 0);
+            $this->setData('minimumReviews', 1);
+            $this->setData('includeQRCode', false);
+            $this->setData('backgroundImage', '');
+        }
     }
 
     /**
@@ -212,10 +228,17 @@ class CertificateSettingsForm extends Form {
 
         // Statistics
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
-        $statistics = $certificateDao->getStatisticsByContext($this->contextId);
-        $templateMgr->assign('totalCertificates', $statistics['total']);
-        $templateMgr->assign('totalDownloads', $statistics['downloads']);
-        $templateMgr->assign('uniqueReviewers', $statistics['reviewers']);
+        if (!$certificateDao) {
+            error_log('ReviewerCertificate: CertificateDAO not registered - statistics unavailable');
+            $templateMgr->assign('totalCertificates', 0);
+            $templateMgr->assign('totalDownloads', 0);
+            $templateMgr->assign('uniqueReviewers', 0);
+        } else {
+            $statistics = $certificateDao->getStatisticsByContext($this->contextId);
+            $templateMgr->assign('totalCertificates', $statistics['total']);
+            $templateMgr->assign('totalDownloads', $statistics['downloads']);
+            $templateMgr->assign('uniqueReviewers', $statistics['reviewers']);
+        }
 
         // Eligible reviewers for batch generation
         $eligibleReviewers = $this->getEligibleReviewers();
@@ -230,6 +253,12 @@ class CertificateSettingsForm extends Form {
      */
     private function getEligibleReviewers() {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
+
+        // Check if DAO is available
+        if (!$certificateDao) {
+            error_log('ReviewerCertificate: CertificateDAO not registered - cannot get eligible reviewers');
+            return array();
+        }
 
         // Use direct database query for OJS 3.4 compatibility
         // Note: review_id is the primary key in review_assignments table
@@ -250,15 +279,21 @@ class CertificateSettingsForm extends Form {
 
         $reviewers = array();
         foreach ($result as $row) {
-            // Use Repo facade for OJS 3.4 compatibility
-            $user = Repo::user()->get($row->reviewer_id);
-            if ($user) {
-                $reviewers[] = array(
-                    'id' => $row->reviewer_id,
-                    'name' => $user->getFullName(),
-                    'completedReviews' => $row->completed_reviews,
-                    'missingCertificates' => $row->missing_certificates
-                );
+            try {
+                // Use Repo facade for OJS 3.4 compatibility
+                $user = Repo::user()->get($row->reviewer_id);
+                if ($user) {
+                    $reviewers[] = array(
+                        'id' => $row->reviewer_id,
+                        'name' => $user->getFullName(),
+                        'completedReviews' => $row->completed_reviews,
+                        'missingCertificates' => $row->missing_certificates
+                    );
+                }
+            } catch (Exception $e) {
+                error_log('ReviewerCertificate: Error getting user ' . $row->reviewer_id . ': ' . $e->getMessage());
+                // Skip this reviewer and continue
+                continue;
             }
         }
 

@@ -110,6 +110,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             case 'settings':
                 $context = $request->getContext();
 
+                // Validate context
+                if (!$context) {
+                    error_log('ReviewerCertificate: No context available for settings');
+                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
+                }
+
                 $this->import('classes.form.CertificateSettingsForm');
                 $form = new CertificateSettingsForm($this, $context->getId());
 
@@ -136,6 +142,15 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             case 'preview':
                 $context = $request->getContext();
+
+                // Validate context
+                if (!$context) {
+                    error_log('ReviewerCertificate: No context available for preview');
+                    http_response_code(400);
+                    echo 'Error: No context available';
+                    exit;
+                }
+
                 $this->import('classes.CertificateGenerator');
 
                 // Create a sample certificate for preview
@@ -173,6 +188,13 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 set_time_limit(300); // 5 minutes for batch operations
 
                 $context = $request->getContext();
+
+                // Validate context
+                if (!$context) {
+                    error_log('ReviewerCertificate: No context available for batch generation');
+                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
+                }
+
                 $reviewerIds = $request->getUserVar('reviewerIds');
 
                 if (!is_array($reviewerIds) || empty($reviewerIds)) {
@@ -180,6 +202,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 }
 
                 $certificateDao = DAORegistry::getDAO('CertificateDAO');
+
+                // Validate DAO
+                if (!$certificateDao) {
+                    error_log('ReviewerCertificate: CertificateDAO not registered');
+                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.daoNotAvailable'));
+                }
                 $this->import('classes.Certificate');
 
                 $generated = 0;
