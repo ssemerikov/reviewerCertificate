@@ -39,7 +39,7 @@ jobs:
         run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
 
       - name: Cache Composer dependencies
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ steps.composer-cache.outputs.dir }}
           key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
@@ -96,7 +96,7 @@ jobs:
 
       - name: Upload Coverage to Codecov
         if: matrix.php == '8.1' && matrix.ojs == '3.4'
-        uses: codecov/codecov-action@v3
+        uses: codecov/codecov-action@v4
         with:
           files: tests/coverage/clover.xml
           flags: unittests
@@ -105,7 +105,7 @@ jobs:
 
       - name: Archive test results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: test-results-php${{ matrix.php }}-ojs${{ matrix.ojs }}
           path: |
