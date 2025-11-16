@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/sv_SE/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Swedish
+  * NOTE: This translation uses formal Swedish ("ni") appropriate for academic publishing.
+  * Swedish-specific characters: å, ä, ö
+  -->
+
+<locale name="sv_SE" full_name="Svenska (Sverige)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Plugin för Granskarcertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.description">Gör det möjligt för granskare att generera och ladda ner personliga PDF-certifikat för erkännande efter slutförda granskningar.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Granskningscertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Certifikat för Kollegial Granskning</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Ditt certifikat är klart!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Tack för att du slutförde denna granskning. Du kan nu ladda ner ditt certifikat för erkännande.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Ditt certifikat kommer att genereras automatiskt när du klickar på nedladdningsknappen.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Ladda ner Certifikat</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Certifikatinställningar</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Konfigurera certifikatmallar och behörighetskriterier för granskare.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Inställningar för Certifikatmall</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Bakgrundsbild</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Ladda upp en bakgrundsbild för certifikatet (JPG eller PNG, rekommenderad storlek: 2100x2970 pixlar för A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Nuvarande bakgrundsbild</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Rubriktext</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Huvudrubriken som visas högst upp på certifikatet</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Rubriktext krävs</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Mall för Certifikatinnehåll</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Huvudinnehållet i certifikatet. Använd mallvariabler för att infoga dynamiskt innehåll.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Mall för certifikatinnehåll krävs</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Sidfotstext</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Valfri text som visas längst ner på certifikatet</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Tillgängliga Mallvariabler</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Använd dessa variabler i dina mallar för att infoga dynamiskt innehåll:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Standardmall</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Använd standardmall</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Utseendeinställningar</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Typsnittsfamilj</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Teckenstorlek</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Textfärg (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Ange textfärg med RGB-värden (0-255 för varje komponent)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Behörighetskriterier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minsta Antal Slutförda Granskningar</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Minsta antal slutförda granskningar som krävs innan en granskare kan få ett certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Minsta antal granskningar måste vara ett tal större än eller lika med 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Verifieringsalternativ</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Inkludera QR-kod för certifikatverifiering</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Förhandsgranska Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Ogiltig bildtyp. Vänligen ladda upp en JPG- eller PNG-fil.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Filuppladdning misslyckades. Vänligen försök igen.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Denna granskning är inte slutförd ännu. Certifikat är endast tillgängliga för slutförda granskningar.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Ingen certifikatkod angiven</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Ogiltig certifikatkod. Detta certifikat kunde inte verifieras.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Inga granskare valda för batchgenerering av certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Åtkomst nekad. Du har inte behörighet att ladda ner detta certifikat.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Ingen tidskriftskontext tillgänglig. Vänligen se till att du kommer åt från en giltig tidskrift.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Databasåtkomst är för närvarande otillgänglig. Vänligen kontakta systemadministratören.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Verifiera Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Ange en certifikatkod för att verifiera äktheten</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Certifikatkod</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Verifiera Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Giltigt Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Ogiltigt Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Certifikatkoden du angav är ogiltig eller finns inte i vårt system.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Certifikatkod</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Granskarens Namn</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Tidskriftens Namn</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Utfärdandedatum</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Batchgenerering av Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generera certifikat för flera granskare samtidigt. Välj granskare från listan nedan som har slutfört granskningar men ännu inte har certifikat.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Välj Granskare</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">slutförda granskningar</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Inga behöriga granskare hittades. Alla granskare har certifikat för sina slutförda granskningar.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Håll Ctrl (Windows/Linux) eller Cmd (Mac) nedtryckt för att välja flera granskare</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generera Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Genererar certifikat...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Vänligen välj minst en granskare</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certifikat genererade framgångsrikt</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Ett fel uppstod vid generering av certifikat. Vänligen försök igen.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certifikat genererade framgångsrikt</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Certifikatstatistik</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Översikt över certifikatgenerering och användning i din tidskrift</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Totalt Utfärdade Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Totalt Antal Nedladdningar</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Unika Granskare med Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Totalt Utfärdade Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Totalt Antal Nedladdningar</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Genomsnittligt Antal Nedladdningar per Certifikat</message>
+</locale>

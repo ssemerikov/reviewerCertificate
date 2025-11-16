@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/fi_FI/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Finnish
+  * NOTE: This translation uses formal Finnish appropriate for academic publishing.
+  * Finnish-specific characters: ä, ö, å
+  * NOTE: Finnish is a Uralic language with unique grammar (agglutinative).
+  -->
+
+<locale name="fi_FI" full_name="Suomi (Suomi)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Arvioitsijatodistuslisäosa</message>
+	<message key="plugins.generic.reviewerCertificate.description">Mahdollistaa arvioitsijoiden luoda ja ladata henkilökohtaisia PDF-todistuksia tunnustuksena vertaisarvioinnin suorittamisen jälkeen.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Arviointitodistus</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Vertaisarviointitodistus</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Todistuksesi on valmis!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Kiitos arvioinnin suorittamisesta. Voit nyt ladata tunnustustodistuksesi.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Todistuksesi luodaan automaattisesti, kun napsautat lataus-painiketta.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Lataa Todistus</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Todistusasetukset</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Määritä todistuspohjat ja kelpoisuuskriteerit arvioitsijoille.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Todistuspohjan Asetukset</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Taustakuva</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Lataa taustakuva todistukselle (JPG tai PNG, suositeltu koko: 2100x2970 pikseliä A4:lle)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Nykyinen taustakuva</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Otsikkoteksti</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Pääotsikko, joka näytetään todistuksen yläosassa</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Otsikkoteksti vaaditaan</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Todistuksen Rungon Pohja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Todistuksen pääsisältö. Käytä pohjamuuttujia dynaamisen sisällön lisäämiseen.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Todistuksen rungon pohja vaaditaan</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Alatunnisteteksti</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Valinnainen teksti, joka näytetään todistuksen alaosassa</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Käytettävissä Olevat Pohjamuuttujat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Käytä näitä muuttujia pohjissasi dynaamisen sisällön lisäämiseen:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Oletuspohja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Käytä oletuspohjaa</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Ulkoasuasetukset</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Fonttiperhe</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Fonttikoko</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Tekstin Väri (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Määritä tekstin väri käyttämällä RGB-arvoja (0-255 kullekin komponentille)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Kelpoisuuskriteerit</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Vähimmäismäärä Suoritettuja Arviointeja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Vähimmäismäärä suoritettuja arviointeja, joka vaaditaan ennen kuin arvioitsija voi saada todistuksen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Vähimmäismäärän arviointeja tulee olla numero, joka on suurempi tai yhtä suuri kuin 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Vahvistusvaihtoehdot</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Sisällytä QR-koodi todistuksen vahvistamiseen</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Esikatsele Todistusta</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Virheellinen kuvatyyppi. Lataa JPG- tai PNG-tiedosto.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Tiedoston lataus epäonnistui. Yritä uudelleen.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Tätä arviointia ei ole vielä suoritettu. Todistukset ovat saatavilla vain suoritetuille arvioinneille.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Todistuskoodia ei annettu</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Virheellinen todistuskoodi. Tätä todistusta ei voitu vahvistaa.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Eräluonnin todistusten luomiseen ei ole valittu arvioitsijoita</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Pääsy evätty. Sinulla ei ole oikeutta ladata tätä todistusta.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Lehden kontekstia ei ole saatavilla. Varmista, että käytät pääsyä kelvollisesta lehdestä.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Tietokantayhteys ei ole tällä hetkellä saatavilla. Ota yhteyttä järjestelmän ylläpitäjään.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Vahvista Todistus</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Anna todistuskoodi sen aitouden vahvistamiseksi</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Todistuskoodi</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Vahvista Todistus</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Kelvollinen Todistus</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Virheellinen Todistus</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Antamasi todistuskoodi ei ole kelvollinen tai sitä ei ole järjestelmässämme.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Todistuskoodi</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Arvioitsijan Nimi</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Lehden Nimi</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Myöntämispäivä</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Todistusten Eräluonti</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Luo todistuksia useille arvioitsijoille kerralla. Valitse arvioitsijat alla olevasta luettelosta, jotka ovat suorittaneet arvioinnit mutta joilla ei vielä ole todistuksia.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Valitse Arvioitsijat</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">suoritettua arviointia</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Kelpoisia arvioitsijoita ei löytynyt. Kaikilla arvioitsijoilla on todistukset suoritetuista arvioinneistaan.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Pidä Ctrl (Windows/Linux) tai Cmd (Mac) painettuna valitaksesi useita arvioitsijoita</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Luo Todistukset</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Luodaan todistuksia...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Valitse vähintään yksi arvioitsija</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">todistus/todistusta luotu onnistuneesti</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Todistusten luonnissa tapahtui virhe. Yritä uudelleen.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} todistus/todistusta luotu onnistuneesti</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Todistustilastot</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Yleiskatsaus todistusten luomisesta ja käytöstä lehdessäsi</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Myönnettyjä Todistuksia Yhteensä</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Latauksia Yhteensä</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Yksilöllisiä Arvioitsijoita Todistuksineen</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Myönnettyjä Todistuksia Yhteensä</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Latauksia Yhteensä</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Keskimääräinen Latausmäärä Todistusta Kohden</message>
+</locale>

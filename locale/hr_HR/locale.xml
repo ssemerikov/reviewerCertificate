@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/hr_HR/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Croatian
+  * NOTE: This translation uses formal Croatian appropriate for academic publishing.
+  * Croatian-specific characters: č, ć, đ, š, ž
+  -->
+
+<locale name="hr_HR" full_name="Hrvatski (Hrvatska)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Dodatak za Certifikate Recenzenata</message>
+	<message key="plugins.generic.reviewerCertificate.description">Omogućuje recenzentima stvaranje i preuzimanje personaliziranih PDF certifikata za priznanje nakon završetka recenzija.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Certifikat o Recenziji</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Certifikat o Stručnoj Recenziji</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Vaš certifikat je spreman!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Hvala što ste dovršili ovu recenziju. Sada možete preuzeti svoj certifikat za priznanje.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Vaš certifikat bit će automatski generiran kada kliknete na gumb za preuzimanje.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Preuzmi Certifikat</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Postavke Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Konfigurirajte predloške certifikata i kriterije prihvatljivosti za recenzente.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Postavke Predloška Certifikata</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Pozadinska Slika</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Prenesite pozadinsku sliku za certifikat (JPG ili PNG, preporučena veličina: 2100x2970 piksela za A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Trenutna pozadinska slika</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Tekst Zaglavlja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Glavni naslov prikazan na vrhu certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Tekst zaglavlja je obavezan</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Predložak Tijela Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Glavni sadržaj certifikata. Koristite varijable predloška za umetanje dinamičkog sadržaja.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Predložak tijela certifikata je obavezan</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Tekst Podnožja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Opcionalni tekst prikazan na dnu certifikata</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Dostupne Varijable Predloška</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Koristite ove varijable u svojim predlošcima za umetanje dinamičkog sadržaja:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Zadani predložak</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Koristi zadani predložak</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Postavke Izgleda</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Obitelj Fontova</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Veličina Fonta</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Boja Teksta (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Odredite boju teksta koristeći RGB vrijednosti (0-255 za svaku komponentu)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Kriteriji Prihvatljivosti</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minimalan Broj Završenih Recenzija</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Minimalan broj završenih recenzija potreban prije nego recenzent može primiti certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Minimalan broj recenzija mora biti broj veći ili jednak 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Opcije Provjere</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Uključi QR kod za provjeru certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Pregled Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Nevažeća vrsta slike. Molimo prenesite JPG ili PNG datoteku.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Prijenos datoteke nije uspio. Molimo pokušajte ponovno.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Ova recenzija još nije završena. Certifikati su dostupni samo za završene recenzije.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Nije dostavljen kod certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Nevažeći kod certifikata. Ovaj certifikat nije mogao biti provjeren.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Nisu odabrani recenzenti za skupno generiranje certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Pristup odbijen. Nemate dopuštenje za preuzimanje ovog certifikata.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Nema dostupnog konteksta časopisa. Molimo osigurajte da pristupate iz važećeg časopisa.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Pristup bazi podataka trenutno nije dostupan. Molimo kontaktirajte administratora sustava.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Provjeri Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Unesite kod certifikata za provjeru autentičnosti</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Kod Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Provjeri Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Važeći Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Nevažeći Certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Kod certifikata koji ste unijeli nije važeći ili ne postoji u našem sustavu.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Kod Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Ime Recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Naziv Časopisa</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Datum Izdavanja</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Skupno Generiranje Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generirajte certifikate za više recenzenata odjednom. Odaberite recenzente s donje liste koji su završili recenzije, ali još nemaju certifikate.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Odaberi Recenzente</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">završenih recenzija</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Nisu pronađeni prihvatljivi recenzenti. Svi recenzenti imaju certifikate za svoje završene recenzije.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Držite Ctrl (Windows/Linux) ili Cmd (Mac) za odabir više recenzenata</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generiraj Certifikate</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Generiranje certifikata...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Molimo odaberite barem jednog recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certifikat/certifikata uspješno generirano</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Došlo je do pogreške pri generiranju certifikata. Molimo pokušajte ponovno.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certifikat/certifikata uspješno generirano</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Statistika Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Pregled generiranja i korištenja certifikata u vašem časopisu</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Ukupno Izdanih Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Ukupno Preuzimanja</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Jedinstvenih Recenzenata s Certifikatima</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Ukupno Izdanih Certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Ukupno Preuzimanja</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Prosječan Broj Preuzimanja po Certifikatu</message>
+</locale>

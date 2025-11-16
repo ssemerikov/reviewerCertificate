@@ -37,10 +37,10 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 15 languages with complete coverage (82 message keys each)
-  - English, Ukrainian, Russian, Spanish, Portuguese (BR), French, German, Italian, Turkish, Polish, Indonesian, Dutch, Czech, Catalan, Norwegian
+  - 19 languages with complete coverage (82 message keys each)
+  - English, Ukrainian, Russian, Spanish, Portuguese (BR), French, German, Italian, Turkish, Polish, Indonesian, Dutch, Czech, Catalan, Norwegian, Swedish, Croatian, Finnish, Romanian
   - Automatic language detection from OJS settings
-  - All translations validated with comprehensive test suite (3961 assertions)
+  - All translations validated with comprehensive test suite (5017 assertions)
 - **Batch Generation**: Generate certificates for multiple reviewers at once
 
 ## Requirements
@@ -196,17 +196,27 @@ The Reviewer Certificate Plugin is fully internationalized and available in mult
 | Czech | `cs_CZ` | Čeština (Česká republika) | ✅ Complete |
 | Catalan | `ca_ES` | Català (Catalunya) | ✅ Complete |
 | Norwegian (Bokmål) | `nb_NO` | Norsk Bokmål (Norge) | ✅ Complete |
+| Swedish | `sv_SE` | Svenska (Sverige) | ✅ Complete |
+| Croatian | `hr_HR` | Hrvatski (Hrvatska) | ✅ Complete |
+| Finnish | `fi_FI` | Suomi (Suomi) | ✅ Complete |
+| Romanian | `ro_RO` | Română (România) | ✅ Complete |
 
 ### Global Coverage
 
-With 15 languages, the plugin now serves **approximately 80-82% of the global OJS user base** across:
+With 19 languages, the plugin now serves **approximately 85-87% of the global OJS user base** across:
 
-- **Western Europe**: English, French, German, Italian, Spanish, Dutch, Catalan
-- **Nordic Region**: Norwegian (Bokmål)
-- **Central Europe**: Czech
-- **Eastern Europe & Eurasia**: Russian, Ukrainian, Polish, Turkish
-- **Latin America**: Spanish, Portuguese (Brazilian)
-- **Southeast Asia**: Indonesian
+- **Western Europe (7)**: English, French, German, Italian, Spanish, Dutch, Catalan
+- **Nordic Region (3)**: Norwegian (Bokmål), Swedish, Finnish
+- **Central Europe (1)**: Czech
+- **Southeastern Europe (2)**: Romanian, Croatian
+- **Eastern Europe & Eurasia (4)**: Russian, Ukrainian, Polish, Turkish
+- **Latin America (2)**: Spanish, Portuguese (Brazilian)
+- **Southeast Asia (1)**: Indonesian
+
+**Language Families Represented:**
+- Indo-European (16 languages): Romance, Germanic, Slavic, Baltic branches
+- Uralic (2 languages): Finnish, (Hungarian potential)
+- Turkic (1 language): Turkish
 
 All translations feature scholarly terminology appropriate for academic publishing contexts and native speaker quality.
 
@@ -226,7 +236,9 @@ We welcome community contributions for additional languages! To contribute:
 3. Test your translation with the locale validation tests: `php vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
 4. Submit a pull request
 
-**Priority Languages Needed**: Chinese (Simplified), Arabic, Japanese, Korean, Swedish, Persian/Farsi, Greek
+**Priority Languages Needed (Tier 3)**: Chinese (Simplified), Arabic, Japanese, Korean, Persian/Farsi, Greek, Hebrew
+
+**Next Medium Priority (Tier 2.75+)**: Hungarian, Lithuanian, Slovak, Slovenian, Bulgarian (Cyrillic)
 
 ## Usage
 

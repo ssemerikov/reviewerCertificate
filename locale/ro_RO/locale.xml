@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/ro_RO/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Romanian
+  * NOTE: This translation uses formal Romanian appropriate for academic publishing.
+  * Romanian-specific characters: ă, â, î, ș, ț
+  -->
+
+<locale name="ro_RO" full_name="Română (România)">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Plugin Certificate Recenzori</message>
+	<message key="plugins.generic.reviewerCertificate.description">Permite recenzorilor să genereze și să descarce certificate PDF personalizate de recunoaștere după finalizarea recenziilor.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Certificat de Recenzie</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Certificat de Recenzie Colegi
+
+ală</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Certificatul dumneavoastră este gata!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Vă mulțumim pentru finalizarea acestei recenzii. Acum puteți descărca certificatul dumneavoastră de recunoaștere.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Certificatul dumneavoastră va fi generat automat când veți apăsa butonul de descărcare.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Descarcă Certificatul</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Setări Certificate</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Configurați șabloanele de certificate și criteriile de eligibilitate pentru recenzori.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Setări Șablon Certificat</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Imagine de Fundal</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Încărcați o imagine de fundal pentru certificat (JPG sau PNG, dimensiune recomandată: 2100x2970 pixeli pentru A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Imaginea de fundal curentă</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Text Antet</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Titlul principal afișat în partea de sus a certificatului</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Textul antetului este obligatoriu</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Șablon Corp Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Conținutul principal al certificatului. Utilizați variabilele șablonului pentru a insera conținut dinamic.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Șablonul corpului certificatului este obligatoriu</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Text Subsol</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Text opțional afișat în partea de jos a certificatului</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Variabile Șablon Disponibile</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Utilizați aceste variabile în șabloanele dumneavoastră pentru a insera conținut dinamic:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Șablon implicit</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Utilizați șablonul implicit</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Setări Aspect</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Familie Font</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Dimensiune Font</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Culoare Text (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Specificați culoarea textului utilizând valori RGB (0-255 pentru fiecare componentă)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Criterii de Eligibilitate</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Recenzii Finalizate Minime</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Numărul minim de recenzii finalizate necesar înainte ca un recenzor să poată primi un certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Numărul minim de recenzii trebuie să fie un număr mai mare sau egal cu 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Opțiuni de Verificare</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Includeți codul QR pentru verificarea certificatului</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Previzualizare Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Tip de imagine nevalid. Vă rugăm să încărcați un fișier JPG sau PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Încărcarea fișierului a eșuat. Vă rugăm să încercați din nou.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Această recenzie nu a fost încă finalizată. Certificatele sunt disponibile doar pentru recenzii finalizate.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Nu a fost furnizat niciun cod de certificat</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Cod de certificat nevalid. Acest certificat nu a putut fi verificat.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Nu au fost selectați recenzori pentru generarea în lot a certificatelor</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Acces refuzat. Nu aveți permisiunea de a descărca acest certificat.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Nu există un context de revistă disponibil. Vă rugăm să vă asigurați că accesați dintr-o revistă validă.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Accesul la baza de date este momentan indisponibil. Vă rugăm să contactați administratorul de sistem.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Verificare Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Introduceți un cod de certificat pentru a-i verifica autenticitatea</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Cod Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Verificați Certificatul</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Certificat Valid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Certificat Nevalid</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Codul de certificat pe care l-ați introdus nu este valid sau nu există în sistemul nostru.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Cod Certificat</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Nume Recenzor</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Nume Revistă</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Data Emiterii</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Generare în Lot a Certificatelor</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generați certificate pentru mai mulți recenzori simultan. Selectați recenzorii din lista de mai jos care au finalizat recenzii dar nu au încă certificate.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Selectați Recenzori</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">recenzii finalizate</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Nu au fost găsiți recenzori eligibili. Toți recenzorii au certificate pentru recenziile lor finalizate.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Țineți apăsat Ctrl (Windows/Linux) sau Cmd (Mac) pentru a selecta mai mulți recenzori</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generați Certificate</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Se generează certificatele...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Vă rugăm să selectați cel puțin un recenzor</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certificat/certificate generate cu succes</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">A apărut o eroare la generarea certificatelor. Vă rugăm să încercați din nou.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certificat/certificate generate cu succes</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Statistici Certificate</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Prezentare generală a generării și utilizării certificatelor în revista dumneavoastră</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Total Certificate Emise</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Total Descărcări</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Recenzori Unici cu Certificate</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total Certificate Emise</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total Descărcări</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Medie Descărcări per Certificat</message>
+</locale>
