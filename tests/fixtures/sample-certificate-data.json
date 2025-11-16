@@ -1,0 +1,46 @@
+{
+  "certificates": [
+    {
+      "reviewer_id": 1,
+      "reviewer_name": "Dr. Jane Smith",
+      "submission_id": 100,
+      "submission_title": "Advances in Machine Learning",
+      "review_id": 50,
+      "context_id": 1,
+      "journal_name": "Journal of Computer Science",
+      "date_completed": "2025-01-15"
+    },
+    {
+      "reviewer_id": 2,
+      "reviewer_name": "Prof. John Doe",
+      "submission_id": 101,
+      "submission_title": "Quantum Computing Applications",
+      "review_id": 51,
+      "context_id": 1,
+      "journal_name": "Journal of Computer Science",
+      "date_completed": "2025-01-16"
+    },
+    {
+      "reviewer_id": 3,
+      "reviewer_name": "Dr. Maria Garcia",
+      "submission_id": 102,
+      "submission_title": "Blockchain Technology Review",
+      "review_id": 52,
+      "context_id": 2,
+      "journal_name": "Technology Review",
+      "date_completed": "2025-01-17"
+    }
+  ],
+  "settings": {
+    "headerText": "Certificate of Recognition",
+    "bodyTemplate": "This certificate is awarded to {{$reviewerName}} in recognition of their valuable contribution as a peer reviewer for {{$journalName}}. Review completed on {{$reviewDate}} for the manuscript titled \"{{$submissionTitle}}\".",
+    "footerText": "We deeply appreciate your expertise and dedication.",
+    "fontFamily": "helvetica",
+    "fontSize": 12,
+    "textColorR": 0,
+    "textColorG": 0,
+    "textColorB": 0,
+    "minimumReviews": 1,
+    "includeQRCode": true
+  }
+}

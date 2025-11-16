@@ -1,0 +1,150 @@
+name: PHPUnit Tests
+
+on:
+  push:
+    branches: [ main, develop, 'claude/**' ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  test:
+    name: Test on PHP ${{ matrix.php }} - OJS ${{ matrix.ojs }}
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php: ['7.3', '7.4', '8.0', '8.1', '8.2']
+        ojs: ['3.3', '3.4', '3.5']
+        exclude:
+          # OJS 3.5 may require PHP 8.0+
+          - ojs: '3.5'
+            php: '7.3'
+          - ojs: '3.5'
+            php: '7.4'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, gd, mysqli, zip
+          coverage: xdebug
+          tools: composer
+
+      - name: Get Composer cache directory
+        id: composer-cache
+        run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+
+      - name: Cache Composer dependencies
+        uses: actions/cache@v3
+        with:
+          path: ${{ steps.composer-cache.outputs.dir }}
+          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+          restore-keys: ${{ runner.os }}-composer-
+
+      - name: Install Composer dependencies
+        run: |
+          if [ -f composer.json ]; then
+            composer install --no-interaction --prefer-dist --no-progress
+          else
+            composer init --no-interaction
+            composer require --dev phpunit/phpunit:^9.5 --no-interaction
+          fi
+
+      - name: Verify PHPUnit installation
+        run: |
+          if [ -f vendor/bin/phpunit ]; then
+            vendor/bin/phpunit --version
+          else
+            echo "PHPUnit not found in vendor/bin"
+            exit 1
+          fi
+
+      - name: Create required directories
+        run: |
+          mkdir -p tests/coverage tests/logs tests/tmp
+          chmod -R 755 tests/
+
+      - name: Run Unit Tests
+        env:
+          OJS_VERSION: ${{ matrix.ojs }}
+        run: vendor/bin/phpunit --testsuite "Unit Tests" --testdox
+
+      - name: Run Integration Tests
+        env:
+          OJS_VERSION: ${{ matrix.ojs }}
+        run: vendor/bin/phpunit --testsuite "Integration Tests" --testdox
+
+      - name: Run Compatibility Tests
+        env:
+          OJS_VERSION: ${{ matrix.ojs }}
+        run: vendor/bin/phpunit --testsuite "Compatibility Tests" --testdox
+
+      - name: Run Security Tests
+        env:
+          OJS_VERSION: ${{ matrix.ojs }}
+        run: vendor/bin/phpunit --testsuite "Security Tests" --testdox
+
+      - name: Run All Tests with Coverage
+        env:
+          OJS_VERSION: ${{ matrix.ojs }}
+        run: |
+          vendor/bin/phpunit --coverage-text --coverage-clover=tests/coverage/clover.xml
+
+      - name: Upload Coverage to Codecov
+        if: matrix.php == '8.1' && matrix.ojs == '3.4'
+        uses: codecov/codecov-action@v3
+        with:
+          files: tests/coverage/clover.xml
+          flags: unittests
+          name: codecov-umbrella
+          fail_ci_if_error: false
+
+      - name: Archive test results
+        if: always()
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-results-php${{ matrix.php }}-ojs${{ matrix.ojs }}
+          path: |
+            tests/logs/
+            tests/coverage/
+          retention-days: 30
+
+  code-quality:
+    name: Code Quality Checks
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+          extensions: mbstring, gd
+          tools: composer, phpcs, phpstan
+
+      - name: Check PHP syntax
+        run: find . -name "*.php" -not -path "./vendor/*" -not -path "./lib/*" -exec php -l {} \;
+
+      - name: PHP CodeSniffer (if configured)
+        continue-on-error: true
+        run: |
+          if [ -f phpcs.xml ]; then
+            phpcs --standard=phpcs.xml
+          else
+            echo "phpcs.xml not found, skipping"
+          fi
+
+      - name: PHPStan (if configured)
+        continue-on-error: true
+        run: |
+          if [ -f phpstan.neon ]; then
+            phpstan analyse
+          else
+            echo "phpstan.neon not found, skipping"
+          fi

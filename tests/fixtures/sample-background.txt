@@ -1,0 +1,6 @@
+# Sample Background Image Fixture
+
+This is a placeholder file for testing background image uploads.
+In actual tests, you would use real image files (JPG/PNG).
+
+For automated testing, you can create test images programmatically using GD or Imagick.
