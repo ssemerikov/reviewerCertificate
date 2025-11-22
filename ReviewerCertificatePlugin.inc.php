@@ -253,7 +253,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                                 $certificate->setSubmissionId($row->submission_id);
                                 $certificate->setReviewId($row->review_id);
                                 $certificate->setContextId($context->getId());
-                                $certificate->setDateIssued(Core::getCurrentDate());
+                                $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
                                 // Generate code without review assignment object
                                 $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
                                 $certificate->setDownloadCount(0);
@@ -592,7 +592,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
         $certificate->setReviewId($reviewAssignment->getId());
         $certificate->setContextId(Application::get()->getRequest()->getContext()->getId());
-        $certificate->setDateIssued(Core::getCurrentDate());
+        $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
         $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
         $certificateDao->insertObject($certificate);

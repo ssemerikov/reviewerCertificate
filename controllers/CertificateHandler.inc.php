@@ -128,7 +128,7 @@ class CertificateHandler extends \APP\handler\Handler {
             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
             $certificate->setReviewId($reviewId);
             $certificate->setContextId($context->getId());
-            $certificate->setDateIssued(Core::getCurrentDate());
+            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
             $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
             $certificate->setDownloadCount(0);
 
@@ -360,7 +360,7 @@ class CertificateHandler extends \APP\handler\Handler {
                             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
                             $certificate->setReviewId($reviewAssignment->getId());
                             $certificate->setContextId($context->getId());
-                            $certificate->setDateIssued(Core::getCurrentDate());
+                            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
                             $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
                             $certificateDao->insertObject($certificate);

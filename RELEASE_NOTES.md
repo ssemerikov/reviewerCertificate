@@ -1,6 +1,6 @@
-# Release Notes - Reviewer Certificate Plugin v1.0.1
+# Release Notes - Reviewer Certificate Plugin v1.0.3
 
-**Release Date**: November 16, 2025
+**Release Date**: November 22, 2025
 **Author**: Serhiy O. Semerikov (Academy of Cognitive and Natural Sciences)
 **Contact**: semerikov@gmail.com
 **License**: GNU General Public License v3.0
@@ -11,9 +11,53 @@
 
 The Reviewer Certificate Plugin for Open Journal Systems (OJS) enables journals to automatically generate and distribute personalized PDF certificates of recognition to peer reviewers upon completion of their review assignments. This plugin helps journals acknowledge and incentivize quality peer review work while providing reviewers with verifiable credentials for their professional portfolios.
 
-**Current Version**: 1.0.1 (Patch Release)
+**Current Version**: 1.0.3 (Patch Release)
 **Supported OJS Versions**: 3.3.x, 3.4.x, 3.5.x
 **Supported PHP Versions**: 7.3+ (8.0+ recommended for OJS 3.5)
+
+---
+
+## What's New in Version 1.0.3
+
+This is a **critical patch release** addressing OJS 3.5 class loading issues reported by the PKP community. Upgrading from 1.0.2 is highly recommended for OJS 3.5 users.
+
+### Critical Bug Fixes
+
+#### Fixed: DataObject and Core Class Loading Errors in OJS 3.5
+**Issue**: "Class 'DataObject' not found" and "Class 'Certificate' not found" errors in OJS 3.5.0-1
+**Impact**: Plugin failed to register and certificates could not be generated
+**Errors Logged**:
+- `Plugin ReviewerCertificatePlugin failed to be registered`
+- `Error: Class "DataObject" not found in .../Certificate.inc.php:14`
+- `Class "Certificate" not found` during batch generation
+**Solution**:
+- Changed `Certificate` class to extend fully qualified `\PKP\core\DataObject` instead of `DataObject`
+- Changed all `Core::getCurrentDate()` calls to use fully qualified `\PKP\core\Core::getCurrentDate()`
+- Fixed in `Certificate.inc.php`, `ReviewerCertificatePlugin.inc.php`, and `CertificateHandler.inc.php`
+
+**Files Fixed**:
+- `classes/Certificate.inc.php` (lines 14, 181)
+- `ReviewerCertificatePlugin.inc.php` (lines 256, 595)
+- `controllers/CertificateHandler.inc.php` (lines 131, 363)
+
+### Community Feedback Addressed
+
+This release directly addresses issues reported on PKP Community Forum:
+- **Dr. Uğur Koçak**: Class loading failures in OJS 3.5.0-1 → Fixed with fully qualified class names
+
+---
+
+## What's New in Version 1.0.2
+
+This is a **patch release** addressing class loading issues for OJS 3.4.x and 3.5.x. Upgrading from 1.0.1 is recommended for improved compatibility.
+
+### Bug Fixes
+
+#### Fixed: Class Loading Issues
+**Issue**: Parent classes not found during plugin registration
+**Solution**: Updated all parent class references to use fully qualified namespaces
+
+**Files Fixed**: Various plugin files updated with proper namespace resolution
 
 ---
 
