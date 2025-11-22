@@ -98,7 +98,7 @@ $certificate->setReviewerId($testReviewerId);
 $certificate->setSubmissionId($testSubmissionId);
 $certificate->setReviewId($testReviewId + 1); // Different review_id
 $certificate->setContextId($testContextId);
-$certificate->setDateIssued(Core::getCurrentDate());
+$certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
 $certificate->setCertificateCode($testCode . '2');
 $certificate->setDownloadCount(0);
 

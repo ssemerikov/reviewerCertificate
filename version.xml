@@ -14,7 +14,7 @@
 <version>
 	<application>reviewerCertificate</application>
 	<type>plugins.generic</type>
-	<release>1.0.2.0</release>
+	<release>1.0.3.0</release>
 	<date>2025-11-22</date>
 	<lazy-load>1</lazy-load>
 	<class>ReviewerCertificatePlugin</class>

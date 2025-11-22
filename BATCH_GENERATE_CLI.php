@@ -131,7 +131,7 @@ foreach ($reviewerIds as $reviewerId) {
         $certificate->setSubmissionId($row->submission_id);
         $certificate->setReviewId($row->review_id);
         $certificate->setContextId($contextId);
-        $certificate->setDateIssued(Core::getCurrentDate());
+        $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
         $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
         $certificate->setDownloadCount(0);
 

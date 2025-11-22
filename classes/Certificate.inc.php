@@ -11,7 +11,7 @@
  * @brief Certificate data model
  */
 
-class Certificate extends DataObject {
+class Certificate extends \PKP\core\DataObject {
 
     /**
      * Get certificate ID
@@ -178,6 +178,6 @@ class Certificate extends DataObject {
      */
     public function incrementDownloadCount() {
         $this->setDownloadCount($this->getDownloadCount() + 1);
-        $this->setLastDownloaded(Core::getCurrentDate());
+        $this->setLastDownloaded(\PKP\core\Core::getCurrentDate());
     }
 }
