@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.0.1** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.0.2** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.0.1)**: Critical bug fixes, improved installation reliability, and official OJS 3.5 support. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.0.2)**: Critical OJS 3.5 compatibility fix - removed all deprecated `import()` function calls. Plugin now works seamlessly with OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -407,6 +407,12 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
+
+**Version 1.0.2** (2025-11-22)
+- **Fixed**: Critical OJS 3.5 compatibility issue - "Call to undefined function import()" errors
+- **Changed**: Replaced all deprecated `import()` calls with modern PHP namespace imports
+- **Improved**: Full compatibility with OJS 3.3, 3.4, and 3.5
+- Addresses installation issues reported by Dr. Uğur Koçak on PKP Community Forum
 
 **Version 1.0.1** (2025-11-16)
 - **Fixed**: Critical AJAX settings form error ("Failed Ajax request or invalid JSON returned")

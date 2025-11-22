@@ -5,6 +5,35 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-11-22
+
+### Fixed
+- **Critical: OJS 3.5 Compatibility** - Fixed "Call to undefined function import()" errors preventing plugin installation
+  - Replaced all deprecated `import()` function calls with proper namespace use statements
+  - Updated ReviewerCertificatePlugin.inc.php to use modern PHP namespaces
+  - Updated CertificateDAO.inc.php with proper PKP\db namespace imports
+  - Updated CertificateHandler.inc.php with proper APP\handler namespace
+  - Updated CertificateSettingsForm.inc.php with proper PKP\form namespaces
+  - Files: All core plugin files (.inc.php)
+
+### Changed
+- **Modern PHP Namespacing**: Plugin now uses PSR-4 compliant namespace imports instead of legacy import() function
+  - Uses `use PKP\plugins\GenericPlugin` instead of `import('lib.pkp.classes.plugins.GenericPlugin')`
+  - Uses `require_once()` for plugin-specific class loading
+  - Maintains backward compatibility with OJS 3.3 and 3.4
+
+### Technical Details
+- All core plugin files updated to work with OJS 3.5.0+ which removed the deprecated import() function
+- Plugin class loading now uses `require_once($this->getPluginPath() . '/classes/...')`  pattern
+- Proper use statements for PKP library classes (JSONMessage, LinkAction, MailTemplate, etc.)
+
+### Community Feedback Addressed
+This release addresses the critical installation issue reported by Dr. Uğur Koçak on PKP Community Forum:
+- "Error: Call to undefined function import()" - **FIXED** with namespace refactoring
+- Plugin now loads successfully in OJS 3.5.0-1 and later versions
+
+---
+
 ## [1.0.1] - 2025-11-16
 
 ### Added
@@ -90,12 +119,21 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.0.2 | 2025-11-22 | Patch | OJS 3.5 compatibility fix - removed deprecated import() calls |
 | 1.0.1 | 2025-11-16 | Patch | Critical bug fixes, OJS 3.5 support, improved installation |
 | 1.0.0 | 2025-11-04 | Major | Initial release |
 
 ---
 
 ## Upgrade Notes
+
+### From 1.0.1 to 1.0.2
+- **No database changes** - Safe to upgrade without data migration
+- **No configuration changes** - All existing settings preserved
+- **Automatic**: Simply replace plugin files and refresh cache
+- **Critical for OJS 3.5**: This update is REQUIRED for OJS 3.5.0+ installations
+- **Backward compatible**: Maintains full compatibility with OJS 3.3 and 3.4
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.0.0 to 1.0.1
 - **No database changes** - Safe to upgrade without data migration

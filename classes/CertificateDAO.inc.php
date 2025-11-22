@@ -11,8 +11,10 @@
  * @brief Operations for retrieving and modifying Certificate objects
  */
 
-import('lib.pkp.classes.db.DAO');
-import('plugins.generic.reviewerCertificate.classes.Certificate');
+use PKP\db\DAO;
+use PKP\db\DAOResultFactory;
+
+require_once(dirname(__FILE__) . '/Certificate.inc.php');
 
 class CertificateDAO extends DAO {
 

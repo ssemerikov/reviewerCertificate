@@ -11,10 +11,12 @@
  * @brief Reviewer Certificate Plugin - Enables reviewers to generate and download personalized PDF certificates
  */
 
-import('lib.pkp.classes.plugins.GenericPlugin');
-import('lib.pkp.classes.core.JSONMessage');
-import('lib.pkp.classes.config.Config');
-
+use PKP\plugins\GenericPlugin;
+use PKP\core\JSONMessage;
+use PKP\config\Config;
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxModal;
+use PKP\mail\MailTemplate;
 use APP\facades\Repo;
 
 class ReviewerCertificatePlugin extends GenericPlugin {
@@ -27,7 +29,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
         if ($success && $this->getEnabled($mainContextId)) {
             // Import and register DAOs
-            $this->import('classes.CertificateDAO');
+            require_once($this->getPluginPath() . '/classes/CertificateDAO.inc.php');
             $certificateDao = new CertificateDAO();
             DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
@@ -82,7 +84,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function getActions($request, $verb) {
         $router = $request->getRouter();
-        import('lib.pkp.classes.linkAction.request.AjaxModal');
 
         return array_merge(
             $this->getEnabled() ? array(
@@ -116,7 +117,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
                 }
 
-                $this->import('classes.form.CertificateSettingsForm');
+                require_once($this->getPluginPath() . '/classes/form/CertificateSettingsForm.inc.php');
                 $form = new CertificateSettingsForm($this, $context->getId());
 
                 if ($request->getUserVar('save')) {
@@ -151,7 +152,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     exit;
                 }
 
-                $this->import('classes.CertificateGenerator');
+                require_once($this->getPluginPath() . '/classes/CertificateGenerator.inc.php');
 
                 // Create a sample certificate for preview
                 $generator = new CertificateGenerator();
@@ -208,7 +209,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     error_log('ReviewerCertificate: CertificateDAO not registered');
                     return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.daoNotAvailable'));
                 }
-                $this->import('classes.Certificate');
+                require_once($this->getPluginPath() . '/classes/Certificate.inc.php');
 
                 $generated = 0;
                 $errors = array();
@@ -369,7 +370,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $page = $params[0];
 
         if ($page == 'certificate') {
-            $this->import('controllers.CertificateHandler');
+            require_once($this->getPluginPath() . '/controllers/CertificateHandler.inc.php');
 
             // Check if handler class file was loaded
             if (!class_exists('CertificateHandler')) {
@@ -586,7 +587,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             return;
         }
 
-        $this->import('classes.Certificate');
+        require_once($this->getPluginPath() . '/classes/Certificate.inc.php');
         $certificate = new Certificate();
         $certificate->setReviewerId($reviewAssignment->getReviewerId());
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
@@ -608,7 +609,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         // Use Repo facade for OJS 3.4 compatibility
         $reviewer = Repo::user()->get($reviewAssignment->getReviewerId());
 
-        import('lib.pkp.classes.mail.MailTemplate');
         $mail = new MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
 
         $mail->setReplyTo($context->getData('contactEmail'), $context->getData('contactName'));
@@ -647,7 +647,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * @return \Illuminate\Database\Migrations\Migration
      */
     public function getInstallMigration() {
-        $this->import('classes.migration.ReviewerCertificateInstallMigration');
+        require_once($this->getPluginPath() . '/classes/migration/ReviewerCertificateInstallMigration.inc.php');
         return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
     }
 

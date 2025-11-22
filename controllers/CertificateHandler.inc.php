@@ -11,12 +11,11 @@
  * @brief Handle requests for certificate operations
  */
 
-import('classes.handler.Handler');
-import('lib.pkp.classes.core.JSONMessage');
-import('lib.pkp.classes.security.Role');
-
-use APP\facades\Repo;
+use APP\handler\Handler;
+use PKP\core\JSONMessage;
 use PKP\security\Role;
+use PKP\security\authorization\ContextAccessPolicy;
+use APP\facades\Repo;
 
 class CertificateHandler extends Handler {
 
@@ -52,7 +51,6 @@ class CertificateHandler extends Handler {
         }
 
         // For all other operations, require context access
-        import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
         $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
 
         return parent::authorize($request, $args, $roleAssignments);
@@ -125,7 +123,7 @@ class CertificateHandler extends Handler {
 
         if (!$certificate) {
             // Create certificate if it doesn't exist
-            import('plugins.generic.reviewerCertificate.classes.Certificate');
+            require_once(dirname(__FILE__) . '/../classes/Certificate.inc.php');
             $certificate = new Certificate();
             $certificate->setReviewerId($reviewAssignment->getReviewerId());
             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
@@ -226,7 +224,7 @@ class CertificateHandler extends Handler {
     private function generateAndOutputPDF($reviewAssignment, $certificate, $context) {
         // Load generator
         $plugin = $this->getPlugin();
-        $plugin->import('classes.CertificateGenerator');
+        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.inc.php');
         $generator = new CertificateGenerator();
 
         // Set up generator
@@ -258,7 +256,7 @@ class CertificateHandler extends Handler {
      */
     private function generatePreviewPDF($context) {
         $plugin = $this->getPlugin();
-        $plugin->import('classes.CertificateGenerator');
+        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.inc.php');
         $generator = new CertificateGenerator();
 
         // Create mock objects for preview
@@ -357,7 +355,7 @@ class CertificateHandler extends Handler {
 
                         if (!$existing) {
                             // Create certificate
-                            import('plugins.generic.reviewerCertificate.classes.Certificate');
+                            require_once(dirname(__FILE__) . '/../classes/Certificate.inc.php');
                             $certificate = new Certificate();
                             $certificate->setReviewerId($reviewerId);
                             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
