@@ -399,23 +399,40 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
         $templateMgr = $params[0];
         $template = $params[1];
 
-
         // Exclude our own verify template to prevent interference with Smarty path resolution
         if (strpos($template, 'verify.tpl') !== false) {
             return false;
         }
 
-        // Check if this is the reviewer dashboard - support multiple template patterns for OJS 3.4
+        // Check if this is the reviewer dashboard - support multiple template patterns
+        // Different templates for different OJS versions and review states
         $reviewerTemplates = array(
+            // OJS 3.3/3.4 templates
             'reviewer/review/reviewCompleted.tpl',
             'reviewer/review/step3.tpl',
             'reviewer/review/step4.tpl',
-            'reviewer/review/reviewStepHeader.tpl',  // Template used during review process
+            'reviewer/review/reviewStepHeader.tpl',
+
+            // OJS 3.5 templates - may use different paths
+            'reviewer/review/step4.tpl',  // Review completion step
+            'reviewer/review/complete.tpl',  // Potential OJS 3.5 completion template
+            'reviewer/review/reviewStep4.tpl',  // Alternative naming
+            'reviewer/review/reviewComplete.tpl',  // Alternative naming
         );
+
+        // Debug logging to help diagnose template issues
+        // Only log if we're in a reviewer context (to reduce log noise)
+        $context = $request->getContext();
+        if ($context && strpos($template, 'reviewer/') === 0) {
+            error_log("ReviewerCertificate: Template displayed: $template");
+        }
 
         if (!in_array($template, $reviewerTemplates)) {
             return false;
         }
+
+        // Log successful template match
+        error_log("ReviewerCertificate: Matched template for certificate button: $template");
 
 
         // Get template variable - might be ReviewAssignment or Submission object
@@ -495,6 +512,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
 
 
         if ($certificate || $isEligible) {
+            error_log("ReviewerCertificate: Certificate is available or reviewer is eligible - showing button");
 
             // Load CSS and JS assets
             $this->addScript($request);
@@ -503,28 +521,29 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
             $templateMgr->assign('showCertificateButton', true);
             $templateMgr->assign('certificateExists', (bool)$certificate);
             $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', $reviewAssignment->getId()));
+            $templateMgr->assign('reviewAssignmentId', $reviewAssignment->getId());
 
             // Fetch the button HTML
             $additionalContent = $templateMgr->fetch($this->getTemplateResource('reviewerDashboard.tpl'));
 
-            // Instead of trying to modify params[2] (which is NULL),
-            // we need to use template manager's state to inject content
-            // Store the content in template manager for later retrieval
+            // Store content in template variable for Smarty templates to include
             $templateMgr->assign('reviewerCertificateButtonHTML', $additionalContent);
 
-            // Try to append to output if it exists
-            if (isset($params[2]) && is_string($params[2])) {
-                $params[2] .= '<div class="reviewer-certificate-wrapper">' . $additionalContent . '</div>';
-            } else {
-                // Output is NULL or not a string - use alternative injection method
+            // Multiple injection strategies for maximum compatibility across OJS versions
 
-                // params[2] is NULL - we can't modify it
-                // Instead, just echo the HTML directly since we're in a template display hook
-                // The hook is called during template rendering, so output will be captured
-                echo '<div class="reviewer-certificate-wrapper" style="margin: 20px 0;">' . $additionalContent . '</div>';
+            // Strategy 1: Try to modify output buffer (params[2])
+            if (isset($params[2]) && is_string($params[2])) {
+                $params[2] .= "\n" . $additionalContent;
+                error_log("ReviewerCertificate: Injected via params[2] modification");
+            }
+            // Strategy 2: Direct echo (works in most template hooks due to output buffering)
+            else {
+                echo "\n" . $additionalContent;
+                error_log("ReviewerCertificate: Injected via echo (output buffering)");
             }
 
         } else {
+            error_log("ReviewerCertificate: Certificate not available and reviewer not eligible");
         }
 
         return false;
