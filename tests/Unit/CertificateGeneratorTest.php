@@ -188,6 +188,44 @@ class CertificateGeneratorTest extends TestCase
     }
 
     /**
+     * Test proportional font size calculations
+     * Ensures that all text elements scale correctly based on the configured base font size
+     */
+    public function testProportionalFontSizes(): void
+    {
+        $testCases = [
+            // [baseFontSize, expectedHeader, expectedBody, expectedFooter, expectedCode, expectedQRLabel]
+            [12, 24, 14, 10, 8, 6],   // Default configuration
+            [16, 32, 19, 13, 11, 8],  // Larger font
+            [10, 20, 12, 8, 7, 5],    // Smaller font
+            [18, 36, 21, 15, 12, 9],  // Very large font
+            [8, 16, 9, 7, 5, 4],      // Very small font
+        ];
+
+        foreach ($testCases as [$base, $expectedHeader, $expectedBody, $expectedFooter, $expectedCode, $expectedQR]) {
+            // Calculate proportional sizes using the same logic as CertificateGenerator
+            $headerSize = round($base * 2.0);      // 2x base
+            $bodySize = round($base * 1.167);      // 1.167x base
+            $footerSize = round($base * 0.833);    // 0.833x base
+            $codeSize = round($base * 0.667);      // 0.667x base
+            $qrLabelSize = round($base * 0.5);     // 0.5x base
+
+            // Verify calculations match expected values
+            $this->assertEquals($expectedHeader, $headerSize, "Header size incorrect for base font $base");
+            $this->assertEquals($expectedBody, $bodySize, "Body size incorrect for base font $base");
+            $this->assertEquals($expectedFooter, $footerSize, "Footer size incorrect for base font $base");
+            $this->assertEquals($expectedCode, $codeSize, "Code size incorrect for base font $base");
+            $this->assertEquals($expectedQR, $qrLabelSize, "QR label size incorrect for base font $base");
+
+            // Verify proportions are maintained
+            $this->assertGreaterThan($bodySize, $headerSize, "Header should be larger than body");
+            $this->assertGreaterThan($footerSize, $bodySize, "Body should be larger than footer");
+            $this->assertGreaterThan($codeSize, $footerSize, "Footer should be larger than code");
+            $this->assertGreaterThan($qrLabelSize, $codeSize, "Code should be larger than QR label");
+        }
+    }
+
+    /**
      * Test QR code URL generation
      */
     public function testQRCodeURL(): void

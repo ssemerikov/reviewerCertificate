@@ -210,13 +210,20 @@ class CertificateGenerator {
         // Get template variables
         $variables = $this->getTemplateVariables();
 
+        // Get base font size from settings and calculate proportional sizes
+        $baseFontSize = $this->getTemplateSetting('fontSize', 12);
+        $headerSize = round($baseFontSize * 2.0);      // 2x base (default: 24)
+        $bodySize = round($baseFontSize * 1.167);      // 1.167x base (default: 14)
+        $footerSize = round($baseFontSize * 0.833);    // 0.833x base (default: 10)
+        $codeSize = round($baseFontSize * 0.667);      // 0.667x base (default: 8)
+
         // Header text
         $headerText = $this->replaceVariables(
             $this->getTemplateSetting('headerText', 'Certificate of Recognition'),
             $variables
         );
 
-        $pdf->SetFont($pdf->getFontFamily(), 'B', 24);
+        $pdf->SetFont($pdf->getFontFamily(), 'B', $headerSize);
         $pdf->Cell(0, 20, $headerText, 0, 1, 'C');
         $pdf->Ln(10);
 
@@ -226,7 +233,7 @@ class CertificateGenerator {
             $variables
         );
 
-        $pdf->SetFont($pdf->getFontFamily(), '', 14);
+        $pdf->SetFont($pdf->getFontFamily(), '', $bodySize);
         $pdf->MultiCell(0, 10, $bodyTemplate, 0, 'C', 0, 1);
         $pdf->Ln(10);
 
@@ -237,7 +244,7 @@ class CertificateGenerator {
         );
 
         if ($footerText) {
-            $pdf->SetFont($pdf->getFontFamily(), 'I', 10);
+            $pdf->SetFont($pdf->getFontFamily(), 'I', $footerSize);
             $pdf->MultiCell(0, 8, $footerText, 0, 'C', 0, 1);
             $pdf->Ln(5);
         }
@@ -245,7 +252,7 @@ class CertificateGenerator {
         // Certificate code
         if ($this->certificate || $this->previewMode) {
             $code = $this->previewMode ? 'PREVIEW12345' : $this->certificate->getCertificateCode();
-            $pdf->SetFont($pdf->getFontFamily(), '', 8);
+            $pdf->SetFont($pdf->getFontFamily(), '', $codeSize);
             $pdf->Cell(0, 5, 'Certificate Code: ' . $code, 0, 1, 'C');
         }
     }
@@ -289,8 +296,12 @@ class CertificateGenerator {
         );
 
         // Add verification URL text
+        // Use proportional font size for QR code label
+        $baseFontSize = $this->getTemplateSetting('fontSize', 12);
+        $qrLabelSize = round($baseFontSize * 0.5);     // 0.5x base (default: 6)
+
         $pdf->SetXY(150, 282);
-        $pdf->SetFont($pdf->getFontFamily(), '', 6);
+        $pdf->SetFont($pdf->getFontFamily(), '', $qrLabelSize);
         $pdf->Cell(50, 3, 'Scan to verify', 0, 0, 'C');
     }
 
