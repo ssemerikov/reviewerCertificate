@@ -5,6 +5,50 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.3] - 2025-11-24
+
+### Fixed
+- **Critical: Font Size Setting Not Applied** - Fixed certificate font size configuration being ignored during PDF generation
+  - **Issue**: Users could configure fontSize in plugin settings, but it had no effect on generated certificates
+  - **Root Cause**: All text elements in PDF used hardcoded font sizes (Header: 24pt, Body: 14pt, Footer: 10pt, Code: 8pt, QR: 6pt)
+  - **Solution**: Implemented proportional font size scaling based on configured fontSize setting
+  - **Proportional Scaling**:
+    - Header: 2.0× base size (e.g., 12pt → 24pt, 16pt → 32pt)
+    - Body: 1.167× base size (e.g., 12pt → 14pt, 16pt → 19pt)
+    - Footer: 0.833× base size (e.g., 12pt → 10pt, 16pt → 13pt)
+    - Certificate Code: 0.667× base size (e.g., 12pt → 8pt, 16pt → 11pt)
+    - QR Label: 0.5× base size (e.g., 12pt → 6pt, 16pt → 8pt)
+  - **Files Modified**:
+    - `classes/CertificateGenerator.inc.php` - Lines 213-218, 226, 236, 247, 255, 300-301, 304
+  - **Impact**: Font size setting now works correctly; all text elements scale proportionally while maintaining visual hierarchy
+  - **Reported by**: Dr. Pavlo Nechypurenko
+
+### Added
+- **Test Coverage**: New comprehensive test `testProportionalFontSizes()` validates proportional font size calculations
+  - Tests 5 different base font sizes (8pt, 10pt, 12pt, 16pt, 18pt)
+  - Verifies all proportional calculations are correct
+  - Ensures visual hierarchy is maintained (header > body > footer > code > QR label)
+  - File: `tests/Unit/CertificateGeneratorTest.php` - Lines 190-226
+
+### Changed
+- **Font Size Behavior**: Font size setting now applies globally to all certificate text elements with proportional scaling
+  - Previously: fontSize setting was saved but ignored (hardcoded values always used)
+  - Now: fontSize setting controls all text sizes proportionally
+  - Default behavior unchanged (fontSize=12 produces same output as before)
+  - Enhanced flexibility: Users can now increase/decrease all text sizes by changing one setting
+
+### Technical Details
+- **Commits**: 1 commit (e58bc2a)
+- **Files Modified**: 2 files
+  - `classes/CertificateGenerator.inc.php` - Font size calculation logic
+  - `tests/Unit/CertificateGeneratorTest.php` - Proportional font size tests
+- **Lines Changed**: +54 added, -5 removed
+- **Backward Compatible**: Default fontSize=12 produces identical output to v1.0.2
+- **No Database Changes**: Safe upgrade with no migration required
+- **No Configuration Changes**: All existing settings work without modification
+
+---
+
 ## [1.0.2] - 2025-11-22
 
 ### Fixed
@@ -126,6 +170,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.0.3 | 2025-11-24 | Patch | Font size setting fix - now applies proportionally to all text |
 | 1.0.2 | 2025-11-22 | Patch | OJS 3.5 compatibility fix - removed deprecated import() calls |
 | 1.0.1 | 2025-11-16 | Patch | Critical bug fixes, OJS 3.5 support, improved installation |
 | 1.0.0 | 2025-11-04 | Major | Initial release |
@@ -133,6 +178,14 @@ This release addresses multiple issues reported on PKP Community Forum:
 ---
 
 ## Upgrade Notes
+
+### From 1.0.2 to 1.0.3
+- **No database changes** - Safe to upgrade without data migration
+- **No configuration changes** - All existing settings preserved
+- **Automatic**: Simply replace plugin files and refresh cache
+- **Backward compatible**: Default fontSize=12 produces identical output to v1.0.2
+- **Recommended**: Review font size setting after upgrade - it now works correctly
+- **Optional**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.0.1 to 1.0.2
 - **No database changes** - Safe to upgrade without data migration
