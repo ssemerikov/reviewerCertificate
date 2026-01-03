@@ -5,6 +5,66 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.5] - 2025-01-03
+
+### Fixed
+- **Date Format Display Error** - Certificate verification page showed `%B %e, %Y` instead of formatted date
+  - **Issue**: Smarty's `date_format` modifier uses deprecated `strftime()` function
+  - **Root Cause**: PHP 8.1+ deprecated `strftime()`, PHP 8.2+ shows format codes instead of dates
+  - **Solution**: Format date in PHP using `date('F j, Y')` before passing to template
+  - **Files Modified**:
+    - `controllers/CertificateHandler.inc.php` - Line 224: Format date in verify() method
+    - `templates/verify.tpl` - Line 25: Removed `date_format` Smarty modifier
+  - **Reported by**: Olha P. Pinchuk
+
+- **Memory Exhaustion Issue** - Missing return statement after error in download handler
+  - **Issue**: `fatalError()` doesn't halt execution, code continued running after error
+  - **Root Cause**: Missing `return` statement after `fatalError()` call in download() method
+  - **Solution**: Added `return;` after `fatalError()` on line 148
+  - **File Modified**: `controllers/CertificateHandler.inc.php`
+  - **Reported by**: Olha P. Pinchuk
+
+### Technical Details
+- **PHP 8.1+ Compatibility**: Replaced deprecated `strftime()` with modern `date()` function
+- **Backward Compatible**: Works correctly on PHP 7.3+ through PHP 8.2+
+- **No Database Changes**: Safe upgrade with no migration required
+
+---
+
+## [1.0.4] - 2025-01-03
+
+### Added
+- **`.po` Locale Files for OJS 3.5** - Added Gettext `.po` format locale files for all 20 languages
+  - **Issue**: OJS 3.5 only recognizes `.po` files, not `.xml` files for translations
+  - **Root Cause**: OJS 3.5 switched to Gettext format for locale files
+  - **Solution**: Generated `.po` files for all locales alongside existing `.xml` files
+  - **Files Added**: `locale/*/locale.po` for all 20 supported languages
+  - **Reported by**: Pedro Felipe Rocha (PKP Community Forum)
+
+- **Brazilian Portuguese Translation** - New `pt_BR` locale with complete translation
+  - Community contribution by Pedro Felipe Rocha
+  - 83 message keys translated with professional scholarly terminology
+  - Both `.xml` and `.po` formats included
+
+### Changed
+- **Documentation Updates**:
+  - Updated README.md with locale file format information
+  - Added simpler installation instructions (tar.gz upload method)
+  - Updated INSTALL.md with OJS Admin upload instructions
+  - Added CLAUDE.md with development documentation
+
+### Technical Details
+- **Locale File Formats**:
+  - `.xml` files for OJS 3.3/3.4 compatibility
+  - `.po` files for OJS 3.5+ compatibility
+- **All 20 Languages Updated**: en, en_US, uk_UA, ru_RU, es_ES, pt_BR, fr_FR, de_DE, it_IT, tr_TR, pl_PL, id_ID, nl_NL, cs_CZ, ca_ES, nb_NO, sv_SE, hr_HR, fi_FI, ro_RO
+
+### Community Feedback Addressed
+- Pedro Felipe Rocha: "OJS 3.5 only recognizes .po files" - **FIXED** with dual format support
+- Pedro Felipe Rocha: "Translations showing ### symbols" - **FIXED** with .po file generation
+
+---
+
 ## [1.0.3] - 2025-11-24
 
 ### Fixed
@@ -170,6 +230,8 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.0.5 | 2025-01-03 | Patch | Date format fix (PHP 8.1+), memory issue fix |
+| 1.0.4 | 2025-01-03 | Patch | Added .po locale files for OJS 3.5, Brazilian Portuguese translation |
 | 1.0.3 | 2025-11-24 | Patch | Font size setting fix - now applies proportionally to all text |
 | 1.0.2 | 2025-11-22 | Patch | OJS 3.5 compatibility fix - removed deprecated import() calls |
 | 1.0.1 | 2025-11-16 | Patch | Critical bug fixes, OJS 3.5 support, improved installation |
@@ -178,6 +240,21 @@ This release addresses multiple issues reported on PKP Community Forum:
 ---
 
 ## Upgrade Notes
+
+### From 1.0.4 to 1.0.5
+- **No database changes** - Safe to upgrade without data migration
+- **No configuration changes** - All existing settings preserved
+- **Automatic**: Simply replace plugin files and refresh cache
+- **Critical for PHP 8.1+**: This update fixes date format display on verification page
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
+
+### From 1.0.3 to 1.0.4
+- **No database changes** - Safe to upgrade without data migration
+- **No configuration changes** - All existing settings preserved
+- **Automatic**: Simply replace plugin files and refresh cache
+- **Critical for OJS 3.5**: This update is REQUIRED for translations to work in OJS 3.5
+- **New locale files**: `.po` files added for all 20 languages
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.0.2 to 1.0.3
 - **No database changes** - Safe to upgrade without data migration
