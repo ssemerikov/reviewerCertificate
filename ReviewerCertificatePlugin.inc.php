@@ -129,7 +129,8 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
                             // File was uploaded - redirect back to Website Settings
                             // Note: We can't control which tab opens - that's handled by JavaScript
-                            $request->redirect(null, 'management', 'settings', 'website');
+                            // OJS 3.5 requires $path to be array, not string
+                            $request->redirect(null, 'management', 'settings', array('website'));
                         }
 
                         return new JSONMessage(true);
@@ -459,29 +460,18 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                 return false;
             }
 
-            // Fetch review assignments for this submission
-            $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
-            $reviewAssignments = $reviewAssignmentDao->getBySubmissionId($templateVar->getId());
+            // Fetch review assignment for this submission and user
+            // Use direct SQL query for OJS 3.5 compatibility (ReviewAssignmentDAO not available)
+            $certificateDao = DAORegistry::getDAO('CertificateDAO');
+            $result = $certificateDao->retrieve(
+                'SELECT * FROM review_assignments WHERE submission_id = ? AND reviewer_id = ?',
+                array((int) $templateVar->getId(), (int) $user->getId())
+            );
 
-            // Find the review assignment for the current user
-            // Handle both DAOResultFactory (object with next()) and array return types
-            if ($reviewAssignments) {
-                if (is_array($reviewAssignments)) {
-                    // OJS 3.4+ returns array
-                    foreach ($reviewAssignments as $ra) {
-                        if ($ra->getReviewerId() == $user->getId()) {
-                            $reviewAssignment = $ra;
-                            break;
-                        }
-                    }
-                } else {
-                    // OJS 3.3 and earlier returns DAOResultFactory
-                    while ($ra = $reviewAssignments->next()) {
-                        if ($ra->getReviewerId() == $user->getId()) {
-                            $reviewAssignment = $ra;
-                            break;
-                        }
-                    }
+            if ($result) {
+                $row = $result->current();
+                if ($row) {
+                    $reviewAssignment = $this->createReviewAssignmentFromRow($row);
                 }
             }
 
@@ -579,10 +569,9 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
         }
 
         // Count completed reviews for this reviewer
-        // In OJS 3.4, getCompletedReviewCountByReviewerId() doesn't exist
-        // Use custom SQL query instead
-        $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
-        $result = $reviewAssignmentDao->retrieve(
+        // Use direct SQL query for OJS 3.5 compatibility (ReviewAssignmentDAO not available)
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        $result = $certificateDao->retrieve(
             'SELECT COUNT(*) AS count FROM review_assignments WHERE reviewer_id = ? AND date_completed IS NOT NULL',
             array((int) $reviewAssignment->getReviewerId())
         );
@@ -667,6 +656,36 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
     public function getInstallMigration() {
         require_once($this->getPluginPath() . '/classes/migration/ReviewerCertificateInstallMigration.inc.php');
         return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
+    }
+
+    /**
+     * Create a ReviewAssignment-like object from database row
+     * For OJS 3.5 compatibility where ReviewAssignmentDAO is not available
+     * @param $row object Database row
+     * @return object Object with getter methods for review assignment data
+     */
+    private function createReviewAssignmentFromRow($row) {
+        return new class($row) {
+            private $data;
+            public function __construct($row) {
+                $this->data = (array) $row;
+            }
+            public function getId() {
+                return $this->data['review_id'] ?? null;
+            }
+            public function getReviewerId() {
+                return $this->data['reviewer_id'] ?? null;
+            }
+            public function getSubmissionId() {
+                return $this->data['submission_id'] ?? null;
+            }
+            public function getDateCompleted() {
+                return $this->data['date_completed'] ?? null;
+            }
+            public function getDateNotified() {
+                return $this->data['date_notified'] ?? null;
+            }
+        };
     }
 
     /**
