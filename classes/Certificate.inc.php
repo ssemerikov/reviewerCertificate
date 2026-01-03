@@ -11,7 +11,15 @@
  * @brief Certificate data model
  */
 
-class Certificate extends \PKP\core\DataObject {
+// OJS 3.3 compatibility: DataObject class alias
+if (class_exists('PKP\core\DataObject')) {
+    class_alias('PKP\core\DataObject', 'CertificateDataObjectBase');
+} else {
+    import('lib.pkp.classes.core.DataObject');
+    class_alias('DataObject', 'CertificateDataObjectBase');
+}
+
+class Certificate extends CertificateDataObjectBase {
 
     /**
      * Get certificate ID
@@ -178,6 +186,12 @@ class Certificate extends \PKP\core\DataObject {
      */
     public function incrementDownloadCount() {
         $this->setDownloadCount($this->getDownloadCount() + 1);
-        $this->setLastDownloaded(\PKP\core\Core::getCurrentDate());
+        // OJS 3.3 compatibility
+        if (class_exists('PKP\core\Core')) {
+            $this->setLastDownloaded(\PKP\core\Core::getCurrentDate());
+        } else {
+            import('lib.pkp.classes.core.Core');
+            $this->setLastDownloaded(Core::getCurrentDate());
+        }
     }
 }

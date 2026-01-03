@@ -11,13 +11,15 @@
  * @brief Form for managing certificate settings
  */
 
-use PKP\form\validation\FormValidator;
-use PKP\form\validation\FormValidatorPost;
-use PKP\form\validation\FormValidatorCSRF;
-use PKP\form\validation\FormValidatorCustom;
-use APP\facades\Repo;
+// OJS 3.3 compatibility: Form class alias
+if (class_exists('PKP\form\Form')) {
+    class_alias('PKP\form\Form', 'CertificateSettingsFormBase');
+} else {
+    import('lib.pkp.classes.form.Form');
+    class_alias('Form', 'CertificateSettingsFormBase');
+}
 
-class CertificateSettingsForm extends \PKP\form\Form {
+class CertificateSettingsForm extends CertificateSettingsFormBase {
 
     /** @var ReviewerCertificatePlugin */
     private $plugin;
@@ -36,14 +38,28 @@ class CertificateSettingsForm extends \PKP\form\Form {
         $this->plugin = $plugin;
         $this->contextId = $contextId;
 
-        // Add form validators
-        $this->addCheck(new FormValidatorPost($this));
-        $this->addCheck(new FormValidatorCSRF($this));
-        $this->addCheck(new FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
-        $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
-        $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
-            return is_numeric($value) && $value >= 1;
-        }));
+        // Add form validators - OJS 3.3 compatibility
+        if (class_exists('PKP\form\validation\FormValidatorPost')) {
+            $this->addCheck(new \PKP\form\validation\FormValidatorPost($this));
+            $this->addCheck(new \PKP\form\validation\FormValidatorCSRF($this));
+            $this->addCheck(new \PKP\form\validation\FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
+            $this->addCheck(new \PKP\form\validation\FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
+            $this->addCheck(new \PKP\form\validation\FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
+                return is_numeric($value) && $value >= 1;
+            }));
+        } else {
+            import('lib.pkp.classes.form.validation.FormValidatorPost');
+            import('lib.pkp.classes.form.validation.FormValidatorCSRF');
+            import('lib.pkp.classes.form.validation.FormValidator');
+            import('lib.pkp.classes.form.validation.FormValidatorCustom');
+            $this->addCheck(new FormValidatorPost($this));
+            $this->addCheck(new FormValidatorCSRF($this));
+            $this->addCheck(new FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
+            $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
+            $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
+                return is_numeric($value) && $value >= 1;
+            }));
+        }
     }
 
     /**
@@ -147,8 +163,13 @@ class CertificateSettingsForm extends \PKP\form\Form {
             return;
         }
 
-        // Create upload directory if it doesn't exist
-        $uploadDir = Core::getBaseDir() . '/files/journals/' . $context->getId() . '/reviewerCertificate';
+        // Create upload directory if it doesn't exist - OJS 3.3 compatibility
+        if (class_exists('PKP\core\Core')) {
+            $baseDir = \PKP\core\Core::getBaseDir();
+        } else {
+            $baseDir = Core::getBaseDir();
+        }
+        $uploadDir = $baseDir . '/files/journals/' . $context->getId() . '/reviewerCertificate';
         error_log('ReviewerCertificate: Upload directory: ' . $uploadDir);
 
         if (!file_exists($uploadDir)) {
@@ -278,8 +299,13 @@ class CertificateSettingsForm extends \PKP\form\Form {
         $reviewers = array();
         foreach ($result as $row) {
             try {
-                // Use Repo facade for OJS 3.4 compatibility
-                $user = Repo::user()->get($row->reviewer_id);
+                // OJS 3.3 compatibility
+                if (class_exists('APP\facades\Repo')) {
+                    $user = \APP\facades\Repo::user()->get($row->reviewer_id);
+                } else {
+                    $userDao = DAORegistry::getDAO('UserDAO');
+                    $user = $userDao->getById($row->reviewer_id);
+                }
                 if ($user) {
                     $reviewers[] = array(
                         'id' => $row->reviewer_id,

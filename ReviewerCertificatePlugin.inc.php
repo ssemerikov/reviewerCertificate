@@ -11,14 +11,15 @@
  * @brief Reviewer Certificate Plugin - Enables reviewers to generate and download personalized PDF certificates
  */
 
-use PKP\core\JSONMessage;
-use PKP\config\Config;
-use PKP\linkAction\LinkAction;
-use PKP\linkAction\request\AjaxModal;
-use PKP\mail\MailTemplate;
-use APP\facades\Repo;
+// OJS 3.3 compatibility: GenericPlugin class alias
+if (class_exists('PKP\plugins\GenericPlugin')) {
+    class_alias('PKP\plugins\GenericPlugin', 'ReviewerCertificatePluginBase');
+} else {
+    import('lib.pkp.classes.plugins.GenericPlugin');
+    class_alias('GenericPlugin', 'ReviewerCertificatePluginBase');
+}
 
-class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
+class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
 
     /**
      * @copydoc Plugin::register()
@@ -84,18 +85,33 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
     public function getActions($request, $verb) {
         $router = $request->getRouter();
 
-        return array_merge(
-            $this->getEnabled() ? array(
-                new LinkAction(
-                    'settings',
-                    new AjaxModal(
-                        $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
-                        $this->getDisplayName()
-                    ),
-                    __('manager.plugins.settings'),
-                    null
+        // OJS 3.3 compatibility for LinkAction and AjaxModal
+        if (class_exists('PKP\linkAction\LinkAction')) {
+            $linkAction = new \PKP\linkAction\LinkAction(
+                'settings',
+                new \PKP\linkAction\request\AjaxModal(
+                    $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
+                    $this->getDisplayName()
                 ),
-            ) : array(),
+                __('manager.plugins.settings'),
+                null
+            );
+        } else {
+            import('lib.pkp.classes.linkAction.LinkAction');
+            import('lib.pkp.classes.linkAction.request.AjaxModal');
+            $linkAction = new LinkAction(
+                'settings',
+                new AjaxModal(
+                    $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
+                    $this->getDisplayName()
+                ),
+                __('manager.plugins.settings'),
+                null
+            );
+        }
+
+        return array_merge(
+            $this->getEnabled() ? array($linkAction) : array(),
             parent::getActions($request, $verb)
         );
     }
@@ -113,7 +129,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                 // Validate context
                 if (!$context) {
                     error_log('ReviewerCertificate: No context available for settings');
-                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
+                    return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
                 }
 
                 require_once($this->getPluginPath() . '/classes/form/CertificateSettingsForm.inc.php');
@@ -133,13 +149,13 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                             $request->redirect(null, 'management', 'settings', array('website'));
                         }
 
-                        return new JSONMessage(true);
+                        return $this->createJSONMessage(true);
                     }
                 } else {
                     $form->initData();
                 }
 
-                return new JSONMessage(true, $form->fetch($request));
+                return $this->createJSONMessage(true, $form->fetch($request));
 
             case 'preview':
                 $context = $request->getContext();
@@ -193,13 +209,13 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                 // Validate context
                 if (!$context) {
                     error_log('ReviewerCertificate: No context available for batch generation');
-                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
+                    return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
                 }
 
                 $reviewerIds = $request->getUserVar('reviewerIds');
 
                 if (!is_array($reviewerIds) || empty($reviewerIds)) {
-                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.batch.noSelection'));
+                    return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.batch.noSelection'));
                 }
 
                 $certificateDao = DAORegistry::getDAO('CertificateDAO');
@@ -207,7 +223,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                 // Validate DAO
                 if (!$certificateDao) {
                     error_log('ReviewerCertificate: CertificateDAO not registered');
-                    return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.daoNotAvailable'));
+                    return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.daoNotAvailable'));
                 }
                 require_once($this->getPluginPath() . '/classes/Certificate.inc.php');
 
@@ -337,7 +353,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                     error_log("ReviewerCertificate: Batch generation completed - generated $generated certificates");
 
                     // Return response in format expected by JavaScript
-                    $response = new JSONMessage(true);
+                    $response = $this->createJSONMessage(true);
                     $response->setContent(array('generated' => $generated));
                     return $response;
 
@@ -346,7 +362,7 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                     error_log('ReviewerCertificate batch generation error: ' . $e->getMessage());
                     error_log('ReviewerCertificate batch generation stack trace: ' . $e->getTraceAsString());
                     error_log('ReviewerCertificate batch generation error type: ' . get_class($e));
-                    return new JSONMessage(false, 'Error generating certificates: ' . $e->getMessage());
+                    return $this->createJSONMessage(false, 'Error generating certificates: ' . $e->getMessage());
                 }
 
             default:
@@ -600,7 +616,12 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
         $certificate->setReviewId($reviewAssignment->getId());
         $certificate->setContextId(Application::get()->getRequest()->getContext()->getId());
-        $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+        // OJS 3.3 compatibility
+        if (class_exists('PKP\core\Core')) {
+            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+        } else {
+            $certificate->setDateIssued(Core::getCurrentDate());
+        }
         $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
         $certificateDao->insertObject($certificate);
@@ -613,10 +634,21 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
         $request = Application::get()->getRequest();
         $context = $request->getContext();
 
-        // Use Repo facade for OJS 3.4 compatibility
-        $reviewer = Repo::user()->get($reviewAssignment->getReviewerId());
+        // OJS 3.3 compatibility
+        if (class_exists('APP\facades\Repo')) {
+            $reviewer = \APP\facades\Repo::user()->get($reviewAssignment->getReviewerId());
+        } else {
+            $userDao = DAORegistry::getDAO('UserDAO');
+            $reviewer = $userDao->getById($reviewAssignment->getReviewerId());
+        }
 
-        $mail = new MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
+        // OJS 3.3 compatibility for MailTemplate
+        if (class_exists('PKP\mail\MailTemplate')) {
+            $mail = new \PKP\mail\MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
+        } else {
+            import('lib.pkp.classes.mail.MailTemplate');
+            $mail = new MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
+        }
 
         $mail->setReplyTo($context->getData('contactEmail'), $context->getData('contactName'));
         $mail->addRecipient($reviewer->getEmail(), $reviewer->getFullName());
@@ -699,5 +731,20 @@ class ReviewerCertificatePlugin extends \PKP\plugins\GenericPlugin {
                "{{\$journalName}}\n\n" .
                "Review completed on {{\$reviewDate}}\n\n" .
                "Manuscript: {{\$submissionTitle}}";
+    }
+
+    /**
+     * Create JSONMessage - OJS 3.3 compatibility helper
+     * @param $status bool
+     * @param $content mixed
+     * @return JSONMessage
+     */
+    private function createJSONMessage($status, $content = '') {
+        if (class_exists('PKP\core\JSONMessage')) {
+            return new \PKP\core\JSONMessage($status, $content);
+        } else {
+            import('lib.pkp.classes.core.JSONMessage');
+            return new \JSONMessage($status, $content);
+        }
     }
 }
