@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.0.2** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.0.5** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.0.2)**: Critical OJS 3.5 compatibility fix - removed all deprecated `import()` function calls. Plugin now works seamlessly with OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.0.5)**: Fixed date format display on certificate verification page (PHP 8.1+ compatibility), memory optimization, and missing error handling. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -37,10 +37,11 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 19 languages with complete coverage (82 message keys each)
+  - 20 languages with complete coverage (82 message keys each)
   - English, Ukrainian, Russian, Spanish, Portuguese (BR), French, German, Italian, Turkish, Polish, Indonesian, Dutch, Czech, Catalan, Norwegian, Swedish, Croatian, Finnish, Romanian
+  - Dual format support: `.xml` (OJS 3.3/3.4) and `.po` (OJS 3.5) locale files
   - Automatic language detection from OJS settings
-  - All translations validated with comprehensive test suite (5017 assertions)
+  - All translations validated with comprehensive test suite
 - **Batch Generation**: Generate certificates for multiple reviewers at once
 
 ## Requirements
@@ -63,7 +64,21 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 
 ## Installation
 
-### Quick Install (Recommended)
+### Quick Install via OJS Admin (Recommended)
+
+1. Download `reviewerCertificate.tar.gz` from [Releases](https://github.com/ssemerikov/reviewerCertificate/releases)
+
+2. In OJS, go to **Settings → Website → Plugins**
+
+3. Click **Upload A New Plugin** and select the tar.gz file
+
+4. Click **Enable** on the Reviewer Certificate Plugin
+
+5. Click **Settings** to customize certificate templates
+
+**That's it!** No command line needed.
+
+### Alternative: Git Clone
 
 1. Clone or download the plugin:
    ```bash
@@ -87,7 +102,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
    - Click **Settings** to customize certificate templates
    - Click **Preview Certificate** to test your design
 
-**That's it!** The plugin includes TCPDF library, so no additional dependencies need to be installed.
+**Note:** The plugin includes TCPDF library, so no additional dependencies need to be installed.
 
 ### Manual Installation (If Automatic Fails)
 
@@ -175,13 +190,25 @@ We deeply appreciate your expertise and dedication to advancing scholarly commun
 
 ## Language Support
 
-The Reviewer Certificate Plugin is fully internationalized and available in multiple languages:
+The Reviewer Certificate Plugin is fully internationalized and available in multiple languages.
+
+### Locale File Formats
+
+The plugin provides both `.xml` and `.po` locale files for maximum compatibility:
+
+| Format | OJS Version | Location |
+|--------|-------------|----------|
+| `.xml` | 3.3, 3.4 | `locale/{lang}/locale.xml` |
+| `.po` | 3.5+ | `locale/{lang}/locale.po` |
+
+**Note:** OJS 3.5 requires `.po` files for translations to work correctly.
 
 ### Supported Languages
 
 | Language | Locale Code | Native Name | Status |
 |----------|-------------|-------------|--------|
 | English (US) | `en_US` | English | ✅ Complete |
+| English | `en` | English | ✅ Complete |
 | Ukrainian | `uk_UA` | Українська | ✅ Complete |
 | Russian | `ru_RU` | Русский | ✅ Complete |
 | Spanish | `es_ES` | Español | ✅ Complete |
@@ -203,7 +230,7 @@ The Reviewer Certificate Plugin is fully internationalized and available in mult
 
 ### Global Coverage
 
-With 19 languages, the plugin now serves **approximately 85-87% of the global OJS user base** across:
+With 20 languages, the plugin now serves **approximately 85-87% of the global OJS user base** across:
 
 - **Western Europe (7)**: English, French, German, Italian, Spanish, Dutch, Catalan
 - **Nordic Region (3)**: Norwegian (Bokmål), Swedish, Finnish
@@ -231,10 +258,14 @@ All translations feature scholarly terminology appropriate for academic publishi
 
 We welcome community contributions for additional languages! To contribute:
 
-1. Copy `locale/en_US/locale.xml` to a new directory for your language (e.g., `locale/fr_FR/`)
-2. Translate all message strings while preserving template variables (e.g., `{{$reviewerName}}`)
-3. Test your translation with the locale validation tests: `php vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
-4. Submit a pull request
+1. Create a new directory for your language (e.g., `locale/fr_FR/`)
+2. Copy both `locale/en_US/locale.xml` and `locale/en_US/locale.po` to your new directory
+3. Translate all message strings while preserving template variables (e.g., `{{$reviewerName}}`)
+4. Update the .po file header with your language code and language team
+5. Test your translation with the locale validation tests: `php vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
+6. Submit a pull request
+
+**Note:** Both `.xml` and `.po` files are required for full OJS compatibility.
 
 **Priority Languages Needed (Tier 3)**: Chinese (Simplified), Arabic, Japanese, Korean, Persian/Farsi, Greek, Hebrew
 
@@ -407,6 +438,25 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
+
+**Version 1.0.5** (2025-01-03)
+- **Fixed**: Date format display on certificate verification page showing `%B %e, %Y` instead of formatted date
+- **Fixed**: PHP 8.1+ compatibility - replaced deprecated `strftime()` with `date()` function
+- **Fixed**: Missing return statement after error in download handler causing potential memory issues
+- Addresses issues reported by Olha P. Pinchuk
+
+**Version 1.0.4** (2025-01-03)
+- **Added**: `.po` locale files for all 20 languages (OJS 3.5 compatibility)
+- **Added**: Brazilian Portuguese translation (community contribution by Pedro Felipe Rocha)
+- **Added**: Simplified installation via tar.gz upload
+- **Improved**: Documentation with user-friendly installation guide
+- Addresses community feedback on PKP Community Forum
+
+**Version 1.0.3** (2025-11-24)
+- **Fixed**: Font size setting not being applied to PDF content
+- **Fixed**: OJS 3.5 redirect() signature compatibility
+- **Fixed**: ReviewAssignmentDAO deprecation in OJS 3.5
+- **Added**: OJS 3.3 namespace compatibility (conditional class loading)
 
 **Version 1.0.2** (2025-11-22)
 - **Fixed**: Critical OJS 3.5 compatibility issue - "Call to undefined function import()" errors

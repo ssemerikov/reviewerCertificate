@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: French (France)\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Plugin de Certificats de Relecteurs"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Permet aux relecteurs de générer et télécharger des certificats PDF personnalisés de reconnaissance après avoir complété les évaluations."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Certificat d'Évaluation"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Certificat d'Évaluation par les Pairs"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Votre certificat est prêt !"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Merci d'avoir complété cette évaluation. Vous pouvez maintenant télécharger votre certificat de reconnaissance."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Votre certificat sera généré automatiquement lorsque vous cliquerez sur le bouton de téléchargement."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Télécharger le Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Paramètres des Certificats"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Configurez les modèles de certificats et les critères d'éligibilité pour les relecteurs."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Paramètres du Modèle de Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Image de Fond"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Téléversez une image de fond pour le certificat (JPG ou PNG, taille recommandée : 2100x2970 pixels pour A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Image de fond actuelle"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Texte d'En-tête"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Le titre principal affiché en haut du certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Le texte d'en-tête est requis"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Modèle du Corps du Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Le contenu principal du certificat. Utilisez les variables de modèle pour insérer du contenu dynamique."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Le modèle du corps du certificat est requis"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Texte du Pied de Page"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Texte optionnel affiché en bas du certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Variables de Modèle Disponibles"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Utilisez ces variables dans vos modèles pour insérer du contenu dynamique :"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Modèle par défaut"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Utiliser le modèle par défaut"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Paramètres d'Apparence"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Famille de Police"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Taille de Police"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Couleur du Texte (RVB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Spécifiez la couleur du texte en utilisant les valeurs RVB (0-255 pour chaque composant)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Critères d'Éligibilité"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Évaluations Complétées Minimales"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Le nombre minimum d'évaluations complétées requis avant qu'un relecteur puisse recevoir un certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Le nombre minimum d'évaluations doit être un nombre supérieur ou égal à 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Options de Vérification"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Inclure un code QR pour la vérification du certificat"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Aperçu du Certificat"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Type d'image invalide. Veuillez téléverser un fichier JPG ou PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Échec du téléversement du fichier. Veuillez réessayer."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Cette évaluation n'est pas encore terminée. Les certificats ne sont disponibles que pour les évaluations complétées."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Aucun code de certificat fourni"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Code de certificat invalide. Ce certificat n'a pas pu être vérifié."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Aucun relecteur sélectionné pour la génération par lots de certificats"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Accès refusé. Vous n'avez pas la permission de télécharger ce certificat."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Aucun contexte de revue disponible. Assurez-vous d'accéder depuis une revue valide."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "L'accès à la base de données est actuellement indisponible. Veuillez contacter l'administrateur système."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Vérifier le Certificat"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Entrez un code de certificat pour vérifier son authenticité"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Code du Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Vérifier le Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Certificat Valide"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Certificat Invalide"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Le code de certificat que vous avez entré n'est pas valide ou n'existe pas dans notre système."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Code du Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Nom du Relecteur"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Nom de la Revue"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Date d'Émission"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Génération par Lots de Certificats"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Générez des certificats pour plusieurs relecteurs à la fois. Sélectionnez les relecteurs dans la liste ci-dessous qui ont complété des évaluations mais n'ont pas encore de certificats."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Sélectionner les Relecteurs"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "évaluations complétées"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Aucun relecteur éligible trouvé. Tous les relecteurs ont des certificats pour leurs évaluations complétées."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Maintenez Ctrl (Windows/Linux) ou Cmd (Mac) pour sélectionner plusieurs relecteurs"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Générer les Certificats"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Génération des certificats..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Veuillez sélectionner au moins un relecteur"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificat(s) généré(s) avec succès"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Une erreur s'est produite lors de la génération des certificats. Veuillez réessayer."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} certificat(s) généré(s) avec succès"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Statistiques des Certificats"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Aperçu de la génération et de l'utilisation des certificats dans votre revue"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total de Certificats Émis"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total de Téléchargements"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Relecteurs Uniques avec Certificats"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Total de Certificats Émis"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Total de Téléchargements"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Moyenne de Téléchargements par Certificat"
+

@@ -145,6 +145,7 @@ class CertificateHandler extends CertificateHandlerBase {
         if (!$reviewAssignment->getDateCompleted()) {
             error_log('Certificate download failed: Review not completed');
             fatalError(__('plugins.generic.reviewerCertificate.error.reviewNotCompleted'));
+            return;
         }
 
         // Get or create certificate
@@ -219,7 +220,9 @@ class CertificateHandler extends CertificateHandlerBase {
                 // Assign valid certificate data to template
                 $templateMgr->assign('isValid', true);
                 $templateMgr->assign('reviewerName', $reviewer->getFullName());
-                $templateMgr->assign('dateIssued', $certificate->getDateIssued());
+                // Format date in PHP to avoid strftime() deprecation issues in PHP 8.1+
+                $formattedDate = date('F j, Y', strtotime($certificate->getDateIssued()));
+                $templateMgr->assign('dateIssued', $formattedDate);
                 $templateMgr->assign('journalName', $context->getLocalizedName());
             } else {
                 // Invalid certificate

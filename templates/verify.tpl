@@ -22,7 +22,7 @@
 							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.certificateCode"}:</strong> {$certificateCode}</p>
 							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.reviewerName"}:</strong> {$reviewerName}</p>
 							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.journalName"}:</strong> {$journalName}</p>
-							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.dateIssued"}:</strong> {$dateIssued|date_format:"%B %e, %Y"}</p>
+							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.dateIssued"}:</strong> {$dateIssued}</p>
 						</div>
 					</div>
 				{else}

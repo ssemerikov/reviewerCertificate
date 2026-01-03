@@ -1,14 +1,37 @@
 # Reviewer Certificate Plugin - Installation Guide
 
-## Quick Install (Recommended)
+## Quick Install via OJS Admin (Recommended)
 
-### Method 1: Automatic Installation via OJS
+The easiest way to install the plugin - no command line needed!
+
+1. **Download** `reviewerCertificate.tar.gz` from [GitHub Releases](https://github.com/ssemerikov/reviewerCertificate/releases)
+
+2. **Log in** to OJS as Administrator
+
+3. **Navigate to** Settings → Website → Plugins
+
+4. **Click** "Upload A New Plugin" button
+
+5. **Select** the downloaded `reviewerCertificate.tar.gz` file
+
+6. **Click** "Save" to upload and install
+
+7. **Enable** the "Reviewer Certificate Plugin"
+
+8. **Click** "Settings" to customize certificate templates
+
+**That's it!** The database tables will be created automatically.
+
+---
+
+## Alternative: Git Clone Installation
+
+For developers or if the tar.gz method doesn't work:
 
 1. **Upload the plugin:**
    ```bash
    cd /path/to/ojs/plugins/generic/
    git clone https://github.com/ssemerikov/reviewerCertificate.git
-   # OR upload and extract the ZIP file
    ```
 
 2. **Set permissions:**
@@ -23,8 +46,6 @@
    - Find "Reviewer Certificate Plugin"
    - Click **Enable**
    - The database tables will be created automatically
-
-   **Note:** The plugin now includes improved database migration with automatic fallback for OJS 3.3 compatibility. If the modern Laravel migration fails, it will automatically retry using raw SQL commands.
 
 4. **Configure:**
    - Click **Settings** to customize certificate templates

@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Плагин сертификатов рецензентов"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Позволяет рецензентам генерировать и загружать персонализированные PDF-сертификаты признания после завершения рецензирования."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Сертификат рецензента"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Сертификат экспертной оценки"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Ваш сертификат готов!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Благодарим за завершение рецензирования. Теперь вы можете загрузить свой сертификат признания."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Ваш сертификат будет сгенерирован автоматически при нажатии кнопки загрузки."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Загрузить сертификат"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Настройки сертификатов"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Настройте шаблоны сертификатов и критерии приемлемости для рецензентов."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Настройки шаблона сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Фоновое изображение"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Загрузите фоновое изображение для сертификата (JPG или PNG, рекомендуемый размер: 2100x2970 пикселей для A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Текущее фоновое изображение"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Текст заголовка"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Основной заголовок, отображаемый в верхней части сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Текст заголовка обязателен"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Шаблон тела сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Основное содержимое сертификата. Используйте переменные шаблона для вставки динамического содержимого."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Шаблон тела сертификата обязателен"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Текст нижнего колонтитула"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Необязательный текст, отображаемый в нижней части сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Доступные переменные шаблона"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Используйте эти переменные в своих шаблонах для вставки динамического содержимого:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Стандартный шаблон"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Использовать стандартный шаблон"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Настройки внешнего вида"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Семейство шрифтов"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Размер шрифта"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Цвет текста (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Укажите цвет текста, используя значения RGB (0-255 для каждого компонента)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Критерии приемлемости"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Минимальное количество завершенных рецензий"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Минимальное количество завершенных рецензий, необходимое перед тем, как рецензент сможет получить сертификат"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Минимальное количество рецензий должно быть числом, большим или равным 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Параметры проверки"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Включить QR-код для проверки сертификата"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Предварительный просмотр сертификата"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Недопустимый тип изображения. Пожалуйста, загрузите файл JPG или PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Ошибка загрузки файла. Пожалуйста, попробуйте еще раз."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Это рецензирование еще не завершено. Сертификаты доступны только для завершенных рецензий."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Код сертификата не предоставлен"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Недействительный код сертификата. Этот сертификат не может быть проверен."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Не выбрано ни одного рецензента для пакетной генерации сертификатов"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Доступ запрещен. У вас нет разрешения на загрузку этого сертификата."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Контекст журнала недоступен. Убедитесь, что вы получаете доступ из действительного журнала."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Доступ к базе данных в настоящее время недоступен. Обратитесь к системному администратору."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Проверить сертификат"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Введите код сертификата для проверки его подлинности"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Код сертификата"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Проверить сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Сертификат действителен"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Сертификат недействителен"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Введенный вами код сертификата недействителен или не существует в нашей системе."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Код сертификата"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Имя рецензента"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Название журнала"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Дата выдачи"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Пакетная генерация сертификатов"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Генерируйте сертификаты для нескольких рецензентов одновременно. Выберите рецензентов из списка ниже, которые завершили рецензирование, но еще не имеют сертификатов."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Выберите рецензентов"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "завершенных рецензий"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Приемлемых рецензентов не найдено. Все рецензенты имеют сертификаты для своих завершенных рецензий."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Удерживайте Ctrl (Windows/Linux) или Cmd (Mac) для выбора нескольких рецензентов"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Генерировать сертификаты"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Генерация сертификатов..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Пожалуйста, выберите хотя бы одного рецензента"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "сертификат(ов) успешно сгенерировано"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Произошла ошибка при генерации сертификатов. Пожалуйста, попробуйте еще раз."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} сертификат(ов) успешно сгенерировано"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Статистика сертификатов"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Обзор генерации и использования сертификатов в вашем журнале"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Всего выдано сертификатов"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Всего загрузок"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Уникальных рецензентов с сертификатами"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Всего выдано сертификатов"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Всего загрузок"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Среднее количество загрузок на сертификат"
+

@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Catalan (Spain)\n"
+"Language: ca_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Complement de Certificats de Revisors"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Permet als revisors generar i descarregar certificats PDF personalitzats de reconeixement després de completar les revisions."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Certificat de Revisió"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Certificat de Revisió per Parells"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "El vostre certificat està llest!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Gràcies per completar aquesta revisió. Ara podeu descarregar el vostre certificat de reconeixement."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "El vostre certificat es generarà automàticament quan feu clic al botó de descàrrega."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Descarregar Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Configuració de Certificats"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Configureu les plantilles de certificats i els criteris d'elegibilitat per als revisors."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Configuració de la Plantilla de Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Imatge de Fons"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Carregueu una imatge de fons per al certificat (JPG o PNG, mida recomanada: 2100x2970 píxels per A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Imatge de fons actual"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Text de Capçalera"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "El títol principal que es mostra a la part superior del certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "El text de capçalera és obligatori"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Plantilla del Cos del Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "El contingut principal del certificat. Utilitzeu variables de plantilla per inserir contingut dinàmic."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "La plantilla del cos del certificat és obligatòria"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Text del Peu de Pàgina"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Text opcional que es mostra a la part inferior del certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Variables de Plantilla Disponibles"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Utilitzeu aquestes variables a les vostres plantilles per inserir contingut dinàmic:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Plantilla per defecte"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Utilitzar plantilla per defecte"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Configuració d'Aparença"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Família de Tipus de Lletra"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Mida del Tipus de Lletra"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Color del Text (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Especifiqueu el color del text utilitzant valors RGB (0-255 per a cada component)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Criteris d'Elegibilitat"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Revisions Completades Mínimes"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "El nombre mínim de revisions completades requerides abans que un revisor pugui rebre un certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "El nombre mínim de revisions ha de ser un número més gran o igual a 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Opcions de Verificació"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Incloure codi QR per a la verificació del certificat"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Previsualitzar Certificat"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Tipus d'imatge no vàlid. Si us plau, carregueu un fitxer JPG o PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "La càrrega del fitxer ha fallat. Si us plau, torneu-ho a provar."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Aquesta revisió encara no s'ha completat. Els certificats només estan disponibles per a revisions completades."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "No s'ha proporcionat cap codi de certificat"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Codi de certificat no vàlid. Aquest certificat no s'ha pogut verificar."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "No s'han seleccionat revisors per a la generació massiva de certificats"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Accés denegat. No teniu permís per descarregar aquest certificat."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "No hi ha cap context de revista disponible. Assegureu-vos que accediu des d'una revista vàlida."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "L'accés a la base de dades no està disponible actualment. Si us plau, contacteu amb l'administrador del sistema."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Verificar Certificat"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Introduïu un codi de certificat per verificar-ne l'autenticitat"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Codi del Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Verificar Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Certificat Vàlid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Certificat No Vàlid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "El codi de certificat que heu introduït no és vàlid o no existeix al nostre sistema."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Codi del Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Nom del Revisor"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Nom de la Revista"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Data d'Emissió"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Generació Massiva de Certificats"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Genereu certificats per a múltiples revisors alhora. Seleccioneu revisors de la llista a continuació que hagin completat revisions però que encara no tinguin certificats."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Seleccionar Revisors"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "revisions completades"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "No s'han trobat revisors elegibles. Tots els revisors tenen certificats per a les seves revisions completades."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Mantingueu premut Ctrl (Windows/Linux) o Cmd (Mac) per seleccionar múltiples revisors"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Generar Certificats"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Generant certificats..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Si us plau, seleccioneu almenys un revisor"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificat/s generat/s amb èxit"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "S'ha produït un error en generar els certificats. Si us plau, torneu-ho a provar."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} certificat/s generat/s amb èxit"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Estadístiques de Certificats"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Resum de la generació i ús de certificats a la vostra revista"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total de Certificats Emesos"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total de Descàrregues"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Revisors Únics amb Certificats"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Total de Certificats Emesos"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Total de Descàrregues"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Mitjana de Descàrregues per Certificat"
+

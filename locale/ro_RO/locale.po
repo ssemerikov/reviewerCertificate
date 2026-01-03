@@ -1,0 +1,282 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Romanian\n"
+"Language: ro_RO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Plugin Certificate Recenzori"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Permite recenzorilor să genereze și să descarce certificate PDF personalizate de recunoaștere după finalizarea recenziilor."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Certificat de Recenzie"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr ""
+"Certificat de Recenzie Colegi\n"
+"\n"
+"ală"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Certificatul dumneavoastră este gata!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Vă mulțumim pentru finalizarea acestei recenzii. Acum puteți descărca certificatul dumneavoastră de recunoaștere."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Certificatul dumneavoastră va fi generat automat când veți apăsa butonul de descărcare."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Descarcă Certificatul"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Setări Certificate"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Configurați șabloanele de certificate și criteriile de eligibilitate pentru recenzori."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Setări Șablon Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Imagine de Fundal"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Încărcați o imagine de fundal pentru certificat (JPG sau PNG, dimensiune recomandată: 2100x2970 pixeli pentru A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Imaginea de fundal curentă"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Text Antet"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Titlul principal afișat în partea de sus a certificatului"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Textul antetului este obligatoriu"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Șablon Corp Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Conținutul principal al certificatului. Utilizați variabilele șablonului pentru a insera conținut dinamic."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Șablonul corpului certificatului este obligatoriu"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Text Subsol"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Text opțional afișat în partea de jos a certificatului"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Variabile Șablon Disponibile"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Utilizați aceste variabile în șabloanele dumneavoastră pentru a insera conținut dinamic:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Șablon implicit"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Utilizați șablonul implicit"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Setări Aspect"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Familie Font"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Dimensiune Font"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Culoare Text (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Specificați culoarea textului utilizând valori RGB (0-255 pentru fiecare componentă)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Criterii de Eligibilitate"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Recenzii Finalizate Minime"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Numărul minim de recenzii finalizate necesar înainte ca un recenzor să poată primi un certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Numărul minim de recenzii trebuie să fie un număr mai mare sau egal cu 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Opțiuni de Verificare"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Includeți codul QR pentru verificarea certificatului"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Previzualizare Certificat"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Tip de imagine nevalid. Vă rugăm să încărcați un fișier JPG sau PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Încărcarea fișierului a eșuat. Vă rugăm să încercați din nou."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Această recenzie nu a fost încă finalizată. Certificatele sunt disponibile doar pentru recenzii finalizate."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Nu a fost furnizat niciun cod de certificat"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Cod de certificat nevalid. Acest certificat nu a putut fi verificat."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Nu au fost selectați recenzori pentru generarea în lot a certificatelor"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Acces refuzat. Nu aveți permisiunea de a descărca acest certificat."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Nu există un context de revistă disponibil. Vă rugăm să vă asigurați că accesați dintr-o revistă validă."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Accesul la baza de date este momentan indisponibil. Vă rugăm să contactați administratorul de sistem."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Verificare Certificat"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Introduceți un cod de certificat pentru a-i verifica autenticitatea"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Cod Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Verificați Certificatul"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Certificat Valid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Certificat Nevalid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Codul de certificat pe care l-ați introdus nu este valid sau nu există în sistemul nostru."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Cod Certificat"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Nume Recenzor"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Nume Revistă"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Data Emiterii"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Generare în Lot a Certificatelor"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Generați certificate pentru mai mulți recenzori simultan. Selectați recenzorii din lista de mai jos care au finalizat recenzii dar nu au încă certificate."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Selectați Recenzori"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "recenzii finalizate"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Nu au fost găsiți recenzori eligibili. Toți recenzorii au certificate pentru recenziile lor finalizate."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Țineți apăsat Ctrl (Windows/Linux) sau Cmd (Mac) pentru a selecta mai mulți recenzori"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Generați Certificate"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Se generează certificatele..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Vă rugăm să selectați cel puțin un recenzor"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificat/certificate generate cu succes"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "A apărut o eroare la generarea certificatelor. Vă rugăm să încercați din nou."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} certificat/certificate generate cu succes"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Statistici Certificate"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Prezentare generală a generării și utilizării certificatelor în revista dumneavoastră"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total Certificate Emise"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total Descărcări"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Recenzori Unici cu Certificate"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Total Certificate Emise"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Total Descărcări"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Medie Descărcări per Certificat"
+

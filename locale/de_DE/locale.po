@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: German (Germany)\n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Gutachter-Zertifikate Plugin"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Ermöglicht Gutachtern, personalisierte PDF-Zertifikate als Anerkennung nach Abschluss ihrer Begutachtungen zu erstellen und herunterzuladen."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Gutachter-Zertifikat"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Peer-Review-Zertifikat"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Ihr Zertifikat ist fertig!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Vielen Dank für den Abschluss dieser Begutachtung. Sie können jetzt Ihr Anerkennungszertifikat herunterladen."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Ihr Zertifikat wird automatisch erstellt, wenn Sie auf die Download-Schaltfläche klicken."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Zertifikat Herunterladen"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Zertifikat-Einstellungen"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Konfigurieren Sie Zertifikatvorlagen und Zulassungskriterien für Gutachter."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Einstellungen der Zertifikatvorlage"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Hintergrundbild"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Laden Sie ein Hintergrundbild für das Zertifikat hoch (JPG oder PNG, empfohlene Größe: 2100x2970 Pixel für A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Aktuelles Hintergrundbild"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Kopfzeilentext"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Die Hauptüberschrift, die oben auf dem Zertifikat angezeigt wird"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Der Kopfzeilentext ist erforderlich"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Haupttext-Vorlage des Zertifikats"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Der Hauptinhalt des Zertifikats. Verwenden Sie Vorlagenvariablen, um dynamische Inhalte einzufügen."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Die Haupttext-Vorlage des Zertifikats ist erforderlich"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Fußzeilentext"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Optionaler Text, der am unteren Rand des Zertifikats angezeigt wird"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Verfügbare Vorlagenvariablen"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Verwenden Sie diese Variablen in Ihren Vorlagen, um dynamische Inhalte einzufügen:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Standardvorlage"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Standardvorlage verwenden"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Darstellungseinstellungen"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Schriftfamilie"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Schriftgröße"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Textfarbe (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Geben Sie die Textfarbe mit RGB-Werten an (0-255 für jede Komponente)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Zulassungskriterien"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Mindestanzahl Abgeschlossener Begutachtungen"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Die Mindestanzahl abgeschlossener Begutachtungen, die erforderlich ist, bevor ein Gutachter ein Zertifikat erhalten kann"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Die Mindestanzahl der Begutachtungen muss eine Zahl größer oder gleich 1 sein"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Verifizierungsoptionen"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "QR-Code zur Zertifikatsverifizierung einschließen"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Zertifikat-Vorschau"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Ungültiger Bildtyp. Bitte laden Sie eine JPG- oder PNG-Datei hoch."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Datei-Upload fehlgeschlagen. Bitte versuchen Sie es erneut."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Diese Begutachtung wurde noch nicht abgeschlossen. Zertifikate sind nur für abgeschlossene Begutachtungen verfügbar."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Kein Zertifikatscode angegeben"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Ungültiger Zertifikatscode. Dieses Zertifikat konnte nicht verifiziert werden."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Keine Gutachter für die Stapelgenerierung von Zertifikaten ausgewählt"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Zugriff verweigert. Sie haben keine Berechtigung, dieses Zertifikat herunterzuladen."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Kein Zeitschriftenkontext verfügbar. Stellen Sie sicher, dass Sie von einer gültigen Zeitschrift aus zugreifen."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Der Datenbankzugriff ist derzeit nicht verfügbar. Bitte kontaktieren Sie den Systemadministrator."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Zertifikat Verifizieren"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Geben Sie einen Zertifikatscode ein, um dessen Echtheit zu überprüfen"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Zertifikatscode"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Zertifikat Verifizieren"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Zertifikat Gültig"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Zertifikat Ungültig"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Der von Ihnen eingegebene Zertifikatscode ist ungültig oder existiert nicht in unserem System."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Zertifikatscode"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Name des Gutachters"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Name der Zeitschrift"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Ausstellungsdatum"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Stapelgenerierung von Zertifikaten"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Erstellen Sie Zertifikate für mehrere Gutachter gleichzeitig. Wählen Sie Gutachter aus der unten stehenden Liste aus, die Begutachtungen abgeschlossen haben, aber noch keine Zertifikate besitzen."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Gutachter Auswählen"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "abgeschlossene Begutachtungen"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Keine qualifizierten Gutachter gefunden. Alle Gutachter haben Zertifikate für ihre abgeschlossenen Begutachtungen."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Halten Sie Strg (Windows/Linux) oder Cmd (Mac) gedrückt, um mehrere Gutachter auszuwählen"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Zertifikate Erstellen"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Zertifikate werden erstellt..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Bitte wählen Sie mindestens einen Gutachter aus"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "Zertifikat(e) erfolgreich erstellt"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Beim Erstellen der Zertifikate ist ein Fehler aufgetreten. Bitte versuchen Sie es erneut."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} Zertifikat(e) erfolgreich erstellt"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Zertifikat-Statistiken"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Übersicht über die Generierung und Nutzung von Zertifikaten in Ihrer Zeitschrift"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Gesamt Ausgestellte Zertifikate"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Gesamt Downloads"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Eindeutige Gutachter mit Zertifikaten"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Gesamt Ausgestellte Zertifikate"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Gesamt Downloads"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Durchschnittliche Downloads pro Zertifikat"
+
