@@ -11,11 +11,17 @@
  * @brief Operations for retrieving and modifying Certificate objects
  */
 
-use PKP\db\DAOResultFactory;
-
 require_once(dirname(__FILE__) . '/Certificate.inc.php');
 
-class CertificateDAO extends \PKP\db\DAO {
+// OJS 3.3 compatibility: DAO class alias
+if (class_exists('PKP\db\DAO')) {
+    class_alias('PKP\db\DAO', 'CertificateDAOBase');
+} else {
+    import('lib.pkp.classes.db.DAO');
+    class_alias('DAO', 'CertificateDAOBase');
+}
+
+class CertificateDAO extends CertificateDAOBase {
 
     /**
      * Retrieve a certificate by certificate ID
@@ -80,7 +86,13 @@ class CertificateDAO extends \PKP\db\DAO {
         $sql .= ' ORDER BY date_issued DESC';
 
         $result = $this->retrieve($sql, $params);
-        return new DAOResultFactory($result, $this, '_fromRow');
+        // OJS 3.3 compatibility
+        if (class_exists('PKP\db\DAOResultFactory')) {
+            return new \PKP\db\DAOResultFactory($result, $this, '_fromRow');
+        } else {
+            import('lib.pkp.classes.db.DAOResultFactory');
+            return new DAOResultFactory($result, $this, '_fromRow');
+        }
     }
 
     /**
@@ -94,7 +106,13 @@ class CertificateDAO extends \PKP\db\DAO {
             array((int) $contextId)
         );
 
-        return new DAOResultFactory($result, $this, '_fromRow');
+        // OJS 3.3 compatibility
+        if (class_exists('PKP\db\DAOResultFactory')) {
+            return new \PKP\db\DAOResultFactory($result, $this, '_fromRow');
+        } else {
+            import('lib.pkp.classes.db.DAOResultFactory');
+            return new DAOResultFactory($result, $this, '_fromRow');
+        }
     }
 
     /**

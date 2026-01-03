@@ -11,12 +11,15 @@
  * @brief Handle requests for certificate operations
  */
 
-use PKP\core\JSONMessage;
-use PKP\security\Role;
-use PKP\security\authorization\ContextAccessPolicy;
-use APP\facades\Repo;
+// OJS 3.3 compatibility: Handler class alias
+if (class_exists('APP\handler\Handler')) {
+    class_alias('APP\handler\Handler', 'CertificateHandlerBase');
+} else {
+    import('classes.handler.Handler');
+    class_alias('Handler', 'CertificateHandlerBase');
+}
 
-class CertificateHandler extends \APP\handler\Handler {
+class CertificateHandler extends CertificateHandlerBase {
 
     /** @var ReviewerCertificatePlugin */
     private $plugin;
@@ -26,14 +29,26 @@ class CertificateHandler extends \APP\handler\Handler {
      */
     public function __construct() {
         parent::__construct();
-        $this->addRoleAssignment(
-            array(Role::ROLE_ID_REVIEWER),
-            array('download', 'preview')
-        );
-        $this->addRoleAssignment(
-            array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
-            array('manage', 'generateBatch')
-        );
+        // OJS 3.3 compatibility: Role constants
+        if (class_exists('PKP\security\Role')) {
+            $this->addRoleAssignment(
+                array(\PKP\security\Role::ROLE_ID_REVIEWER),
+                array('download', 'preview')
+            );
+            $this->addRoleAssignment(
+                array(\PKP\security\Role::ROLE_ID_MANAGER, \PKP\security\Role::ROLE_ID_SITE_ADMIN),
+                array('manage', 'generateBatch')
+            );
+        } else {
+            $this->addRoleAssignment(
+                array(ROLE_ID_REVIEWER),
+                array('download', 'preview')
+            );
+            $this->addRoleAssignment(
+                array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
+                array('manage', 'generateBatch')
+            );
+        }
         // Make verify publicly accessible (no role restriction)
     }
 
@@ -49,8 +64,13 @@ class CertificateHandler extends \APP\handler\Handler {
             return true;
         }
 
-        // For all other operations, require context access
-        $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
+        // For all other operations, require context access - OJS 3.3 compatibility
+        if (class_exists('PKP\security\authorization\ContextAccessPolicy')) {
+            $this->addPolicy(new \PKP\security\authorization\ContextAccessPolicy($request, $roleAssignments));
+        } else {
+            import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
+            $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
+        }
 
         return parent::authorize($request, $args, $roleAssignments);
     }
@@ -185,9 +205,13 @@ class CertificateHandler extends \APP\handler\Handler {
             $certificate = $certificateDao->getByCertificateCode($certificateCode);
 
             if ($certificate) {
-                // Get reviewer and context information
-                // Use Repo facade for OJS 3.4 compatibility
-                $reviewer = Repo::user()->get($certificate->getReviewerId());
+                // Get reviewer and context information - OJS 3.3 compatibility
+                if (class_exists('APP\facades\Repo')) {
+                    $reviewer = \APP\facades\Repo::user()->get($certificate->getReviewerId());
+                } else {
+                    $userDao = DAORegistry::getDAO('UserDAO');
+                    $reviewer = $userDao->getById($certificate->getReviewerId());
+                }
 
                 $contextDao = Application::getContextDAO();
                 $context = $contextDao->getById($certificate->getContextId());
@@ -372,7 +396,7 @@ class CertificateHandler extends \APP\handler\Handler {
         $reviewerIds = $request->getUserVar('reviewerIds');
 
         if (!is_array($reviewerIds) || empty($reviewerIds)) {
-            return new JSONMessage(false, __('plugins.generic.reviewerCertificate.error.noReviewersSelected'));
+            return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noReviewersSelected'));
         }
 
         $generated = 0;
@@ -403,7 +427,12 @@ class CertificateHandler extends \APP\handler\Handler {
                             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
                             $certificate->setReviewId($reviewAssignment->getId());
                             $certificate->setContextId($context->getId());
-                            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+                            // OJS 3.3 compatibility
+                            if (class_exists('PKP\core\Core')) {
+                                $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+                            } else {
+                                $certificate->setDateIssued(Core::getCurrentDate());
+                            }
                             $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
                             $certificateDao->insertObject($certificate);
@@ -416,9 +445,24 @@ class CertificateHandler extends \APP\handler\Handler {
             }
         }
 
-        return new JSONMessage(true, array(
+        return $this->createJSONMessage(true, array(
             'generated' => $generated,
             'errors' => $errors
         ));
+    }
+
+    /**
+     * Create JSONMessage - OJS 3.3 compatibility
+     * @param $status bool
+     * @param $content mixed
+     * @return JSONMessage
+     */
+    private function createJSONMessage($status, $content = '') {
+        if (class_exists('PKP\core\JSONMessage')) {
+            return new \PKP\core\JSONMessage($status, $content);
+        } else {
+            import('lib.pkp.classes.core.JSONMessage');
+            return new JSONMessage($status, $content);
+        }
     }
 }

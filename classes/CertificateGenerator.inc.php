@@ -11,14 +11,24 @@
  * @brief Generates PDF certificates for reviewers
  */
 
+// OJS 3.3 compatibility: Get base directory
+if (class_exists('PKP\core\Core')) {
+    $ojsBaseDir = \PKP\core\Core::getBaseDir();
+} elseif (class_exists('Core')) {
+    $ojsBaseDir = Core::getBaseDir();
+} else {
+    // Fallback: try to determine from current path
+    $ojsBaseDir = dirname(__FILE__, 6); // Go up from plugins/generic/reviewerCertificate/classes
+}
+
 // Load TCPDF library - try multiple locations
 $tcpdfLocations = array(
     // Plugin's bundled TCPDF (primary location)
     dirname(__FILE__, 2) . '/lib/tcpdf/tcpdf.php',
     // OJS 3.4 location
-    Core::getBaseDir() . '/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php',
+    $ojsBaseDir . '/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php',
     // OJS 3.3 location
-    Core::getBaseDir() . '/lib/pkp/lib/tcpdf/tcpdf.php',
+    $ojsBaseDir . '/lib/pkp/lib/tcpdf/tcpdf.php',
 );
 
 $tcpdfLoaded = false;
@@ -36,8 +46,6 @@ if (!$tcpdfLoaded) {
         'Please reinstall the plugin or contact the administrator.'
     );
 }
-
-use APP\facades\Repo;
 
 class CertificateGenerator {
 
@@ -76,10 +84,17 @@ class CertificateGenerator {
     public function setReviewAssignment($reviewAssignment) {
         $this->reviewAssignment = $reviewAssignment;
 
-        // Load related objects
-        // Use Repo facade for OJS 3.4 compatibility
-        $this->reviewer = Repo::user()->get($reviewAssignment->getReviewerId());
-        $this->submission = Repo::submission()->get($reviewAssignment->getSubmissionId());
+        // Load related objects - OJS 3.3 compatibility
+        if (class_exists('APP\facades\Repo')) {
+            $this->reviewer = \APP\facades\Repo::user()->get($reviewAssignment->getReviewerId());
+            $this->submission = \APP\facades\Repo::submission()->get($reviewAssignment->getSubmissionId());
+        } else {
+            // OJS 3.3 fallback using DAOs
+            $userDao = DAORegistry::getDAO('UserDAO');
+            $this->reviewer = $userDao->getById($reviewAssignment->getReviewerId());
+            $submissionDao = DAORegistry::getDAO('SubmissionDAO');
+            $this->submission = $submissionDao->getById($reviewAssignment->getSubmissionId());
+        }
     }
 
     /**
