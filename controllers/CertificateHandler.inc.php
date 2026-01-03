@@ -91,9 +91,20 @@ class CertificateHandler extends \APP\handler\Handler {
             return;
         }
 
-        // Get review assignment
-        $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
-        $reviewAssignment = $reviewAssignmentDao->getById($reviewId);
+        // Get review assignment using direct SQL for OJS 3.5 compatibility
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        $result = $certificateDao->retrieve(
+            'SELECT * FROM review_assignments WHERE review_id = ?',
+            array((int) $reviewId)
+        );
+
+        $reviewAssignment = null;
+        if ($result) {
+            $row = $result->current();
+            if ($row) {
+                $reviewAssignment = $this->createReviewAssignmentFromRow($row);
+            }
+        }
 
         if (!$reviewAssignment) {
             error_log('Certificate download failed: Review assignment not found');
@@ -325,6 +336,33 @@ class CertificateHandler extends \APP\handler\Handler {
     }
 
     /**
+     * Create a ReviewAssignment-like object from database row
+     * For OJS 3.5 compatibility where ReviewAssignmentDAO is not available
+     * @param $row object Database row
+     * @return object Object with getter methods for review assignment data
+     */
+    private function createReviewAssignmentFromRow($row) {
+        return new class($row) {
+            private $data;
+            public function __construct($row) {
+                $this->data = (array) $row;
+            }
+            public function getId() {
+                return $this->data['review_id'] ?? null;
+            }
+            public function getReviewerId() {
+                return $this->data['reviewer_id'] ?? null;
+            }
+            public function getSubmissionId() {
+                return $this->data['submission_id'] ?? null;
+            }
+            public function getDateCompleted() {
+                return $this->data['date_completed'] ?? null;
+            }
+        };
+    }
+
+    /**
      * Generate batch certificates
      * @param $args array
      * @param $request Request
@@ -340,16 +378,21 @@ class CertificateHandler extends \APP\handler\Handler {
         $generated = 0;
         $errors = array();
 
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+
         foreach ($reviewerIds as $reviewerId) {
             try {
-                // Get completed reviews for this reviewer
-                $reviewAssignmentDao = DAORegistry::getDAO('ReviewAssignmentDAO');
-                $reviewAssignments = $reviewAssignmentDao->getByReviewerId($reviewerId);
+                // Get completed reviews for this reviewer using direct SQL for OJS 3.5 compatibility
+                $result = $certificateDao->retrieve(
+                    'SELECT * FROM review_assignments WHERE reviewer_id = ? AND date_completed IS NOT NULL',
+                    array((int) $reviewerId)
+                );
 
-                foreach ($reviewAssignments as $reviewAssignment) {
-                    if ($reviewAssignment->getDateCompleted()) {
+                if ($result) {
+                    foreach ($result as $row) {
+                        $reviewAssignment = $this->createReviewAssignmentFromRow($row);
+
                         // Check if certificate already exists
-                        $certificateDao = DAORegistry::getDAO('CertificateDAO');
                         $existing = $certificateDao->getByReviewId($reviewAssignment->getId());
 
                         if (!$existing) {
