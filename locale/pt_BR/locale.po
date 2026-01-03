@@ -1,0 +1,292 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-12-08 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Plugin de Certificados de Avaliadores"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Permite que avaliadores gerem e baixem certificados personalizados em PDF como reconhecimento após concluírem avaliações."
+
+
+# Certificate labels
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Certificado de Avaliação"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Certificado de Revisão por Pares"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Seu certificado está pronto!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Obrigado por concluir esta avaliação. Agora você pode baixar seu certificado de reconhecimento."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Seu certificado será gerado quando você concluir esta avaliação. Obrigado pela sua valiosa contribuição para nossa revista."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Baixar certificado"
+
+
+# Settings main section
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Configurações de certificados"
+
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Configure os modelos de certificado e os critérios de elegibilidade para avaliadores."
+
+
+# Template settings
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Configurações do modelo de certificado"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Imagem de fundo"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Envie uma imagem de fundo para o certificado (JPG ou PNG, tamanho recomendado: 2100x2970 pixels para A4)."
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Imagem de fundo atual"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Texto do cabeçalho"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Título principal exibido na parte superior do certificado."
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "O texto do cabeçalho é obrigatório."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Modelo do corpo do certificado"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Conteúdo principal do certificado. Use variáveis de modelo para inserir conteúdo dinâmico."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "O modelo do corpo do certificado é obrigatório."
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Texto de rodapé"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Texto opcional exibido na parte inferior do certificado."
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Variáveis de modelo disponíveis"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Use estas variáveis no modelo para inserir automaticamente informações da revista, do avaliador e da avaliação."
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Modelo padrão"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Usar modelo padrão"
+
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Aparência"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Família tipográfica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Tamanho da fonte"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Cor do texto (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Defina a cor do texto usando valores RGB (0–255 para cada componente)."
+
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Critérios de elegibilidade"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Número mínimo de avaliações concluídas"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Número mínimo de avaliações concluídas exigidas para que um avaliador possa receber um certificado."
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "O número mínimo de avaliações deve ser um valor numérico maior ou igual a 1."
+
+
+# Verification / QR
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Verificação do certificado"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Incluir QR code para verificação do certificado"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Pré-visualizar certificado"
+
+
+# Settings errors
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Tipo de imagem inválido. Envie um arquivo JPG ou PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Falha ao enviar o arquivo. Tente novamente."
+
+
+# Runtime errors
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Esta avaliação ainda não foi concluída. Certificados só ficam disponíveis para avaliações concluídas."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Nenhum código de certificado foi informado."
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "O código de certificado informado é inválido."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Nenhum avaliador foi selecionado para geração de certificados."
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Acesso negado. Você não tem permissão para baixar este certificado."
+
+
+# Email notification
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "Seu certificado de avaliação está disponível"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr ""
+"Prezado(a) {$reviewerName},\n"
+"\n"
+"Seu certificado de avaliação está disponível para download.\n"
+"\n"
+"Obrigado por sua valiosa contribuição para nossa revista.\n"
+"\n"
+"Atenciosamente,\n"
+"Equipe editorial"
+
+
+# Public verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Verificar certificado"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Informe o código do certificado para verificar sua autenticidade."
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Código do certificado"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Verificar certificado"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Certificado válido"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Certificado inválido"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "O código de certificado informado é inválido ou não existe em nosso sistema."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Código do certificado"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Nome do avaliador"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Nome da revista"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Data de emissão"
+
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Geração em lote de certificados"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Gere certificados para vários avaliadores de uma só vez."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} certificado(s) gerado(s) com sucesso"
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Selecionar avaliadores"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "avaliações concluídas"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Nenhum avaliador elegível encontrado"
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Mantenha pressionada a tecla Ctrl (Cmd no Mac) para selecionar vários avaliadores."
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Gerar certificados"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Gerando certificados..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Selecione pelo menos um avaliador."
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificado(s) gerado(s) com sucesso"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Falha ao gerar os certificados."
+
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Estatísticas de certificados"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Veja as estatísticas de emissão de certificados."
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total de certificados"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total de downloads"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Avaliadores únicos"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Total de certificados emitidos"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Total de downloads"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Média de downloads por certificado"

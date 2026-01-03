@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Norwegian Bokmål\n"
+"Language: nb_NO\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Plugin for Fagfellesesertifikater"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Lar fagfeller generere og laste ned personaliserte PDF-sertifikater for anerkjennelse etter fullført fagfellevurdering."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Fagfellevurderingssertifikat"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Sertifikat for Fagfellevurdering"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Sertifikatet ditt er klart!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Takk for at du fullførte denne vurderingen. Du kan nå laste ned sertifikatet ditt for anerkjennelse."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Sertifikatet ditt vil bli generert automatisk når du klikker på nedlastingsknappen."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Last ned Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Sertifikatinnstillinger"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Konfigurer sertifikatmaler og kvalifikasjonskriterier for fagfeller."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Innstillinger for Sertifikatmal"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Bakgrunnsbilde"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Last opp et bakgrunnsbilde for sertifikatet (JPG eller PNG, anbefalt størrelse: 2100x2970 piksler for A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Gjeldende bakgrunnsbilde"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Overskriftstekst"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Hovedtittelen som vises øverst på sertifikatet"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Overskriftstekst er påkrevd"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Mal for Sertifikatinnhold"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Hovedinnholdet i sertifikatet. Bruk malvariabler for å sette inn dynamisk innhold."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Mal for sertifikatinnhold er påkrevd"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Bunntekst"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Valgfri tekst som vises nederst på sertifikatet"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Tilgjengelige Malvariabler"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Bruk disse variablene i malene dine for å sette inn dynamisk innhold:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Standardmal"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Bruk standardmal"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Utseendeinnstillinger"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Skriftfamilie"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Skriftstørrelse"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Tekstfarge (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Spesifiser tekstfargen ved hjelp av RGB-verdier (0-255 for hver komponent)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Kvalifikasjonskriterier"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Minimum Fullførte Vurderinger"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Minimumsantall fullførte vurderinger som kreves før en fagfelle kan motta et sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Minimumsantall vurderinger må være et tall større enn eller lik 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Verifikasjonsalternativer"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Inkluder QR-kode for sertifikatverifisering"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Forhåndsvis Sertifikat"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Ugyldig bildetype. Vennligst last opp en JPG- eller PNG-fil."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Filopplasting mislyktes. Vennligst prøv igjen."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Denne vurderingen er ikke fullført ennå. Sertifikater er kun tilgjengelige for fullførte vurderinger."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Ingen sertifikatkode oppgitt"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Ugyldig sertifikatkode. Dette sertifikatet kunne ikke verifiseres."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Ingen fagfeller valgt for massegenerering av sertifikater"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Tilgang nektet. Du har ikke tillatelse til å laste ned dette sertifikatet."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Ingen tidsskriftkontekst tilgjengelig. Vennligst sørg for at du får tilgang fra et gyldig tidsskrift."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Databasetilgang er for øyeblikket utilgjengelig. Vennligst kontakt systemadministratoren."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Verifiser Sertifikat"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Skriv inn en sertifikatkode for å verifisere ekthet"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Sertifikatkode"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Verifiser Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Gyldig Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Ugyldig Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Sertifikatkoden du skrev inn er ugyldig eller finnes ikke i vårt system."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Sertifikatkode"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Navn på Fagfelle"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Tidsskriftnavn"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Utstedelsesdato"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Massegenerering av Sertifikater"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Generer sertifikater for flere fagfeller samtidig. Velg fagfeller fra listen nedenfor som har fullført vurderinger, men som ennå ikke har sertifikater."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Velg Fagfeller"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "fullførte vurderinger"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Ingen kvalifiserte fagfeller funnet. Alle fagfeller har sertifikater for sine fullførte vurderinger."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Hold Ctrl (Windows/Linux) eller Cmd (Mac) inne for å velge flere fagfeller"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Generer Sertifikater"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Genererer sertifikater..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Vennligst velg minst én fagfelle"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "sertifikat/sertifikater generert"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "En feil oppstod under generering av sertifikater. Vennligst prøv igjen."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} sertifikat/sertifikater generert"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Sertifikatstatistikk"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Oversikt over sertifikatgenerering og -bruk i tidsskriftet ditt"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Totalt Utstedte Sertifikater"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Totale Nedlastinger"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Unike Fagfeller med Sertifikater"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Totalt Utstedte Sertifikater"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Totale Nedlastinger"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Gjennomsnittlige Nedlastinger per Sertifikat"
+

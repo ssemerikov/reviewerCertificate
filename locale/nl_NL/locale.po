@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Dutch\n"
+"Language: nl_NL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Recensentencertificaat Plugin"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Stelt recensenten in staat om gepersonaliseerde PDF-certificaten van erkenning te genereren en te downloaden na het voltooien van beoordelingen."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Beoordelingscertificaat"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Certificaat van Peer Review"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Uw certificaat is klaar!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Bedankt voor het voltooien van deze beoordeling. U kunt nu uw certificaat van erkenning downloaden."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Uw certificaat wordt automatisch gegenereerd wanneer u op de downloadknop klikt."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Certificaat Downloaden"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Certificaatinstellingen"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Configureer certificaatsjablonen en geschiktheidscriteria voor recensenten."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Certificaatsjablooninstellingen"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Achtergrondafbeelding"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Upload een achtergrondafbeelding voor het certificaat (JPG of PNG, aanbevolen grootte: 2100x2970 pixels voor A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Huidige achtergrondafbeelding"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Koptekst"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "De hoofdtitel bovenaan het certificaat"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Koptekst is verplicht"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Certificaat Hoofdtekstsjabloon"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "De hoofdinhoud van het certificaat. Gebruik sjabloonvariabelen om dynamische inhoud in te voegen."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Hoofdtekstsjabloon is verplicht"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Voettekst"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Optionele tekst onderaan het certificaat"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Beschikbare Sjabloonvariabelen"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Gebruik deze variabelen in uw sjablonen om dynamische inhoud in te voegen:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Standaardsjabloon"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Standaardsjabloon gebruiken"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Weergave-instellingen"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Lettertypefamilie"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Lettergrootte"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Tekstkleur (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Specificeer de tekstkleur met RGB-waarden (0-255 voor elk component)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Geschiktheidscriteria"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Minimaal Voltooide Beoordelingen"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Het minimale aantal voltooide beoordelingen voordat een recensent een certificaat kan ontvangen"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Het minimale aantal beoordelingen moet een getal groter dan of gelijk aan 1 zijn"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Verificatie-opties"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "QR-code voor certificaatverificatie opnemen"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Certificaat Voorvertonen"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Ongeldig afbeeldingstype. Upload een JPG- of PNG-bestand."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Bestandsupload mislukt. Probeer het opnieuw."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Deze beoordeling is nog niet voltooid. Certificaten zijn alleen beschikbaar voor voltooide beoordelingen."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Geen certificaatcode opgegeven"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Ongeldige certificaatcode. Dit certificaat kon niet worden geverifieerd."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Geen recensenten geselecteerd voor batch certificaatgeneratie"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Toegang geweigerd. U heeft geen toestemming om dit certificaat te downloaden."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Geen tijdschriftcontext beschikbaar. Zorg ervoor dat u toegang heeft vanuit een geldig tijdschrift."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Databasetoegang is momenteel niet beschikbaar. Neem contact op met de systeembeheerder."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Certificaat Verifiëren"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Voer een certificaatcode in om de authenticiteit te verifiëren"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Certificaatcode"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Certificaat Verifiëren"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Geldig Certificaat"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Ongeldig Certificaat"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "De certificaatcode die u heeft ingevoerd is ongeldig of bestaat niet in ons systeem."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Certificaatcode"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Naam Recensent"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Tijdschriftnaam"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Uitgiftedatum"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Batch Certificaatgeneratie"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Genereer certificaten voor meerdere recensenten tegelijk. Selecteer recensenten uit de onderstaande lijst die beoordelingen hebben voltooid maar nog geen certificaten hebben."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Recensenten Selecteren"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "voltooide beoordelingen"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Geen geschikte recensenten gevonden. Alle recensenten hebben certificaten voor hun voltooide beoordelingen."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Houd Ctrl (Windows/Linux) of Cmd (Mac) ingedrukt om meerdere recensenten te selecteren"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Certificaten Genereren"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Certificaten genereren..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Selecteer ten minste één recensent"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificaat/certificaten succesvol gegenereerd"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Er is een fout opgetreden bij het genereren van certificaten. Probeer het opnieuw."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} certificaat/certificaten succesvol gegenereerd"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Certificaatstatistieken"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Overzicht van certificaatgeneratie en -gebruik in uw tijdschrift"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Totaal Uitgegeven Certificaten"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Totaal Downloads"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Unieke Recensenten met Certificaten"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Totaal Uitgegeven Certificaten"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Totaal Downloads"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Gemiddelde Downloads per Certificaat"
+

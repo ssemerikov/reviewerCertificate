@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Finnish\n"
+"Language: fi_FI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Arvioitsijatodistuslisäosa"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Mahdollistaa arvioitsijoiden luoda ja ladata henkilökohtaisia PDF-todistuksia tunnustuksena vertaisarvioinnin suorittamisen jälkeen."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Arviointitodistus"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Vertaisarviointitodistus"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Todistuksesi on valmis!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Kiitos arvioinnin suorittamisesta. Voit nyt ladata tunnustustodistuksesi."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Todistuksesi luodaan automaattisesti, kun napsautat lataus-painiketta."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Lataa Todistus"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Todistusasetukset"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Määritä todistuspohjat ja kelpoisuuskriteerit arvioitsijoille."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Todistuspohjan Asetukset"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Taustakuva"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Lataa taustakuva todistukselle (JPG tai PNG, suositeltu koko: 2100x2970 pikseliä A4:lle)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Nykyinen taustakuva"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Otsikkoteksti"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Pääotsikko, joka näytetään todistuksen yläosassa"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Otsikkoteksti vaaditaan"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Todistuksen Rungon Pohja"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Todistuksen pääsisältö. Käytä pohjamuuttujia dynaamisen sisällön lisäämiseen."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Todistuksen rungon pohja vaaditaan"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Alatunnisteteksti"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Valinnainen teksti, joka näytetään todistuksen alaosassa"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Käytettävissä Olevat Pohjamuuttujat"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Käytä näitä muuttujia pohjissasi dynaamisen sisällön lisäämiseen:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Oletuspohja"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Käytä oletuspohjaa"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Ulkoasuasetukset"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Fonttiperhe"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Fonttikoko"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Tekstin Väri (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Määritä tekstin väri käyttämällä RGB-arvoja (0-255 kullekin komponentille)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Kelpoisuuskriteerit"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Vähimmäismäärä Suoritettuja Arviointeja"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Vähimmäismäärä suoritettuja arviointeja, joka vaaditaan ennen kuin arvioitsija voi saada todistuksen"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Vähimmäismäärän arviointeja tulee olla numero, joka on suurempi tai yhtä suuri kuin 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Vahvistusvaihtoehdot"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Sisällytä QR-koodi todistuksen vahvistamiseen"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Esikatsele Todistusta"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Virheellinen kuvatyyppi. Lataa JPG- tai PNG-tiedosto."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Tiedoston lataus epäonnistui. Yritä uudelleen."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Tätä arviointia ei ole vielä suoritettu. Todistukset ovat saatavilla vain suoritetuille arvioinneille."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Todistuskoodia ei annettu"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Virheellinen todistuskoodi. Tätä todistusta ei voitu vahvistaa."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Eräluonnin todistusten luomiseen ei ole valittu arvioitsijoita"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Pääsy evätty. Sinulla ei ole oikeutta ladata tätä todistusta."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Lehden kontekstia ei ole saatavilla. Varmista, että käytät pääsyä kelvollisesta lehdestä."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Tietokantayhteys ei ole tällä hetkellä saatavilla. Ota yhteyttä järjestelmän ylläpitäjään."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Vahvista Todistus"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Anna todistuskoodi sen aitouden vahvistamiseksi"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Todistuskoodi"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Vahvista Todistus"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Kelvollinen Todistus"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Virheellinen Todistus"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Antamasi todistuskoodi ei ole kelvollinen tai sitä ei ole järjestelmässämme."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Todistuskoodi"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Arvioitsijan Nimi"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Lehden Nimi"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Myöntämispäivä"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Todistusten Eräluonti"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Luo todistuksia useille arvioitsijoille kerralla. Valitse arvioitsijat alla olevasta luettelosta, jotka ovat suorittaneet arvioinnit mutta joilla ei vielä ole todistuksia."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Valitse Arvioitsijat"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "suoritettua arviointia"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Kelpoisia arvioitsijoita ei löytynyt. Kaikilla arvioitsijoilla on todistukset suoritetuista arvioinneistaan."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Pidä Ctrl (Windows/Linux) tai Cmd (Mac) painettuna valitaksesi useita arvioitsijoita"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Luo Todistukset"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Luodaan todistuksia..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Valitse vähintään yksi arvioitsija"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "todistus/todistusta luotu onnistuneesti"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Todistusten luonnissa tapahtui virhe. Yritä uudelleen."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} todistus/todistusta luotu onnistuneesti"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Todistustilastot"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Yleiskatsaus todistusten luomisesta ja käytöstä lehdessäsi"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Myönnettyjä Todistuksia Yhteensä"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Latauksia Yhteensä"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Yksilöllisiä Arvioitsijoita Todistuksineen"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Myönnettyjä Todistuksia Yhteensä"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Latauksia Yhteensä"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Keskimääräinen Latausmäärä Todistusta Kohden"
+

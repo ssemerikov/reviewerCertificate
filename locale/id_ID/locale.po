@@ -1,0 +1,279 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Indonesian\n"
+"Language: id_ID\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Plugin Sertifikat Mitra Bestari"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Memungkinkan mitra bestari untuk menghasilkan dan mengunduh sertifikat PDF penghargaan yang dipersonalisasi setelah menyelesaikan tinjauan."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Sertifikat Tinjauan"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Sertifikat Tinjauan Sejawat"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Sertifikat Anda sudah siap!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Terima kasih telah menyelesaikan tinjauan ini. Anda sekarang dapat mengunduh sertifikat penghargaan Anda."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Sertifikat Anda akan dibuat secara otomatis saat Anda mengklik tombol unduh."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Unduh Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Pengaturan Sertifikat"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Konfigurasi templat sertifikat dan kriteria kelayakan untuk mitra bestari."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Pengaturan Templat Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Gambar Latar Belakang"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Unggah gambar latar belakang untuk sertifikat (JPG atau PNG, ukuran yang disarankan: 2100x2970 piksel untuk A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Gambar latar belakang saat ini"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Teks Judul"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Judul utama yang ditampilkan di bagian atas sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Teks judul wajib diisi"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Templat Isi Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Konten utama sertifikat. Gunakan variabel templat untuk menyisipkan konten dinamis."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Templat isi sertifikat wajib diisi"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Teks Footer"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Teks opsional yang ditampilkan di bagian bawah sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Variabel Templat yang Tersedia"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Gunakan variabel-variabel ini dalam templat Anda untuk menyisipkan konten dinamis:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Templat bawaan"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Gunakan templat bawaan"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Pengaturan Tampilan"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Jenis Huruf"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Ukuran Huruf"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Warna Teks (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Tentukan warna teks menggunakan nilai RGB (0-255 untuk setiap komponen)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Kriteria Kelayakan"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Tinjauan Selesai Minimum"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Jumlah minimum tinjauan yang diselesaikan yang diperlukan sebelum mitra bestari dapat menerima sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Jumlah minimum tinjauan harus berupa angka yang lebih besar atau sama dengan 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Opsi Verifikasi"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Sertakan kode QR untuk verifikasi sertifikat"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Pratinjau Sertifikat"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Jenis gambar tidak valid. Harap unggah file JPG atau PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Pengunggahan file gagal. Harap coba lagi."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Tinjauan ini belum diselesaikan. Sertifikat hanya tersedia untuk tinjauan yang sudah selesai."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Tidak ada kode sertifikat yang diberikan"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Kode sertifikat tidak valid. Sertifikat ini tidak dapat diverifikasi."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Tidak ada mitra bestari yang dipilih untuk pembuatan sertifikat batch"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Akses ditolak. Anda tidak memiliki izin untuk mengunduh sertifikat ini."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Tidak ada konteks jurnal yang tersedia. Pastikan Anda mengakses dari jurnal yang valid."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Akses basis data saat ini tidak tersedia. Harap hubungi administrator sistem."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Verifikasi Sertifikat"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Masukkan kode sertifikat untuk memverifikasi keasliannya"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Kode Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Verifikasi Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Sertifikat Valid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Sertifikat Tidak Valid"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Kode sertifikat yang Anda masukkan tidak valid atau tidak ada dalam sistem kami."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Kode Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Nama Mitra Bestari"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Nama Jurnal"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Tanggal Penerbitan"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Pembuatan Sertifikat Batch"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Buat sertifikat untuk beberapa mitra bestari sekaligus. Pilih mitra bestari dari daftar di bawah ini yang telah menyelesaikan tinjauan tetapi belum memiliki sertifikat."
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Pilih Mitra Bestari"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "tinjauan selesai"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Tidak ada mitra bestari yang memenuhi syarat. Semua mitra bestari memiliki sertifikat untuk tinjauan mereka yang sudah selesai."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Tahan Ctrl (Windows/Linux) atau Cmd (Mac) untuk memilih beberapa mitra bestari"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Buat Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Membuat sertifikat..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Harap pilih setidaknya satu mitra bestari"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "sertifikat berhasil dibuat"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Terjadi kesalahan saat membuat sertifikat. Harap coba lagi."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} sertifikat berhasil dibuat"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Statistik Sertifikat"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Ikhtisar pembuatan dan penggunaan sertifikat di jurnal Anda"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total Sertifikat yang Diterbitkan"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total Unduhan"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Mitra Bestari Unik dengan Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Total Sertifikat yang Diterbitkan"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Total Unduhan"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Rata-rata Unduhan per Sertifikat"
+
