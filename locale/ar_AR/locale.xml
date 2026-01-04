@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/ar_AR/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Arabic (RTL)
+  -->
+
+<locale name="ar_AR" full_name="العربية">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">إضافة شهادات المحكّمين</message>
+	<message key="plugins.generic.reviewerCertificate.description">تتيح للمحكّمين إنشاء وتنزيل شهادات تقدير PDF مخصصة بعد إتمام عمليات التحكيم.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">شهادة تحكيم</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">شهادة مراجعة الأقران</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">شهادتك جاهزة!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">شكراً لإتمامك هذا التحكيم. يمكنك الآن تنزيل شهادة التقدير الخاصة بك.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">سيتم إنشاء شهادتك تلقائياً عند النقر على زر التنزيل.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">تنزيل الشهادة</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">إعدادات الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">إعداد قوالب الشهادات ومعايير الأهلية للمحكّمين.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">إعدادات قالب الشهادة</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">صورة الخلفية</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">رفع صورة خلفية للشهادة (JPG أو PNG، الحجم الموصى به: 2100×2970 بكسل لصفحة A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">صورة الخلفية الحالية</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">نص العنوان</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">العنوان الرئيسي المعروض في أعلى الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">نص العنوان مطلوب</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">قالب محتوى الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">المحتوى الرئيسي للشهادة. استخدم متغيرات القالب لإدراج محتوى ديناميكي.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">قالب محتوى الشهادة مطلوب</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">نص التذييل</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">نص اختياري يُعرض في أسفل الشهادة</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">متغيرات القالب المتاحة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">استخدم هذه المتغيرات في قوالبك لإدراج محتوى ديناميكي:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">القالب الافتراضي</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">استخدام القالب الافتراضي</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">إعدادات المظهر</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">نوع الخط</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">حجم الخط</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">لون النص (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">حدد لون النص باستخدام قيم RGB (0-255 لكل مكون)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">معايير الأهلية</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">الحد الأدنى من التحكيمات المكتملة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">الحد الأدنى من التحكيمات المكتملة المطلوبة قبل أن يتمكن المحكّم من الحصول على شهادة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">يجب أن يكون الحد الأدنى للتحكيمات رقماً أكبر من أو يساوي 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">خيارات التحقق</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">تضمين رمز QR للتحقق من الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">معاينة الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">نوع الصورة غير صالح. يرجى رفع ملف JPG أو PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">فشل رفع الملف. يرجى المحاولة مرة أخرى.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">لم يكتمل هذا التحكيم بعد. الشهادات متاحة فقط للتحكيمات المكتملة.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">لم يتم تقديم رمز الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">رمز الشهادة غير صالح. تعذر التحقق من هذه الشهادة.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">لم يتم اختيار محكّمين لإنشاء الشهادات المجمعة</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">تم رفض الوصول. ليس لديك إذن لتنزيل هذه الشهادة.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">لا يتوفر سياق المجلة. يرجى التأكد من الوصول من مجلة صالحة.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">الوصول إلى قاعدة البيانات غير متاح حالياً. يرجى الاتصال بمسؤول النظام.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">التحقق من الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">أدخل رمز الشهادة للتحقق من صحتها</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">رمز الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">التحقق من الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">الشهادة صالحة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">الشهادة غير صالحة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">رمز الشهادة الذي أدخلته غير صالح أو غير موجود في نظامنا.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">رمز الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">اسم المحكّم</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">اسم المجلة</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">تاريخ الإصدار</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">إنشاء الشهادات المجمعة</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">إنشاء شهادات لعدة محكّمين دفعة واحدة. اختر المحكّمين من القائمة أدناه الذين أتموا تحكيماتهم ولكن ليس لديهم شهادات بعد.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">اختيار المحكّمين</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">تحكيمات مكتملة</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">لم يتم العثور على محكّمين مؤهلين. جميع المحكّمين لديهم شهادات لتحكيماتهم المكتملة.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">اضغط مع الاستمرار على Ctrl (ويندوز/لينكس) أو Cmd (ماك) لاختيار عدة محكّمين</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">إنشاء الشهادات</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">جارٍ إنشاء الشهادات...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">يرجى اختيار محكّم واحد على الأقل</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">تم إنشاء الشهادة (الشهادات) بنجاح</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">حدث خطأ أثناء إنشاء الشهادات. يرجى المحاولة مرة أخرى.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">تم إنشاء {$count} شهادة (شهادات) بنجاح</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">إحصائيات الشهادات</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">نظرة عامة على إنشاء واستخدام الشهادات في مجلتك</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">إجمالي الشهادات الصادرة</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">إجمالي التنزيلات</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">المحكّمون الفريدون الحاصلون على شهادات</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">إجمالي الشهادات الصادرة</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">إجمالي التنزيلات</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">متوسط التنزيلات لكل شهادة</message>
+</locale>

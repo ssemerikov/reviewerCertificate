@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Lithuanian\n"
+"Language: lt_LT\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Recenzento Sertifikato Įskiepis"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Leidžia recenzentams generuoti ir atsisiųsti asmeninio pripažinimo PDF sertifikatus po recenzijų užbaigimo."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Recenzijos Sertifikatas"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Ekspertinio Vertinimo Sertifikatas"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Jūsų Sertifikatas Paruoštas!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Dėkojame už šios recenzijos užbaigimą. Dabar galite atsisiųsti savo pripažinimo sertifikatą."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Jūsų sertifikatas bus automatiškai sugeneruotas paspaudus atsisiuntimo mygtuką."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Atsisiųsti Sertifikatą"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Sertifikato Nustatymai"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Konfigūruokite sertifikatų šablonus ir tinkamumo kriterijus recenzentams."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Sertifikato Šablono Nustatymai"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Fono Paveikslėlis"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Įkelkite fono paveikslėlį sertifikatui (JPG arba PNG, rekomenduojamas dydis: 2100x2970 pikselių A4 formatui)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Dabartinis fono paveikslėlis"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Antraštės Tekstas"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Pagrindinis pavadinimas, rodomas sertifikato viršuje"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Antraštės tekstas yra privalomas"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Sertifikato Turinio Šablonas"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Pagrindinis sertifikato turinys. Naudokite šablono kintamuosius dinaminio turinio įterpimui."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Sertifikato turinio šablonas yra privalomas"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Poraštės Tekstas"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Neprivalomas tekstas, rodomas sertifikato apačioje"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Galimi Šablono Kintamieji"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Naudokite šiuos kintamuosius savo šablonuose dinaminio turinio įterpimui:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Numatytasis šablonas"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Naudoti numatytąjį šabloną"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Išvaizdos Nustatymai"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Šrifto Šeima"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Šrifto Dydis"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Teksto Spalva (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Nurodykite teksto spalvą naudodami RGB reikšmes (0-255 kiekvienam komponentui)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Tinkamumo Kriterijai"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Mažiausias Užbaigtų Recenzijų Skaičius"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Mažiausias užbaigtų recenzijų skaičius, reikalingas prieš recenzentui gaunant sertifikatą"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Mažiausias recenzijų skaičius turi būti didesnis arba lygus 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Patikrinimo Parinktys"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Įtraukti QR kodą sertifikato patikrinimui"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Sertifikato Peržiūra"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Netinkamas paveikslėlio tipas. Prašome įkelti JPG arba PNG failą."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Failo įkėlimas nepavyko. Prašome bandyti dar kartą."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Ši recenzija dar nėra užbaigta. Sertifikatai galimi tik užbaigtoms recenzijoms."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Nepateiktas sertifikato kodas"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Neteisingas sertifikato kodas. Šio sertifikato nepavyko patikrinti."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Nepasirinkti recenzentai masiniam sertifikatų generavimui"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Prieiga uždrausta. Neturite leidimo atsisiųsti šio sertifikato."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Nėra žurnalo konteksto. Įsitikinkite, kad prieinate iš galiojančio žurnalo."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Duomenų bazės prieiga šiuo metu negalima. Prašome susisiekti su sistemos administratoriumi."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Sertifikato Patikrinimas"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Įveskite sertifikato kodą, kad patikrintumėte jo autentiškumą"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Sertifikato Kodas"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Patikrinti Sertifikatą"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Sertifikatas Galioja"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Sertifikatas Negalioja"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Jūsų įvestas sertifikato kodas negalioja arba neegzistuoja mūsų sistemoje."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Sertifikato Kodas"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Recenzento Vardas"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Žurnalo Pavadinimas"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Išdavimo Data"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Masinis Sertifikatų Generavimas"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Generuokite sertifikatus keliems recenzentams vienu metu. Pasirinkite recenzentus iš žemiau esančio sąrašo, kurie užbaigė recenzijas, bet dar neturi sertifikatų."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Pasirinkti Recenzentus"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "užbaigtos recenzijos"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Nerasta tinkamų recenzentų. Visi recenzentai turi sertifikatus savo užbaigtoms recenzijoms."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Laikykite Ctrl (Windows/Linux) arba Cmd (Mac), kad pasirinktumėte kelis recenzentus"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Generuoti Sertifikatus"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Generuojami sertifikatai..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Prašome pasirinkti bent vieną recenzentą"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "sertifikatas(-ai) sėkmingai sugeneruotas(-i)"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Generuojant sertifikatus įvyko klaida. Prašome bandyti dar kartą."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} sertifikatas(-ai) sėkmingai sugeneruotas(-i)"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Sertifikatų Statistika"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Sertifikatų generavimo ir naudojimo apžvalga jūsų žurnale"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Iš Viso Išduotų Sertifikatų"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Iš Viso Atsisiuntimų"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Unikalūs Recenzentai su Sertifikatais"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Iš Viso Išduotų Sertifikatų"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Iš Viso Atsisiuntimų"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Vidutinis Atsisiuntimų Skaičius Sertifikatui"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "Jūsų recenzento sertifikatas paruoštas atsisiuntimui"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "Gerbiamas(-a) {$reviewerName},\n\nDėkojame, kad atlikote ekspertinį vertinimą. Jūsų recenzento pripažinimo sertifikatas dabar paruoštas atsisiuntimui.\n\nApsilankykite šioje nuorodoje, kad atsisiųstumėte sertifikatą:\n{$certificateUrl}\n\nDėkojame už jūsų indėlį į akademinę leidybą."

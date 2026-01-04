@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/fa_IR/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Persian/Farsi (RTL)
+  -->
+
+<locale name="fa_IR" full_name="فارسی">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">افزونه گواهی داوری</message>
+	<message key="plugins.generic.reviewerCertificate.description">به داوران امکان می‌دهد پس از تکمیل داوری، گواهی‌های PDF شخصی‌سازی شده را ایجاد و دانلود کنند.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">گواهی داوری</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">گواهی داوری همتا</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">گواهی شما آماده است!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">از تکمیل این داوری سپاسگزاریم. اکنون می‌توانید گواهی تقدیر خود را دانلود کنید.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">با کلیک روی دکمه دانلود، گواهی شما به صورت خودکار ایجاد می‌شود.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">دانلود گواهی</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">تنظیمات گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">پیکربندی قالب‌های گواهی و معیارهای واجد شرایط بودن برای داوران.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">تنظیمات قالب گواهی</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">تصویر پس‌زمینه</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">بارگذاری تصویر پس‌زمینه برای گواهی (JPG یا PNG، اندازه پیشنهادی: 2100×2970 پیکسل برای A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">تصویر پس‌زمینه فعلی</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">متن سربرگ</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">عنوان اصلی که در بالای گواهی نمایش داده می‌شود</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">متن سربرگ الزامی است</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">قالب متن اصلی گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">محتوای اصلی گواهی. از متغیرهای قالب برای درج محتوای پویا استفاده کنید.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">قالب متن اصلی گواهی الزامی است</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">متن پاورقی</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">متن اختیاری که در پایین گواهی نمایش داده می‌شود</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">متغیرهای قالب موجود</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">از این متغیرها در قالب‌های خود برای درج محتوای پویا استفاده کنید:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">قالب پیش‌فرض</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">استفاده از قالب پیش‌فرض</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">تنظیمات ظاهری</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">خانواده فونت</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">اندازه فونت</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">رنگ متن (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">رنگ متن را با مقادیر RGB مشخص کنید (0-255 برای هر مؤلفه)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">معیارهای واجد شرایط بودن</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">حداقل داوری‌های تکمیل شده</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">حداقل تعداد داوری‌های تکمیل شده مورد نیاز قبل از دریافت گواهی توسط داور</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">حداقل داوری‌ها باید عددی بزرگتر یا مساوی 1 باشد</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">گزینه‌های تأیید</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">شامل کد QR برای تأیید گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">پیش‌نمایش گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">نوع تصویر نامعتبر است. لطفاً فایل JPG یا PNG بارگذاری کنید.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">بارگذاری فایل ناموفق بود. لطفاً دوباره تلاش کنید.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">این داوری هنوز تکمیل نشده است. گواهی‌ها فقط برای داوری‌های تکمیل شده موجود است.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">کد گواهی ارائه نشده است</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">کد گواهی نامعتبر است. این گواهی قابل تأیید نیست.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">هیچ داوری برای تولید گروهی گواهی انتخاب نشده است</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">دسترسی رد شد. شما مجوز دانلود این گواهی را ندارید.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">زمینه مجله موجود نیست. لطفاً مطمئن شوید که از یک مجله معتبر دسترسی دارید.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">دسترسی به پایگاه داده در حال حاضر موجود نیست. لطفاً با مدیر سیستم تماس بگیرید.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">تأیید گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">کد گواهی را برای تأیید اصالت آن وارد کنید</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">کد گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">تأیید گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">گواهی معتبر</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">گواهی نامعتبر</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">کد گواهی وارد شده نامعتبر است یا در سیستم ما وجود ندارد.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">کد گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">نام داور</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">نام مجله</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">تاریخ صدور</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">تولید گروهی گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">گواهی‌ها را برای چندین داور به صورت یکجا تولید کنید. داورانی را از لیست زیر انتخاب کنید که داوری‌های خود را تکمیل کرده‌اند اما هنوز گواهی ندارند.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">انتخاب داوران</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">داوری‌های تکمیل شده</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">هیچ داور واجد شرایطی یافت نشد. همه داوران گواهی‌های داوری‌های تکمیل شده خود را دارند.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">کلید Ctrl (ویندوز/لینوکس) یا Cmd (مک) را نگه دارید تا چندین داور انتخاب کنید</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">تولید گواهی‌ها</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">در حال تولید گواهی‌ها...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">لطفاً حداقل یک داور انتخاب کنید</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">گواهی(ها) با موفقیت تولید شد</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">در تولید گواهی‌ها خطایی رخ داد. لطفاً دوباره تلاش کنید.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} گواهی با موفقیت تولید شد</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">آمار گواهی‌ها</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">نمای کلی تولید و استفاده از گواهی در مجله شما</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">کل گواهی‌های صادر شده</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">کل دانلودها</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">داوران منحصر به فرد دارای گواهی</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">کل گواهی‌های صادر شده</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">کل دانلودها</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">میانگین دانلود به ازای هر گواهی</message>
+</locale>

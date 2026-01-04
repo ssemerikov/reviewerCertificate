@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/sl_SI/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Slovenian
+  -->
+
+<locale name="sl_SI" full_name="Slovenščina">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Vtičnik za Potrdilo Recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.description">Omogoča recenzentom ustvarjanje in prenos personaliziranih PDF potrdil priznanja po zaključku recenzij.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Potrdilo o Recenziji</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Potrdilo o Strokovni Recenziji</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Vaše Potrdilo je Pripravljeno!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Zahvaljujemo se vam za dokončanje te recenzije. Zdaj lahko prenesete svoje potrdilo priznanja.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Vaše potrdilo bo samodejno ustvarjeno, ko kliknete gumb za prenos.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Prenesi Potrdilo</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Nastavitve Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Konfigurirajte predloge potrdil in merila upravičenosti za recenzente.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Nastavitve Predloge Potrdila</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Slika Ozadja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Naložite sliko ozadja za potrdilo (JPG ali PNG, priporočena velikost: 2100x2970 pikslov za A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Trenutna slika ozadja</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Besedilo Glave</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Glavni naslov, prikazan na vrhu potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Besedilo glave je obvezno</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Predloga Vsebine Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Glavna vsebina potrdila. Uporabite spremenljivke predloge za vstavljanje dinamične vsebine.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Predloga vsebine potrdila je obvezna</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Besedilo Noge</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Neobvezno besedilo, prikazano na dnu potrdila</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Razpoložljive Spremenljivke Predloge</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Uporabite te spremenljivke v svojih predlogah za vstavljanje dinamične vsebine:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Privzeta predloga</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Uporabi privzeto predlogo</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Nastavitve Videza</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Družina Pisave</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Velikost Pisave</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Barva Besedila (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Določite barvo besedila z uporabo RGB vrednosti (0-255 za vsako komponento)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Merila Upravičenosti</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Najmanjše Število Dokončanih Recenzij</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Najmanjše število dokončanih recenzij, potrebnih preden lahko recenzent prejme potrdilo</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Najmanjše število recenzij mora biti število večje ali enako 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Možnosti Preverjanja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Vključi QR kodo za preverjanje potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Predogled Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Neveljavna vrsta slike. Prosimo, naložite datoteko JPG ali PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Nalaganje datoteke ni uspelo. Prosimo, poskusite znova.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Ta recenzija še ni dokončana. Potrdila so na voljo samo za dokončane recenzije.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Koda potrdila ni bila podana</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Neveljavna koda potrdila. Tega potrdila ni mogoče preveriti.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Recenzenti niso bili izbrani za množično generiranje potrdil</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Dostop zavrnjen. Nimate dovoljenja za prenos tega potrdila.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Kontekst revije ni na voljo. Prepričajte se, da dostopate iz veljavne revije.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Dostop do baze podatkov trenutno ni na voljo. Prosimo, obrnite se na skrbnika sistema.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Preverjanje Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Vnesite kodo potrdila za preverjanje njegove verodostojnosti</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Koda Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Preveri Potrdilo</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Veljavno Potrdilo</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Neveljavno Potrdilo</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Vnesena koda potrdila je neveljavna ali ne obstaja v našem sistemu.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Koda Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Ime Recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Ime Revije</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Datum Izdaje</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Množično Generiranje Potrdil</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generirajte potrdila za več recenzentov hkrati. Izberite recenzente s spodnjega seznama, ki so dokončali recenzije, vendar še nimajo potrdil.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Izberi Recenzente</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">dokončane recenzije</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Upravičeni recenzenti niso bili najdeni. Vsi recenzenti imajo potrdila za svoje dokončane recenzije.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Držite Ctrl (Windows/Linux) ali Cmd (Mac) za izbiro več recenzentov</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generiraj Potrdila</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Generiranje potrdil...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Prosimo, izberite vsaj enega recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">potrdilo/a uspešno generirano/a</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Pri generiranju potrdil je prišlo do napake. Prosimo, poskusite znova.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} potrdilo/a uspešno generirano/a</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Statistika Potrdil</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Pregled generiranja in uporabe potrdil v vaši reviji</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Skupno Število Izdanih Potrdil</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Skupno Število Prenosov</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Edinstveni Recenzenti s Potrdili</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Skupno Število Izdanih Potrdil</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Skupno Število Prenosov</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Povprečno Število Prenosov na Potrdilo</message>
+</locale>

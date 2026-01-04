@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Hungarian\n"
+"Language: hu_HU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Bíráló Tanúsítvány Bővítmény"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Lehetővé teszi a bírálók számára, hogy személyre szabott PDF elismerő tanúsítványokat hozzanak létre és töltsenek le a bírálatok befejezése után."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Bírálati Tanúsítvány"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Szakmai Bírálati Tanúsítvány"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Tanúsítványa Elkészült!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Köszönjük, hogy befejezte ezt a bírálatot. Most letöltheti elismerő tanúsítványát."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Tanúsítványa automatikusan létrejön, amikor a letöltés gombra kattint."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Tanúsítvány Letöltése"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Tanúsítvány Beállítások"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Tanúsítvány sablonok és jogosultsági kritériumok konfigurálása bírálók számára."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Tanúsítvány Sablon Beállítások"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Háttérkép"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Töltse fel a tanúsítvány háttérképét (JPG vagy PNG, ajánlott méret: 2100x2970 pixel A4-hez)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Jelenlegi háttérkép"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Fejléc Szöveg"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "A tanúsítvány tetején megjelenő fő címsor"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "A fejléc szöveg megadása kötelező"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Tanúsítvány Törzs Sablon"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "A tanúsítvány fő tartalma. Használjon sablon változókat dinamikus tartalom beszúrásához."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "A tanúsítvány törzs sablon megadása kötelező"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Lábléc Szöveg"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Opcionális szöveg a tanúsítvány alján"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Elérhető Sablon Változók"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Használja ezeket a változókat a sablonjaiban dinamikus tartalom beszúrásához:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Alapértelmezett sablon"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Alapértelmezett sablon használata"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Megjelenési Beállítások"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Betűtípus Család"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Betűméret"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Szövegszín (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Adja meg a szövegszínt RGB értékekkel (0-255 minden komponenshez)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Jogosultsági Kritériumok"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Minimum Befejezett Bírálatok"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "A tanúsítvány megszerzéséhez szükséges minimum befejezett bírálatok száma"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "A minimum bírálatok számának 1-nél nagyobb vagy egyenlő számnak kell lennie"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Ellenőrzési Beállítások"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "QR kód hozzáadása tanúsítvány ellenőrzéshez"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Tanúsítvány Előnézet"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Érvénytelen képtípus. Kérjük, töltsön fel JPG vagy PNG fájlt."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "A fájlfeltöltés sikertelen. Kérjük, próbálja újra."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Ez a bírálat még nem fejeződött be. Tanúsítványok csak befejezett bírálatokhoz elérhetők."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Nincs megadva tanúsítvány kód"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Érvénytelen tanúsítvány kód. Ez a tanúsítvány nem ellenőrizhető."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Nincs kiválasztva bíráló a tömeges tanúsítvány generáláshoz"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Hozzáférés megtagadva. Nincs jogosultsága letölteni ezt a tanúsítványt."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Nincs elérhető folyóirat kontextus. Kérjük, győződjön meg róla, hogy érvényes folyóiratból fér hozzá."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Az adatbázis hozzáférés jelenleg nem elérhető. Kérjük, lépjen kapcsolatba a rendszergazdával."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Tanúsítvány Ellenőrzése"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Adja meg a tanúsítvány kódot a hitelesség ellenőrzéséhez"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Tanúsítvány Kód"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Tanúsítvány Ellenőrzése"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Érvényes Tanúsítvány"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Érvénytelen Tanúsítvány"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "A megadott tanúsítvány kód érvénytelen vagy nem létezik a rendszerünkben."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Tanúsítvány Kód"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Bíráló Neve"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Folyóirat Neve"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Kiállítás Dátuma"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Tömeges Tanúsítvány Generálás"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Tanúsítványok generálása több bíráló számára egyszerre. Válassza ki azokat a bírálókat az alábbi listából, akik befejeztek bírálatokat, de még nincs tanúsítványuk."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Bírálók Kiválasztása"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "befejezett bírálat"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Nem található jogosult bíráló. Minden bíráló rendelkezik tanúsítvánnyal a befejezett bírálataihoz."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Tartsa lenyomva a Ctrl (Windows/Linux) vagy Cmd (Mac) gombot több bíráló kiválasztásához"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Tanúsítványok Generálása"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Tanúsítványok generálása..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Kérjük, válasszon ki legalább egy bírálót"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "tanúsítvány(ok) sikeresen generálva"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Hiba történt a tanúsítványok generálása során. Kérjük, próbálja újra."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} tanúsítvány sikeresen generálva"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Tanúsítvány Statisztikák"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "A tanúsítvány generálás és használat áttekintése a folyóiratban"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Összes Kiállított Tanúsítvány"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Összes Letöltés"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Egyedi Bírálók Tanúsítvánnyal"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Összes Kiállított Tanúsítvány"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Összes Letöltés"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Átlagos Letöltés Tanúsítványonként"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "Bírálói tanúsítványa letölthető"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "Tisztelt {$reviewerName}!\n\nKöszönjük, hogy elvégezte a szakmai bírálatot. Elismerő bírálói tanúsítványa most letölthető.\n\nKérjük, látogasson el az alábbi linkre a tanúsítvány letöltéséhez:\n{$certificateUrl}\n\nKöszönjük hozzájárulását a tudományos publikáláshoz."

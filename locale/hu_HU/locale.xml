@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/hu_HU/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Hungarian
+  -->
+
+<locale name="hu_HU" full_name="Magyar">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Bíráló Tanúsítvány Bővítmény</message>
+	<message key="plugins.generic.reviewerCertificate.description">Lehetővé teszi a bírálók számára, hogy személyre szabott PDF elismerő tanúsítványokat hozzanak létre és töltsenek le a bírálatok befejezése után.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Bírálati Tanúsítvány</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Szakmai Bírálati Tanúsítvány</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Tanúsítványa Elkészült!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Köszönjük, hogy befejezte ezt a bírálatot. Most letöltheti elismerő tanúsítványát.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Tanúsítványa automatikusan létrejön, amikor a letöltés gombra kattint.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Tanúsítvány Letöltése</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Tanúsítvány Beállítások</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Tanúsítvány sablonok és jogosultsági kritériumok konfigurálása bírálók számára.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Tanúsítvány Sablon Beállítások</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Háttérkép</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Töltse fel a tanúsítvány háttérképét (JPG vagy PNG, ajánlott méret: 2100x2970 pixel A4-hez)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Jelenlegi háttérkép</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Fejléc Szöveg</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">A tanúsítvány tetején megjelenő fő címsor</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">A fejléc szöveg megadása kötelező</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Tanúsítvány Törzs Sablon</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">A tanúsítvány fő tartalma. Használjon sablon változókat dinamikus tartalom beszúrásához.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">A tanúsítvány törzs sablon megadása kötelező</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Lábléc Szöveg</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Opcionális szöveg a tanúsítvány alján</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Elérhető Sablon Változók</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Használja ezeket a változókat a sablonjaiban dinamikus tartalom beszúrásához:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Alapértelmezett sablon</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Alapértelmezett sablon használata</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Megjelenési Beállítások</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Betűtípus Család</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Betűméret</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Szövegszín (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Adja meg a szövegszínt RGB értékekkel (0-255 minden komponenshez)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Jogosultsági Kritériumok</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minimum Befejezett Bírálatok</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">A tanúsítvány megszerzéséhez szükséges minimum befejezett bírálatok száma</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">A minimum bírálatok számának 1-nél nagyobb vagy egyenlő számnak kell lennie</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Ellenőrzési Beállítások</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">QR kód hozzáadása tanúsítvány ellenőrzéshez</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Tanúsítvány Előnézet</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Érvénytelen képtípus. Kérjük, töltsön fel JPG vagy PNG fájlt.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">A fájlfeltöltés sikertelen. Kérjük, próbálja újra.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Ez a bírálat még nem fejeződött be. Tanúsítványok csak befejezett bírálatokhoz elérhetők.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Nincs megadva tanúsítvány kód</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Érvénytelen tanúsítvány kód. Ez a tanúsítvány nem ellenőrizhető.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Nincs kiválasztva bíráló a tömeges tanúsítvány generáláshoz</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Hozzáférés megtagadva. Nincs jogosultsága letölteni ezt a tanúsítványt.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Nincs elérhető folyóirat kontextus. Kérjük, győződjön meg róla, hogy érvényes folyóiratból fér hozzá.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Az adatbázis hozzáférés jelenleg nem elérhető. Kérjük, lépjen kapcsolatba a rendszergazdával.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Tanúsítvány Ellenőrzése</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Adja meg a tanúsítvány kódot a hitelesség ellenőrzéséhez</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Tanúsítvány Kód</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Tanúsítvány Ellenőrzése</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Érvényes Tanúsítvány</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Érvénytelen Tanúsítvány</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">A megadott tanúsítvány kód érvénytelen vagy nem létezik a rendszerünkben.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Tanúsítvány Kód</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Bíráló Neve</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Folyóirat Neve</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Kiállítás Dátuma</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Tömeges Tanúsítvány Generálás</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Tanúsítványok generálása több bíráló számára egyszerre. Válassza ki azokat a bírálókat az alábbi listából, akik befejeztek bírálatokat, de még nincs tanúsítványuk.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Bírálók Kiválasztása</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">befejezett bírálat</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Nem található jogosult bíráló. Minden bíráló rendelkezik tanúsítvánnyal a befejezett bírálataihoz.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Tartsa lenyomva a Ctrl (Windows/Linux) vagy Cmd (Mac) gombot több bíráló kiválasztásához</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Tanúsítványok Generálása</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Tanúsítványok generálása...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Kérjük, válasszon ki legalább egy bírálót</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">tanúsítvány(ok) sikeresen generálva</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Hiba történt a tanúsítványok generálása során. Kérjük, próbálja újra.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} tanúsítvány sikeresen generálva</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Tanúsítvány Statisztikák</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">A tanúsítvány generálás és használat áttekintése a folyóiratban</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Összes Kiállított Tanúsítvány</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Összes Letöltés</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Egyedi Bírálók Tanúsítvánnyal</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Összes Kiállított Tanúsítvány</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Összes Letöltés</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Átlagos Letöltés Tanúsítványonként</message>
+</locale>

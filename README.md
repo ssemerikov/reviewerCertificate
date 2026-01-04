@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.0.5** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.0.6** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.0.5)**: Fixed date format display on certificate verification page (PHP 8.1+ compatibility), memory optimization, and missing error handling. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.0.6)**: Added 12 new language translations (Chinese, Arabic, Japanese, Korean, Persian, Greek, Hebrew, Hungarian, Lithuanian, Slovak, Slovenian, Bulgarian) expanding global coverage to ~95%. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -37,8 +37,8 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 20 languages with complete coverage (82 message keys each)
-  - English, Ukrainian, Russian, Spanish, Portuguese (BR), French, German, Italian, Turkish, Polish, Indonesian, Dutch, Czech, Catalan, Norwegian, Swedish, Croatian, Finnish, Romanian
+  - 32 languages with complete coverage (82 message keys each)
+  - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
   - Dual format support: `.xml` (OJS 3.3/3.4) and `.po` (OJS 3.5) locale files
   - Automatic language detection from OJS settings
   - All translations validated with comprehensive test suite
@@ -227,23 +227,44 @@ The plugin provides both `.xml` and `.po` locale files for maximum compatibility
 | Croatian | `hr_HR` | Hrvatski (Hrvatska) | ✅ Complete |
 | Finnish | `fi_FI` | Suomi (Suomi) | ✅ Complete |
 | Romanian | `ro_RO` | Română (România) | ✅ Complete |
+| Chinese (Simplified) | `zh_CN` | 简体中文 | ✅ Complete |
+| Arabic | `ar_AR` | العربية | ✅ Complete |
+| Japanese | `ja_JP` | 日本語 | ✅ Complete |
+| Korean | `ko_KR` | 한국어 | ✅ Complete |
+| Persian/Farsi | `fa_IR` | فارسی | ✅ Complete |
+| Greek | `el_GR` | Ελληνικά | ✅ Complete |
+| Hebrew | `he_IL` | עברית | ✅ Complete |
+| Hungarian | `hu_HU` | Magyar | ✅ Complete |
+| Lithuanian | `lt_LT` | Lietuvių | ✅ Complete |
+| Slovak | `sk_SK` | Slovenčina | ✅ Complete |
+| Slovenian | `sl_SI` | Slovenščina | ✅ Complete |
+| Bulgarian | `bg_BG` | Български | ✅ Complete |
 
 ### Global Coverage
 
-With 20 languages, the plugin now serves **approximately 85-87% of the global OJS user base** across:
+With 32 languages, the plugin now serves **approximately 95% of the global OJS user base** across:
 
 - **Western Europe (7)**: English, French, German, Italian, Spanish, Dutch, Catalan
 - **Nordic Region (3)**: Norwegian (Bokmål), Swedish, Finnish
-- **Central Europe (1)**: Czech
-- **Southeastern Europe (2)**: Romanian, Croatian
+- **Central Europe (5)**: Czech, Hungarian, Slovak, Slovenian, Lithuanian
+- **Southeastern Europe (4)**: Romanian, Croatian, Bulgarian, Greek
 - **Eastern Europe & Eurasia (4)**: Russian, Ukrainian, Polish, Turkish
 - **Latin America (2)**: Spanish, Portuguese (Brazilian)
+- **Middle East & North Africa (4)**: Arabic, Persian/Farsi, Hebrew, Turkish
+- **East Asia (3)**: Chinese (Simplified), Japanese, Korean
 - **Southeast Asia (1)**: Indonesian
 
 **Language Families Represented:**
-- Indo-European (16 languages): Romance, Germanic, Slavic, Baltic branches
-- Uralic (2 languages): Finnish, (Hungarian potential)
+- Indo-European (20 languages): Romance, Germanic, Slavic, Baltic, Hellenic, Indo-Iranian branches
+- Uralic (2 languages): Finnish, Hungarian
 - Turkic (1 language): Turkish
+- Semitic (2 languages): Arabic, Hebrew
+- CJK (3 languages): Chinese, Japanese, Korean
+
+**Special Script Support:**
+- **RTL Languages**: Arabic, Persian, Hebrew (right-to-left text direction)
+- **CJK Scripts**: Chinese Han, Japanese Kanji/Kana, Korean Hangul
+- **Cyrillic**: Russian, Ukrainian, Bulgarian
 
 All translations feature scholarly terminology appropriate for academic publishing contexts and native speaker quality.
 
@@ -267,9 +288,7 @@ We welcome community contributions for additional languages! To contribute:
 
 **Note:** Both `.xml` and `.po` files are required for full OJS compatibility.
 
-**Priority Languages Needed (Tier 3)**: Chinese (Simplified), Arabic, Japanese, Korean, Persian/Farsi, Greek, Hebrew
-
-**Next Medium Priority (Tier 2.75+)**: Hungarian, Lithuanian, Slovak, Slovenian, Bulgarian (Cyrillic)
+**All priority languages are now complete!** Community contributions for additional regional variants are welcome.
 
 ## Usage
 
@@ -438,6 +457,14 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
+
+**Version 1.0.6** (2025-01-04)
+- **Added**: 12 new language translations expanding global coverage to ~95%
+  - **Tier 3 Priority**: Chinese (zh_CN), Arabic (ar_AR), Japanese (ja_JP), Korean (ko_KR), Persian (fa_IR), Greek (el_GR), Hebrew (he_IL)
+  - **Medium Priority**: Hungarian (hu_HU), Lithuanian (lt_LT), Slovak (sk_SK), Slovenian (sl_SI), Bulgarian (bg_BG)
+- **Added**: RTL (right-to-left) language support for Arabic, Persian, and Hebrew
+- **Added**: CJK (Chinese, Japanese, Korean) language support
+- **Added**: Additional Cyrillic script support (Bulgarian)
 
 **Version 1.0.5** (2025-01-03)
 - **Fixed**: Date format display on certificate verification page showing `%B %e, %Y` instead of formatted date

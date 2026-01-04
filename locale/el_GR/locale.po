@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Greek\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Πρόσθετο Πιστοποιητικού Κριτή"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Επιτρέπει στους κριτές να δημιουργούν και να κατεβάζουν εξατομικευμένα πιστοποιητικά αναγνώρισης PDF μετά την ολοκλήρωση κριτικών."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Πιστοποιητικό Κριτικής"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Πιστοποιητικό Αξιολόγησης από Ομότιμους"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Το Πιστοποιητικό σας είναι Έτοιμο!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Σας ευχαριστούμε για την ολοκλήρωση αυτής της κριτικής. Μπορείτε τώρα να κατεβάσετε το πιστοποιητικό αναγνώρισής σας."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Το πιστοποιητικό σας θα δημιουργηθεί αυτόματα όταν κάνετε κλικ στο κουμπί λήψης."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Λήψη Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Ρυθμίσεις Πιστοποιητικού"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Διαμόρφωση προτύπων πιστοποιητικών και κριτηρίων επιλεξιμότητας για τους κριτές."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Ρυθμίσεις Προτύπου Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Εικόνα Φόντου"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Ανεβάστε μια εικόνα φόντου για το πιστοποιητικό (JPG ή PNG, προτεινόμενο μέγεθος: 2100x2970 pixels για A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Τρέχουσα εικόνα φόντου"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Κείμενο Επικεφαλίδας"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Η κύρια επικεφαλίδα που εμφανίζεται στην κορυφή του πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Το κείμενο επικεφαλίδας είναι υποχρεωτικό"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Πρότυπο Κυρίως Κειμένου Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Το κύριο περιεχόμενο του πιστοποιητικού. Χρησιμοποιήστε μεταβλητές προτύπου για εισαγωγή δυναμικού περιεχομένου."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Το πρότυπο κυρίως κειμένου πιστοποιητικού είναι υποχρεωτικό"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Κείμενο Υποσέλιδου"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Προαιρετικό κείμενο που εμφανίζεται στο κάτω μέρος του πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Διαθέσιμες Μεταβλητές Προτύπου"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Χρησιμοποιήστε αυτές τις μεταβλητές στα πρότυπά σας για εισαγωγή δυναμικού περιεχομένου:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Προεπιλεγμένο πρότυπο"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Χρήση προεπιλεγμένου προτύπου"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Ρυθμίσεις Εμφάνισης"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Οικογένεια Γραμματοσειράς"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Μέγεθος Γραμματοσειράς"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Χρώμα Κειμένου (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Καθορίστε το χρώμα κειμένου χρησιμοποιώντας τιμές RGB (0-255 για κάθε συνιστώσα)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Κριτήρια Επιλεξιμότητας"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Ελάχιστες Ολοκληρωμένες Κριτικές"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Ο ελάχιστος αριθμός ολοκληρωμένων κριτικών που απαιτούνται πριν ένας κριτής μπορεί να λάβει πιστοποιητικό"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Οι ελάχιστες κριτικές πρέπει να είναι αριθμός μεγαλύτερος ή ίσος με 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Επιλογές Επαλήθευσης"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Συμπερίληψη κωδικού QR για επαλήθευση πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Προεπισκόπηση Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Μη έγκυρος τύπος εικόνας. Παρακαλώ ανεβάστε αρχείο JPG ή PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Η μεταφόρτωση αρχείου απέτυχε. Παρακαλώ δοκιμάστε ξανά."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Αυτή η κριτική δεν έχει ολοκληρωθεί ακόμα. Τα πιστοποιητικά είναι διαθέσιμα μόνο για ολοκληρωμένες κριτικές."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Δεν παρέχεται κωδικός πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Μη έγκυρος κωδικός πιστοποιητικού. Αυτό το πιστοποιητικό δεν μπόρεσε να επαληθευτεί."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Δεν επιλέχθηκαν κριτές για μαζική δημιουργία πιστοποιητικών"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Πρόσβαση απορρίφθηκε. Δεν έχετε άδεια να κατεβάσετε αυτό το πιστοποιητικό."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Δεν υπάρχει διαθέσιμο περιβάλλον περιοδικού. Βεβαιωθείτε ότι έχετε πρόσβαση από έγκυρο περιοδικό."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Η πρόσβαση στη βάση δεδομένων δεν είναι διαθέσιμη αυτή τη στιγμή. Επικοινωνήστε με το διαχειριστή συστήματος."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Επαλήθευση Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Εισάγετε έναν κωδικό πιστοποιητικού για να επαληθεύσετε την αυθεντικότητά του"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Κωδικός Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Επαλήθευση Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Έγκυρο Πιστοποιητικό"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Μη Έγκυρο Πιστοποιητικό"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Ο κωδικός πιστοποιητικού που εισάγατε δεν είναι έγκυρος ή δεν υπάρχει στο σύστημά μας."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Κωδικός Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Όνομα Κριτή"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Όνομα Περιοδικού"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Ημερομηνία Έκδοσης"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Μαζική Δημιουργία Πιστοποιητικών"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Δημιουργήστε πιστοποιητικά για πολλαπλούς κριτές ταυτόχρονα. Επιλέξτε κριτές από την παρακάτω λίστα που έχουν ολοκληρώσει κριτικές αλλά δεν έχουν ακόμη πιστοποιητικά."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Επιλογή Κριτών"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "ολοκληρωμένες κριτικές"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Δεν βρέθηκαν επιλέξιμοι κριτές. Όλοι οι κριτές έχουν πιστοποιητικά για τις ολοκληρωμένες κριτικές τους."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Κρατήστε πατημένο Ctrl (Windows/Linux) ή Cmd (Mac) για να επιλέξετε πολλαπλούς κριτές"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Δημιουργία Πιστοποιητικών"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Δημιουργία πιστοποιητικών..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Παρακαλώ επιλέξτε τουλάχιστον έναν κριτή"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "πιστοποιητικό(ά) δημιουργήθηκαν επιτυχώς"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Προέκυψε σφάλμα κατά τη δημιουργία πιστοποιητικών. Παρακαλώ δοκιμάστε ξανά."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} πιστοποιητικό(ά) δημιουργήθηκαν επιτυχώς"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Στατιστικά Πιστοποιητικών"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Επισκόπηση της δημιουργίας και χρήσης πιστοποιητικών στο περιοδικό σας"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Συνολικά Εκδοθέντα Πιστοποιητικά"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Συνολικές Λήψεις"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Μοναδικοί Κριτές με Πιστοποιητικά"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Συνολικά Εκδοθέντα Πιστοποιητικά"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Συνολικές Λήψεις"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Μέσος Όρος Λήψεων ανά Πιστοποιητικό"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "Το πιστοποιητικό κριτή σας είναι διαθέσιμο για λήψη"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "Αγαπητέ/ή {$reviewerName},\n\nΣας ευχαριστούμε για την ολοκλήρωση της αξιολόγησης από ομότιμους. Το πιστοποιητικό αναγνώρισης κριτή σας είναι τώρα διαθέσιμο για λήψη.\n\nΠαρακαλώ επισκεφθείτε τον παρακάτω σύνδεσμο για να κατεβάσετε το πιστοποιητικό σας:\n{$certificateUrl}\n\nΕυχαριστούμε για τη συμβολή σας στην ακαδημαϊκή έκδοση."

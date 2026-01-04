@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/he_IL/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Hebrew (RTL)
+  -->
+
+<locale name="he_IL" full_name="עברית">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">תוסף תעודת שופט</message>
+	<message key="plugins.generic.reviewerCertificate.description">מאפשר לשופטים ליצור ולהוריד תעודות הוקרה PDF מותאמות אישית לאחר השלמת ביקורות.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">תעודת שיפוט</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">תעודת ביקורת עמיתים</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">התעודה שלך מוכנה!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">תודה על השלמת הביקורת. כעת תוכל להוריד את תעודת ההוקרה שלך.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">התעודה שלך תיווצר אוטומטית כשתלחץ על כפתור ההורדה.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">הורד תעודה</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">הגדרות תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">הגדר תבניות תעודות וקריטריוני זכאות לשופטים.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">הגדרות תבנית תעודה</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">תמונת רקע</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">העלה תמונת רקע לתעודה (JPG או PNG, גודל מומלץ: 2100x2970 פיקסלים עבור A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">תמונת רקע נוכחית</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">טקסט כותרת</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">הכותרת הראשית המוצגת בראש התעודה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">טקסט כותרת נדרש</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">תבנית גוף התעודה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">התוכן העיקרי של התעודה. השתמש במשתני תבנית להכנסת תוכן דינמי.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">תבנית גוף התעודה נדרשת</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">טקסט תחתית</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">טקסט אופציונלי המוצג בתחתית התעודה</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">משתני תבנית זמינים</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">השתמש במשתנים אלה בתבניות שלך להכנסת תוכן דינמי:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">תבנית ברירת מחדל</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">השתמש בתבנית ברירת מחדל</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">הגדרות מראה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">משפחת גופן</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">גודל גופן</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">צבע טקסט (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">ציין את צבע הטקסט באמצעות ערכי RGB (0-255 לכל רכיב)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">קריטריוני זכאות</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">מינימום ביקורות שהושלמו</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">מספר הביקורות המינימלי שנדרש לפני שהשופט יכול לקבל תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">מינימום ביקורות חייב להיות מספר גדול או שווה ל-1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">אפשרויות אימות</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">כלול קוד QR לאימות תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">תצוגה מקדימה של תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">סוג תמונה לא חוקי. אנא העלה קובץ JPG או PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">העלאת הקובץ נכשלה. אנא נסה שוב.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">ביקורת זו טרם הושלמה. תעודות זמינות רק לביקורות שהושלמו.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">לא סופק קוד תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">קוד תעודה לא חוקי. לא ניתן לאמת תעודה זו.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">לא נבחרו שופטים ליצירת תעודות מרובות</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">הגישה נדחתה. אין לך הרשאה להוריד תעודה זו.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">אין הקשר כתב עת זמין. אנא ודא שאתה ניגש מכתב עת תקף.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">הגישה למסד הנתונים אינה זמינה כרגע. אנא פנה למנהל המערכת.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">אימות תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">הכנס קוד תעודה לאימות האותנטיות שלה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">קוד תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">אמת תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">תעודה תקפה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">תעודה לא תקפה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">קוד התעודה שהזנת אינו תקף או אינו קיים במערכת שלנו.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">קוד תעודה</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">שם השופט</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">שם כתב העת</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">תאריך הנפקה</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">יצירת תעודות מרובות</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">צור תעודות למספר שופטים בו-זמנית. בחר שופטים מהרשימה למטה שהשלימו ביקורות אך אין להם עדיין תעודות.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">בחר שופטים</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">ביקורות שהושלמו</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">לא נמצאו שופטים זכאים. לכל השופטים יש תעודות עבור הביקורות שהשלימו.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">החזק Ctrl (Windows/Linux) או Cmd (Mac) כדי לבחור מספר שופטים</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">צור תעודות</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">יוצר תעודות...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">אנא בחר שופט אחד לפחות</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">תעודה/ות נוצרה/ו בהצלחה</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">אירעה שגיאה ביצירת התעודות. אנא נסה שוב.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} תעודה/ות נוצרה/ו בהצלחה</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">סטטיסטיקת תעודות</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">סקירה כללית של יצירת תעודות ושימוש בכתב העת שלך</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">סה"כ תעודות שהונפקו</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">סה"כ הורדות</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">שופטים ייחודיים עם תעודות</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">סה"כ תעודות שהונפקו</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">סה"כ הורדות</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">ממוצע הורדות לתעודה</message>
+</locale>

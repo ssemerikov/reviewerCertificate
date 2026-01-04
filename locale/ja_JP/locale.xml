@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/ja_JP/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Japanese
+  -->
+
+<locale name="ja_JP" full_name="日本語">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">査読者証明書プラグイン</message>
+	<message key="plugins.generic.reviewerCertificate.description">査読者が査読完了後に、個人向けPDF認定証を生成・ダウンロードできるようにします。</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">査読証明書</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">ピアレビュー証明書</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">証明書の準備ができました！</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">査読を完了していただきありがとうございます。認定証をダウンロードできます。</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">ダウンロードボタンをクリックすると、証明書が自動的に生成されます。</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">証明書をダウンロード</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">証明書設定</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">査読者向けの証明書テンプレートと資格基準を設定します。</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">証明書テンプレート設定</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">背景画像</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">証明書の背景画像をアップロード（JPGまたはPNG、A4サイズ推奨：2100×2970ピクセル）</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">現在の背景画像</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">ヘッダーテキスト</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">証明書の上部に表示されるメインタイトル</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">ヘッダーテキストは必須です</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">証明書本文テンプレート</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">証明書の主要コンテンツ。テンプレート変数を使用して動的コンテンツを挿入できます。</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">証明書本文テンプレートは必須です</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">フッターテキスト</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">証明書の下部に表示されるオプションのテキスト</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">利用可能なテンプレート変数</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">テンプレートでこれらの変数を使用して動的コンテンツを挿入：</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">デフォルトテンプレート</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">デフォルトテンプレートを使用</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">外観設定</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">フォントファミリー</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">フォントサイズ</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">テキスト色（RGB）</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">RGB値でテキスト色を指定（各成分0〜255）</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">資格基準</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">最低完了査読数</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">査読者が証明書を受け取るために必要な最低完了査読数</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">最低査読数は1以上の数値でなければなりません</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">検証オプション</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">証明書検証用のQRコードを含める</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">証明書のプレビュー</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">画像タイプが無効です。JPGまたはPNGファイルをアップロードしてください。</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">ファイルのアップロードに失敗しました。再試行してください。</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">この査読はまだ完了していません。証明書は完了した査読のみ利用可能です。</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">証明書コードが提供されていません</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">証明書コードが無効です。この証明書を検証できませんでした。</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">一括証明書生成用の査読者が選択されていません</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">アクセスが拒否されました。この証明書をダウンロードする権限がありません。</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">ジャーナルコンテキストが利用できません。有効なジャーナルからアクセスしていることを確認してください。</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">データベースアクセスが現在利用できません。システム管理者にお問い合わせください。</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">証明書の検証</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">証明書コードを入力して真正性を確認</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">証明書コード</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">証明書を検証</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">証明書は有効です</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">証明書は無効です</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">入力された証明書コードは無効であるか、システムに存在しません。</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">証明書コード</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">査読者名</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">ジャーナル名</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">発行日</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">一括証明書生成</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">複数の査読者の証明書を一度に生成します。査読を完了したが証明書をまだ持っていない査読者を下のリストから選択してください。</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">査読者を選択</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">完了した査読</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">対象となる査読者が見つかりません。すべての査読者が完了した査読の証明書を持っています。</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Ctrl（Windows/Linux）またはCmd（Mac）を押しながらクリックで複数選択</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">証明書を生成</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">証明書を生成中...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">少なくとも1人の査読者を選択してください</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">証明書が正常に生成されました</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">証明書の生成中にエラーが発生しました。再試行してください。</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count}件の証明書が正常に生成されました</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">証明書統計</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">ジャーナルの証明書生成と使用状況の概要</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">発行済み証明書総数</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">総ダウンロード数</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">証明書を持つ査読者数</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">発行済み証明書総数</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">総ダウンロード数</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">証明書あたりの平均ダウンロード数</message>
+</locale>

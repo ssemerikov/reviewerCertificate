@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Arabic\n"
+"Language: ar_AR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "إضافة شهادات المحكّمين"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "تتيح للمحكّمين إنشاء وتنزيل شهادات تقدير PDF مخصصة بعد إتمام عمليات التحكيم."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "شهادة تحكيم"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "شهادة مراجعة الأقران"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "شهادتك جاهزة!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "شكراً لإتمامك هذا التحكيم. يمكنك الآن تنزيل شهادة التقدير الخاصة بك."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "سيتم إنشاء شهادتك تلقائياً عند النقر على زر التنزيل."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "تنزيل الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "إعدادات الشهادة"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "إعداد قوالب الشهادات ومعايير الأهلية للمحكّمين."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "إعدادات قالب الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "صورة الخلفية"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "رفع صورة خلفية للشهادة (JPG أو PNG، الحجم الموصى به: 2100×2970 بكسل لصفحة A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "صورة الخلفية الحالية"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "نص العنوان"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "العنوان الرئيسي المعروض في أعلى الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "نص العنوان مطلوب"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "قالب محتوى الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "المحتوى الرئيسي للشهادة. استخدم متغيرات القالب لإدراج محتوى ديناميكي."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "قالب محتوى الشهادة مطلوب"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "نص التذييل"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "نص اختياري يُعرض في أسفل الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "متغيرات القالب المتاحة"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "استخدم هذه المتغيرات في قوالبك لإدراج محتوى ديناميكي:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "القالب الافتراضي"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "استخدام القالب الافتراضي"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "إعدادات المظهر"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "نوع الخط"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "حجم الخط"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "لون النص (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "حدد لون النص باستخدام قيم RGB (0-255 لكل مكون)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "معايير الأهلية"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "الحد الأدنى من التحكيمات المكتملة"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "الحد الأدنى من التحكيمات المكتملة المطلوبة قبل أن يتمكن المحكّم من الحصول على شهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "يجب أن يكون الحد الأدنى للتحكيمات رقماً أكبر من أو يساوي 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "خيارات التحقق"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "تضمين رمز QR للتحقق من الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "معاينة الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "نوع الصورة غير صالح. يرجى رفع ملف JPG أو PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "فشل رفع الملف. يرجى المحاولة مرة أخرى."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "لم يكتمل هذا التحكيم بعد. الشهادات متاحة فقط للتحكيمات المكتملة."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "لم يتم تقديم رمز الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "رمز الشهادة غير صالح. تعذر التحقق من هذه الشهادة."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "لم يتم اختيار محكّمين لإنشاء الشهادات المجمعة"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "تم رفض الوصول. ليس لديك إذن لتنزيل هذه الشهادة."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "لا يتوفر سياق المجلة. يرجى التأكد من الوصول من مجلة صالحة."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "الوصول إلى قاعدة البيانات غير متاح حالياً. يرجى الاتصال بمسؤول النظام."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "التحقق من الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "أدخل رمز الشهادة للتحقق من صحتها"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "رمز الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "التحقق من الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "الشهادة صالحة"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "الشهادة غير صالحة"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "رمز الشهادة الذي أدخلته غير صالح أو غير موجود في نظامنا."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "رمز الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "اسم المحكّم"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "اسم المجلة"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "تاريخ الإصدار"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "إنشاء الشهادات المجمعة"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "إنشاء شهادات لعدة محكّمين دفعة واحدة. اختر المحكّمين من القائمة أدناه الذين أتموا تحكيماتهم ولكن ليس لديهم شهادات بعد."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "اختيار المحكّمين"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "تحكيمات مكتملة"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "لم يتم العثور على محكّمين مؤهلين. جميع المحكّمين لديهم شهادات لتحكيماتهم المكتملة."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "اضغط مع الاستمرار على Ctrl (ويندوز/لينكس) أو Cmd (ماك) لاختيار عدة محكّمين"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "إنشاء الشهادات"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "جارٍ إنشاء الشهادات..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "يرجى اختيار محكّم واحد على الأقل"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "تم إنشاء الشهادة (الشهادات) بنجاح"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "حدث خطأ أثناء إنشاء الشهادات. يرجى المحاولة مرة أخرى."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "تم إنشاء {$count} شهادة (شهادات) بنجاح"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "إحصائيات الشهادات"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "نظرة عامة على إنشاء واستخدام الشهادات في مجلتك"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "إجمالي الشهادات الصادرة"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "إجمالي التنزيلات"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "المحكّمون الفريدون الحاصلون على شهادات"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "إجمالي الشهادات الصادرة"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "إجمالي التنزيلات"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "متوسط التنزيلات لكل شهادة"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "شهادة المحكّم الخاصة بك متاحة للتنزيل"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "عزيزي/عزيزتي {$reviewerName}،\n\nشكراً لإتمامك مراجعة الأقران. شهادة التقدير الخاصة بك كمحكّم متاحة الآن للتنزيل.\n\nيرجى زيارة الرابط التالي لتنزيل شهادتك:\n{$certificateUrl}\n\nشكراً لمساهمتك في النشر الأكاديمي."

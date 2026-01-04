@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/zh_CN/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Simplified Chinese
+  -->
+
+<locale name="zh_CN" full_name="简体中文">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">审稿人证书插件</message>
+	<message key="plugins.generic.reviewerCertificate.description">允许审稿人在完成审稿后生成并下载个性化的PDF荣誉证书。</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">审稿证书</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">同行评审证书</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">您的证书已准备就绪！</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">感谢您完成本次审稿。您现在可以下载您的荣誉证书。</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">点击下载按钮后，您的证书将自动生成。</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">下载证书</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">证书设置</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">配置审稿人的证书模板和资格标准。</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">证书模板设置</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">背景图片</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">上传证书的背景图片（JPG或PNG格式，A4尺寸建议：2100x2970像素）</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">当前背景图片</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">标题文本</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">显示在证书顶部的主标题</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">标题文本为必填项</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">证书正文模板</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">证书的主要内容。使用模板变量插入动态内容。</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">证书正文模板为必填项</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">页脚文本</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">显示在证书底部的可选文本</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">可用模板变量</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">在模板中使用这些变量插入动态内容：</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">默认模板</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">使用默认模板</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">外观设置</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">字体</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">字号</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">文字颜色（RGB）</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">使用RGB值指定文字颜色（每个分量范围0-255）</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">资格标准</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">最低完成审稿数</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">审稿人获得证书所需的最低完成审稿数量</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">最低审稿数必须是大于或等于1的数字</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">验证选项</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">包含用于证书验证的二维码</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">预览证书</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">图片类型无效。请上传JPG或PNG文件。</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">文件上传失败。请重试。</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">此审稿尚未完成。证书仅适用于已完成的审稿。</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">未提供证书代码</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">证书代码无效。无法验证此证书。</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">未选择批量生成证书的审稿人</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">访问被拒绝。您没有下载此证书的权限。</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">无可用的期刊上下文。请确保您从有效的期刊访问。</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">数据库访问当前不可用。请联系系统管理员。</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">验证证书</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">输入证书代码以验证其真实性</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">证书代码</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">验证证书</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">证书有效</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">证书无效</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">您输入的证书代码无效或在我们的系统中不存在。</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">证书代码</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">审稿人姓名</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">期刊名称</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">颁发日期</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">批量生成证书</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">一次为多位审稿人生成证书。从下面的列表中选择已完成审稿但尚未获得证书的审稿人。</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">选择审稿人</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">已完成审稿</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">未找到符合条件的审稿人。所有审稿人都已获得其完成审稿的证书。</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">按住Ctrl（Windows/Linux）或Cmd（Mac）键可选择多位审稿人</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">生成证书</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">正在生成证书...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">请至少选择一位审稿人</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">证书生成成功</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">生成证书时发生错误。请重试。</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">已成功生成{$count}份证书</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">证书统计</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">您期刊的证书生成和使用概览</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">已颁发证书总数</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">下载总数</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">拥有证书的审稿人数</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">已颁发证书总数</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">下载总数</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">每份证书平均下载次数</message>
+</locale>

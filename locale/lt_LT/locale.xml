@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/lt_LT/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Lithuanian
+  -->
+
+<locale name="lt_LT" full_name="Lietuvių">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Recenzento Sertifikato Įskiepis</message>
+	<message key="plugins.generic.reviewerCertificate.description">Leidžia recenzentams generuoti ir atsisiųsti asmeninio pripažinimo PDF sertifikatus po recenzijų užbaigimo.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Recenzijos Sertifikatas</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Ekspertinio Vertinimo Sertifikatas</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Jūsų Sertifikatas Paruoštas!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Dėkojame už šios recenzijos užbaigimą. Dabar galite atsisiųsti savo pripažinimo sertifikatą.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Jūsų sertifikatas bus automatiškai sugeneruotas paspaudus atsisiuntimo mygtuką.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Atsisiųsti Sertifikatą</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Sertifikato Nustatymai</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Konfigūruokite sertifikatų šablonus ir tinkamumo kriterijus recenzentams.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Sertifikato Šablono Nustatymai</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Fono Paveikslėlis</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Įkelkite fono paveikslėlį sertifikatui (JPG arba PNG, rekomenduojamas dydis: 2100x2970 pikselių A4 formatui)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Dabartinis fono paveikslėlis</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Antraštės Tekstas</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Pagrindinis pavadinimas, rodomas sertifikato viršuje</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Antraštės tekstas yra privalomas</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Sertifikato Turinio Šablonas</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Pagrindinis sertifikato turinys. Naudokite šablono kintamuosius dinaminio turinio įterpimui.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Sertifikato turinio šablonas yra privalomas</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Poraštės Tekstas</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Neprivalomas tekstas, rodomas sertifikato apačioje</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Galimi Šablono Kintamieji</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Naudokite šiuos kintamuosius savo šablonuose dinaminio turinio įterpimui:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Numatytasis šablonas</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Naudoti numatytąjį šabloną</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Išvaizdos Nustatymai</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Šrifto Šeima</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Šrifto Dydis</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Teksto Spalva (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Nurodykite teksto spalvą naudodami RGB reikšmes (0-255 kiekvienam komponentui)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Tinkamumo Kriterijai</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Mažiausias Užbaigtų Recenzijų Skaičius</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Mažiausias užbaigtų recenzijų skaičius, reikalingas prieš recenzentui gaunant sertifikatą</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Mažiausias recenzijų skaičius turi būti didesnis arba lygus 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Patikrinimo Parinktys</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Įtraukti QR kodą sertifikato patikrinimui</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Sertifikato Peržiūra</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Netinkamas paveikslėlio tipas. Prašome įkelti JPG arba PNG failą.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Failo įkėlimas nepavyko. Prašome bandyti dar kartą.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Ši recenzija dar nėra užbaigta. Sertifikatai galimi tik užbaigtoms recenzijoms.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Nepateiktas sertifikato kodas</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Neteisingas sertifikato kodas. Šio sertifikato nepavyko patikrinti.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Nepasirinkti recenzentai masiniam sertifikatų generavimui</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Prieiga uždrausta. Neturite leidimo atsisiųsti šio sertifikato.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Nėra žurnalo konteksto. Įsitikinkite, kad prieinate iš galiojančio žurnalo.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Duomenų bazės prieiga šiuo metu negalima. Prašome susisiekti su sistemos administratoriumi.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Sertifikato Patikrinimas</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Įveskite sertifikato kodą, kad patikrintumėte jo autentiškumą</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Sertifikato Kodas</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Patikrinti Sertifikatą</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Sertifikatas Galioja</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Sertifikatas Negalioja</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Jūsų įvestas sertifikato kodas negalioja arba neegzistuoja mūsų sistemoje.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Sertifikato Kodas</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Recenzento Vardas</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Žurnalo Pavadinimas</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Išdavimo Data</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Masinis Sertifikatų Generavimas</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generuokite sertifikatus keliems recenzentams vienu metu. Pasirinkite recenzentus iš žemiau esančio sąrašo, kurie užbaigė recenzijas, bet dar neturi sertifikatų.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Pasirinkti Recenzentus</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">užbaigtos recenzijos</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Nerasta tinkamų recenzentų. Visi recenzentai turi sertifikatus savo užbaigtoms recenzijoms.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Laikykite Ctrl (Windows/Linux) arba Cmd (Mac), kad pasirinktumėte kelis recenzentus</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generuoti Sertifikatus</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Generuojami sertifikatai...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Prašome pasirinkti bent vieną recenzentą</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">sertifikatas(-ai) sėkmingai sugeneruotas(-i)</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Generuojant sertifikatus įvyko klaida. Prašome bandyti dar kartą.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} sertifikatas(-ai) sėkmingai sugeneruotas(-i)</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Sertifikatų Statistika</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Sertifikatų generavimo ir naudojimo apžvalga jūsų žurnale</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Iš Viso Išduotų Sertifikatų</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Iš Viso Atsisiuntimų</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Unikalūs Recenzentai su Sertifikatais</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Iš Viso Išduotų Sertifikatų</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Iš Viso Atsisiuntimų</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Vidutinis Atsisiuntimų Skaičius Sertifikatui</message>
+</locale>

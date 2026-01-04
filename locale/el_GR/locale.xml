@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/el_GR/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Greek
+  -->
+
+<locale name="el_GR" full_name="Ελληνικά">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Πρόσθετο Πιστοποιητικού Κριτή</message>
+	<message key="plugins.generic.reviewerCertificate.description">Επιτρέπει στους κριτές να δημιουργούν και να κατεβάζουν εξατομικευμένα πιστοποιητικά αναγνώρισης PDF μετά την ολοκλήρωση κριτικών.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Πιστοποιητικό Κριτικής</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Πιστοποιητικό Αξιολόγησης από Ομότιμους</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Το Πιστοποιητικό σας είναι Έτοιμο!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Σας ευχαριστούμε για την ολοκλήρωση αυτής της κριτικής. Μπορείτε τώρα να κατεβάσετε το πιστοποιητικό αναγνώρισής σας.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Το πιστοποιητικό σας θα δημιουργηθεί αυτόματα όταν κάνετε κλικ στο κουμπί λήψης.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Λήψη Πιστοποιητικού</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Ρυθμίσεις Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Διαμόρφωση προτύπων πιστοποιητικών και κριτηρίων επιλεξιμότητας για τους κριτές.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Ρυθμίσεις Προτύπου Πιστοποιητικού</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Εικόνα Φόντου</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Ανεβάστε μια εικόνα φόντου για το πιστοποιητικό (JPG ή PNG, προτεινόμενο μέγεθος: 2100x2970 pixels για A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Τρέχουσα εικόνα φόντου</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Κείμενο Επικεφαλίδας</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Η κύρια επικεφαλίδα που εμφανίζεται στην κορυφή του πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Το κείμενο επικεφαλίδας είναι υποχρεωτικό</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Πρότυπο Κυρίως Κειμένου Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Το κύριο περιεχόμενο του πιστοποιητικού. Χρησιμοποιήστε μεταβλητές προτύπου για εισαγωγή δυναμικού περιεχομένου.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Το πρότυπο κυρίως κειμένου πιστοποιητικού είναι υποχρεωτικό</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Κείμενο Υποσέλιδου</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Προαιρετικό κείμενο που εμφανίζεται στο κάτω μέρος του πιστοποιητικού</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Διαθέσιμες Μεταβλητές Προτύπου</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Χρησιμοποιήστε αυτές τις μεταβλητές στα πρότυπά σας για εισαγωγή δυναμικού περιεχομένου:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Προεπιλεγμένο πρότυπο</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Χρήση προεπιλεγμένου προτύπου</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Ρυθμίσεις Εμφάνισης</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Οικογένεια Γραμματοσειράς</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Μέγεθος Γραμματοσειράς</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Χρώμα Κειμένου (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Καθορίστε το χρώμα κειμένου χρησιμοποιώντας τιμές RGB (0-255 για κάθε συνιστώσα)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Κριτήρια Επιλεξιμότητας</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Ελάχιστες Ολοκληρωμένες Κριτικές</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Ο ελάχιστος αριθμός ολοκληρωμένων κριτικών που απαιτούνται πριν ένας κριτής μπορεί να λάβει πιστοποιητικό</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Οι ελάχιστες κριτικές πρέπει να είναι αριθμός μεγαλύτερος ή ίσος με 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Επιλογές Επαλήθευσης</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Συμπερίληψη κωδικού QR για επαλήθευση πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Προεπισκόπηση Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Μη έγκυρος τύπος εικόνας. Παρακαλώ ανεβάστε αρχείο JPG ή PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Η μεταφόρτωση αρχείου απέτυχε. Παρακαλώ δοκιμάστε ξανά.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Αυτή η κριτική δεν έχει ολοκληρωθεί ακόμα. Τα πιστοποιητικά είναι διαθέσιμα μόνο για ολοκληρωμένες κριτικές.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Δεν παρέχεται κωδικός πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Μη έγκυρος κωδικός πιστοποιητικού. Αυτό το πιστοποιητικό δεν μπόρεσε να επαληθευτεί.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Δεν επιλέχθηκαν κριτές για μαζική δημιουργία πιστοποιητικών</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Πρόσβαση απορρίφθηκε. Δεν έχετε άδεια να κατεβάσετε αυτό το πιστοποιητικό.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Δεν υπάρχει διαθέσιμο περιβάλλον περιοδικού. Βεβαιωθείτε ότι έχετε πρόσβαση από έγκυρο περιοδικό.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Η πρόσβαση στη βάση δεδομένων δεν είναι διαθέσιμη αυτή τη στιγμή. Επικοινωνήστε με το διαχειριστή συστήματος.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Επαλήθευση Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Εισάγετε έναν κωδικό πιστοποιητικού για να επαληθεύσετε την αυθεντικότητά του</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Κωδικός Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Επαλήθευση Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Έγκυρο Πιστοποιητικό</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Μη Έγκυρο Πιστοποιητικό</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Ο κωδικός πιστοποιητικού που εισάγατε δεν είναι έγκυρος ή δεν υπάρχει στο σύστημά μας.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Κωδικός Πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Όνομα Κριτή</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Όνομα Περιοδικού</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Ημερομηνία Έκδοσης</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Μαζική Δημιουργία Πιστοποιητικών</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Δημιουργήστε πιστοποιητικά για πολλαπλούς κριτές ταυτόχρονα. Επιλέξτε κριτές από την παρακάτω λίστα που έχουν ολοκληρώσει κριτικές αλλά δεν έχουν ακόμη πιστοποιητικά.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Επιλογή Κριτών</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">ολοκληρωμένες κριτικές</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Δεν βρέθηκαν επιλέξιμοι κριτές. Όλοι οι κριτές έχουν πιστοποιητικά για τις ολοκληρωμένες κριτικές τους.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Κρατήστε πατημένο Ctrl (Windows/Linux) ή Cmd (Mac) για να επιλέξετε πολλαπλούς κριτές</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Δημιουργία Πιστοποιητικών</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Δημιουργία πιστοποιητικών...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Παρακαλώ επιλέξτε τουλάχιστον έναν κριτή</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">πιστοποιητικό(ά) δημιουργήθηκαν επιτυχώς</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Προέκυψε σφάλμα κατά τη δημιουργία πιστοποιητικών. Παρακαλώ δοκιμάστε ξανά.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} πιστοποιητικό(ά) δημιουργήθηκαν επιτυχώς</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Στατιστικά Πιστοποιητικών</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Επισκόπηση της δημιουργίας και χρήσης πιστοποιητικών στο περιοδικό σας</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Συνολικά Εκδοθέντα Πιστοποιητικά</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Συνολικές Λήψεις</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Μοναδικοί Κριτές με Πιστοποιητικά</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Συνολικά Εκδοθέντα Πιστοποιητικά</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Συνολικές Λήψεις</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Μέσος Όρος Λήψεων ανά Πιστοποιητικό</message>
+</locale>

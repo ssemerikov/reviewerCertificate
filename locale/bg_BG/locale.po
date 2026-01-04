@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Bulgarian\n"
+"Language: bg_BG\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Плъгин за Сертификат на Рецензент"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Позволява на рецензентите да генерират и изтеглят персонализирани PDF сертификати за признание след завършване на рецензии."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Сертификат за Рецензия"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Сертификат за Експертна Оценка"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Вашият Сертификат е Готов!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Благодарим ви за завършването на тази рецензия. Сега можете да изтеглите вашия сертификат за признание."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Вашият сертификат ще бъде автоматично генериран, когато щракнете върху бутона за изтегляне."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Изтегли Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Настройки на Сертификата"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Конфигурирайте шаблони за сертификати и критерии за допустимост за рецензенти."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Настройки на Шаблона за Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Фоново Изображение"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Качете фоново изображение за сертификата (JPG или PNG, препоръчителен размер: 2100x2970 пиксела за A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Текущо фоново изображение"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Заглавен Текст"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Основното заглавие, показвано в горната част на сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Заглавният текст е задължителен"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Шаблон на Съдържанието на Сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Основното съдържание на сертификата. Използвайте шаблонни променливи за вмъкване на динамично съдържание."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Шаблонът на съдържанието на сертификата е задължителен"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Текст в Долната Част"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Незадължителен текст, показван в долната част на сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Налични Шаблонни Променливи"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Използвайте тези променливи във вашите шаблони за вмъкване на динамично съдържание:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Шаблон по подразбиране"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Използвай шаблон по подразбиране"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Настройки на Външния Вид"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Шрифтово Семейство"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Размер на Шрифта"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Цвят на Текста (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Посочете цвета на текста, като използвате RGB стойности (0-255 за всеки компонент)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Критерии за Допустимост"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Минимален Брой Завършени Рецензии"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Минималният брой завършени рецензии, необходими преди рецензентът да може да получи сертификат"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Минималният брой рецензии трябва да е число, по-голямо или равно на 1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Опции за Проверка"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Включи QR код за проверка на сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Преглед на Сертификата"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Невалиден тип изображение. Моля, качете JPG или PNG файл."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Качването на файла е неуспешно. Моля, опитайте отново."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Тази рецензия все още не е завършена. Сертификатите са налични само за завършени рецензии."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Не е предоставен код на сертификат"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Невалиден код на сертификат. Този сертификат не може да бъде проверен."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Не са избрани рецензенти за масово генериране на сертификати"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Достъпът е отказан. Нямате разрешение да изтеглите този сертификат."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Няма наличен контекст на списание. Моля, уверете се, че достъпвате от валидно списание."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Достъпът до базата данни в момента не е наличен. Моля, свържете се със системния администратор."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Проверка на Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Въведете кода на сертификата, за да проверите неговата автентичност"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Код на Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Провери Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Валиден Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Невалиден Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Въведеният код на сертификат е невалиден или не съществува в нашата система."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Код на Сертификат"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Име на Рецензента"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Име на Списанието"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Дата на Издаване"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Масово Генериране на Сертификати"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Генерирайте сертификати за множество рецензенти наведнъж. Изберете рецензенти от списъка по-долу, които са завършили рецензии, но все още нямат сертификати."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Избери Рецензенти"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "завършени рецензии"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Не са намерени допустими рецензенти. Всички рецензенти имат сертификати за завършените си рецензии."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Задръжте Ctrl (Windows/Linux) или Cmd (Mac), за да изберете множество рецензенти"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Генерирай Сертификати"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Генериране на сертификати..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Моля, изберете поне един рецензент"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "сертификат(и) успешно генериран(и)"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Възникна грешка при генерирането на сертификати. Моля, опитайте отново."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} сертификат(и) успешно генериран(и)"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Статистика на Сертификатите"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Преглед на генерирането и използването на сертификати във вашето списание"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Общо Издадени Сертификати"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Общо Изтегляния"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Уникални Рецензенти със Сертификати"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Общо Издадени Сертификати"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Общо Изтегляния"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Средно Изтегляния на Сертификат"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "Вашият сертификат за рецензент е готов за изтегляне"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "Уважаеми/а {$reviewerName},\n\nБлагодарим ви за завършването на експертната оценка. Вашият сертификат за признание на рецензент вече е готов за изтегляне.\n\nМоля, посетете следния линк, за да изтеглите вашия сертификат:\n{$certificateUrl}\n\nБлагодарим ви за приноса ви към академичното издаване."

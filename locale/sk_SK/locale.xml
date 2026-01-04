@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/sk_SK/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Slovak
+  -->
+
+<locale name="sk_SK" full_name="Slovenčina">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Doplnok Certifikátu Recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.description">Umožňuje recenzentom generovať a sťahovať personalizované PDF certifikáty uznania po dokončení recenzií.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Certifikát Recenzie</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Certifikát Odborného Posúdenia</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Váš Certifikát je Pripravený!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Ďakujeme za dokončenie tejto recenzie. Teraz si môžete stiahnuť svoj certifikát uznania.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Váš certifikát bude automaticky vygenerovaný po kliknutí na tlačidlo sťahovania.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Stiahnuť Certifikát</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Nastavenia Certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Nastavte šablóny certifikátov a kritériá oprávnenosti pre recenzentov.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Nastavenia Šablóny Certifikátu</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Obrázok Pozadia</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Nahrajte obrázok pozadia pre certifikát (JPG alebo PNG, odporúčaná veľkosť: 2100x2970 pixelov pre A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Aktuálny obrázok pozadia</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Text Hlavičky</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Hlavný názov zobrazený v hornej časti certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Text hlavičky je povinný</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Šablóna Tela Certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Hlavný obsah certifikátu. Použite premenné šablóny na vloženie dynamického obsahu.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Šablóna tela certifikátu je povinná</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Text Päty</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Voliteľný text zobrazený v dolnej časti certifikátu</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Dostupné Premenné Šablóny</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Použite tieto premenné vo svojich šablónach na vloženie dynamického obsahu:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Predvolená šablóna</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Použiť predvolenú šablónu</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Nastavenia Vzhľadu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Rodina Písma</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Veľkosť Písma</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Farba Textu (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Zadajte farbu textu pomocou hodnôt RGB (0-255 pre každú zložku)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Kritériá Oprávnenosti</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Minimálny Počet Dokončených Recenzií</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Minimálny počet dokončených recenzií potrebných pred získaním certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Minimálny počet recenzií musí byť číslo väčšie alebo rovné 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Možnosti Overenia</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Zahrnúť QR kód pre overenie certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Náhľad Certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Neplatný typ obrázka. Prosím, nahrajte súbor JPG alebo PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Nahrávanie súboru zlyhalo. Prosím, skúste to znova.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Táto recenzia ešte nebola dokončená. Certifikáty sú dostupné len pre dokončené recenzie.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Nebol poskytnutý kód certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Neplatný kód certifikátu. Tento certifikát nie je možné overiť.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Neboli vybraní recenzenti pre hromadné generovanie certifikátov</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Prístup zamietnutý. Nemáte oprávnenie na stiahnutie tohto certifikátu.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Nie je k dispozícii kontext časopisu. Uistite sa, že pristupujete z platného časopisu.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Prístup k databáze je momentálne nedostupný. Prosím, kontaktujte správcu systému.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Overenie Certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Zadajte kód certifikátu na overenie jeho pravosti</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Kód Certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Overiť Certifikát</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Platný Certifikát</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Neplatný Certifikát</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Zadaný kód certifikátu je neplatný alebo neexistuje v našom systéme.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Kód Certifikátu</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Meno Recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Názov Časopisu</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Dátum Vydania</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Hromadné Generovanie Certifikátov</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Generujte certifikáty pre viacerých recenzentov naraz. Vyberte recenzentov zo zoznamu nižšie, ktorí dokončili recenzie, ale ešte nemajú certifikáty.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Vybrať Recenzentov</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">dokončené recenzie</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Nenašli sa žiadni oprávnení recenzenti. Všetci recenzenti majú certifikáty za svoje dokončené recenzie.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Podržte Ctrl (Windows/Linux) alebo Cmd (Mac) pre výber viacerých recenzentov</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Generovať Certifikáty</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Generujem certifikáty...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Prosím, vyberte aspoň jedného recenzenta</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">certifikát(y) úspešne vygenerovaný(é)</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Pri generovaní certifikátov sa vyskytla chyba. Prosím, skúste to znova.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} certifikát(y) úspešne vygenerovaný(é)</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Štatistika Certifikátov</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Prehľad generovania a používania certifikátov vo vašom časopise</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Celkový Počet Vydaných Certifikátov</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Celkový Počet Stiahnutí</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Unikátni Recenzenti s Certifikátmi</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Celkový Počet Vydaných Certifikátov</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Celkový Počet Stiahnutí</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Priemerný Počet Stiahnutí na Certifikát</message>
+</locale>

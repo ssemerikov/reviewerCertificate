@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Japanese\n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "査読者証明書プラグイン"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "査読者が査読完了後に、個人向けPDF認定証を生成・ダウンロードできるようにします。"
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "査読証明書"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "ピアレビュー証明書"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "証明書の準備ができました！"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "査読を完了していただきありがとうございます。認定証をダウンロードできます。"
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "ダウンロードボタンをクリックすると、証明書が自動的に生成されます。"
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "証明書をダウンロード"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "証明書設定"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "査読者向けの証明書テンプレートと資格基準を設定します。"
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "証明書テンプレート設定"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "背景画像"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "証明書の背景画像をアップロード（JPGまたはPNG、A4サイズ推奨：2100×2970ピクセル）"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "現在の背景画像"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "ヘッダーテキスト"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "証明書の上部に表示されるメインタイトル"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "ヘッダーテキストは必須です"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "証明書本文テンプレート"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "証明書の主要コンテンツ。テンプレート変数を使用して動的コンテンツを挿入できます。"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "証明書本文テンプレートは必須です"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "フッターテキスト"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "証明書の下部に表示されるオプションのテキスト"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "利用可能なテンプレート変数"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "テンプレートでこれらの変数を使用して動的コンテンツを挿入："
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "デフォルトテンプレート"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "デフォルトテンプレートを使用"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "外観設定"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "フォントファミリー"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "フォントサイズ"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "テキスト色（RGB）"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "RGB値でテキスト色を指定（各成分0〜255）"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "資格基準"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "最低完了査読数"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "査読者が証明書を受け取るために必要な最低完了査読数"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "最低査読数は1以上の数値でなければなりません"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "検証オプション"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "証明書検証用のQRコードを含める"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "証明書のプレビュー"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "画像タイプが無効です。JPGまたはPNGファイルをアップロードしてください。"
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "ファイルのアップロードに失敗しました。再試行してください。"
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "この査読はまだ完了していません。証明書は完了した査読のみ利用可能です。"
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "証明書コードが提供されていません"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "証明書コードが無効です。この証明書を検証できませんでした。"
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "一括証明書生成用の査読者が選択されていません"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "アクセスが拒否されました。この証明書をダウンロードする権限がありません。"
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "ジャーナルコンテキストが利用できません。有効なジャーナルからアクセスしていることを確認してください。"
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "データベースアクセスが現在利用できません。システム管理者にお問い合わせください。"
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "証明書の検証"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "証明書コードを入力して真正性を確認"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "証明書コード"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "証明書を検証"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "証明書は有効です"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "証明書は無効です"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "入力された証明書コードは無効であるか、システムに存在しません。"
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "証明書コード"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "査読者名"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "ジャーナル名"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "発行日"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "一括証明書生成"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "複数の査読者の証明書を一度に生成します。査読を完了したが証明書をまだ持っていない査読者を下のリストから選択してください。"
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "査読者を選択"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "完了した査読"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "対象となる査読者が見つかりません。すべての査読者が完了した査読の証明書を持っています。"
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Ctrl（Windows/Linux）またはCmd（Mac）を押しながらクリックで複数選択"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "証明書を生成"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "証明書を生成中..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "少なくとも1人の査読者を選択してください"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "証明書が正常に生成されました"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "証明書の生成中にエラーが発生しました。再試行してください。"
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count}件の証明書が正常に生成されました"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "証明書統計"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "ジャーナルの証明書生成と使用状況の概要"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "発行済み証明書総数"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "総ダウンロード数"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "証明書を持つ査読者数"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "発行済み証明書総数"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "総ダウンロード数"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "証明書あたりの平均ダウンロード数"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "査読者証明書がダウンロード可能です"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "{$reviewerName}様\n\nピアレビューを完了していただきありがとうございます。査読者認定証がダウンロード可能になりました。\n\n以下のリンクから証明書をダウンロードしてください：\n{$certificateUrl}\n\n学術出版へのご貢献に感謝いたします。"

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/bg_BG/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Bulgarian
+  -->
+
+<locale name="bg_BG" full_name="Български">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Плъгин за Сертификат на Рецензент</message>
+	<message key="plugins.generic.reviewerCertificate.description">Позволява на рецензентите да генерират и изтеглят персонализирани PDF сертификати за признание след завършване на рецензии.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Сертификат за Рецензия</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Сертификат за Експертна Оценка</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Вашият Сертификат е Готов!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Благодарим ви за завършването на тази рецензия. Сега можете да изтеглите вашия сертификат за признание.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Вашият сертификат ще бъде автоматично генериран, когато щракнете върху бутона за изтегляне.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Изтегли Сертификат</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Настройки на Сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Конфигурирайте шаблони за сертификати и критерии за допустимост за рецензенти.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Настройки на Шаблона за Сертификат</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Фоново Изображение</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Качете фоново изображение за сертификата (JPG или PNG, препоръчителен размер: 2100x2970 пиксела за A4)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Текущо фоново изображение</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Заглавен Текст</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Основното заглавие, показвано в горната част на сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Заглавният текст е задължителен</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Шаблон на Съдържанието на Сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Основното съдържание на сертификата. Използвайте шаблонни променливи за вмъкване на динамично съдържание.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Шаблонът на съдържанието на сертификата е задължителен</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Текст в Долната Част</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Незадължителен текст, показван в долната част на сертификата</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Налични Шаблонни Променливи</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Използвайте тези променливи във вашите шаблони за вмъкване на динамично съдържание:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Шаблон по подразбиране</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Използвай шаблон по подразбиране</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Настройки на Външния Вид</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Шрифтово Семейство</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Размер на Шрифта</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Цвят на Текста (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Посочете цвета на текста, като използвате RGB стойности (0-255 за всеки компонент)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Критерии за Допустимост</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Минимален Брой Завършени Рецензии</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Минималният брой завършени рецензии, необходими преди рецензентът да може да получи сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Минималният брой рецензии трябва да е число, по-голямо или равно на 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Опции за Проверка</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Включи QR код за проверка на сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Преглед на Сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Невалиден тип изображение. Моля, качете JPG или PNG файл.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Качването на файла е неуспешно. Моля, опитайте отново.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Тази рецензия все още не е завършена. Сертификатите са налични само за завършени рецензии.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Не е предоставен код на сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Невалиден код на сертификат. Този сертификат не може да бъде проверен.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Не са избрани рецензенти за масово генериране на сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Достъпът е отказан. Нямате разрешение да изтеглите този сертификат.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Няма наличен контекст на списание. Моля, уверете се, че достъпвате от валидно списание.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Достъпът до базата данни в момента не е наличен. Моля, свържете се със системния администратор.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Проверка на Сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Въведете кода на сертификата, за да проверите неговата автентичност</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Код на Сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Провери Сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Валиден Сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Невалиден Сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Въведеният код на сертификат е невалиден или не съществува в нашата система.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Код на Сертификат</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Име на Рецензента</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Име на Списанието</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Дата на Издаване</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Масово Генериране на Сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Генерирайте сертификати за множество рецензенти наведнъж. Изберете рецензенти от списъка по-долу, които са завършили рецензии, но все още нямат сертификати.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Избери Рецензенти</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">завършени рецензии</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Не са намерени допустими рецензенти. Всички рецензенти имат сертификати за завършените си рецензии.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Задръжте Ctrl (Windows/Linux) или Cmd (Mac), за да изберете множество рецензенти</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Генерирай Сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Генериране на сертификати...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Моля, изберете поне един рецензент</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">сертификат(и) успешно генериран(и)</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Възникна грешка при генерирането на сертификати. Моля, опитайте отново.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">{$count} сертификат(и) успешно генериран(и)</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Статистика на Сертификатите</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Преглед на генерирането и използването на сертификати във вашето списание</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Общо Издадени Сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Общо Изтегляния</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Уникални Рецензенти със Сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Общо Издадени Сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Общо Изтегляния</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Средно Изтегляния на Сертификат</message>
+</locale>

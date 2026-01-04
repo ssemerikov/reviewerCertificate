@@ -1,0 +1,276 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Hebrew\n"
+"Language: he_IL\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "תוסף תעודת שופט"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "מאפשר לשופטים ליצור ולהוריד תעודות הוקרה PDF מותאמות אישית לאחר השלמת ביקורות."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "תעודת שיפוט"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "תעודת ביקורת עמיתים"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "התעודה שלך מוכנה!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "תודה על השלמת הביקורת. כעת תוכל להוריד את תעודת ההוקרה שלך."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "התעודה שלך תיווצר אוטומטית כשתלחץ על כפתור ההורדה."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "הורד תעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "הגדרות תעודה"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "הגדר תבניות תעודות וקריטריוני זכאות לשופטים."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "הגדרות תבנית תעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "תמונת רקע"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "העלה תמונת רקע לתעודה (JPG או PNG, גודל מומלץ: 2100x2970 פיקסלים עבור A4)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "תמונת רקע נוכחית"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "טקסט כותרת"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "הכותרת הראשית המוצגת בראש התעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "טקסט כותרת נדרש"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "תבנית גוף התעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "התוכן העיקרי של התעודה. השתמש במשתני תבנית להכנסת תוכן דינמי."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "תבנית גוף התעודה נדרשת"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "טקסט תחתית"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "טקסט אופציונלי המוצג בתחתית התעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "משתני תבנית זמינים"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "השתמש במשתנים אלה בתבניות שלך להכנסת תוכן דינמי:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "תבנית ברירת מחדל"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "השתמש בתבנית ברירת מחדל"
+
+# Appearance settings
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "הגדרות מראה"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "משפחת גופן"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "גודל גופן"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "צבע טקסט (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "ציין את צבע הטקסט באמצעות ערכי RGB (0-255 לכל רכיב)"
+
+# Eligibility settings
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "קריטריוני זכאות"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "מינימום ביקורות שהושלמו"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "מספר הביקורות המינימלי שנדרש לפני שהשופט יכול לקבל תעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "מינימום ביקורות חייב להיות מספר גדול או שווה ל-1"
+
+# Verification settings
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "אפשרויות אימות"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "כלול קוד QR לאימות תעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "תצוגה מקדימה של תעודה"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "סוג תמונה לא חוקי. אנא העלה קובץ JPG או PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "העלאת הקובץ נכשלה. אנא נסה שוב."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "ביקורת זו טרם הושלמה. תעודות זמינות רק לביקורות שהושלמו."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "לא סופק קוד תעודה"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "קוד תעודה לא חוקי. לא ניתן לאמת תעודה זו."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "לא נבחרו שופטים ליצירת תעודות מרובות"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "הגישה נדחתה. אין לך הרשאה להוריד תעודה זו."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "אין הקשר כתב עת זמין. אנא ודא שאתה ניגש מכתב עת תקף."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "הגישה למסד הנתונים אינה זמינה כרגע. אנא פנה למנהל המערכת."
+
+# Verification page
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "אימות תעודה"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "הכנס קוד תעודה לאימות האותנטיות שלה"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "קוד תעודה"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "אמת תעודה"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "תעודה תקפה"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "תעודה לא תקפה"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "קוד התעודה שהזנת אינו תקף או אינו קיים במערכת שלנו."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "קוד תעודה"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "שם השופט"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "שם כתב העת"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "תאריך הנפקה"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "יצירת תעודות מרובות"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "צור תעודות למספר שופטים בו-זמנית. בחר שופטים מהרשימה למטה שהשלימו ביקורות אך אין להם עדיין תעודות."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "בחר שופטים"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "ביקורות שהושלמו"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "לא נמצאו שופטים זכאים. לכל השופטים יש תעודות עבור הביקורות שהשלימו."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "החזק Ctrl (Windows/Linux) או Cmd (Mac) כדי לבחור מספר שופטים"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "צור תעודות"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "יוצר תעודות..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "אנא בחר שופט אחד לפחות"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "תעודה/ות נוצרה/ו בהצלחה"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "אירעה שגיאה ביצירת התעודות. אנא נסה שוב."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "{$count} תעודה/ות נוצרה/ו בהצלחה"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "סטטיסטיקת תעודות"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "סקירה כללית של יצירת תעודות ושימוש בכתב העת שלך"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "סה\"כ תעודות שהונפקו"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "סה\"כ הורדות"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "שופטים ייחודיים עם תעודות"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "סה\"כ תעודות שהונפקו"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "סה\"כ הורדות"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "ממוצע הורדות לתעודה"
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
+msgstr "תעודת השופט שלך זמינה להורדה"
+
+msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
+msgstr "{$reviewerName} היקר/ה,\n\nתודה על השלמת ביקורת העמיתים. תעודת ההוקרה שלך כשופט זמינה כעת להורדה.\n\nאנא בקר/י בקישור הבא כדי להוריד את התעודה שלך:\n{$certificateUrl}\n\nתודה על תרומתך לפרסום האקדמי."
