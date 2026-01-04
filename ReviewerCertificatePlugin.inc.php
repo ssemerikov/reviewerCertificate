@@ -394,12 +394,18 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
                 return false;
             }
 
-            define('HANDLER_CLASS', 'CertificateHandler');
-
-            // Get the handler instance and set the plugin reference
-            $handler = $params[2];
-            if (is_object($handler) && method_exists($handler, 'setPlugin')) {
+            // OJS 3.5+ uses direct handler assignment; OJS 3.3/3.4 use HANDLER_CLASS constant
+            // Use array_key_exists() because isset() returns false for null values
+            // In OJS 3.5, $params[3] exists but is null initially
+            if (array_key_exists(3, $params)) {
+                // OJS 3.5+ pattern: assign handler via reference (per PKP Plugin Guide)
+                // Must use =& to get reference, then assign to modify original
+                $handler =& $params[3];
+                $handler = new CertificateHandler();
                 $handler->setPlugin($this);
+            } else {
+                // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant
+                define('HANDLER_CLASS', 'CertificateHandler');
             }
 
             return true;
@@ -526,7 +532,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
             // Assign template variables
             $templateMgr->assign('showCertificateButton', true);
             $templateMgr->assign('certificateExists', (bool)$certificate);
-            $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', $reviewAssignment->getId()));
+            $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())));
             $templateMgr->assign('reviewAssignmentId', $reviewAssignment->getId());
 
             // Fetch the button HTML
@@ -655,9 +661,9 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
 
         $mail->assignParams(array(
             'reviewerName' => $reviewer->getFullName(),
-            'certificateUrl' => $request->url(null, 'certificate', 'download', $reviewAssignment->getId()),
+            'certificateUrl' => $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())),
             'journalName' => $context->getLocalizedName(),
-            'journalUrl' => $request->url($context->getPath()),
+            'journalUrl' => $request->getBaseUrl() . '/' . $context->getPath(),
         ));
 
         $mail->send($request);

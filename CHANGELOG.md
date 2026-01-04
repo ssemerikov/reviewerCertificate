@@ -5,6 +5,36 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.7] - 2025-01-04
+
+### Fixed
+- **Critical: OJS 3.5 URL Parameter Type Error** - Fixed TypeError preventing certificate button display
+  - **Issue**: `PKP\core\PKPRequest::url(): Argument #4 ($path) must be of type ?array, int given`
+  - **Root Cause**: OJS 3.5 has stricter type checking; `$path` parameter must be an array, not an integer
+  - **Solution**: Wrapped review assignment ID in array for all `$request->url()` calls
+  - **Files Modified**: `ReviewerCertificatePlugin.inc.php` (lines 529, 658, 660)
+  - **Reported by**: @drugurkocak (GitHub Issue #57)
+
+- **Critical: OJS 3.5 Handler Registration Error** - Fixed HANDLER_CLASS deprecation error
+  - **Issue**: `The use of HANDLER_CLASS is no longer supported for injecting handlers`
+  - **Root Cause**: OJS 3.5 removed support for legacy `define('HANDLER_CLASS', ...)` pattern
+  - **Solution**: Use direct handler assignment via reference (`$handler =& $params[3]`) for OJS 3.5+
+  - **Key Fixes**:
+    - Use `array_key_exists(3, $params)` instead of `isset()` (isset returns false for null)
+    - Use reference assignment `$handler =& $params[3]` per PKP Plugin Guide
+  - **Files Modified**: `ReviewerCertificatePlugin.inc.php` - `setupHandler()` method
+  - **Reported by**: @drugurkocak (GitHub Issue #57)
+
+### Technical Details
+- Line 529: `$request->url(null, 'certificate', 'download', $id)` → `array($id)`
+- Line 658: Same fix for email template URL
+- Line 660: Changed `$request->url($context->getPath())` to `$request->getBaseUrl() . '/' . $context->getPath()`
+- `setupHandler()`: OJS 3.5 uses `$params[3] = new CertificateHandler()`; OJS 3.3/3.4 uses `define('HANDLER_CLASS', ...)`
+- **Backward Compatible**: Works correctly in OJS 3.3, 3.4, and 3.5
+- **No database changes** - Safe upgrade with no migration required
+
+---
+
 ## [1.0.6] - 2025-01-04
 
 ### Added
@@ -271,6 +301,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.0.7 | 2025-01-04 | Patch | Fixed OJS 3.5 URL parameter type error (Issue #57) |
 | 1.0.6 | 2025-01-04 | Minor | Added 12 new languages (zh_CN, ar_AR, ja_JP, ko_KR, fa_IR, el_GR, he_IL, hu_HU, lt_LT, sk_SK, sl_SI, bg_BG) |
 | 1.0.5 | 2025-01-03 | Patch | Date format fix (PHP 8.1+), memory issue fix |
 | 1.0.4 | 2025-01-03 | Patch | Added .po locale files for OJS 3.5, Brazilian Portuguese translation |
@@ -282,6 +313,13 @@ This release addresses multiple issues reported on PKP Community Forum:
 ---
 
 ## Upgrade Notes
+
+### From 1.0.6 to 1.0.7
+- **No database changes** - Safe to upgrade without data migration
+- **No configuration changes** - All existing settings preserved
+- **Automatic**: Simply replace plugin files and refresh cache
+- **Critical for OJS 3.5**: This update fixes the certificate button not appearing for reviewers
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.0.5 to 1.0.6
 - **No database changes** - Safe to upgrade without data migration

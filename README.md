@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.0.6** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.0.7** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.0.6)**: Added 12 new language translations (Chinese, Arabic, Japanese, Korean, Persian, Greek, Hebrew, Hungarian, Lithuanian, Slovak, Slovenian, Bulgarian) expanding global coverage to ~95%. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.0.7)**: Fixed critical OJS 3.5 URL parameter type error that prevented certificate button from appearing (Issue #57). See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -457,6 +457,13 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
+
+**Version 1.0.7** (2025-01-04)
+- **Fixed**: Critical OJS 3.5 URL parameter type error preventing certificate button display
+- **Fixed**: Critical OJS 3.5 handler registration error (`HANDLER_CLASS` no longer supported)
+- **Fixed**: `$request->url()` calls now correctly pass path as array
+- Fully compatible with OJS 3.5 handler system (Issue #57)
+- Addresses issues reported by @drugurkocak
 
 **Version 1.0.6** (2025-01-04)
 - **Added**: 12 new language translations expanding global coverage to ~95%
