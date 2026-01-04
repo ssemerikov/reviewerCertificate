@@ -394,12 +394,15 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
                 return false;
             }
 
-            define('HANDLER_CLASS', 'CertificateHandler');
-
-            // Get the handler instance and set the plugin reference
-            $handler = $params[2];
-            if (is_object($handler) && method_exists($handler, 'setPlugin')) {
+            // OJS 3.5+ uses direct handler assignment; OJS 3.3/3.4 use HANDLER_CLASS constant
+            if (isset($params[3])) {
+                // OJS 3.5+ pattern: directly assign handler instance to $params[3]
+                $handler = new CertificateHandler();
                 $handler->setPlugin($this);
+                $params[3] = $handler;
+            } else {
+                // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant
+                define('HANDLER_CLASS', 'CertificateHandler');
             }
 
             return true;
@@ -526,7 +529,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
             // Assign template variables
             $templateMgr->assign('showCertificateButton', true);
             $templateMgr->assign('certificateExists', (bool)$certificate);
-            $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', $reviewAssignment->getId()));
+            $templateMgr->assign('certificateUrl', $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())));
             $templateMgr->assign('reviewAssignmentId', $reviewAssignment->getId());
 
             // Fetch the button HTML
@@ -655,9 +658,9 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
 
         $mail->assignParams(array(
             'reviewerName' => $reviewer->getFullName(),
-            'certificateUrl' => $request->url(null, 'certificate', 'download', $reviewAssignment->getId()),
+            'certificateUrl' => $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())),
             'journalName' => $context->getLocalizedName(),
-            'journalUrl' => $request->url($context->getPath()),
+            'journalUrl' => $request->getBaseUrl() . '/' . $context->getPath(),
         ));
 
         $mail->send($request);
