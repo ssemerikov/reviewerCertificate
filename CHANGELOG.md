@@ -5,6 +5,34 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-01-05
+
+### Fixed - Critical OJS 3.5 Bugs
+
+- **Critical: CertificateDAO::_getInsertId() Error** - Fixed HTTP 500 error when downloading certificates
+  - **Issue**: `Call to undefined method CertificateDAO::_getInsertId()`
+  - **Root Cause**: OJS 3.5 removed `_getInsertId()` from base DAO class
+  - **Solution**: Added `method_exists()` check with fallback to Laravel's `DB::getPdo()->lastInsertId()`
+  - **File Modified**: `classes/CertificateDAO.php`
+  - **Reported by**: @drugurkocak (GitHub Issue #57)
+
+- **Critical: Missing Use Statements** - Fixed class loading errors in OJS 3.5
+  - **Issue**: `Class "APP\plugins\generic\reviewerCertificate\Application" not found`
+  - **Issue**: `Class "APP\plugins\generic\reviewerCertificate\CertificateSettingsForm" not found`
+  - **Root Cause**: PHP namespaces require `use` statements even after `require_once`
+  - **Solution**: Added proper `use` statements for all referenced classes
+  - **File Modified**: `ReviewerCertificatePlugin.php`
+
+- **Fixed: Tarball Structure** - Plugin files now extract to correct directory
+  - **Issue**: Files extracted to root of `plugins/generic/` instead of `plugins/generic/reviewerCertificate/`
+  - **Solution**: Tarball now includes top-level `reviewerCertificate/` directory wrapper
+
+### Technical Details
+- **Backward Compatible**: Works correctly in OJS 3.3, 3.4, and 3.5
+- **No database changes** - Safe upgrade with no migration required
+
+---
+
 ## [1.1.0] - 2026-01-05
 
 ### Changed - OJS 3.5 Full Compatibility Update
@@ -359,6 +387,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.1.1 | 2026-01-05 | Patch | Fixed _getInsertId(), missing use statements, tarball structure (Issue #57) |
 | 1.1.0 | 2026-01-05 | Minor | Full OJS 3.5 compatibility - PSR-4 namespaces, .php extensions |
 | 1.0.7 | 2025-01-04 | Patch | Fixed OJS 3.5 URL parameter type error (Issue #57) |
 | 1.0.6 | 2025-01-04 | Minor | Added 12 new languages (zh_CN, ar_AR, ja_JP, ko_KR, fa_IR, el_GR, he_IL, hu_HU, lt_LT, sk_SK, sl_SI, bg_BG) |
@@ -372,6 +401,13 @@ This release addresses multiple issues reported on PKP Community Forum:
 ---
 
 ## Upgrade Notes
+
+### From 1.1.0 to 1.1.1
+- **Critical bug fixes** for OJS 3.5 compatibility
+- **No database changes** - Safe upgrade with no migration required
+- **No configuration changes** - All existing settings preserved
+- **Tarball fix**: Plugin now extracts to correct `reviewerCertificate/` directory
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.0.7 to 1.1.0
 - **File renames**: All `.inc.php` files renamed to `.php` (OJS 3.5 requirement)

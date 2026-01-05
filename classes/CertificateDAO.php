@@ -314,6 +314,15 @@ class CertificateDAO extends DAO {
      * @return int
      */
     public function getInsertId(): int {
-        return $this->_getInsertId('reviewer_certificates', 'certificate_id');
+        // OJS 3.5 removed _getInsertId() from base DAO class
+        // Use method_exists check with fallback to Laravel/PDO
+        if (method_exists($this, '_getInsertId')) {
+            return $this->_getInsertId('reviewer_certificates', 'certificate_id');
+        }
+        // Fallback for OJS 3.5+: use Illuminate DB facade
+        if (class_exists('Illuminate\Support\Facades\DB')) {
+            return (int) \Illuminate\Support\Facades\DB::getPdo()->lastInsertId();
+        }
+        return 0;
     }
 }

@@ -16,6 +16,12 @@ namespace APP\plugins\generic\reviewerCertificate;
 use PKP\plugins\GenericPlugin;
 use PKP\db\DAORegistry;
 use PKP\plugins\Hook;
+use APP\core\Application;
+use APP\plugins\generic\reviewerCertificate\classes\Certificate;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateDAO;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator;
+use APP\plugins\generic\reviewerCertificate\classes\form\CertificateSettingsForm;
+use APP\plugins\generic\reviewerCertificate\controllers\CertificateHandler;
 
 // OJS 3.4+ uses namespaced classes, OJS 3.3 uses legacy import()
 if (!class_exists('PKP\plugins\GenericPlugin')) {
@@ -36,7 +42,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         if ($success && $this->getEnabled($mainContextId)) {
             // Import and register DAOs
             require_once($this->getPluginPath() . '/classes/CertificateDAO.php');
-            $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
+            $certificateDao = new CertificateDAO();
             DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
             // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3

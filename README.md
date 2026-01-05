@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.1.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.1.1** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.1.0)**: Full OJS 3.5 compatibility update with PSR-4 namespaces, renamed `.inc.php` to `.php` files, and replaced deprecated functions. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.1.1)**: Critical bug fixes for OJS 3.5 - fixed `_getInsertId()` error, missing namespace imports, and tarball extraction issues. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -457,6 +457,12 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
+
+**Version 1.1.1** (2026-01-05)
+- **Fixed**: Critical `_getInsertId()` error in OJS 3.5 - certificates now generate correctly
+- **Fixed**: Missing `use` statements causing class loading errors (Application, CertificateSettingsForm)
+- **Fixed**: Tarball extraction - plugin now extracts to correct `reviewerCertificate/` directory
+- Addresses issues reported by @drugurkocak (GitHub Issue #57)
 
 **Version 1.1.0** (2026-01-05)
 - **BREAKING**: Full OJS 3.5 compatibility update with PSR-4 namespaces
