@@ -7,7 +7,9 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.inc.php';
+require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.php';
+
+use APP\plugins\generic\reviewerCertificate\ReviewerCertificatePlugin;
 
 class OJS33CompatibilityTest extends TestCase
 {

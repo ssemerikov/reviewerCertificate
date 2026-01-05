@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/reviewerCertificate/classes/CertificateGenerator.inc.php
+ * @file plugins/generic/reviewerCertificate/classes/CertificateGenerator.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
@@ -11,11 +11,17 @@
  * @brief Generates PDF certificates for reviewers
  */
 
-// OJS 3.3 compatibility: Get base directory
+namespace APP\plugins\generic\reviewerCertificate\classes;
+
+use PKP\core\Core;
+use PKP\db\DAORegistry;
+use APP\facades\Repo;
+
+// OJS 3.4+/3.3 compatibility: Get base directory
 if (class_exists('PKP\core\Core')) {
-    $ojsBaseDir = \PKP\core\Core::getBaseDir();
-} elseif (class_exists('Core')) {
     $ojsBaseDir = Core::getBaseDir();
+} elseif (class_exists('Core')) {
+    $ojsBaseDir = \Core::getBaseDir();
 } else {
     // Fallback: try to determine from current path
     $ojsBaseDir = dirname(__FILE__, 6); // Go up from plugins/generic/reviewerCertificate/classes

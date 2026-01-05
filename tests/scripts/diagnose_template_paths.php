@@ -11,7 +11,7 @@
  * INSTRUCTIONS FOR DR. KOÇAK:
  *
  * 1. Enable this diagnostic mode:
- *    - Open ReviewerCertificatePlugin.inc.php
+ *    - Open ReviewerCertificatePlugin.php
  *    - Find the addCertificateButton() method
  *    - The debug logging is already enabled in version 1.0.3+
  *
@@ -78,7 +78,7 @@ echo "STEP 2: Check Debug Logging is Enabled\n";
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n";
 echo "\n";
 
-$pluginFile = $baseDir . '/ReviewerCertificatePlugin.inc.php';
+$pluginFile = $baseDir . '/ReviewerCertificatePlugin.php';
 $content = file_get_contents($pluginFile);
 
 if (strpos($content, 'error_log("ReviewerCertificate: Template displayed:') !== false) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/reviewerCertificate/controllers/CertificateHandler.inc.php
+ * @file plugins/generic/reviewerCertificate/controllers/CertificateHandler.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
@@ -11,15 +11,23 @@
  * @brief Handle requests for certificate operations
  */
 
+namespace APP\plugins\generic\reviewerCertificate\controllers;
+
+use APP\handler\Handler;
+use PKP\security\Role;
+use PKP\security\authorization\ContextAccessPolicy;
+use PKP\db\DAORegistry;
+use PKP\core\JSONMessage;
+use Exception;
+
 // OJS 3.3 compatibility: Handler class alias
-if (class_exists('APP\handler\Handler')) {
-    class_alias('APP\handler\Handler', 'CertificateHandlerBase');
-} else {
-    import('classes.handler.Handler');
-    class_alias('Handler', 'CertificateHandlerBase');
+if (!class_exists('APP\handler\Handler')) {
+    if (function_exists('import')) {
+        import('classes.handler.Handler');
+    }
 }
 
-class CertificateHandler extends CertificateHandlerBase {
+class CertificateHandler extends Handler {
 
     /** @var ReviewerCertificatePlugin */
     private $plugin;
@@ -29,14 +37,14 @@ class CertificateHandler extends CertificateHandlerBase {
      */
     public function __construct() {
         parent::__construct();
-        // OJS 3.3 compatibility: Role constants
+        // OJS 3.4+: Use namespaced Role class; OJS 3.3: Use global constants
         if (class_exists('PKP\security\Role')) {
             $this->addRoleAssignment(
-                array(\PKP\security\Role::ROLE_ID_REVIEWER),
+                array(Role::ROLE_ID_REVIEWER),
                 array('download', 'preview')
             );
             $this->addRoleAssignment(
-                array(\PKP\security\Role::ROLE_ID_MANAGER, \PKP\security\Role::ROLE_ID_SITE_ADMIN),
+                array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
                 array('manage', 'generateBatch')
             );
         } else {
@@ -64,12 +72,12 @@ class CertificateHandler extends CertificateHandlerBase {
             return true;
         }
 
-        // For all other operations, require context access - OJS 3.3 compatibility
+        // For all other operations, require context access - OJS 3.4+/3.3 compatibility
         if (class_exists('PKP\security\authorization\ContextAccessPolicy')) {
-            $this->addPolicy(new \PKP\security\authorization\ContextAccessPolicy($request, $roleAssignments));
-        } else {
-            import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
             $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
+        } elseif (function_exists('import')) {
+            import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
+            $this->addPolicy(new \ContextAccessPolicy($request, $roleAssignments));
         }
 
         return parent::authorize($request, $args, $roleAssignments);
@@ -107,8 +115,7 @@ class CertificateHandler extends CertificateHandlerBase {
         if (!$reviewId || !$user) {
             error_log('Certificate download failed: Missing review ID or user');
             http_response_code(404);
-            fatalError('Not found');
-            return;
+            throw new Exception('Not found', 404);
         }
 
         // Get review assignment using direct SQL for OJS 3.5 compatibility
@@ -129,23 +136,21 @@ class CertificateHandler extends CertificateHandlerBase {
         if (!$reviewAssignment) {
             error_log('Certificate download failed: Review assignment not found');
             http_response_code(404);
-            fatalError('Review assignment not found');
-            return;
+            throw new Exception('Review assignment not found', 404);
         }
 
         // Validate access - user must be the reviewer
         if ($reviewAssignment->getReviewerId() != $user->getId()) {
             error_log('Certificate download failed: Access denied for user ' . $user->getId() . ', review belongs to reviewer ' . $reviewAssignment->getReviewerId());
             http_response_code(403);
-            fatalError(__('plugins.generic.reviewerCertificate.error.accessDenied'));
-            return;
+            throw new Exception(__('plugins.generic.reviewerCertificate.error.accessDenied'), 403);
         }
 
         // Check if review is completed
         if (!$reviewAssignment->getDateCompleted()) {
             error_log('Certificate download failed: Review not completed');
-            fatalError(__('plugins.generic.reviewerCertificate.error.reviewNotCompleted'));
-            return;
+            http_response_code(400);
+            throw new Exception(__('plugins.generic.reviewerCertificate.error.reviewNotCompleted'), 400);
         }
 
         // Get or create certificate
@@ -154,7 +159,7 @@ class CertificateHandler extends CertificateHandlerBase {
 
         if (!$certificate) {
             // Create certificate if it doesn't exist
-            require_once(dirname(__FILE__) . '/../classes/Certificate.inc.php');
+            require_once(dirname(__FILE__) . '/../classes/Certificate.php');
             $certificate = new Certificate();
             $certificate->setReviewerId($reviewAssignment->getReviewerId());
             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
@@ -261,7 +266,7 @@ class CertificateHandler extends CertificateHandlerBase {
     private function generateAndOutputPDF($reviewAssignment, $certificate, $context) {
         // Load generator
         $plugin = $this->getPlugin();
-        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.inc.php');
+        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.php');
         $generator = new CertificateGenerator();
 
         // Set up generator
@@ -293,7 +298,7 @@ class CertificateHandler extends CertificateHandlerBase {
      */
     private function generatePreviewPDF($context) {
         $plugin = $this->getPlugin();
-        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.inc.php');
+        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.php');
         $generator = new CertificateGenerator();
 
         // Create mock objects for preview
@@ -424,7 +429,7 @@ class CertificateHandler extends CertificateHandlerBase {
 
                         if (!$existing) {
                             // Create certificate
-                            require_once(dirname(__FILE__) . '/../classes/Certificate.inc.php');
+                            require_once(dirname(__FILE__) . '/../classes/Certificate.php');
                             $certificate = new Certificate();
                             $certificate->setReviewerId($reviewerId);
                             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());

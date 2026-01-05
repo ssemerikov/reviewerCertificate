@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/reviewerCertificate/classes/form/CertificateSettingsForm.inc.php
+ * @file plugins/generic/reviewerCertificate/classes/form/CertificateSettingsForm.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
@@ -11,15 +11,23 @@
  * @brief Form for managing certificate settings
  */
 
-// OJS 3.3 compatibility: Form class alias
-if (class_exists('PKP\form\Form')) {
-    class_alias('PKP\form\Form', 'CertificateSettingsFormBase');
-} else {
-    import('lib.pkp.classes.form.Form');
-    class_alias('Form', 'CertificateSettingsFormBase');
+namespace APP\plugins\generic\reviewerCertificate\classes\form;
+
+use PKP\form\Form;
+use PKP\form\validation\FormValidatorPost;
+use PKP\form\validation\FormValidatorCSRF;
+use PKP\form\validation\FormValidator;
+use PKP\form\validation\FormValidatorCustom;
+use PKP\db\DAORegistry;
+
+// OJS 3.3 compatibility fallback
+if (!class_exists('PKP\form\Form')) {
+    if (function_exists('import')) {
+        import('lib.pkp.classes.form.Form');
+    }
 }
 
-class CertificateSettingsForm extends CertificateSettingsFormBase {
+class CertificateSettingsForm extends Form {
 
     /** @var ReviewerCertificatePlugin */
     private $plugin;
@@ -38,25 +46,25 @@ class CertificateSettingsForm extends CertificateSettingsFormBase {
         $this->plugin = $plugin;
         $this->contextId = $contextId;
 
-        // Add form validators - OJS 3.3 compatibility
+        // Add form validators - OJS 3.4+/3.3 compatibility
         if (class_exists('PKP\form\validation\FormValidatorPost')) {
-            $this->addCheck(new \PKP\form\validation\FormValidatorPost($this));
-            $this->addCheck(new \PKP\form\validation\FormValidatorCSRF($this));
-            $this->addCheck(new \PKP\form\validation\FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
-            $this->addCheck(new \PKP\form\validation\FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
-            $this->addCheck(new \PKP\form\validation\FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
-                return is_numeric($value) && $value >= 1;
-            }));
-        } else {
-            import('lib.pkp.classes.form.validation.FormValidatorPost');
-            import('lib.pkp.classes.form.validation.FormValidatorCSRF');
-            import('lib.pkp.classes.form.validation.FormValidator');
-            import('lib.pkp.classes.form.validation.FormValidatorCustom');
             $this->addCheck(new FormValidatorPost($this));
             $this->addCheck(new FormValidatorCSRF($this));
             $this->addCheck(new FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
             $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
             $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
+                return is_numeric($value) && $value >= 1;
+            }));
+        } elseif (function_exists('import')) {
+            import('lib.pkp.classes.form.validation.FormValidatorPost');
+            import('lib.pkp.classes.form.validation.FormValidatorCSRF');
+            import('lib.pkp.classes.form.validation.FormValidator');
+            import('lib.pkp.classes.form.validation.FormValidatorCustom');
+            $this->addCheck(new \FormValidatorPost($this));
+            $this->addCheck(new \FormValidatorCSRF($this));
+            $this->addCheck(new \FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
+            $this->addCheck(new \FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
+            $this->addCheck(new \FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
                 return is_numeric($value) && $value >= 1;
             }));
         }

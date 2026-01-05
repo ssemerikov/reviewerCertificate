@@ -5,6 +5,44 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2026-01-05
+
+### Changed - OJS 3.5 Full Compatibility Update
+This release brings full OJS 3.5 compatibility while maintaining backward compatibility with OJS 3.3 and 3.4.
+
+#### Breaking Changes from OJS 3.5 Addressed
+- **File Extension**: Renamed all `.inc.php` files to `.php` (OJS 3.5 requirement)
+- **Namespaces**: Added PSR-4 namespaces to all plugin classes
+- **import() Deprecated**: Replaced with PHP `use` statements
+- **fatalError() Removed**: Replaced with `throw new Exception()`
+- **Hook Registration**: Updated to use `PKP\plugins\Hook` class for OJS 3.5
+
+#### Files Renamed
+| Old Name | New Name |
+|----------|----------|
+| `ReviewerCertificatePlugin.inc.php` | `ReviewerCertificatePlugin.php` |
+| `controllers/CertificateHandler.inc.php` | `controllers/CertificateHandler.php` |
+| `classes/Certificate.inc.php` | `classes/Certificate.php` |
+| `classes/CertificateDAO.inc.php` | `classes/CertificateDAO.php` |
+| `classes/CertificateGenerator.inc.php` | `classes/CertificateGenerator.php` |
+| `classes/form/CertificateSettingsForm.inc.php` | `classes/form/CertificateSettingsForm.php` |
+| `classes/migration/ReviewerCertificateInstallMigration.inc.php` | `classes/migration/ReviewerCertificateInstallMigration.php` |
+
+#### Namespaces Added
+- `APP\plugins\generic\reviewerCertificate` - Main plugin
+- `APP\plugins\generic\reviewerCertificate\controllers` - Request handlers
+- `APP\plugins\generic\reviewerCertificate\classes` - Core classes
+- `APP\plugins\generic\reviewerCertificate\classes\form` - Form classes
+- `APP\plugins\generic\reviewerCertificate\classes\migration` - Database migrations
+
+### Technical Details
+- **Backward Compatible**: All changes include fallback patterns for OJS 3.3/3.4
+- **No database changes** - Safe upgrade with no migration required
+- **PHP 8.2+**: Tested with PHP 8.2 as required by OJS 3.5
+- **Note**: The `reviewassignmentdao::_updateobject` hook is deprecated in OJS 3.5; auto-email on review completion may not work in OJS 3.5
+
+---
+
 ## [1.0.8] - 2026-01-05
 
 ### Fixed

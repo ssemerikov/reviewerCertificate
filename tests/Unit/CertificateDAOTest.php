@@ -7,8 +7,11 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/classes/Certificate.inc.php';
-require_once BASE_SYS_DIR . '/classes/CertificateDAO.inc.php';
+require_once BASE_SYS_DIR . '/classes/Certificate.php';
+require_once BASE_SYS_DIR . '/classes/CertificateDAO.php';
+
+use APP\plugins\generic\reviewerCertificate\classes\Certificate;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateDAO;
 
 class CertificateDAOTest extends TestCase
 {

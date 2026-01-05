@@ -46,13 +46,13 @@ echo "────────────────────────�
 
 $requiredFiles = [
     'version.xml',
-    'ReviewerCertificatePlugin.inc.php',
-    'classes/Certificate.inc.php',
-    'classes/CertificateDAO.inc.php',
-    'classes/CertificateGenerator.inc.php',
-    'classes/form/CertificateSettingsForm.inc.php',
-    'classes/migration/ReviewerCertificateInstallMigration.inc.php',
-    'controllers/CertificateHandler.inc.php',
+    'ReviewerCertificatePlugin.php',
+    'classes/Certificate.php',
+    'classes/CertificateDAO.php',
+    'classes/CertificateGenerator.php',
+    'classes/form/CertificateSettingsForm.php',
+    'classes/migration/ReviewerCertificateInstallMigration.php',
+    'controllers/CertificateHandler.php',
 ];
 
 $missingFiles = [];
@@ -118,15 +118,15 @@ echo "► Validating Namespace Usage...\n";
 echo "─────────────────────────────────────────────────────────────\n";
 
 $namespaceChecks = [
-    'Certificate.inc.php' => [
+    'Certificate.php' => [
         'pattern' => '/class\s+Certificate\s+extends\s+\\\\PKP\\\\core\\\\DataObject/',
         'description' => 'Certificate extends \\PKP\\core\\DataObject'
     ],
-    'CertificateDAO.inc.php' => [
+    'CertificateDAO.php' => [
         'pattern' => '/class\s+CertificateDAO\s+extends\s+\\\\PKP\\\\db\\\\DAO/',
         'description' => 'CertificateDAO extends \\PKP\\db\\DAO'
     ],
-    'ReviewerCertificatePlugin.inc.php' => [
+    'ReviewerCertificatePlugin.php' => [
         'pattern' => '/class\s+ReviewerCertificatePlugin\s+extends\s+\\\\PKP\\\\plugins\\\\GenericPlugin/',
         'description' => 'Plugin extends \\PKP\\plugins\\GenericPlugin'
     ]
@@ -154,7 +154,7 @@ echo "\n";
 echo "► Validating Database Schema...\n";
 echo "─────────────────────────────────────────────────────────────\n";
 
-$migrationFile = $pluginDir . '/classes/migration/ReviewerCertificateInstallMigration.inc.php';
+$migrationFile = $pluginDir . '/classes/migration/ReviewerCertificateInstallMigration.php';
 if (file_exists($migrationFile)) {
     $content = file_get_contents($migrationFile);
     

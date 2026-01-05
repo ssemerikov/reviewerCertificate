@@ -7,7 +7,11 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.inc.php';
+require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.php';
+require_once BASE_SYS_DIR . '/classes/CertificateDAO.php';
+
+use APP\plugins\generic\reviewerCertificate\ReviewerCertificatePlugin;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateDAO;
 
 class OJS35CompatibilityTest extends TestCase
 {
@@ -125,7 +129,7 @@ class OJS35CompatibilityTest extends TestCase
         $dao = DAORegistry::getDAO('CertificateDAO');
 
         $this->assertNotNull($dao);
-        $this->assertInstanceOf('CertificateDAO', $dao);
+        $this->assertInstanceOf(CertificateDAO::class, $dao);
     }
 
     /**

@@ -7,7 +7,9 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/classes/Certificate.inc.php';
+require_once BASE_SYS_DIR . '/classes/Certificate.php';
+
+use APP\plugins\generic\reviewerCertificate\classes\Certificate;
 
 class CertificateTest extends TestCase
 {

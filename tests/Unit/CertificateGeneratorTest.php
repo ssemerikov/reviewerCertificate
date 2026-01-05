@@ -7,8 +7,11 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/classes/Certificate.inc.php';
-require_once BASE_SYS_DIR . '/classes/CertificateGenerator.inc.php';
+require_once BASE_SYS_DIR . '/classes/Certificate.php';
+require_once BASE_SYS_DIR . '/classes/CertificateGenerator.php';
+
+use APP\plugins\generic\reviewerCertificate\classes\Certificate;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator;
 
 class CertificateGeneratorTest extends TestCase
 {

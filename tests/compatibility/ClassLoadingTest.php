@@ -41,7 +41,7 @@ class ClassLoadingTest {
     private function testCertificateClassNamespace() {
         echo "[TEST] Certificate class namespace...\n";
 
-        $file = dirname(__DIR__, 2) . '/classes/Certificate.inc.php';
+        $file = dirname(__DIR__, 2) . '/classes/Certificate.php';
         $content = file_get_contents($file);
 
         // Check for correct parent class
@@ -56,7 +56,7 @@ class ClassLoadingTest {
 
         // Check for Core::getCurrentDate() calls
         if (preg_match_all('/([^\\\\])Core::getCurrentDate/', $content, $matches, PREG_OFFSET_CAPTURE)) {
-            $this->addError("Found unqualified Core::getCurrentDate() in Certificate.inc.php");
+            $this->addError("Found unqualified Core::getCurrentDate() in Certificate.php");
         } else {
             echo "  ✓ All Core::getCurrentDate() calls are fully qualified\n";
             $this->passed++;
@@ -70,9 +70,9 @@ class ClassLoadingTest {
         echo "\n[TEST] Core class references...\n";
 
         $files = [
-            'classes/Certificate.inc.php',
-            'ReviewerCertificatePlugin.inc.php',
-            'controllers/CertificateHandler.inc.php'
+            'classes/Certificate.php',
+            'ReviewerCertificatePlugin.php',
+            'controllers/CertificateHandler.php'
         ];
 
         foreach ($files as $file) {
@@ -101,7 +101,7 @@ class ClassLoadingTest {
     private function testDAOClassReferences() {
         echo "\n[TEST] DAO class references...\n";
 
-        $file = dirname(__DIR__, 2) . '/classes/CertificateDAO.inc.php';
+        $file = dirname(__DIR__, 2) . '/classes/CertificateDAO.php';
         $content = file_get_contents($file);
 
         // Check parent class
@@ -125,7 +125,7 @@ class ClassLoadingTest {
     private function testPluginClassReferences() {
         echo "\n[TEST] Plugin class references...\n";
 
-        $file = dirname(__DIR__, 2) . '/ReviewerCertificatePlugin.inc.php';
+        $file = dirname(__DIR__, 2) . '/ReviewerCertificatePlugin.php';
         $content = file_get_contents($file);
 
         // Check parent class

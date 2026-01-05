@@ -100,7 +100,270 @@ class OJSMockLoader
      */
     private static function loadBaseClasses(): void
     {
-        // Create Core class
+        // Create namespaced PKP classes for OJS 3.4+/3.5
+        if (!class_exists('PKP\core\Core')) {
+            eval('
+                namespace PKP\core;
+                class Core {
+                    public static function getCurrentDate() {
+                        return date("Y-m-d H:i:s");
+                    }
+
+                    public static function getBaseDir() {
+                        return BASE_SYS_DIR;
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced DataObject for OJS 3.4+/3.5
+        if (!class_exists('PKP\core\DataObject')) {
+            eval('
+                namespace PKP\core;
+                class DataObject {
+                    private $_data = [];
+
+                    public function setData($key, $value) {
+                        $this->_data[$key] = $value;
+                    }
+
+                    public function getData($key) {
+                        return $this->_data[$key] ?? null;
+                    }
+
+                    public function setAllData($data) {
+                        $this->_data = $data;
+                    }
+
+                    public function getAllData() {
+                        return $this->_data;
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced DAO for OJS 3.4+/3.5
+        if (!class_exists('PKP\db\DAO')) {
+            eval('
+                namespace PKP\db;
+                class DAO {
+                    protected function _getInsertId($tableName = null, $idField = null) {
+                        return rand(1, 999999);
+                    }
+
+                    public function retrieve($sql, $params = []) {
+                        return new \ArrayIterator([]);
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced DAOResultFactory for OJS 3.4+/3.5
+        if (!class_exists('PKP\db\DAOResultFactory')) {
+            eval('
+                namespace PKP\db;
+                class DAOResultFactory extends \ArrayIterator {
+                    public function __construct($result, $dao, $method) {
+                        parent::__construct([]);
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced DAORegistry for OJS 3.4+/3.5
+        if (!class_exists('PKP\db\DAORegistry')) {
+            eval('
+                namespace PKP\db;
+                class DAORegistry {
+                    private static $daos = [];
+
+                    public static function getDAO($name) {
+                        return self::$daos[$name] ?? null;
+                    }
+
+                    public static function registerDAO($name, $dao) {
+                        self::$daos[$name] = $dao;
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced GenericPlugin for OJS 3.4+/3.5
+        if (!class_exists('PKP\plugins\GenericPlugin')) {
+            eval('
+                namespace PKP\plugins;
+                class GenericPlugin {
+                    private $_pluginSettings = [];
+                    private $_enabled = true;
+
+                    public function register($category, $path, $mainContextId = null) {
+                        return true;
+                    }
+
+                    public function getEnabled($contextId = null) {
+                        return $this->_enabled;
+                    }
+
+                    public function setEnabled($enabled) {
+                        $this->_enabled = $enabled;
+                    }
+
+                    public function getSetting($contextId, $name) {
+                        return $this->_pluginSettings[$contextId][$name] ?? null;
+                    }
+
+                    public function updateSetting($contextId, $name, $value) {
+                        $this->_pluginSettings[$contextId][$name] = $value;
+                    }
+
+                    public function getPluginPath() {
+                        return BASE_SYS_DIR;
+                    }
+
+                    public function getTemplatePath() {
+                        return BASE_SYS_DIR . "/templates/";
+                    }
+
+                    public function getTemplateResource($template) {
+                        return BASE_SYS_DIR . "/templates/" . $template;
+                    }
+
+                    public function getCanEnable() {
+                        return true;
+                    }
+
+                    public function getCanDisable() {
+                        return true;
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced Hook for OJS 3.4+/3.5
+        if (!class_exists('PKP\plugins\Hook')) {
+            eval('
+                namespace PKP\plugins;
+                class Hook {
+                    private static $hooks = [];
+
+                    public static function register($hook, $callback, $priority = 0) {
+                        self::$hooks[$hook][] = $callback;
+                        return true;
+                    }
+
+                    public static function call($hook, $args = []) {
+                        if (isset(self::$hooks[$hook])) {
+                            foreach (self::$hooks[$hook] as $callback) {
+                                call_user_func_array($callback, $args);
+                            }
+                        }
+                    }
+                }
+            ');
+        }
+
+        // Create namespaced Form classes for OJS 3.4+/3.5
+        if (!class_exists('PKP\form\Form')) {
+            eval('
+                namespace PKP\form;
+                class Form {
+                    private $_data = [];
+                    protected $_template;
+                    protected $_checks = [];
+
+                    public function __construct($template = null) {
+                        $this->_template = $template;
+                    }
+
+                    public function setData($key, $value = null) {
+                        if (is_array($key)) {
+                            $this->_data = array_merge($this->_data, $key);
+                        } else {
+                            $this->_data[$key] = $value;
+                        }
+                    }
+
+                    public function getData($key = null) {
+                        if ($key === null) return $this->_data;
+                        return $this->_data[$key] ?? null;
+                    }
+
+                    public function readInputData() {}
+                    public function validate() { return true; }
+                    public function execute() { return true; }
+                    public function fetch($request, $template = null, $display = false) { return ""; }
+                    public function addCheck($check) { $this->_checks[] = $check; }
+                }
+            ');
+        }
+
+        // Form validators
+        if (!class_exists('PKP\form\validation\FormValidatorPost')) {
+            eval('
+                namespace PKP\form\validation;
+                class FormValidatorPost { public function __construct($form) {} }
+                class FormValidatorCSRF { public function __construct($form) {} }
+                class FormValidator { public function __construct($form, $field = "", $type = "", $msg = "") {} }
+                class FormValidatorCustom { public function __construct($form, $field = "", $type = "", $msg = "", $callback = null) {} }
+            ');
+        }
+
+        // Create namespaced Handler for OJS 3.4+/3.5
+        if (!class_exists('APP\handler\Handler')) {
+            eval('
+                namespace APP\handler;
+                class Handler {
+                    protected $_roleAssignments = [];
+
+                    public function __construct() {}
+
+                    public function addRoleAssignment($roles, $operations) {
+                        foreach ((array)$roles as $role) {
+                            $this->_roleAssignments[$role] = $operations;
+                        }
+                    }
+
+                    public function authorize($request, &$args, $roleAssignments) {
+                        return true;
+                    }
+
+                    public function addPolicy($policy) {}
+                }
+            ');
+        }
+
+        // Create namespaced Role and auth classes for OJS 3.4+/3.5
+        if (!class_exists('PKP\security\Role')) {
+            eval('
+                namespace PKP\security;
+                class Role {
+                    const ROLE_ID_REVIEWER = 0x00001000;
+                    const ROLE_ID_MANAGER = 0x00000010;
+                    const ROLE_ID_SITE_ADMIN = 0x00000001;
+                }
+            ');
+        }
+
+        if (!class_exists('PKP\security\authorization\ContextAccessPolicy')) {
+            eval('
+                namespace PKP\security\authorization;
+                class ContextAccessPolicy {
+                    public function __construct($request, $roleAssignments) {}
+                }
+            ');
+        }
+
+        if (!class_exists('PKP\core\JSONMessage')) {
+            eval('
+                namespace PKP\core;
+                class JSONMessage {
+                    public function __construct($success = true, $content = null) {}
+                    public function getString() { return "{}"; }
+                }
+            ');
+        }
+
+        // Create Core class (legacy - global namespace)
         if (!class_exists('Core')) {
             eval('
                 class Core {

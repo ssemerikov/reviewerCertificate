@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/reviewerCertificate/ReviewerCertificatePlugin.inc.php
+ * @file plugins/generic/reviewerCertificate/ReviewerCertificatePlugin.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
@@ -11,15 +11,21 @@
  * @brief Reviewer Certificate Plugin - Enables reviewers to generate and download personalized PDF certificates
  */
 
-// OJS 3.3 compatibility: GenericPlugin class alias
-if (class_exists('PKP\plugins\GenericPlugin')) {
-    class_alias('PKP\plugins\GenericPlugin', 'ReviewerCertificatePluginBase');
-} else {
-    import('lib.pkp.classes.plugins.GenericPlugin');
-    class_alias('GenericPlugin', 'ReviewerCertificatePluginBase');
+namespace APP\plugins\generic\reviewerCertificate;
+
+use PKP\plugins\GenericPlugin;
+use PKP\db\DAORegistry;
+use PKP\plugins\Hook;
+
+// OJS 3.4+ uses namespaced classes, OJS 3.3 uses legacy import()
+if (!class_exists('PKP\plugins\GenericPlugin')) {
+    // OJS 3.3 fallback
+    if (function_exists('import')) {
+        import('lib.pkp.classes.plugins.GenericPlugin');
+    }
 }
 
-class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
+class ReviewerCertificatePlugin extends GenericPlugin {
 
     /**
      * @copydoc Plugin::register()
@@ -29,14 +35,22 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
 
         if ($success && $this->getEnabled($mainContextId)) {
             // Import and register DAOs
-            require_once($this->getPluginPath() . '/classes/CertificateDAO.inc.php');
-            $certificateDao = new CertificateDAO();
+            require_once($this->getPluginPath() . '/classes/CertificateDAO.php');
+            $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
             DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
-            // Register hooks
-            HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
-            HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
-            HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+            // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3
+            if (class_exists('PKP\plugins\Hook')) {
+                Hook::register('LoadHandler', array($this, 'setupHandler'));
+                Hook::register('TemplateManager::display', array($this, 'addCertificateButton'));
+                // Note: reviewassignmentdao::_updateobject hook removed in OJS 3.5
+                // Auto-email on review completion not supported in OJS 3.5
+                Hook::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+            } else {
+                \HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
+                \HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
+                \HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+            }
         }
 
         return $success;
@@ -132,7 +146,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
                     return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noContext'));
                 }
 
-                require_once($this->getPluginPath() . '/classes/form/CertificateSettingsForm.inc.php');
+                require_once($this->getPluginPath() . '/classes/form/CertificateSettingsForm.php');
                 $form = new CertificateSettingsForm($this, $context->getId());
 
                 if ($request->getUserVar('save')) {
@@ -168,7 +182,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
                     exit;
                 }
 
-                require_once($this->getPluginPath() . '/classes/CertificateGenerator.inc.php');
+                require_once($this->getPluginPath() . '/classes/CertificateGenerator.php');
 
                 // Create a sample certificate for preview
                 $generator = new CertificateGenerator();
@@ -225,7 +239,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
                     error_log('ReviewerCertificate: CertificateDAO not registered');
                     return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.daoNotAvailable'));
                 }
-                require_once($this->getPluginPath() . '/classes/Certificate.inc.php');
+                require_once($this->getPluginPath() . '/classes/Certificate.php');
 
                 $generated = 0;
                 $errors = array();
@@ -386,7 +400,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
         $page = $params[0];
 
         if ($page == 'certificate') {
-            require_once($this->getPluginPath() . '/controllers/CertificateHandler.inc.php');
+            require_once($this->getPluginPath() . '/controllers/CertificateHandler.php');
 
             // Check if handler class file was loaded
             if (!class_exists('CertificateHandler')) {
@@ -616,7 +630,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
             return;
         }
 
-        require_once($this->getPluginPath() . '/classes/Certificate.inc.php');
+        require_once($this->getPluginPath() . '/classes/Certificate.php');
         $certificate = new Certificate();
         $certificate->setReviewerId($reviewAssignment->getReviewerId());
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
@@ -692,7 +706,7 @@ class ReviewerCertificatePlugin extends ReviewerCertificatePluginBase {
      * @return \Illuminate\Database\Migrations\Migration
      */
     public function getInstallMigration() {
-        require_once($this->getPluginPath() . '/classes/migration/ReviewerCertificateInstallMigration.inc.php');
+        require_once($this->getPluginPath() . '/classes/migration/ReviewerCertificateInstallMigration.php');
         return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
     }
 

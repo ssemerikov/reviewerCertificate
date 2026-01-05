@@ -41,16 +41,18 @@ require_once TESTS_DIR . '/TestCase.php';
 // Initialize OJS mocks
 OJSMockLoader::initialize(OJS_VERSION);
 
-// Autoloader for plugin classes
+// Autoloader for plugin classes - supports namespaced classes (v1.1.0+)
 spl_autoload_register(function ($className) {
     // Remove namespace prefix if present
     $className = str_replace('APP\\plugins\\generic\\reviewerCertificate\\', '', $className);
+    $className = str_replace('\\', '/', $className);
 
     // Convert class name to file path
     $possiblePaths = [
-        BASE_SYS_DIR . '/' . $className . '.inc.php',
-        BASE_SYS_DIR . '/classes/' . $className . '.inc.php',
-        BASE_SYS_DIR . '/classes/form/' . $className . '.inc.php',
+        BASE_SYS_DIR . '/' . $className . '.php',
+        BASE_SYS_DIR . '/classes/' . $className . '.php',
+        BASE_SYS_DIR . '/classes/form/' . $className . '.php',
+        BASE_SYS_DIR . '/controllers/' . $className . '.php',
     ];
 
     foreach ($possiblePaths as $path) {

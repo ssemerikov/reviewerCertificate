@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/reviewerCertificate/classes/Certificate.inc.php
+ * @file plugins/generic/reviewerCertificate/classes/Certificate.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
@@ -11,15 +11,19 @@
  * @brief Certificate data model
  */
 
-// OJS 3.3 compatibility: DataObject class alias
-if (class_exists('PKP\core\DataObject')) {
-    class_alias('PKP\core\DataObject', 'CertificateDataObjectBase');
-} else {
-    import('lib.pkp.classes.core.DataObject');
-    class_alias('DataObject', 'CertificateDataObjectBase');
+namespace APP\plugins\generic\reviewerCertificate\classes;
+
+use PKP\core\DataObject;
+use PKP\core\Core;
+
+// OJS 3.3 compatibility fallback
+if (!class_exists('PKP\core\DataObject')) {
+    if (function_exists('import')) {
+        import('lib.pkp.classes.core.DataObject');
+    }
 }
 
-class Certificate extends CertificateDataObjectBase {
+class Certificate extends DataObject {
 
     /**
      * Get certificate ID
@@ -186,12 +190,14 @@ class Certificate extends CertificateDataObjectBase {
      */
     public function incrementDownloadCount() {
         $this->setDownloadCount($this->getDownloadCount() + 1);
-        // OJS 3.3 compatibility
+        // OJS 3.4+/3.3 compatibility
         if (class_exists('PKP\core\Core')) {
-            $this->setLastDownloaded(\PKP\core\Core::getCurrentDate());
-        } else {
-            import('lib.pkp.classes.core.Core');
             $this->setLastDownloaded(Core::getCurrentDate());
+        } elseif (function_exists('import')) {
+            import('lib.pkp.classes.core.Core');
+            $this->setLastDownloaded(\Core::getCurrentDate());
+        } else {
+            $this->setLastDownloaded(date('Y-m-d H:i:s'));
         }
     }
 }

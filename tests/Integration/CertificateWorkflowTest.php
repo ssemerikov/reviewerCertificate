@@ -7,10 +7,15 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.inc.php';
-require_once BASE_SYS_DIR . '/classes/Certificate.inc.php';
-require_once BASE_SYS_DIR . '/classes/CertificateDAO.inc.php';
-require_once BASE_SYS_DIR . '/classes/CertificateGenerator.inc.php';
+require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.php';
+require_once BASE_SYS_DIR . '/classes/Certificate.php';
+require_once BASE_SYS_DIR . '/classes/CertificateDAO.php';
+require_once BASE_SYS_DIR . '/classes/CertificateGenerator.php';
+
+use APP\plugins\generic\reviewerCertificate\ReviewerCertificatePlugin;
+use APP\plugins\generic\reviewerCertificate\classes\Certificate;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateDAO;
+use APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator;
 
 class CertificateWorkflowTest extends TestCase
 {

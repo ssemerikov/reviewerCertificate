@@ -7,8 +7,11 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.inc.php';
-require_once BASE_SYS_DIR . '/classes/Certificate.inc.php';
+require_once BASE_SYS_DIR . '/ReviewerCertificatePlugin.php';
+require_once BASE_SYS_DIR . '/classes/Certificate.php';
+
+use APP\plugins\generic\reviewerCertificate\ReviewerCertificatePlugin;
+use APP\plugins\generic\reviewerCertificate\classes\Certificate;
 
 class SecurityTest extends TestCase
 {

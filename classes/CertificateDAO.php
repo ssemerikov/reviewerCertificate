@@ -1,6 +1,6 @@
 <?php
 /**
- * @file plugins/generic/reviewerCertificate/classes/CertificateDAO.inc.php
+ * @file plugins/generic/reviewerCertificate/classes/CertificateDAO.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
@@ -11,17 +11,21 @@
  * @brief Operations for retrieving and modifying Certificate objects
  */
 
-require_once(dirname(__FILE__) . '/Certificate.inc.php');
+namespace APP\plugins\generic\reviewerCertificate\classes;
 
-// OJS 3.3 compatibility: DAO class alias
-if (class_exists('PKP\db\DAO')) {
-    class_alias('PKP\db\DAO', 'CertificateDAOBase');
-} else {
-    import('lib.pkp.classes.db.DAO');
-    class_alias('DAO', 'CertificateDAOBase');
+use PKP\db\DAO;
+use PKP\db\DAOResultFactory;
+
+require_once(dirname(__FILE__) . '/Certificate.php');
+
+// OJS 3.3 compatibility fallback
+if (!class_exists('PKP\db\DAO')) {
+    if (function_exists('import')) {
+        import('lib.pkp.classes.db.DAO');
+    }
 }
 
-class CertificateDAO extends CertificateDAOBase {
+class CertificateDAO extends DAO {
 
     /**
      * Retrieve a certificate by certificate ID
@@ -86,13 +90,14 @@ class CertificateDAO extends CertificateDAOBase {
         $sql .= ' ORDER BY date_issued DESC';
 
         $result = $this->retrieve($sql, $params);
-        // OJS 3.3 compatibility
+        // OJS 3.4+/3.3 compatibility
         if (class_exists('PKP\db\DAOResultFactory')) {
-            return new \PKP\db\DAOResultFactory($result, $this, '_fromRow');
-        } else {
-            import('lib.pkp.classes.db.DAOResultFactory');
             return new DAOResultFactory($result, $this, '_fromRow');
+        } elseif (function_exists('import')) {
+            import('lib.pkp.classes.db.DAOResultFactory');
+            return new \DAOResultFactory($result, $this, '_fromRow');
         }
+        return null;
     }
 
     /**
@@ -106,13 +111,14 @@ class CertificateDAO extends CertificateDAOBase {
             array((int) $contextId)
         );
 
-        // OJS 3.3 compatibility
+        // OJS 3.4+/3.3 compatibility
         if (class_exists('PKP\db\DAOResultFactory')) {
-            return new \PKP\db\DAOResultFactory($result, $this, '_fromRow');
-        } else {
-            import('lib.pkp.classes.db.DAOResultFactory');
             return new DAOResultFactory($result, $this, '_fromRow');
+        } elseif (function_exists('import')) {
+            import('lib.pkp.classes.db.DAOResultFactory');
+            return new \DAOResultFactory($result, $this, '_fromRow');
         }
+        return null;
     }
 
     /**
