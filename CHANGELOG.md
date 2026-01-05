@@ -5,6 +5,26 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.8] - 2026-01-05
+
+### Fixed
+- **Critical: OJS 3.5 getLocalizedTitle() Error** - Fixed HTTP 500 error when downloading certificates
+  - **Issue**: `Call to undefined method APP\submission\Submission::getLocalizedTitle()`
+  - **Root Cause**: OJS 3.5 removed `getLocalizedTitle()` from Submission class; must use Publication object
+  - **Solution**: Added 5 helper methods with `method_exists()` checks and fallback logic
+  - **Files Modified**: `classes/CertificateGenerator.inc.php`
+  - **Reported by**: @drugurkocak (GitHub Issue #57)
+
+### Technical Details
+- **New Helper Methods**:
+  - `getSubmissionTitle()` - Uses `getCurrentPublication()->getLocalizedTitle()` for OJS 3.5
+  - `getReviewerGivenName()` / `getReviewerFamilyName()` - User name retrieval with fallbacks
+  - `getContextName()` / `getContextAcronym()` - Journal info retrieval with fallbacks
+- **Backward Compatible**: Works correctly in OJS 3.3, 3.4, and 3.5
+- **No database changes** - Safe upgrade with no migration required
+
+---
+
 ## [1.0.7] - 2025-01-04
 
 ### Fixed

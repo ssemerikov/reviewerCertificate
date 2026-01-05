@@ -139,7 +139,7 @@ class CertificateGenerator {
 
         // Set document information
         $pdf->SetCreator('OJS Reviewer Certificate Plugin');
-        $pdf->SetAuthor($this->context->getLocalizedName());
+        $pdf->SetAuthor($this->getContextName($this->context));
         $pdf->SetTitle(__('plugins.generic.reviewerCertificate.certificateTitle'));
         $pdf->SetSubject(__('plugins.generic.reviewerCertificate.certificateSubject'));
 
@@ -340,8 +340,8 @@ class CertificateGenerator {
             $variables['dateIssued'] = date('F j, Y');
 
             if ($this->context) {
-                $variables['journalName'] = $this->context->getLocalizedName();
-                $variables['journalAcronym'] = $this->context->getLocalizedData('acronym');
+                $variables['journalName'] = $this->getContextName($this->context);
+                $variables['journalAcronym'] = $this->getContextAcronym($this->context);
             } else {
                 $variables['journalName'] = 'Sample Journal Name';
                 $variables['journalAcronym'] = 'SJN';
@@ -350,22 +350,22 @@ class CertificateGenerator {
             // Use real data
             // Reviewer information
             if ($this->reviewer) {
-                // OJS 3.4 compatibility: Use localized methods or pass null for default locale
+                // OJS 3.5 compatibility: Use helper methods with fallbacks
                 $variables['reviewerName'] = $this->reviewer->getFullName();
-                $variables['reviewerFirstName'] = $this->reviewer->getLocalizedGivenName();
-                $variables['reviewerLastName'] = $this->reviewer->getLocalizedFamilyName();
+                $variables['reviewerFirstName'] = $this->getReviewerGivenName($this->reviewer);
+                $variables['reviewerLastName'] = $this->getReviewerFamilyName($this->reviewer);
             }
 
-            // Submission information
+            // Submission information - OJS 3.5 compatibility
             if ($this->submission) {
-                $variables['submissionTitle'] = $this->submission->getLocalizedTitle();
+                $variables['submissionTitle'] = $this->getSubmissionTitle($this->submission);
                 $variables['submissionId'] = $this->submission->getId();
             }
 
             // Context information
             if ($this->context) {
-                $variables['journalName'] = $this->context->getLocalizedName();
-                $variables['journalAcronym'] = $this->context->getLocalizedData('acronym');
+                $variables['journalName'] = $this->getContextName($this->context);
+                $variables['journalAcronym'] = $this->getContextAcronym($this->context);
             }
 
             // Review information
@@ -426,5 +426,120 @@ class CertificateGenerator {
                '{{$journalName}}' . "\n\n" .
                'Review completed on {{$reviewDate}}' . "\n\n" .
                'Manuscript: {{$submissionTitle}}';
+    }
+
+    /**
+     * Get submission title with OJS version compatibility
+     * OJS 3.5 removed getLocalizedTitle() from Submission - must use Publication
+     * @param $submission Submission
+     * @return string
+     */
+    private function getSubmissionTitle($submission) {
+        if (!$submission) {
+            return '';
+        }
+
+        // OJS 3.5+: Use getCurrentPublication()->getLocalizedTitle()
+        if (method_exists($submission, 'getCurrentPublication')) {
+            $publication = $submission->getCurrentPublication();
+            if ($publication) {
+                if (method_exists($publication, 'getLocalizedTitle')) {
+                    return $publication->getLocalizedTitle();
+                }
+                if (method_exists($publication, 'getLocalizedFullTitle')) {
+                    return $publication->getLocalizedFullTitle();
+                }
+            }
+        }
+
+        // OJS 3.3/3.4: Direct method on Submission
+        if (method_exists($submission, 'getLocalizedTitle')) {
+            return $submission->getLocalizedTitle();
+        }
+
+        return '';
+    }
+
+    /**
+     * Get reviewer given name with OJS version compatibility
+     * @param $user User
+     * @return string
+     */
+    private function getReviewerGivenName($user) {
+        if (!$user) {
+            return '';
+        }
+
+        if (method_exists($user, 'getLocalizedGivenName')) {
+            return $user->getLocalizedGivenName();
+        }
+        if (method_exists($user, 'getGivenName')) {
+            return $user->getGivenName(null);
+        }
+
+        return '';
+    }
+
+    /**
+     * Get reviewer family name with OJS version compatibility
+     * @param $user User
+     * @return string
+     */
+    private function getReviewerFamilyName($user) {
+        if (!$user) {
+            return '';
+        }
+
+        if (method_exists($user, 'getLocalizedFamilyName')) {
+            return $user->getLocalizedFamilyName();
+        }
+        if (method_exists($user, 'getFamilyName')) {
+            return $user->getFamilyName(null);
+        }
+
+        return '';
+    }
+
+    /**
+     * Get context (journal) name with OJS version compatibility
+     * @param $context Context
+     * @return string
+     */
+    private function getContextName($context) {
+        if (!$context) {
+            return '';
+        }
+
+        if (method_exists($context, 'getLocalizedName')) {
+            return $context->getLocalizedName();
+        }
+        if (method_exists($context, 'getName')) {
+            return $context->getName(null);
+        }
+
+        return '';
+    }
+
+    /**
+     * Get context (journal) acronym with OJS version compatibility
+     * @param $context Context
+     * @return string
+     */
+    private function getContextAcronym($context) {
+        if (!$context) {
+            return '';
+        }
+
+        if (method_exists($context, 'getLocalizedData')) {
+            $acronym = $context->getLocalizedData('acronym');
+            if ($acronym) {
+                return $acronym;
+            }
+        }
+        if (method_exists($context, 'getAcronym')) {
+            return $context->getAcronym(null) ?: '';
+        }
+
+        return '';
     }
 }
