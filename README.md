@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.0.7** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.1.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.0.7)**: Fixed critical OJS 3.5 URL parameter type error that prevented certificate button from appearing (Issue #57). See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.1.0)**: Full OJS 3.5 compatibility update with PSR-4 namespaces, renamed `.inc.php` to `.php` files, and replaced deprecated functions. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -22,7 +22,7 @@ This plugin was developed with the assistance of **Claude Code (Sonnet 4.5)**, a
 - **Implementation**: Writing PHP classes, controllers, and data access objects
 - **OJS Integration**: Ensuring compatibility with OJS 3.3.x, 3.4.x, and 3.5.x APIs
 - **Database Design**: Creating the migration system and schema with automatic fallback for legacy versions
-- **Testing & Debugging**: Comprehensive test suite with 120 tests across all OJS versions
+- **Testing & Debugging**: Comprehensive test suite with 121 tests across all OJS versions
 - **Documentation**: Creating comprehensive user and technical documentation
 - **Code Review**: Analyzing code quality and identifying potential improvements
 
@@ -346,7 +346,7 @@ Modify the appearance using the settings form:
 
 For developers who want to customize further:
 
-1. **Modify CertificateGenerator.inc.php**: Customize PDF generation logic
+1. **Modify CertificateGenerator.php**: Customize PDF generation logic
 2. **Edit certificate.css**: Change button and interface styling
 3. **Update certificate.js**: Add custom JavaScript functionality
 4. **Extend locale files**: Add translations for additional languages
@@ -458,6 +458,17 @@ For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
 
+**Version 1.1.0** (2026-01-05)
+- **BREAKING**: Full OJS 3.5 compatibility update with PSR-4 namespaces
+- **Changed**: Renamed all `.inc.php` files to `.php` (OJS 3.5 requirement)
+- **Changed**: Added proper PHP namespaces to all plugin classes
+- **Changed**: Replaced deprecated `import()` calls with `use` statements
+- **Changed**: Replaced removed `fatalError()` calls with PHP exceptions
+- **Fixed**: OJS 3.5 handler registration using direct assignment pattern
+- **Fixed**: URL path parameter type errors (must be arrays in OJS 3.5)
+- Fully backward compatible with OJS 3.3 and 3.4
+- Resolves all OJS 3.5 compatibility issues (Issue #57)
+
 **Version 1.0.7** (2025-01-04)
 - **Fixed**: Critical OJS 3.5 URL parameter type error preventing certificate button display
 - **Fixed**: Critical OJS 3.5 handler registration error (`HANDLER_CLASS` no longer supported)
@@ -515,7 +526,7 @@ For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 - QR code verification
 - Multi-language support
 - Batch generation capability
-- Full test suite (120 tests)
+- Full test suite (121 tests)
 
 ## Credits
 

@@ -307,7 +307,7 @@ This release addresses the critical installation issue reported by Dr. UÄŸur KoÃ
 - **Documentation**: Extensively updated README.md and added INSTALL.md
   - Requirements section now lists all three supported OJS versions
   - Added version compatibility table
-  - Updated development section mentioning comprehensive testing (120 tests)
+  - Updated development section mentioning comprehensive testing (121 tests)
   - Added PHP version recommendations (8.0+ for OJS 3.5)
 
 ### Technical Details
@@ -316,7 +316,7 @@ This release addresses the critical installation issue reported by Dr. UÄŸur KoÃ
   - `292064a` - Fix AJAX "invalid JSON" error in Settings form
   - `ed656a6` - Add automatic OJS 3.3 fallback to database migration
   - `5322a75` - Declare official OJS 3.5 compatibility in plugin metadata
-- **Testing**: All existing 120 tests passing across OJS 3.3, 3.4, 3.5
+- **Testing**: All existing 121 tests passing across OJS 3.3, 3.4, 3.5
 - **PHP Compatibility**: Tested on PHP 7.3, 7.4, 8.0, 8.1, 8.2
 
 ### Community Feedback Addressed
@@ -340,7 +340,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 - Batch certificate generation
 - Multi-language support
 - Full compatibility with OJS 3.3 and 3.4
-- Comprehensive test suite (120 tests)
+- Comprehensive test suite (121 tests)
 - GitHub Actions CI/CD pipeline
 - Bundled TCPDF library (v6.10.0)
 
@@ -359,6 +359,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.1.0 | 2026-01-05 | Minor | Full OJS 3.5 compatibility - PSR-4 namespaces, .php extensions |
 | 1.0.7 | 2025-01-04 | Patch | Fixed OJS 3.5 URL parameter type error (Issue #57) |
 | 1.0.6 | 2025-01-04 | Minor | Added 12 new languages (zh_CN, ar_AR, ja_JP, ko_KR, fa_IR, el_GR, he_IL, hu_HU, lt_LT, sk_SK, sl_SI, bg_BG) |
 | 1.0.5 | 2025-01-03 | Patch | Date format fix (PHP 8.1+), memory issue fix |
@@ -371,6 +372,15 @@ This release addresses multiple issues reported on PKP Community Forum:
 ---
 
 ## Upgrade Notes
+
+### From 1.0.7 to 1.1.0
+- **File renames**: All `.inc.php` files renamed to `.php` (OJS 3.5 requirement)
+- **Namespaces added**: All classes now use PSR-4 namespaces
+- **No database changes** - Safe upgrade with no migration required
+- **No configuration changes** - All existing settings preserved
+- **Backward compatible**: Works correctly in OJS 3.3, 3.4, and 3.5
+- **Recommended**: Delete old `.inc.php` files after upgrade to avoid conflicts
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.0.6 to 1.0.7
 - **No database changes** - Safe to upgrade without data migration

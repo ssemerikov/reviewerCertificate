@@ -42,22 +42,22 @@ find . -name "*.php" -not -path "./vendor/*" -not -path "./lib/*" -exec php -l {
 ### Plugin Structure
 
 ```
-ReviewerCertificatePlugin.inc.php  # Main plugin entry point
+ReviewerCertificatePlugin.php  # Main plugin entry point (namespace: APP\plugins\generic\reviewerCertificate)
   ├── Registers hooks: LoadHandler, TemplateManager::display, reviewassignmentdao::_updateobject
   ├── Manages settings via AJAX modal
   └── Handles batch certificate generation
 
 controllers/
-  └── CertificateHandler.inc.php   # HTTP request handler
+  └── CertificateHandler.php   # HTTP request handler (namespace: APP\plugins\generic\reviewerCertificate\controllers)
       ├── download($reviewId)      # Download certificate PDF (requires reviewer role)
       ├── verify($code)            # Public certificate verification
       └── generateBatch()          # Batch generation (requires manager role)
 
 classes/
-  ├── Certificate.inc.php          # Data object (certificate record)
-  ├── CertificateDAO.inc.php       # Database operations (extends PKP\db\DAO)
-  ├── CertificateGenerator.inc.php # PDF generation using TCPDF
-  └── form/CertificateSettingsForm.inc.php  # Settings form
+  ├── Certificate.php          # Data object (namespace: APP\plugins\generic\reviewerCertificate\classes)
+  ├── CertificateDAO.php       # Database operations (extends PKP\db\DAO)
+  ├── CertificateGenerator.php # PDF generation using TCPDF
+  └── form/CertificateSettingsForm.php  # Settings form (namespace: APP\plugins\generic\reviewerCertificate\classes\form)
 ```
 
 ### Key Design Decisions
@@ -97,7 +97,7 @@ Test structure:
 
 ## Localization
 
-20 languages in `locale/` directory with dual format support:
+32 languages in `locale/` directory with dual format support:
 - `.xml` files for OJS 3.3/3.4
 - `.po` files for OJS 3.5+ (required for translations to work)
 
