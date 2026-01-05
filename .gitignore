@@ -1,6 +1,27 @@
 /vendor/
 composer.lock
+composer.phar
 .phpunit.result.cache
 /tests/logs/
 /tests/coverage/
 /tests/tmp/
+
+# Release artifacts
+*.tar.gz
+
+# Development/debug scripts (not needed for production)
+BATCH_GENERATE_*.php
+CHECK_DATABASE_LOCKS.php
+CLEAR_CACHE.php
+debug_config.php
+FORCE_RELOAD_OPCACHE.php
+QUERY_CERTIFICATES.php
+TEST_DIRECT_INSERT.php
+
+# Development documentation
+CODE_ANALYSIS_REPORT.md
+OJS_3.4_COMPATIBILITY.md
+OJS_3.5_REVIEWER_DASHBOARD_INVESTIGATION.md
+RELEASE_NOTES*.md
+REVIEWER_WORKFLOW.md
+.github-release-notes.md
