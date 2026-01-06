@@ -19,11 +19,19 @@ use PKP\form\validation\FormValidatorCSRF;
 use PKP\form\validation\FormValidator;
 use PKP\form\validation\FormValidatorCustom;
 use PKP\db\DAORegistry;
+use PKP\core\Core;
+use APP\core\Application;
+use APP\template\TemplateManager;
+use Exception;
 
 // OJS 3.3 compatibility fallback
 if (!class_exists('PKP\form\Form')) {
     if (function_exists('import')) {
         import('lib.pkp.classes.form.Form');
+        // Create alias so the namespace reference works
+        if (class_exists('Form', false)) {
+            class_alias('Form', 'PKP\form\Form');
+        }
     }
 }
 
@@ -173,9 +181,9 @@ class CertificateSettingsForm extends Form {
 
         // Create upload directory if it doesn't exist - OJS 3.3 compatibility
         if (class_exists('PKP\core\Core')) {
-            $baseDir = \PKP\core\Core::getBaseDir();
-        } else {
             $baseDir = Core::getBaseDir();
+        } else {
+            $baseDir = \Core::getBaseDir();
         }
         $uploadDir = $baseDir . '/files/journals/' . $context->getId() . '/reviewerCertificate';
         error_log('ReviewerCertificate: Upload directory: ' . $uploadDir);

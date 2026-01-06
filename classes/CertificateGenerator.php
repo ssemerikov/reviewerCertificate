@@ -16,6 +16,8 @@ namespace APP\plugins\generic\reviewerCertificate\classes;
 use PKP\core\Core;
 use PKP\db\DAORegistry;
 use APP\facades\Repo;
+use APP\core\Application;
+use Exception;
 
 // OJS 3.4+/3.3 compatibility: Get base directory
 if (class_exists('PKP\core\Core')) {
@@ -140,8 +142,8 @@ class CertificateGenerator {
      * @return string PDF content
      */
     public function generatePDF() {
-        // Create new PDF document
-        $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        // Create new PDF document (TCPDF is in global namespace)
+        $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // Set document information
         $pdf->SetCreator('OJS Reviewer Certificate Plugin');

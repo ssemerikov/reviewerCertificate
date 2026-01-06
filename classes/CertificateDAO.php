@@ -22,6 +22,10 @@ require_once(dirname(__FILE__) . '/Certificate.php');
 if (!class_exists('PKP\db\DAO')) {
     if (function_exists('import')) {
         import('lib.pkp.classes.db.DAO');
+        // Create alias so the namespace reference works
+        if (class_exists('DAO', false)) {
+            class_alias('DAO', 'PKP\db\DAO');
+        }
     }
 }
 

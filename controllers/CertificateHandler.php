@@ -14,16 +14,23 @@
 namespace APP\plugins\generic\reviewerCertificate\controllers;
 
 use APP\handler\Handler;
+use APP\core\Application;
 use PKP\security\Role;
 use PKP\security\authorization\ContextAccessPolicy;
 use PKP\db\DAORegistry;
 use PKP\core\JSONMessage;
+use PKP\plugins\PluginRegistry;
+use APP\template\TemplateManager;
 use Exception;
 
 // OJS 3.3 compatibility: Handler class alias
 if (!class_exists('APP\handler\Handler')) {
     if (function_exists('import')) {
         import('classes.handler.Handler');
+        // Create alias so the namespace reference works
+        if (class_exists('Handler', false)) {
+            class_alias('Handler', 'APP\handler\Handler');
+        }
     }
 }
 
@@ -97,7 +104,12 @@ class CertificateHandler extends Handler {
      */
     private function getPlugin() {
         if (!$this->plugin) {
-            $this->plugin = PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
+            // OJS 3.4+/3.3 compatibility
+            if (class_exists('PKP\plugins\PluginRegistry')) {
+                $this->plugin = PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
+            } else {
+                $this->plugin = \PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
+            }
         }
         return $this->plugin;
     }
@@ -160,7 +172,7 @@ class CertificateHandler extends Handler {
         if (!$certificate) {
             // Create certificate if it doesn't exist
             require_once(dirname(__FILE__) . '/../classes/Certificate.php');
-            $certificate = new Certificate();
+            $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
             $certificate->setReviewerId($reviewAssignment->getReviewerId());
             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
             $certificate->setReviewId($reviewId);
@@ -219,7 +231,12 @@ class CertificateHandler extends Handler {
                     $reviewer = $userDao->getById($certificate->getReviewerId());
                 }
 
-                $contextDao = Application::getContextDAO();
+                // OJS 3.4+/3.3 compatibility
+                if (class_exists('APP\core\Application')) {
+                    $contextDao = Application::getContextDAO();
+                } else {
+                    $contextDao = \Application::getContextDAO();
+                }
                 $context = $contextDao->getById($certificate->getContextId());
 
                 // Assign valid certificate data to template
@@ -267,7 +284,7 @@ class CertificateHandler extends Handler {
         // Load generator
         $plugin = $this->getPlugin();
         require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.php');
-        $generator = new CertificateGenerator();
+        $generator = new \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator();
 
         // Set up generator
         $generator->setReviewAssignment($reviewAssignment);
@@ -299,16 +316,16 @@ class CertificateHandler extends Handler {
     private function generatePreviewPDF($context) {
         $plugin = $this->getPlugin();
         require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.php');
-        $generator = new CertificateGenerator();
+        $generator = new \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator();
 
         // Create mock objects for preview
-        $mockReviewAssignment = new stdClass();
+        $mockReviewAssignment = new \stdClass();
         $mockReviewAssignment->dateCompleted = date('Y-m-d H:i:s');
 
-        $mockReviewer = new stdClass();
+        $mockReviewer = new \stdClass();
         $mockReviewer->fullName = 'Dr. Jane Smith';
 
-        $mockSubmission = new stdClass();
+        $mockSubmission = new \stdClass();
         $mockSubmission->title = 'Sample Article Title: A Comprehensive Study';
 
         // Note: This is a simplified preview. In production, you'd want to create proper mock objects
@@ -430,7 +447,7 @@ class CertificateHandler extends Handler {
                         if (!$existing) {
                             // Create certificate
                             require_once(dirname(__FILE__) . '/../classes/Certificate.php');
-                            $certificate = new Certificate();
+                            $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
                             $certificate->setReviewerId($reviewerId);
                             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
                             $certificate->setReviewId($reviewAssignment->getId());
@@ -439,7 +456,7 @@ class CertificateHandler extends Handler {
                             if (class_exists('PKP\core\Core')) {
                                 $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
                             } else {
-                                $certificate->setDateIssued(Core::getCurrentDate());
+                                $certificate->setDateIssued(\Core::getCurrentDate());
                             }
                             $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
@@ -470,7 +487,7 @@ class CertificateHandler extends Handler {
             return new \PKP\core\JSONMessage($status, $content);
         } else {
             import('lib.pkp.classes.core.JSONMessage');
-            return new JSONMessage($status, $content);
+            return new \JSONMessage($status, $content);
         }
     }
 }

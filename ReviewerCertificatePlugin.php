@@ -16,18 +16,21 @@ namespace APP\plugins\generic\reviewerCertificate;
 use PKP\plugins\GenericPlugin;
 use PKP\db\DAORegistry;
 use PKP\plugins\Hook;
+use PKP\config\Config;
 use APP\core\Application;
-use APP\plugins\generic\reviewerCertificate\classes\Certificate;
-use APP\plugins\generic\reviewerCertificate\classes\CertificateDAO;
-use APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator;
-use APP\plugins\generic\reviewerCertificate\classes\form\CertificateSettingsForm;
-use APP\plugins\generic\reviewerCertificate\controllers\CertificateHandler;
+use APP\template\TemplateManager;
+use Exception;
+use Throwable;
 
 // OJS 3.4+ uses namespaced classes, OJS 3.3 uses legacy import()
 if (!class_exists('PKP\plugins\GenericPlugin')) {
     // OJS 3.3 fallback
     if (function_exists('import')) {
         import('lib.pkp.classes.plugins.GenericPlugin');
+        // Create alias so the namespace reference works
+        if (class_exists('GenericPlugin', false)) {
+            class_alias('GenericPlugin', 'PKP\plugins\GenericPlugin');
+        }
     }
 }
 
@@ -42,7 +45,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         if ($success && $this->getEnabled($mainContextId)) {
             // Import and register DAOs
             require_once($this->getPluginPath() . '/classes/CertificateDAO.php');
-            $certificateDao = new CertificateDAO();
+            $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
             DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
             // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3
@@ -119,9 +122,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         } else {
             import('lib.pkp.classes.linkAction.LinkAction');
             import('lib.pkp.classes.linkAction.request.AjaxModal');
-            $linkAction = new LinkAction(
+            $linkAction = new \LinkAction(
                 'settings',
-                new AjaxModal(
+                new \AjaxModal(
                     $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
                     $this->getDisplayName()
                 ),
@@ -153,7 +156,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 }
 
                 require_once($this->getPluginPath() . '/classes/form/CertificateSettingsForm.php');
-                $form = new CertificateSettingsForm($this, $context->getId());
+                $form = new \APP\plugins\generic\reviewerCertificate\classes\form\CertificateSettingsForm($this, $context->getId());
 
                 if ($request->getUserVar('save')) {
                     $form->readInputData();
@@ -191,7 +194,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 require_once($this->getPluginPath() . '/classes/CertificateGenerator.php');
 
                 // Create a sample certificate for preview
-                $generator = new CertificateGenerator();
+                $generator = new \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator();
 
                 // Get current settings
                 $templateSettings = array(
@@ -285,7 +288,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 }
 
                                 // Create certificate
-                                $certificate = new Certificate();
+                                $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
                                 $certificate->setReviewerId($row->reviewer_id);
                                 $certificate->setSubmissionId($row->submission_id);
                                 $certificate->setReviewId($row->review_id);
@@ -304,7 +307,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                     $dbPass = Config::getVar('database', 'password');
                                     $dbName = Config::getVar('database', 'name');
 
-                                    $dbConn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+                                    $dbConn = new \mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
                                     if ($dbConn->connect_error) {
                                         throw new Exception("Connection failed: " . $dbConn->connect_error);
@@ -408,8 +411,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         if ($page == 'certificate') {
             require_once($this->getPluginPath() . '/controllers/CertificateHandler.php');
 
-            // Check if handler class file was loaded
-            if (!class_exists('CertificateHandler')) {
+            // Check if handler class file was loaded (use FQN for namespaced class)
+            $handlerClass = 'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler';
+            if (!class_exists($handlerClass)) {
                 error_log('ReviewerCertificate: ERROR - CertificateHandler class not found after import!');
                 return false;
             }
@@ -421,7 +425,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 // OJS 3.5+ pattern: assign handler via reference (per PKP Plugin Guide)
                 // Must use =& to get reference, then assign to modify original
                 $handler =& $params[3];
-                $handler = new CertificateHandler();
+                $handler = new \APP\plugins\generic\reviewerCertificate\controllers\CertificateHandler();
                 $handler->setPlugin($this);
             } else {
                 // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant
@@ -637,7 +641,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
 
         require_once($this->getPluginPath() . '/classes/Certificate.php');
-        $certificate = new Certificate();
+        $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
         $certificate->setReviewerId($reviewAssignment->getReviewerId());
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
         $certificate->setReviewId($reviewAssignment->getId());
@@ -673,7 +677,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $mail = new \PKP\mail\MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
         } else {
             import('lib.pkp.classes.mail.MailTemplate');
-            $mail = new MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
+            $mail = new \MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
         }
 
         $mail->setReplyTo($context->getData('contactEmail'), $context->getData('contactName'));
