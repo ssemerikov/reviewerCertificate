@@ -458,6 +458,13 @@ For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
 
+**Version 1.1.2** (2026-01-06)
+- **Fixed**: Critical OJS 3.4 backward compatibility issues after v1.1.1
+- **Fixed**: Missing `class_alias()` calls for OJS 3.3 fallback patterns
+- **Fixed**: Unqualified global PHP class references (`mysqli`, `stdClass`, `TCPDF`, etc.)
+- **Fixed**: Missing `use` statements for OJS core classes
+- Fully tested on OJS 3.3, 3.4, and 3.5
+
 **Version 1.1.1** (2026-01-05)
 - **Fixed**: Critical `_getInsertId()` error in OJS 3.5 - certificates now generate correctly
 - **Fixed**: Missing `use` statements causing class loading errors (Application, CertificateSettingsForm)
@@ -534,6 +541,17 @@ For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 - Batch generation capability
 - Full test suite (121 tests)
 
+## Acknowledgments
+
+We extend our sincere gratitude to the following contributors who helped improve this plugin:
+
+- **Dr. Uğur Koçak** ([@drugurkocak](https://github.com/drugurkocak)) - For extensive testing across OJS 3.5 and detailed bug reports that led to fixes in versions 1.0.7, 1.0.8, 1.1.0, 1.1.1, and 1.1.2. Your dedication to thorough testing was invaluable.
+- **Pedro Felipe Rocha** - For Brazilian Portuguese translation and feedback on OJS 3.5 locale requirements
+- **Olha P. Pinchuk** - For reporting date format and memory issues fixed in v1.0.5
+- **Dr. Pavlo Nechypurenko** - For reporting the font size configuration issue fixed in v1.0.3
+
+Thank you to everyone in the PKP Community Forum who provided feedback and helped test the plugin!
+
 ## Credits
 
 **Author**: Serhiy O. Semerikov (Academy of Cognitive and Natural Sciences)
@@ -541,7 +559,7 @@ For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 Developed for the Open Journal Systems community to support and recognize peer reviewers' contributions to scholarly publishing.
 
-**Development Tools**: Built with Claude Code (Sonnet 4.5) by Anthropic
+**Development Tools**: Built with Claude Code (Opus 4.5) by Anthropic
 
 ## Additional Resources
 
