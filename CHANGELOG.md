@@ -5,6 +5,47 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.2] - 2026-01-06
+
+### Fixed - OJS 3.4 Backward Compatibility
+
+After v1.1.1, OJS 3.4 installations were broken due to PHP namespace issues introduced during the OJS 3.5 compatibility update.
+
+- **Critical: Missing `class_alias()` Calls** - Fixed class inheritance errors in OJS 3.3/3.4
+  - **Issue**: `Class "APP\plugins\generic\reviewerCertificate\mysqli" not found`
+  - **Issue**: `CertificateHandler class not found after import!`
+  - **Root Cause**: When `import()` loads classes in OJS 3.3, they go to global namespace, but `extends ClassName` looked for namespaced classes via `use` statements
+  - **Solution**: Added `class_alias()` calls to map global classes to their namespaced equivalents after `import()`
+  - **Files Modified**: All core plugin files
+
+- **Critical: Unqualified Global Class References** - Fixed PHP global classes not found
+  - **Issue**: PHP looked for classes like `mysqli`, `stdClass`, `TCPDF` in plugin namespace
+  - **Solution**: Added `\` prefix to all global PHP classes (`\mysqli`, `\stdClass`, `\TCPDF`, `\Exception`, `\Throwable`)
+  - **Files Modified**: `ReviewerCertificatePlugin.php`, `CertificateHandler.php`, `CertificateGenerator.php`
+
+- **Critical: Missing Use Statements** - Fixed OJS core classes not found
+  - **Issue**: Classes like `Application`, `PluginRegistry`, `Config`, `Core` not found
+  - **Solution**: Added proper `use` statements for all OJS core classes
+  - **Files Modified**: All core plugin files
+
+- **Fixed: Incorrect `class_exists()` Check** - Handler loading check used unqualified class name
+  - **Issue**: `class_exists('CertificateHandler')` instead of FQN
+  - **Solution**: Use FQN string `'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler'`
+  - **File Modified**: `ReviewerCertificatePlugin.php`
+
+### Technical Details
+- **Class Alias Pattern**: For each OJS 3.3 fallback, added:
+  ```php
+  if (class_exists('GlobalClass', false)) {
+      class_alias('GlobalClass', 'Namespaced\\GlobalClass');
+  }
+  ```
+- **Backward Compatible**: Works correctly in OJS 3.3, 3.4, and 3.5
+- **No database changes** - Safe upgrade with no migration required
+- **All 121 tests passing**
+
+---
+
 ## [1.1.1] - 2026-01-05
 
 ### Fixed - Critical OJS 3.5 Bugs
@@ -387,6 +428,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.1.2 | 2026-01-06 | Patch | Fixed OJS 3.4 backward compatibility - class_alias(), global class FQN |
 | 1.1.1 | 2026-01-05 | Patch | Fixed _getInsertId(), missing use statements, tarball structure (Issue #57) |
 | 1.1.0 | 2026-01-05 | Minor | Full OJS 3.5 compatibility - PSR-4 namespaces, .php extensions |
 | 1.0.7 | 2025-01-04 | Patch | Fixed OJS 3.5 URL parameter type error (Issue #57) |
@@ -401,6 +443,12 @@ This release addresses multiple issues reported on PKP Community Forum:
 ---
 
 ## Upgrade Notes
+
+### From 1.1.1 to 1.1.2
+- **Critical bug fixes** for OJS 3.4 backward compatibility
+- **No database changes** - Safe upgrade with no migration required
+- **No configuration changes** - All existing settings preserved
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
 
 ### From 1.1.0 to 1.1.1
 - **Critical bug fixes** for OJS 3.5 compatibility
