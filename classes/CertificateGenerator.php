@@ -214,7 +214,7 @@ class CertificateGenerator {
      */
     private function applyTemplateSettings($pdf) {
         // Set font
-        $fontFamily = $this->getTemplateSetting('fontFamily', 'helvetica');
+        $fontFamily = $this->getTemplateSetting('fontFamily', 'dejavusans');
         $fontSize = $this->getTemplateSetting('fontSize', 12);
         $pdf->SetFont($fontFamily, '', $fontSize);
 

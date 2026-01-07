@@ -5,6 +5,26 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.3] - 2026-01-07
+
+### Fixed - Turkish/Unicode Character Support (Issue #61)
+
+- **Fixed: Turkish characters (Ş, Ç, Ğ, İ, Ö) displaying as question marks in PDF certificates**
+  - **Issue**: Special characters from Turkish and other non-Latin scripts appeared as `?` in generated PDFs
+  - **Root Cause**: Default font `helvetica` is a core PDF font using WinAnsiEncoding (ISO-8859-1), which only supports ~256 characters and excludes Turkish-specific characters
+  - **Solution**: Changed default font from `helvetica` to `dejavusans` - a TrueTypeUnicode font with full UTF-8 support
+  - **Files Modified**: `CertificateGenerator.php`, `CertificateSettingsForm.php`
+  - **Reported by**: @drugurkocak (Dr. Uğur Koçak)
+
+### Technical Details
+- **DejaVu Sans** supports Turkish, Arabic, Greek, Cyrillic, and many other scripts
+- Existing users who already selected a font in settings are unaffected
+- New installations will default to Unicode-compatible font
+- PDFs will be slightly larger due to embedded font (acceptable trade-off for proper character support)
+- All 121 tests passing
+
+---
+
 ## [1.1.2] - 2026-01-06
 
 ### Fixed - OJS 3.4 Backward Compatibility

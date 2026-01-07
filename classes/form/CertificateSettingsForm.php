@@ -86,7 +86,7 @@ class CertificateSettingsForm extends Form {
             $this->setData('headerText', $this->plugin->getSetting($this->contextId, 'headerText') ?? '');
             $this->setData('bodyTemplate', $this->plugin->getSetting($this->contextId, 'bodyTemplate') ?? '');
             $this->setData('footerText', $this->plugin->getSetting($this->contextId, 'footerText') ?? '');
-            $this->setData('fontFamily', $this->plugin->getSetting($this->contextId, 'fontFamily') ?? 'helvetica');
+            $this->setData('fontFamily', $this->plugin->getSetting($this->contextId, 'fontFamily') ?? 'dejavusans');
             $this->setData('fontSize', $this->plugin->getSetting($this->contextId, 'fontSize') ?? 12);
             $this->setData('textColorR', $this->plugin->getSetting($this->contextId, 'textColorR') ?? 0);
             $this->setData('textColorG', $this->plugin->getSetting($this->contextId, 'textColorG') ?? 0);
@@ -100,7 +100,7 @@ class CertificateSettingsForm extends Form {
             $this->setData('headerText', '');
             $this->setData('bodyTemplate', '');
             $this->setData('footerText', '');
-            $this->setData('fontFamily', 'helvetica');
+            $this->setData('fontFamily', 'dejavusans');
             $this->setData('fontSize', 12);
             $this->setData('textColorR', 0);
             $this->setData('textColorG', 0);
