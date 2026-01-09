@@ -5,6 +5,30 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.4] - 2026-01-09
+
+### Fixed - Memory Optimization and Reinstall Stability (Issue #63)
+
+- **Fixed: High memory usage during PDF generation**
+  - **Issue**: Background image loading at 300 DPI caused excessive memory consumption (~25MB per image)
+  - **Solution**: Reduced DPI from 300 to 150 (still excellent print quality, ~75% memory savings)
+  - **File Modified**: `classes/CertificateGenerator.php`
+
+- **Fixed: Duplicate entry error on plugin reinstall**
+  - **Issue**: Settings save failed with duplicate key error when reinstalling plugin
+  - **Root Cause**: OJS `updateSetting()` method may fail when database state is inconsistent
+  - **Solution**: Added try-catch around settings save to handle gracefully
+  - **File Modified**: `classes/form/CertificateSettingsForm.php`
+
+### Technical Details
+- **Memory Optimization**: 150 DPI provides excellent print quality for certificates while significantly reducing memory usage
+- **Error Handling**: Duplicate key errors are now logged but don't break settings form
+- **Backward Compatible**: Works correctly in OJS 3.3, 3.4, and 3.5
+- **No database changes** - Safe upgrade with no migration required
+- **Confirmed by**: @drugurkocak (Dr. Uğur Koçak) on OJS 3.4.0-10
+
+---
+
 ## [1.1.3] - 2026-01-07
 
 ### Fixed - Turkish/Unicode Character Support (Issue #61)

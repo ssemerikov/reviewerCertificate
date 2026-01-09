@@ -199,7 +199,7 @@ class CertificateGenerator {
 
                 // Add background image
                 try {
-                    $pdf->Image($backgroundImage, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 300, '', false, false, 0);
+                    $pdf->Image($backgroundImage, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 150, '', false, false, 0);
                 } catch (Exception $e) {
                     error_log("ReviewerCertificate: Error adding background image: " . $e->getMessage());
                 }

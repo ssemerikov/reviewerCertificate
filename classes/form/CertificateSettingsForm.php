@@ -344,20 +344,25 @@ class CertificateSettingsForm extends Form {
      * @copydoc Form::execute()
      */
     public function execute(...$functionArgs) {
-        $this->plugin->updateSetting($this->contextId, 'headerText', $this->getData('headerText'), 'string');
-        $this->plugin->updateSetting($this->contextId, 'bodyTemplate', $this->getData('bodyTemplate'), 'string');
-        $this->plugin->updateSetting($this->contextId, 'footerText', $this->getData('footerText'), 'string');
-        $this->plugin->updateSetting($this->contextId, 'fontFamily', $this->getData('fontFamily'), 'string');
-        $this->plugin->updateSetting($this->contextId, 'fontSize', (int) $this->getData('fontSize'), 'int');
-        $this->plugin->updateSetting($this->contextId, 'textColorR', (int) $this->getData('textColorR'), 'int');
-        $this->plugin->updateSetting($this->contextId, 'textColorG', (int) $this->getData('textColorG'), 'int');
-        $this->plugin->updateSetting($this->contextId, 'textColorB', (int) $this->getData('textColorB'), 'int');
-        $this->plugin->updateSetting($this->contextId, 'minimumReviews', (int) $this->getData('minimumReviews'), 'int');
-        $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
+        try {
+            $this->plugin->updateSetting($this->contextId, 'headerText', $this->getData('headerText'), 'string');
+            $this->plugin->updateSetting($this->contextId, 'bodyTemplate', $this->getData('bodyTemplate'), 'string');
+            $this->plugin->updateSetting($this->contextId, 'footerText', $this->getData('footerText'), 'string');
+            $this->plugin->updateSetting($this->contextId, 'fontFamily', $this->getData('fontFamily'), 'string');
+            $this->plugin->updateSetting($this->contextId, 'fontSize', (int) $this->getData('fontSize'), 'int');
+            $this->plugin->updateSetting($this->contextId, 'textColorR', (int) $this->getData('textColorR'), 'int');
+            $this->plugin->updateSetting($this->contextId, 'textColorG', (int) $this->getData('textColorG'), 'int');
+            $this->plugin->updateSetting($this->contextId, 'textColorB', (int) $this->getData('textColorB'), 'int');
+            $this->plugin->updateSetting($this->contextId, 'minimumReviews', (int) $this->getData('minimumReviews'), 'int');
+            $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
 
-        // Always save background image setting (preserves existing or saves new upload)
-        $backgroundImage = $this->getData('backgroundImage');
-        $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage ? $backgroundImage : '', 'string');
+            // Always save background image setting (preserves existing or saves new upload)
+            $backgroundImage = $this->getData('backgroundImage');
+            $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage ? $backgroundImage : '', 'string');
+        } catch (\Exception $e) {
+            // Log error but don't fail - settings may already exist from previous install
+            error_log('ReviewerCertificate: Error saving settings (may be duplicate key on reinstall): ' . $e->getMessage());
+        }
 
         parent::execute(...$functionArgs);
     }

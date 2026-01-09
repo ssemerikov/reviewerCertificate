@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.1.3** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.1.4** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.1.3)**: Fixed Turkish/Unicode character support - Turkish characters (Ş, Ç, Ğ, İ, Ö) now display correctly in PDF certificates by using DejaVu Sans as the default font. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.1.4)**: Memory optimization (reduced background image DPI) and fixed duplicate entry error on plugin reinstall. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -53,6 +53,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
   - mbstring
   - zip
 - **TCPDF Library**: ✅ Bundled with plugin (v6.10.0) - no additional installation required!
+- **Memory**: 128MB minimum PHP memory limit (256MB recommended for large background images)
 
 ### Version Compatibility
 
