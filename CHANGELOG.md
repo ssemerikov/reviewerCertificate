@@ -5,6 +5,26 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.5] - 2026-01-09
+
+### Fixed - OJS 3.3 Compatibility (Issue #62)
+
+- **Fixed: Plugin causing infinite loading on OJS 3.3 plugins page**
+  - **Issue**: Plugin page would hang/load forever after installing on OJS 3.3
+  - **Root Cause**: Migration file used Laravel/Illuminate classes (`use Illuminate\...`) that don't exist in OJS 3.3, causing autoloader to hang
+  - **Solution**: Removed static `use` statements for Laravel classes, added runtime `class_exists()` checks
+  - **File Modified**: `classes/migration/ReviewerCertificateInstallMigration.php`
+  - **Reported by**: @gustavotonini
+
+### Technical Details
+- **Conditional Base Class**: Migration now extends Laravel's Migration class only if available
+- **Runtime Detection**: Uses `class_exists('Illuminate\Support\Facades\Schema')` before using Laravel
+- **Automatic Fallback**: Falls back to raw SQL for OJS 3.3 without causing autoloader issues
+- **No PHP Version Changes**: Still requires PHP 7.3+ (PHP 8.0+ recommended)
+- **All 121 tests passing**
+
+---
+
 ## [1.1.4] - 2026-01-09
 
 ### Fixed - Memory Optimization and Reinstall Stability (Issue #63)

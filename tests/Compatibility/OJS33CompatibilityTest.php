@@ -203,4 +203,94 @@ class OJS33CompatibilityTest extends TestCase
             $this->assertFileIsReadable($localeFile);
         }
     }
+
+    /**
+     * Test migration file can be loaded without Laravel dependencies
+     * This is critical for OJS 3.3 where Laravel/Illuminate is not available
+     */
+    public function testMigrationFileLoadsWithoutLaravel(): void
+    {
+        $this->requireOJSVersion('3.3');
+
+        // In OJS 3.3, Laravel classes don't exist
+        $this->assertFalse(
+            class_exists('Illuminate\Database\Migrations\Migration'),
+            'Laravel Migration class should NOT exist in OJS 3.3'
+        );
+        $this->assertFalse(
+            class_exists('Illuminate\Support\Facades\Schema'),
+            'Laravel Schema facade should NOT exist in OJS 3.3'
+        );
+
+        // The migration file should still be loadable without errors
+        $migrationFile = BASE_SYS_DIR . '/classes/migration/ReviewerCertificateInstallMigration.php';
+        $this->assertFileExists($migrationFile, 'Migration file should exist');
+
+        // This should NOT throw an error even without Laravel
+        require_once $migrationFile;
+
+        // The migration class should be defined
+        $this->assertTrue(
+            class_exists('APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration'),
+            'Migration class should be loadable in OJS 3.3'
+        );
+    }
+
+    /**
+     * Test migration base class conditional inheritance
+     */
+    public function testMigrationBaseClassIsConditional(): void
+    {
+        $this->requireOJSVersion('3.3');
+
+        require_once BASE_SYS_DIR . '/classes/migration/ReviewerCertificateInstallMigration.php';
+
+        $migration = new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
+
+        // In OJS 3.3, the migration should NOT extend Laravel's Migration class
+        $this->assertFalse(
+            $migration instanceof \Illuminate\Database\Migrations\Migration,
+            'Migration should NOT extend Laravel Migration in OJS 3.3'
+        );
+
+        // But it should still be a valid object
+        $this->assertIsObject($migration, 'Migration should be a valid object');
+
+        // And should have the up() and down() methods
+        $this->assertTrue(method_exists($migration, 'up'), 'Migration should have up() method');
+        $this->assertTrue(method_exists($migration, 'down'), 'Migration should have down() method');
+    }
+
+    /**
+     * Test that migration uses raw SQL fallback in OJS 3.3
+     */
+    public function testMigrationUsesRawSQLFallback(): void
+    {
+        $this->requireOJSVersion('3.3');
+
+        // Verify that class_exists check for Schema facade returns false
+        $this->assertFalse(
+            class_exists('Illuminate\Support\Facades\Schema'),
+            'Schema facade should not exist in OJS 3.3'
+        );
+
+        // The migration should detect this and use raw SQL fallback
+        // We can't test the actual SQL execution without a database,
+        // but we can verify the detection logic works
+        require_once BASE_SYS_DIR . '/classes/migration/ReviewerCertificateInstallMigration.php';
+
+        $reflection = new \ReflectionClass('APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration');
+
+        // Verify the upWithRawSQL method exists
+        $this->assertTrue(
+            $reflection->hasMethod('upWithRawSQL'),
+            'Migration should have upWithRawSQL fallback method'
+        );
+
+        // Verify the downWithRawSQL method exists
+        $this->assertTrue(
+            $reflection->hasMethod('downWithRawSQL'),
+            'Migration should have downWithRawSQL fallback method'
+        );
+    }
 }

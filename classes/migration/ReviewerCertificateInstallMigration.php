@@ -1,44 +1,63 @@
 <?php
 
 /**
- * @file plugins/generic/reviewerCertificate/classes/migration/ReviewerCertificateInstallMigration.inc.php
+ * @file plugins/generic/reviewerCertificate/classes/migration/ReviewerCertificateInstallMigration.php
  *
  * Copyright (c) 2024
  * Distributed under the GNU GPL v3.
  *
  * @class ReviewerCertificateInstallMigration
  * @brief Install migration for reviewer certificate plugin
+ *
+ * Compatible with OJS 3.3, 3.4, and 3.5
+ * - OJS 3.4+: Uses Laravel Schema facade
+ * - OJS 3.3: Uses raw SQL via DAORegistry
  */
 
 namespace APP\plugins\generic\reviewerCertificate\classes\migration;
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
+// NOTE: We do NOT use 'use' statements for Laravel classes here
+// because they don't exist in OJS 3.3 and would cause autoloader errors.
+// Instead, we use fully qualified class names with class_exists() checks.
 
-class ReviewerCertificateInstallMigration extends Migration {
+/**
+ * Base class for migration - extends Laravel Migration if available, otherwise standalone
+ */
+if (class_exists('Illuminate\Database\Migrations\Migration')) {
+    class ReviewerCertificateInstallMigrationBase extends \Illuminate\Database\Migrations\Migration {}
+} else {
+    class ReviewerCertificateInstallMigrationBase {}
+}
+
+class ReviewerCertificateInstallMigration extends ReviewerCertificateInstallMigrationBase {
 
     /**
      * Run the migrations.
      * @return void
      */
-    public function up(): void {
-        try {
-            // Try using Laravel Schema facade (OJS 3.4+)
-            $this->upWithSchema();
-        } catch (\Exception $e) {
-            error_log('ReviewerCertificate: Schema facade migration failed, falling back to raw SQL: ' . $e->getMessage());
-            // Fall back to raw SQL for OJS 3.3 compatibility
-            $this->upWithRawSQL();
+    public function up() {
+        // Check if Laravel Schema facade is available (OJS 3.4+)
+        if (class_exists('Illuminate\Support\Facades\Schema')) {
+            try {
+                $this->upWithSchema();
+                return;
+            } catch (\Exception $e) {
+                error_log('ReviewerCertificate: Schema facade migration failed, falling back to raw SQL: ' . $e->getMessage());
+            }
         }
+
+        // Fall back to raw SQL for OJS 3.3 compatibility
+        $this->upWithRawSQL();
     }
 
     /**
      * Create tables using Laravel Schema facade (OJS 3.4+)
      * @return void
      */
-    private function upWithSchema(): void {
-        Schema::create('reviewer_certificate_templates', function (Blueprint $table) {
+    private function upWithSchema() {
+        $schema = \Illuminate\Support\Facades\Schema::class;
+
+        $schema::create('reviewer_certificate_templates', function ($table) {
             $table->bigIncrements('template_id');
             $table->bigInteger('context_id');
             $table->string('template_name', 255);
@@ -61,7 +80,7 @@ class ReviewerCertificateInstallMigration extends Migration {
             $table->index(['context_id'], 'reviewer_certificate_templates_context_id');
         });
 
-        Schema::create('reviewer_certificates', function (Blueprint $table) {
+        $schema::create('reviewer_certificates', function ($table) {
             $table->bigIncrements('certificate_id');
             $table->bigInteger('reviewer_id');
             $table->bigInteger('submission_id');
@@ -80,7 +99,7 @@ class ReviewerCertificateInstallMigration extends Migration {
             $table->unique(['review_id']);
         });
 
-        Schema::create('reviewer_certificate_settings', function (Blueprint $table) {
+        $schema::create('reviewer_certificate_settings', function ($table) {
             $table->bigInteger('template_id');
             $table->string('locale', 14)->default('');
             $table->string('setting_name', 255);
@@ -172,16 +191,22 @@ class ReviewerCertificateInstallMigration extends Migration {
      * Reverse the migrations.
      * @return void
      */
-    public function down(): void {
-        try {
-            Schema::dropIfExists('reviewer_certificate_settings');
-            Schema::dropIfExists('reviewer_certificates');
-            Schema::dropIfExists('reviewer_certificate_templates');
-        } catch (\Exception $e) {
-            error_log('ReviewerCertificate: Schema facade drop failed, falling back to raw SQL: ' . $e->getMessage());
-            // Fall back to raw SQL
-            $this->downWithRawSQL();
+    public function down() {
+        // Check if Laravel Schema facade is available (OJS 3.4+)
+        if (class_exists('Illuminate\Support\Facades\Schema')) {
+            try {
+                $schema = \Illuminate\Support\Facades\Schema::class;
+                $schema::dropIfExists('reviewer_certificate_settings');
+                $schema::dropIfExists('reviewer_certificates');
+                $schema::dropIfExists('reviewer_certificate_templates');
+                return;
+            } catch (\Exception $e) {
+                error_log('ReviewerCertificate: Schema facade drop failed, falling back to raw SQL: ' . $e->getMessage());
+            }
         }
+
+        // Fall back to raw SQL
+        $this->downWithRawSQL();
     }
 
     /**
