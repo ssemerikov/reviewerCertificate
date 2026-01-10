@@ -35,6 +35,31 @@ if (!class_exists('PKP\form\Form')) {
     }
 }
 
+// OJS 3.3 compatibility: Add fallbacks for other namespaced classes used in this file
+if (!class_exists('PKP\db\DAORegistry')) {
+    if (class_exists('DAORegistry', false)) {
+        class_alias('DAORegistry', 'PKP\db\DAORegistry');
+    }
+}
+
+if (!class_exists('PKP\core\Core')) {
+    if (class_exists('Core', false)) {
+        class_alias('Core', 'PKP\core\Core');
+    }
+}
+
+if (!class_exists('APP\core\Application')) {
+    if (class_exists('Application', false)) {
+        class_alias('Application', 'APP\core\Application');
+    }
+}
+
+if (!class_exists('APP\template\TemplateManager')) {
+    if (class_exists('TemplateManager', false)) {
+        class_alias('TemplateManager', 'APP\template\TemplateManager');
+    }
+}
+
 class CertificateSettingsForm extends Form {
 
     /** @var ReviewerCertificatePlugin */

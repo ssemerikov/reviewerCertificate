@@ -324,8 +324,17 @@ class CertificateDAO extends DAO {
             return $this->_getInsertId('reviewer_certificates', 'certificate_id');
         }
         // Fallback for OJS 3.5+: use Illuminate DB facade
+        // Wrap in try/catch to handle OJS 3.3.0-20+ where Laravel exists but DB isn't bootstrapped
         if (class_exists('Illuminate\Support\Facades\DB')) {
-            return (int) \Illuminate\Support\Facades\DB::getPdo()->lastInsertId();
+            try {
+                $pdo = \Illuminate\Support\Facades\DB::getPdo();
+                if ($pdo !== null) {
+                    return (int) $pdo->lastInsertId();
+                }
+            } catch (\Throwable $e) {
+                // Laravel DB not bootstrapped (OJS 3.3.0-20+), fall through
+                error_log('ReviewerCertificate: getInsertId() Laravel fallback failed: ' . $e->getMessage());
+            }
         }
         return 0;
     }

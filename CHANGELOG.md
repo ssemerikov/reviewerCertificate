@@ -5,6 +5,29 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.7] - 2026-01-10
+
+### Fixed - OJS 3.3.0-22 Plugin Enable Issue (Issue #64 - Part 2)
+
+- **Fixed: Plugin won't stay enabled after page refresh on OJS 3.3.0-22**
+  - **Issue**: After successful installation (v1.1.6), plugin checkbox unchecks after refresh, settings link doesn't appear
+  - **Root Cause**: Missing `class_alias()` fallbacks for OJS 3.4+ namespaced classes (`PKP\db\DAORegistry`, `APP\core\Application`, `APP\template\TemplateManager`, etc.). When `register()` tried to use these classes, PHP couldn't find them in OJS 3.3
+  - **Solution**: Added comprehensive namespace fallbacks to all plugin files using OJS 3.4+ namespaced classes
+  - **Files Modified**:
+    - `ReviewerCertificatePlugin.php` - Added fallbacks for DAORegistry, Application, TemplateManager
+    - `controllers/CertificateHandler.php` - Added fallbacks for DAORegistry, TemplateManager, PluginRegistry, Application
+    - `classes/form/CertificateSettingsForm.php` - Added fallbacks for DAORegistry, Core, Application, TemplateManager
+    - `classes/CertificateDAO.php` - Fixed `getInsertId()` to catch `\Throwable` when Laravel DB not bootstrapped
+  - **Reported by**: @drugurkocak (Dr. Uğur Koçak)
+
+### Technical Details
+- **Namespace Resolution**: PHP `use` statements resolve to namespaced classes which don't exist in OJS 3.3
+- **class_alias() Pattern**: Creates aliases from OJS 3.3 global classes to OJS 3.4+ namespace paths
+- **Silent Failure**: OJS catches plugin registration errors and silently disables plugins without logging
+- **Complete Fix**: Now properly handles all OJS versions from 3.3.0-1 through 3.5.x
+
+---
+
 ## [1.1.6] - 2026-01-10
 
 ### Fixed - OJS 3.3.0-20+ Installation Error (Issue #64)
