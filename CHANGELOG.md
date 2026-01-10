@@ -5,6 +5,26 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.6] - 2026-01-10
+
+### Fixed - OJS 3.3.0-20+ Installation Error (Issue #64)
+
+- **Fixed: Plugin installation fails on OJS 3.3.0-20 through 3.3.0-22**
+  - **Issue**: `Call to a member function connection() on null` error during plugin upload
+  - **Root Cause**: OJS 3.3.0-20+ includes Laravel as a Composer dependency, but does NOT bootstrap the database connection. When `Schema::create()` is called, `connection()` returns null, throwing a PHP `Error` (not `Exception`)
+  - **Solution**: Changed `catch (\Exception $e)` to `catch (\Throwable $e)` to catch both Exceptions and Errors
+  - **File Modified**: `classes/migration/ReviewerCertificateInstallMigration.php`
+  - **Reported by**: @drugurkocak (Dr. Uğur Koçak)
+
+### Technical Details
+- **PHP Error vs Exception**: In PHP 7+, `Error` and `Exception` are separate types under `Throwable`
+- **OJS 3.3.0-20+**: Laravel is present (`class_exists()` returns true) but DB connection not initialized
+- **The Fix**: `catch (\Throwable $e)` catches both `\Error` and `\Exception`
+- **Fallback Works**: Error is now caught, migration falls back to raw SQL successfully
+- **All 124 tests passing**
+
+---
+
 ## [1.1.5] - 2026-01-09
 
 ### Fixed - OJS 3.3 Compatibility (Issue #62)

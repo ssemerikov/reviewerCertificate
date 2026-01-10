@@ -41,7 +41,9 @@ class ReviewerCertificateInstallMigration extends ReviewerCertificateInstallMigr
             try {
                 $this->upWithSchema();
                 return;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
+                // Catch both Exception and Error (PHP 7+)
+                // This handles OJS 3.3.0-20+ where Laravel exists but DB connection is not bootstrapped
                 error_log('ReviewerCertificate: Schema facade migration failed, falling back to raw SQL: ' . $e->getMessage());
             }
         }
@@ -200,7 +202,8 @@ class ReviewerCertificateInstallMigration extends ReviewerCertificateInstallMigr
                 $schema::dropIfExists('reviewer_certificates');
                 $schema::dropIfExists('reviewer_certificate_templates');
                 return;
-            } catch (\Exception $e) {
+            } catch (\Throwable $e) {
+                // Catch both Exception and Error (PHP 7+)
                 error_log('ReviewerCertificate: Schema facade drop failed, falling back to raw SQL: ' . $e->getMessage());
             }
         }
