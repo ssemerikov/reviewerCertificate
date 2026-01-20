@@ -18,17 +18,6 @@ use PKP\db\DAOResultFactory;
 
 require_once(dirname(__FILE__) . '/Certificate.php');
 
-// OJS 3.3 compatibility fallback
-if (!class_exists('PKP\db\DAO')) {
-    if (function_exists('import')) {
-        import('lib.pkp.classes.db.DAO');
-        // Create alias so the namespace reference works
-        if (class_exists('DAO', false)) {
-            class_alias('DAO', 'PKP\db\DAO');
-        }
-    }
-}
-
 class CertificateDAO extends DAO {
 
     /**

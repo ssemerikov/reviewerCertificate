@@ -5,6 +5,57 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.8] - 2026-01-19
+
+### Fixed - OJS 3.3.0-22 Plugin Enable Issue (Complete Fix)
+
+- **Fixed: Plugin won't stay enabled after page refresh on OJS 3.3.0-22**
+  - **Issue**: v1.1.7's `class_alias()` approach still failed because PHP processes `use` statements at **parse time**, but the fallback code runs at **runtime** - too late
+  - **Root Cause**: When PHP parses `class X extends NamespacedClass`, it needs to resolve the parent class immediately. The `class_alias()` fallbacks that ran *after* the `use` statements never executed because parsing failed first
+  - **Solution**: Two-file architecture with autoloader loaded BEFORE any namespaced code is parsed
+  - **Files Modified/Added**:
+    - `ReviewerCertificatePlugin.php` - Now a simple loader that includes autoloader first, then implementation
+    - `compat_autoloader.php` (NEW) - OJS 3.3 compatibility autoloader
+    - `classes/ReviewerCertificatePluginCore.php` (NEW) - Main plugin implementation moved here
+    - `controllers/CertificateHandler.php` - Removed old fallback blocks (autoloader handles these)
+    - `classes/form/CertificateSettingsForm.php` - Removed old fallback blocks (autoloader handles these)
+    - `classes/Certificate.php` - Removed old fallback block (autoloader handles these)
+    - `classes/CertificateDAO.php` - Removed old fallback block (autoloader handles these)
+  - **Reported by**: Marc Bria (confirming v1.1.7 still didn't work)
+
+### Technical Details
+
+- **Why v1.1.7 Failed**: PHP requires the namespace declaration to be the FIRST statement (except `declare`). Code cannot be placed before `namespace`, so the autoloader could never run before class resolution
+- **Two-File Architecture Solution**:
+  1. `ReviewerCertificatePlugin.php` has NO namespace - it's a simple loader
+  2. It first includes `compat_autoloader.php` which registers the autoloader
+  3. Then it includes `classes/ReviewerCertificatePluginCore.php` which has the actual plugin code with namespace
+  4. When PHP parses the Core file, autoloading triggers and our autoloader handles it
+  5. Finally, a global class alias is created for OJS 3.3 compatibility
+- **Autoloader Behavior**:
+  - `spl_autoload_register()` with `prepend=true` runs **before** other autoloaders
+  - When PHP tries to load `PKP\plugins\GenericPlugin`, our autoloader intercepts
+  - It calls OJS 3.3's `import()` to load the global class, then creates an alias
+  - PHP finds the class and continues parsing
+- **Class Map**: The autoloader maps 20+ OJS 3.4+ namespaced classes to their OJS 3.3 global equivalents:
+  - `PKP\plugins\GenericPlugin` → `GenericPlugin`
+  - `PKP\db\DAORegistry` → `DAORegistry`
+  - `PKP\db\DAO` → `DAO`
+  - `PKP\plugins\Hook` → `HookRegistry`
+  - `PKP\config\Config` → `Config`
+  - `PKP\core\Core` → `Core`
+  - `PKP\core\JSONMessage` → `JSONMessage`
+  - `PKP\core\DataObject` → `DataObject`
+  - `PKP\form\Form` → `Form`
+  - `APP\handler\Handler` → `Handler`
+  - `APP\core\Application` → `Application`
+  - `APP\template\TemplateManager` → `TemplateManager`
+  - And more...
+- **Guard Constant**: Uses `REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER` to prevent registering the autoloader multiple times
+- **Cleaner Code**: Removed redundant fallback blocks from all files - single autoloader handles all compatibility
+
+---
+
 ## [1.1.7] - 2026-01-10
 
 ### Fixed - OJS 3.3.0-22 Plugin Enable Issue (Issue #64 - Part 2)

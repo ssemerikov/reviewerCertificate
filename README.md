@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.1.7** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.1.8** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.1.7)**: Fixed OJS 3.3.0-22 plugin enable issue - added comprehensive namespace fallbacks for all OJS 3.4+ classes. Plugin now properly enables and stays enabled on all OJS 3.3.x versions. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.1.8)**: Complete fix for OJS 3.3.0-22 plugin enable issue. Implemented custom autoloader that intercepts class resolution during parse time, properly handling namespace aliases before `use` statements are processed. Plugin now correctly enables and stays enabled on all OJS versions. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 

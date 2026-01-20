@@ -233,12 +233,12 @@ class OJS34CompatibilityTest extends TestCase
     {
         $this->requireOJSVersion('3.4');
 
-        $migrationFile = BASE_SYS_DIR . '/classes/migration/install/ReviewerCertificateInstallMigration.php';
+        // Check for the actual migration file location
+        $migrationFile = BASE_SYS_DIR . '/classes/migration/ReviewerCertificateInstallMigration.php';
 
-        if (file_exists($migrationFile)) {
-            $this->assertFileExists($migrationFile);
-            $this->assertFileIsReadable($migrationFile);
-        }
+        // Migration file should exist in the plugin
+        $this->assertFileExists($migrationFile, 'Migration file should exist');
+        $this->assertFileIsReadable($migrationFile, 'Migration file should be readable');
     }
 
     /**

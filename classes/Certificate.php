@@ -16,13 +16,6 @@ namespace APP\plugins\generic\reviewerCertificate\classes;
 use PKP\core\DataObject;
 use PKP\core\Core;
 
-// OJS 3.3 compatibility fallback
-if (!class_exists('PKP\core\DataObject')) {
-    if (function_exists('import')) {
-        import('lib.pkp.classes.core.DataObject');
-    }
-}
-
 class Certificate extends DataObject {
 
     /**
