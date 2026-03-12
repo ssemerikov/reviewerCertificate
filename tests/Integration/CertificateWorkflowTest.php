@@ -59,7 +59,7 @@ class CertificateWorkflowTest extends TestCase
         $this->assertTrue($isEligible);
 
         // Step 2: Generate certificate code
-        $certificateCode = strtoupper(substr(md5(uniqid(strval($review->getId()), true)), 0, 12));
+        $certificateCode = strtoupper(bin2hex(random_bytes(8)));
         $this->assertValidCertificateCode($certificateCode);
 
         // Step 3: Create certificate record
@@ -124,7 +124,7 @@ class CertificateWorkflowTest extends TestCase
         // Generate certificates for all reviewers
         $generatedCount = 0;
         foreach ($reviewers as $data) {
-            $certificateCode = strtoupper(substr(md5(uniqid(strval($data['review']->getId()), true)), 0, 12));
+            $certificateCode = strtoupper(bin2hex(random_bytes(8)));
 
             $certificateId = $this->dbMock->insert('reviewer_certificates', [
                 'reviewer_id' => $data['reviewer']->getId(),
@@ -167,7 +167,7 @@ class CertificateWorkflowTest extends TestCase
                 'context_id' => $contextId,
                 'template_id' => 1,
                 'date_issued' => date('Y-m-d H:i:s'),
-                'certificate_code' => strtoupper(substr(md5(uniqid()), 0, 12)),
+                'certificate_code' => strtoupper(bin2hex(random_bytes(8))),
                 'download_count' => 0,
             ]);
         }
@@ -184,7 +184,7 @@ class CertificateWorkflowTest extends TestCase
             'context_id' => $contextId,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => strtoupper(substr(md5(uniqid()), 0, 12)),
+            'certificate_code' => strtoupper(bin2hex(random_bytes(8))),
             'download_count' => 0,
         ]);
 
@@ -208,7 +208,7 @@ class CertificateWorkflowTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'FIRST1234567',
+            'certificate_code' => 'A1B2C3D4E5F6000D',
             'download_count' => 0,
         ]);
 
@@ -226,7 +226,7 @@ class CertificateWorkflowTest extends TestCase
      */
     public function testCertificateVerification(): void
     {
-        $certificateCode = 'VERIFY123456';
+        $certificateCode = 'A1B2C3D4E5F6000E';
 
         // Create certificate
         $this->dbMock->insert('reviewer_certificates', [
@@ -263,7 +263,7 @@ class CertificateWorkflowTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'TRACK1234567',
+            'certificate_code' => 'A1B2C3D4E5F6000F',
             'download_count' => 0,
             'last_downloaded' => null,
         ]);
@@ -314,7 +314,7 @@ class CertificateWorkflowTest extends TestCase
                 'context_id' => $contextId,
                 'template_id' => 1,
                 'date_issued' => date('Y-m-d H:i:s'),
-                'certificate_code' => strtoupper(substr(md5(uniqid()), 0, 12)),
+                'certificate_code' => strtoupper(bin2hex(random_bytes(8))),
                 'download_count' => $data['downloads'],
             ]);
         }
@@ -346,7 +346,7 @@ class CertificateWorkflowTest extends TestCase
                 'context_id' => 1,
                 'template_id' => 1,
                 'date_issued' => date('Y-m-d H:i:s'),
-                'certificate_code' => strtoupper(substr(md5(uniqid()), 0, 12)),
+                'certificate_code' => strtoupper(bin2hex(random_bytes(8))),
                 'download_count' => $i, // Different download counts
             ]);
         }
@@ -374,7 +374,7 @@ class CertificateWorkflowTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'CONTEXT1CERT',
+            'certificate_code' => 'A1B2C3D4E5F61001',
             'download_count' => 0,
         ]);
 
@@ -385,18 +385,18 @@ class CertificateWorkflowTest extends TestCase
             'context_id' => 2,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'CONTEXT2CERT',
+            'certificate_code' => 'A1B2C3D4E5F61002',
             'download_count' => 0,
         ]);
 
         // Verify context 1 only sees its certificate
         $context1Certs = $this->dbMock->select('reviewer_certificates', ['context_id' => 1]);
         $this->assertCount(1, $context1Certs);
-        $this->assertEquals('CONTEXT1CERT', $context1Certs[0]['certificate_code']);
+        $this->assertEquals('A1B2C3D4E5F61001', $context1Certs[0]['certificate_code']);
 
         // Verify context 2 only sees its certificate
         $context2Certs = $this->dbMock->select('reviewer_certificates', ['context_id' => 2]);
         $this->assertCount(1, $context2Certs);
-        $this->assertEquals('CONTEXT2CERT', $context2Certs[0]['certificate_code']);
+        $this->assertEquals('A1B2C3D4E5F61002', $context2Certs[0]['certificate_code']);
     }
 }

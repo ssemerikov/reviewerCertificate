@@ -19,43 +19,47 @@ use APP\facades\Repo;
 use APP\core\Application;
 use Exception;
 
-// OJS 3.4+/3.3 compatibility: Get base directory
-if (class_exists('PKP\core\Core')) {
-    $ojsBaseDir = Core::getBaseDir();
-} elseif (class_exists('Core')) {
-    $ojsBaseDir = \Core::getBaseDir();
-} else {
-    // Fallback: try to determine from current path
-    $ojsBaseDir = dirname(__FILE__, 6); // Go up from plugins/generic/reviewerCertificate/classes
-}
-
-// Load TCPDF library - try multiple locations
-$tcpdfLocations = array(
-    // Plugin's bundled TCPDF (primary location)
-    dirname(__FILE__, 2) . '/lib/tcpdf/tcpdf.php',
-    // OJS 3.4 location
-    $ojsBaseDir . '/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php',
-    // OJS 3.3 location
-    $ojsBaseDir . '/lib/pkp/lib/tcpdf/tcpdf.php',
-);
-
-$tcpdfLoaded = false;
-foreach ($tcpdfLocations as $tcpdfPath) {
-    if (file_exists($tcpdfPath)) {
-        require_once($tcpdfPath);
-        $tcpdfLoaded = true;
-        break;
-    }
-}
-
-if (!$tcpdfLoaded) {
-    throw new Exception(
-        'TCPDF library not found. The plugin should include TCPDF in lib/tcpdf/ directory. ' .
-        'Please reinstall the plugin or contact the administrator.'
-    );
-}
-
 class CertificateGenerator {
+
+    /** @var bool Whether TCPDF has been loaded */
+    private static $tcpdfLoaded = false;
+
+    /**
+     * Lazy-load TCPDF library on first use
+     */
+    private static function ensureTCPDF() {
+        if (self::$tcpdfLoaded) {
+            return;
+        }
+
+        // OJS 3.4+/3.3 compatibility: Get base directory
+        if (class_exists('PKP\core\Core')) {
+            $ojsBaseDir = Core::getBaseDir();
+        } elseif (class_exists('Core')) {
+            $ojsBaseDir = \Core::getBaseDir();
+        } else {
+            $ojsBaseDir = dirname(__FILE__, 6);
+        }
+
+        $tcpdfLocations = array(
+            dirname(__FILE__, 2) . '/lib/tcpdf/tcpdf.php',
+            $ojsBaseDir . '/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php',
+            $ojsBaseDir . '/lib/pkp/lib/tcpdf/tcpdf.php',
+        );
+
+        foreach ($tcpdfLocations as $tcpdfPath) {
+            if (file_exists($tcpdfPath)) {
+                require_once($tcpdfPath);
+                self::$tcpdfLoaded = true;
+                return;
+            }
+        }
+
+        throw new Exception(
+            'TCPDF library not found. The plugin should include TCPDF in lib/tcpdf/ directory. ' .
+            'Please reinstall the plugin or contact the administrator.'
+        );
+    }
 
     /** @var ReviewAssignment */
     private $reviewAssignment;
@@ -142,6 +146,8 @@ class CertificateGenerator {
      * @return string PDF content
      */
     public function generatePDF() {
+        self::ensureTCPDF();
+
         // Create new PDF document (TCPDF is in global namespace)
         $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
@@ -190,21 +196,38 @@ class CertificateGenerator {
     private function applyBackground($pdf) {
         $backgroundImage = $this->getTemplateSetting('backgroundImage');
 
-        if ($backgroundImage) {
+        if (!$backgroundImage) {
+            return;
+        }
 
-            if (file_exists($backgroundImage)) {
-                // Get page dimensions
-                $pageWidth = $pdf->getPageWidth();
-                $pageHeight = $pdf->getPageHeight();
-
-                // Add background image
-                try {
-                    $pdf->Image($backgroundImage, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 150, '', false, false, 0);
-                } catch (Exception $e) {
-                    error_log("ReviewerCertificate: Error adding background image: " . $e->getMessage());
-                }
-            }
+        // Path traversal protection: validate the image is within allowed directory
+        if (class_exists('PKP\core\Core')) {
+            $baseDir = \PKP\core\Core::getBaseDir();
+        } elseif (class_exists('Core')) {
+            $baseDir = \Core::getBaseDir();
         } else {
+            $baseDir = dirname(__FILE__, 6);
+        }
+
+        $allowedDir = realpath($baseDir . '/files/journals/');
+        $realPath = realpath($backgroundImage);
+
+        if ($realPath === false || $allowedDir === false || strpos($realPath, $allowedDir) !== 0) {
+            error_log("ReviewerCertificate: Background image path outside allowed directory");
+            return;
+        }
+
+        if (file_exists($realPath)) {
+            // Get page dimensions
+            $pageWidth = $pdf->getPageWidth();
+            $pageHeight = $pdf->getPageHeight();
+
+            // Add background image
+            try {
+                $pdf->Image($realPath, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 150, '', false, false, 0);
+            } catch (Exception $e) {
+                error_log("ReviewerCertificate: Error adding background image: " . $e->getMessage());
+            }
         }
     }
 
@@ -213,15 +236,19 @@ class CertificateGenerator {
      * @param $pdf TCPDF
      */
     private function applyTemplateSettings($pdf) {
-        // Set font
+        // Set font — validate against whitelist, clamp size
+        $allowedFonts = array('helvetica', 'times', 'courier', 'dejavusans');
         $fontFamily = $this->getTemplateSetting('fontFamily', 'dejavusans');
-        $fontSize = $this->getTemplateSetting('fontSize', 12);
+        if (!in_array($fontFamily, $allowedFonts)) {
+            $fontFamily = 'dejavusans';
+        }
+        $fontSize = max(6, min(72, (int) $this->getTemplateSetting('fontSize', 12)));
         $pdf->SetFont($fontFamily, '', $fontSize);
 
-        // Set text color
-        $colorR = $this->getTemplateSetting('textColorR', 0);
-        $colorG = $this->getTemplateSetting('textColorG', 0);
-        $colorB = $this->getTemplateSetting('textColorB', 0);
+        // Set text color — clamp to valid RGB range
+        $colorR = max(0, min(255, (int) $this->getTemplateSetting('textColorR', 0)));
+        $colorG = max(0, min(255, (int) $this->getTemplateSetting('textColorG', 0)));
+        $colorB = max(0, min(255, (int) $this->getTemplateSetting('textColorB', 0)));
         $pdf->SetTextColor($colorR, $colorG, $colorB);
     }
 

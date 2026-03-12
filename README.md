@@ -1,12 +1,12 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.1.8** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.2.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.1.8)**: Complete fix for OJS 3.3.0-22 plugin enable issue. Implemented custom autoloader that intercepts class resolution during parse time, properly handling namespace aliases before `use` statements are processed. Plugin now correctly enables and stays enabled on all OJS versions. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.2.0)**: Fixed OJS 3.3 plugin enable (Issue #65) — the enable checkbox now works correctly on all OJS versions. Also fixed handler endpoint 500 errors and role constant resolution on OJS 3.3. All 33 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -458,6 +458,12 @@ Copyright (c) 2025 Serhiy O. Semerikov, Academy of Cognitive and Natural Science
 For detailed version history and changes, see [CHANGELOG.md](CHANGELOG.md).
 
 ### Recent Releases
+
+**Version 1.2.0** (2026-03-12)
+- **Fixed**: OJS 3.3 plugin enable checkbox broken — AJAX never fired due to namespace backslashes in jQuery selectors (Issue #65)
+- **Fixed**: Handler endpoints (download, verify, batch) returning HTTP 500 on OJS 3.3 — `HANDLER_CLASS` short name and `Role` class constant resolution
+- **Fixed**: E2E tests now run on all OJS versions (33/33 pass, 0 skips)
+- Verified on OJS 3.3.0-22, 3.4.0-10, 3.5.0-3
 
 **Version 1.1.2** (2026-01-06)
 - **Fixed**: Critical OJS 3.4 backward compatibility issues after v1.1.1

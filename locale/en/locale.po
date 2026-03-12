@@ -166,6 +166,12 @@ msgid "plugins.generic.reviewerCertificate.error.accessDenied"
 msgstr "Access denied. You do not have permission to download this certificate."
 
 # Email templates
+msgid "plugins.generic.reviewerCertificate.email.name"
+msgstr "Review Certificate Notification"
+
+msgid "plugins.generic.reviewerCertificate.email.description"
+msgstr "Notification sent to reviewers when their certificate is available for download"
+
 msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
 msgstr "Your Review Certificate is Ready"
 

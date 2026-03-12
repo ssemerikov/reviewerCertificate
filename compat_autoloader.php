@@ -64,6 +64,9 @@ if (!defined('REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER')) {
                 class_alias($globalClass, $class);
                 return true;
             }
+
+            // Log when a mapped class can't be resolved — helps diagnose OJS 3.3.x issues
+            error_log('ReviewerCertificate: Autoloader failed to resolve ' . $class . ' -> ' . $globalClass);
         }
         return false;
     }, true, true); // prepend=true to run before other autoloaders

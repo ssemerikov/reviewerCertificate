@@ -33,23 +33,26 @@ class CertificateHandler extends Handler {
      */
     public function __construct() {
         parent::__construct();
-        // OJS 3.4+: Use namespaced Role class; OJS 3.3: Use global constants
-        if (class_exists('PKP\security\Role')) {
-            $this->addRoleAssignment(
-                array(Role::ROLE_ID_REVIEWER),
-                array('download', 'preview')
-            );
-            $this->addRoleAssignment(
-                array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
-                array('manage', 'generateBatch')
-            );
-        } else {
+        // OJS 3.3 defines role IDs as global constants via define();
+        // OJS 3.4+ defines them as class constants on PKP\security\Role.
+        // Note: class_exists('PKP\security\Role') returns true on OJS 3.3 due
+        // to compat_autoloader aliasing, so check for the global constant instead.
+        if (defined('ROLE_ID_REVIEWER')) {
             $this->addRoleAssignment(
                 array(ROLE_ID_REVIEWER),
                 array('download', 'preview')
             );
             $this->addRoleAssignment(
                 array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
+                array('manage', 'generateBatch')
+            );
+        } else {
+            $this->addRoleAssignment(
+                array(Role::ROLE_ID_REVIEWER),
+                array('download', 'preview')
+            );
+            $this->addRoleAssignment(
+                array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
                 array('manage', 'generateBatch')
             );
         }
@@ -121,6 +124,11 @@ class CertificateHandler extends Handler {
 
         // Get review assignment using direct SQL for OJS 3.5 compatibility
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        if (!$certificateDao) {
+            error_log('Certificate download failed: CertificateDAO not available');
+            http_response_code(500);
+            throw new Exception('Internal error', 500);
+        }
         $result = $certificateDao->retrieve(
             'SELECT * FROM review_assignments WHERE review_id = ?',
             array((int) $reviewId)
@@ -141,7 +149,7 @@ class CertificateHandler extends Handler {
         }
 
         // Validate access - user must be the reviewer
-        if ($reviewAssignment->getReviewerId() != $user->getId()) {
+        if ((int)$reviewAssignment->getReviewerId() !== (int)$user->getId()) {
             error_log('Certificate download failed: Access denied for user ' . $user->getId() . ', review belongs to reviewer ' . $reviewAssignment->getReviewerId());
             http_response_code(403);
             throw new Exception(__('plugins.generic.reviewerCertificate.error.accessDenied'), 403);
@@ -156,10 +164,15 @@ class CertificateHandler extends Handler {
 
         // Get or create certificate
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        if (!$certificateDao) {
+            error_log('Certificate download failed: CertificateDAO not available');
+            http_response_code(500);
+            throw new Exception('Internal error', 500);
+        }
         $certificate = $certificateDao->getByReviewId($reviewId);
 
         if (!$certificate) {
-            // Create certificate if it doesn't exist
+            // Create certificate if it doesn't exist — use try-catch for duplicate key race condition
             require_once(dirname(__FILE__) . '/../classes/Certificate.php');
             $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
             $certificate->setReviewerId($reviewAssignment->getReviewerId());
@@ -170,7 +183,15 @@ class CertificateHandler extends Handler {
             $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
             $certificate->setDownloadCount(0);
 
-            $certificateDao->insertObject($certificate);
+            try {
+                $certificateDao->insertObject($certificate);
+            } catch (\Throwable $e) {
+                if (strpos($e->getMessage(), 'Duplicate') !== false) {
+                    $certificate = $certificateDao->getByReviewId($reviewId);
+                } else {
+                    throw $e;
+                }
+            }
         }
 
         // Update download statistics
@@ -209,35 +230,43 @@ class CertificateHandler extends Handler {
         if ($certificateCode) {
             // Lookup certificate
             $certificateDao = DAORegistry::getDAO('CertificateDAO');
-            $certificate = $certificateDao->getByCertificateCode($certificateCode);
-
-            if ($certificate) {
-                // Get reviewer and context information - OJS 3.3 compatibility
-                if (class_exists('APP\facades\Repo')) {
-                    $reviewer = \APP\facades\Repo::user()->get($certificate->getReviewerId());
-                } else {
-                    $userDao = DAORegistry::getDAO('UserDAO');
-                    $reviewer = $userDao->getById($certificate->getReviewerId());
-                }
-
-                // OJS 3.4+/3.3 compatibility
-                if (class_exists('APP\core\Application')) {
-                    $contextDao = Application::getContextDAO();
-                } else {
-                    $contextDao = \Application::getContextDAO();
-                }
-                $context = $contextDao->getById($certificate->getContextId());
-
-                // Assign valid certificate data to template
-                $templateMgr->assign('isValid', true);
-                $templateMgr->assign('reviewerName', $reviewer->getFullName());
-                // Format date in PHP to avoid strftime() deprecation issues in PHP 8.1+
-                $formattedDate = date('F j, Y', strtotime($certificate->getDateIssued()));
-                $templateMgr->assign('dateIssued', $formattedDate);
-                $templateMgr->assign('journalName', $context->getLocalizedName());
-            } else {
-                // Invalid certificate
+            if (!$certificateDao) {
                 $templateMgr->assign('isValid', false);
+            } else {
+                $certificate = $certificateDao->getByCertificateCode($certificateCode);
+
+                if ($certificate) {
+                    // Get reviewer and context information - OJS 3.3 compatibility
+                    if (class_exists('APP\facades\Repo')) {
+                        $reviewer = \APP\facades\Repo::user()->get($certificate->getReviewerId());
+                    } else {
+                        $userDao = DAORegistry::getDAO('UserDAO');
+                        $reviewer = $userDao->getById($certificate->getReviewerId());
+                    }
+
+                    // OJS 3.4+/3.3 compatibility
+                    if (class_exists('APP\core\Application')) {
+                        $contextDao = Application::getContextDAO();
+                    } else {
+                        $contextDao = \Application::getContextDAO();
+                    }
+                    $context = $contextDao->getById($certificate->getContextId());
+
+                    if ($reviewer && $context) {
+                        // Assign valid certificate data to template
+                        $templateMgr->assign('isValid', true);
+                        $templateMgr->assign('reviewerName', $reviewer->getFullName());
+                        // Format date in PHP to avoid strftime() deprecation issues in PHP 8.1+
+                        $formattedDate = date('F j, Y', strtotime($certificate->getDateIssued()));
+                        $templateMgr->assign('dateIssued', $formattedDate);
+                        $templateMgr->assign('journalName', $context->getLocalizedName());
+                    } else {
+                        $templateMgr->assign('isValid', false);
+                    }
+                } else {
+                    // Invalid certificate
+                    $templateMgr->assign('isValid', false);
+                }
             }
         }
 
@@ -285,11 +314,18 @@ class CertificateHandler extends Handler {
         $generator->setTemplateSettings($templateSettings);
 
         // Generate PDF
-        $pdfContent = $generator->generatePDF();
+        try {
+            $pdfContent = $generator->generatePDF();
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: PDF generation failed: ' . $e->getMessage());
+            http_response_code(500);
+            echo 'An error occurred generating the certificate. Please try again later.';
+            exit;
+        }
 
         // Output PDF
         header('Content-Type: application/pdf');
-        header('Content-Disposition: attachment; filename="certificate_' . $certificate->getCertificateCode() . '.pdf"');
+        header('Content-Disposition: attachment; filename="reviewer_certificate_' . $certificate->getCertificateId() . '.pdf"');
         header('Content-Length: ' . strlen($pdfContent));
         header('Cache-Control: private, max-age=0, must-revalidate');
         header('Pragma: public');
@@ -324,7 +360,14 @@ class CertificateHandler extends Handler {
         $templateSettings = $this->getTemplateSettings($context);
         $generator->setTemplateSettings($templateSettings);
 
-        $pdfContent = $generator->generatePDF();
+        try {
+            $pdfContent = $generator->generatePDF();
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: Preview PDF generation failed: ' . $e->getMessage());
+            http_response_code(500);
+            echo 'An error occurred generating the preview. Please try again later.';
+            exit;
+        }
 
         header('Content-Type: application/pdf');
         header('Content-Disposition: inline; filename="certificate_preview.pdf"');
@@ -370,7 +413,7 @@ class CertificateHandler extends Handler {
      * @return string
      */
     private function generateCertificateCode($reviewAssignment) {
-        return strtoupper(substr(md5($reviewAssignment->getId() . time() . uniqid()), 0, 12));
+        return strtoupper(bin2hex(random_bytes(8)));
     }
 
     /**
@@ -417,6 +460,9 @@ class CertificateHandler extends Handler {
         $errors = array();
 
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        if (!$certificateDao) {
+            return $this->createJSONMessage(false, 'Internal error: database not available');
+        }
 
         foreach ($reviewerIds as $reviewerId) {
             try {
@@ -454,7 +500,7 @@ class CertificateHandler extends Handler {
                         }
                     }
                 }
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
                 $errors[] = "Reviewer ID $reviewerId: " . $e->getMessage();
             }
         }

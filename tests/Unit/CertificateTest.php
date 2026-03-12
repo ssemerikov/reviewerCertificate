@@ -103,7 +103,7 @@ class CertificateTest extends TestCase
      */
     public function testCertificateCode(): void
     {
-        $code = 'ABC123XYZ789';
+        $code = 'A1B2C3D4E5F60001';
         $this->certificate->setCertificateCode($code);
         $this->assertEquals($code, $this->certificate->getCertificateCode());
     }
@@ -180,7 +180,7 @@ class CertificateTest extends TestCase
             'contextId' => 1,
             'templateId' => 2,
             'dateIssued' => '2025-01-15 10:00:00',
-            'certificateCode' => 'ABCD1234EFGH',
+            'certificateCode' => 'ABCD1234EF560001',
             'downloadCount' => 3,
             'lastDownloaded' => '2025-01-16 15:00:00',
         ];
@@ -214,10 +214,10 @@ class CertificateTest extends TestCase
     public function testCertificateCodeFormat(): void
     {
         $validCodes = [
-            'ABCD1234EFGH',
-            'XYZ789QWERTY',
-            '1234567890AB',
-            'ZZZZAAAABBBB',
+            'ABCD1234EF560001',
+            'DEF789ABCDEF0002',
+            '1234567890ABCDEF',
+            'AAAA1111BBBB2222',
         ];
 
         foreach ($validCodes as $code) {

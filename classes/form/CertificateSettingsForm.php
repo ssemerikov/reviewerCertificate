@@ -104,8 +104,6 @@ class CertificateSettingsForm extends Form {
      * @copydoc Form::readInputData()
      */
     public function readInputData() {
-        error_log('ReviewerCertificate: readInputData called');
-
         $this->readUserVars(array(
             'headerText',
             'bodyTemplate',
@@ -121,23 +119,14 @@ class CertificateSettingsForm extends Form {
 
         // Preserve existing background image if no new upload
         $existingBackgroundImage = $this->plugin->getSetting($this->contextId, 'backgroundImage');
-        error_log('ReviewerCertificate: Existing background image: ' . ($existingBackgroundImage ? $existingBackgroundImage : 'none'));
 
         if ($existingBackgroundImage) {
             $this->setData('backgroundImage', $existingBackgroundImage);
         }
 
         // Handle file upload for background image (will override existing if new file uploaded)
-        error_log('ReviewerCertificate: Checking for file upload. isset: ' . (isset($_FILES['backgroundImage']) ? 'yes' : 'no'));
-        if (isset($_FILES['backgroundImage'])) {
-            error_log('ReviewerCertificate: File error code: ' . $_FILES['backgroundImage']['error']);
-        }
-
         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
-            error_log('ReviewerCertificate: File upload detected, calling handleBackgroundImageUpload');
             $this->handleBackgroundImageUpload();
-        } else if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] != UPLOAD_ERR_NO_FILE) {
-            error_log('ReviewerCertificate: File upload error: ' . $_FILES['backgroundImage']['error']);
         }
     }
 
@@ -148,25 +137,36 @@ class CertificateSettingsForm extends Form {
         $request = Application::get()->getRequest();
         $context = $request->getContext();
 
-        error_log('ReviewerCertificate: handleBackgroundImageUpload called');
-        error_log('ReviewerCertificate: FILES array: ' . print_r($_FILES, true));
+        $tmpFile = $_FILES['backgroundImage']['tmp_name'];
 
-        // Validate file type
-        $allowedTypes = array('image/jpeg', 'image/png', 'image/jpg', 'image/gif');
-        $fileType = $_FILES['backgroundImage']['type'];
+        // Validate actual file size via filesystem (not client-reported $_FILES['size'])
+        $actualSize = filesize($tmpFile);
+        if ($actualSize === false || $actualSize > 5 * 1024 * 1024) {
+            $this->addError('backgroundImage', 'File size must be less than 5MB');
+            return;
+        }
 
-        if (!in_array($fileType, $allowedTypes)) {
-            error_log('ReviewerCertificate: Invalid file type: ' . $fileType);
+        // Validate image content using getimagesize() instead of client-reported MIME
+        $imageInfo = @getimagesize($tmpFile);
+        if ($imageInfo === false) {
             $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.invalidImageType'));
             return;
         }
 
-        // Validate file size (max 5MB)
-        if ($_FILES['backgroundImage']['size'] > 5 * 1024 * 1024) {
-            error_log('ReviewerCertificate: File too large: ' . $_FILES['backgroundImage']['size']);
-            $this->addError('backgroundImage', 'File size must be less than 5MB');
+        // Whitelist: only JPEG and PNG (drop GIF — TCPDF has inconsistent GIF support)
+        $mimeToExt = array(
+            'image/jpeg' => 'jpg',
+            'image/png' => 'png',
+        );
+
+        $detectedMime = $imageInfo['mime'];
+        if (!isset($mimeToExt[$detectedMime])) {
+            $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.invalidImageType'));
             return;
         }
+
+        // Derive extension from detected MIME type, not from user filename
+        $extension = $mimeToExt[$detectedMime];
 
         // Create upload directory if it doesn't exist - OJS 3.3 compatibility
         if (class_exists('PKP\core\Core')) {
@@ -175,26 +175,20 @@ class CertificateSettingsForm extends Form {
             $baseDir = \Core::getBaseDir();
         }
         $uploadDir = $baseDir . '/files/journals/' . $context->getId() . '/reviewerCertificate';
-        error_log('ReviewerCertificate: Upload directory: ' . $uploadDir);
 
         if (!file_exists($uploadDir)) {
-            $result = mkdir($uploadDir, 0755, true);
-            error_log('ReviewerCertificate: Directory created: ' . ($result ? 'yes' : 'no'));
+            mkdir($uploadDir, 0755, true);
         }
 
-        // Generate unique filename
-        $extension = pathinfo($_FILES['backgroundImage']['name'], PATHINFO_EXTENSION);
+        // Generate unique filename using safe extension
         $filename = 'background_' . time() . '.' . $extension;
         $targetPath = $uploadDir . '/' . $filename;
 
-        error_log('ReviewerCertificate: Target path: ' . $targetPath);
-
         // Move uploaded file
-        if (move_uploaded_file($_FILES['backgroundImage']['tmp_name'], $targetPath)) {
-            error_log('ReviewerCertificate: File uploaded successfully to: ' . $targetPath);
+        if (move_uploaded_file($tmpFile, $targetPath)) {
             $this->setData('backgroundImage', $targetPath);
         } else {
-            error_log('ReviewerCertificate: File upload failed. Temp file: ' . $_FILES['backgroundImage']['tmp_name']);
+            error_log('ReviewerCertificate: File upload failed');
             $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.uploadFailed'));
         }
     }
@@ -337,12 +331,21 @@ class CertificateSettingsForm extends Form {
             $this->plugin->updateSetting($this->contextId, 'headerText', $this->getData('headerText'), 'string');
             $this->plugin->updateSetting($this->contextId, 'bodyTemplate', $this->getData('bodyTemplate'), 'string');
             $this->plugin->updateSetting($this->contextId, 'footerText', $this->getData('footerText'), 'string');
-            $this->plugin->updateSetting($this->contextId, 'fontFamily', $this->getData('fontFamily'), 'string');
-            $this->plugin->updateSetting($this->contextId, 'fontSize', (int) $this->getData('fontSize'), 'int');
-            $this->plugin->updateSetting($this->contextId, 'textColorR', (int) $this->getData('textColorR'), 'int');
-            $this->plugin->updateSetting($this->contextId, 'textColorG', (int) $this->getData('textColorG'), 'int');
-            $this->plugin->updateSetting($this->contextId, 'textColorB', (int) $this->getData('textColorB'), 'int');
-            $this->plugin->updateSetting($this->contextId, 'minimumReviews', (int) $this->getData('minimumReviews'), 'int');
+
+            // Validate fontFamily against whitelist
+            $allowedFonts = array('helvetica', 'times', 'courier', 'dejavusans');
+            $fontFamily = $this->getData('fontFamily');
+            if (!in_array($fontFamily, $allowedFonts)) {
+                $fontFamily = 'dejavusans';
+            }
+            $this->plugin->updateSetting($this->contextId, 'fontFamily', $fontFamily, 'string');
+
+            // Clamp numeric values to valid ranges
+            $this->plugin->updateSetting($this->contextId, 'fontSize', max(6, min(72, (int) $this->getData('fontSize'))), 'int');
+            $this->plugin->updateSetting($this->contextId, 'textColorR', max(0, min(255, (int) $this->getData('textColorR'))), 'int');
+            $this->plugin->updateSetting($this->contextId, 'textColorG', max(0, min(255, (int) $this->getData('textColorG'))), 'int');
+            $this->plugin->updateSetting($this->contextId, 'textColorB', max(0, min(255, (int) $this->getData('textColorB'))), 'int');
+            $this->plugin->updateSetting($this->contextId, 'minimumReviews', max(1, (int) $this->getData('minimumReviews')), 'int');
             $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
 
             // Always save background image setting (preserves existing or saves new upload)

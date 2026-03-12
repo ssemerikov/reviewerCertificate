@@ -45,7 +45,7 @@ class CertificateDAOTest extends TestCase
         $certificate->setContextId(1);
         $certificate->setTemplateId(1);
         $certificate->setDateIssued('2025-01-15 10:00:00');
-        $certificate->setCertificateCode('ABC123XYZ789');
+        $certificate->setCertificateCode('A1B2C3D4E5F60001');
         $certificate->setDownloadCount(0);
 
         // Mock the database insert
@@ -56,7 +56,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'ABC123XYZ789',
+            'certificate_code' => 'A1B2C3D4E5F60001',
             'download_count' => 0,
         ]);
 
@@ -66,7 +66,7 @@ class CertificateDAOTest extends TestCase
         $stored = $this->dbMock->getById('reviewer_certificates', $certificateId);
         $this->assertNotNull($stored);
         $this->assertEquals(1, $stored['reviewer_id']);
-        $this->assertEquals('ABC123XYZ789', $stored['certificate_code']);
+        $this->assertEquals('A1B2C3D4E5F60001', $stored['certificate_code']);
     }
 
     /**
@@ -82,7 +82,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'TEST12345678',
+            'certificate_code' => 'A1B2C3D4E5F60002',
             'download_count' => 0,
         ]);
 
@@ -92,7 +92,7 @@ class CertificateDAOTest extends TestCase
         $this->assertNotNull($result);
         $this->assertEquals($certificateId, $result['certificate_id']);
         $this->assertEquals(1, $result['reviewer_id']);
-        $this->assertEquals('TEST12345678', $result['certificate_code']);
+        $this->assertEquals('A1B2C3D4E5F60002', $result['certificate_code']);
     }
 
     /**
@@ -109,7 +109,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'REVIEW123456',
+            'certificate_code' => 'A1B2C3D4E5F60003',
             'download_count' => 0,
         ]);
 
@@ -117,7 +117,7 @@ class CertificateDAOTest extends TestCase
 
         $this->assertCount(1, $results);
         $this->assertEquals($reviewId, $results[0]['review_id']);
-        $this->assertEquals('REVIEW123456', $results[0]['certificate_code']);
+        $this->assertEquals('A1B2C3D4E5F60003', $results[0]['certificate_code']);
     }
 
     /**
@@ -125,7 +125,7 @@ class CertificateDAOTest extends TestCase
      */
     public function testGetByCertificateCode(): void
     {
-        $code = 'UNIQUE123456';
+        $code = 'A1B2C3D4E5F60004';
 
         $this->dbMock->insert('reviewer_certificates', [
             'reviewer_id' => 1,
@@ -160,7 +160,7 @@ class CertificateDAOTest extends TestCase
                 'context_id' => 1,
                 'template_id' => 1,
                 'date_issued' => '2025-01-15 10:00:00',
-                'certificate_code' => 'CODE' . str_pad($i, 8, '0', STR_PAD_LEFT),
+                'certificate_code' => 'C0DE' . str_pad($i, 12, '0', STR_PAD_LEFT),
                 'download_count' => 0,
             ]);
         }
@@ -188,7 +188,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => $contextId,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'CONTEXT12345',
+            'certificate_code' => 'A1B2C3D4E5F60005',
             'download_count' => 0,
         ]);
 
@@ -199,7 +199,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 2, // Different context
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'CONTEXT67890',
+            'certificate_code' => 'A1B2C3D4E5F60006',
             'download_count' => 0,
         ]);
 
@@ -225,7 +225,7 @@ class CertificateDAOTest extends TestCase
                 'context_id' => 1,
                 'template_id' => 1,
                 'date_issued' => '2025-01-15 10:00:00',
-                'certificate_code' => 'COUNT' . str_pad($i, 7, '0', STR_PAD_LEFT),
+                'certificate_code' => 'C000' . str_pad($i, 12, '0', STR_PAD_LEFT),
                 'download_count' => 0,
             ]);
         }
@@ -248,7 +248,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'UPDATE123456',
+            'certificate_code' => 'A1B2C3D4E5F60007',
             'download_count' => 0,
             'last_downloaded' => null,
         ]);
@@ -284,7 +284,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'DELETE123456',
+            'certificate_code' => 'A1B2C3D4E5F60008',
             'download_count' => 0,
         ]);
 
@@ -314,7 +314,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'DELREV123456',
+            'certificate_code' => 'A1B2C3D4E5F60009',
             'download_count' => 0,
         ]);
 
@@ -343,7 +343,7 @@ class CertificateDAOTest extends TestCase
                 'context_id' => $contextId,
                 'template_id' => 1,
                 'date_issued' => '2025-01-15 10:00:00',
-                'certificate_code' => 'DELCTX' . str_pad($i, 6, '0', STR_PAD_LEFT),
+                'certificate_code' => 'DE1C' . str_pad($i, 12, '0', STR_PAD_LEFT),
                 'download_count' => 0,
             ]);
         }
@@ -372,7 +372,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => $contextId,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'STAT00000001',
+            'certificate_code' => 'A1B2C3D4E5F6000A',
             'download_count' => 3,
         ]);
 
@@ -383,7 +383,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => $contextId,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'STAT00000002',
+            'certificate_code' => 'A1B2C3D4E5F6000B',
             'download_count' => 5,
         ]);
 
@@ -394,7 +394,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => $contextId,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'STAT00000003',
+            'certificate_code' => 'A1B2C3D4E5F6000C',
             'download_count' => 2,
         ]);
 
@@ -414,7 +414,7 @@ class CertificateDAOTest extends TestCase
      */
     public function testCertificateCodeUniqueness(): void
     {
-        $code = 'UNIQUE123456';
+        $code = 'A1B2C3D4E5F60004';
 
         // Insert first certificate
         $this->dbMock->insert('reviewer_certificates', [
@@ -453,7 +453,7 @@ class CertificateDAOTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => '2025-01-15 10:00:00',
-            'certificate_code' => 'FIRST1234567',
+            'certificate_code' => 'A1B2C3D4E5F6000D',
             'download_count' => 0,
         ]);
 

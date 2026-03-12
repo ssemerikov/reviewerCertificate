@@ -122,7 +122,7 @@ class CertificateDAO extends DAO {
      */
     public function getCountByReviewerId($reviewerId, $contextId = null) {
         $params = array((int) $reviewerId);
-        $sql = 'SELECT COUNT(*) FROM reviewer_certificates WHERE reviewer_id = ?';
+        $sql = 'SELECT COUNT(*) AS cnt FROM reviewer_certificates WHERE reviewer_id = ?';
 
         if ($contextId !== null) {
             $sql .= ' AND context_id = ?';
@@ -131,7 +131,7 @@ class CertificateDAO extends DAO {
 
         $result = $this->retrieve($sql, $params);
         $row = $result->current();
-        return $row ? (int) $row->count : 0;
+        return $row ? (int) $row->cnt : 0;
     }
 
     /**

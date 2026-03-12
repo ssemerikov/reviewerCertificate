@@ -1,0 +1,32 @@
+{
+  "name": "reviewercertificate",
+  "version": "1.0.0",
+  "description": "**Version 1.2.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test:e2e": "npx playwright test",
+    "test:e2e:ojs33": "npx playwright test --project=ojs33",
+    "test:e2e:ojs34": "npx playwright test --project=ojs34",
+    "test:e2e:ojs35": "npx playwright test --project=ojs35",
+    "test:e2e:ui": "npx playwright test --ui"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ssemerikov/reviewerCertificate.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/ssemerikov/reviewerCertificate/issues"
+  },
+  "homepage": "https://github.com/ssemerikov/reviewerCertificate#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.58.2"
+  }
+}

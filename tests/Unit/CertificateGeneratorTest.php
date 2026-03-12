@@ -249,14 +249,14 @@ class CertificateGeneratorTest extends TestCase
     public function testCertificateCodeForQR(): void
     {
         $codes = [
-            'ABCD1234EFGH',
-            'XYZ789QWERTY',
-            '1234567890AB',
+            'ABCD1234EF560001',
+            'DEF789ABCDEF0002',
+            '1234567890ABCDEF',
         ];
 
         foreach ($codes as $code) {
             $this->assertValidCertificateCode($code);
-            $this->assertEquals(12, strlen($code));
+            $this->assertEquals(16, strlen($code));
         }
     }
 

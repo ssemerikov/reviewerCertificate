@@ -34,26 +34,44 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $success = parent::register($category, $path, $mainContextId);
 
         if ($success && $this->getEnabled($mainContextId)) {
-            // Import and register DAOs
-            require_once($this->getPluginPath() . '/classes/CertificateDAO.php');
-            $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
-            DAORegistry::registerDAO('CertificateDAO', $certificateDao);
+            try {
+                // Import and register DAOs
+                require_once($this->getPluginPath() . '/classes/CertificateDAO.php');
+                $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
+                DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
-            // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3
-            if (class_exists('PKP\plugins\Hook')) {
-                Hook::register('LoadHandler', array($this, 'setupHandler'));
-                Hook::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                // Note: reviewassignmentdao::_updateobject hook removed in OJS 3.5
-                // Auto-email on review completion not supported in OJS 3.5
-                Hook::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-            } else {
-                \HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
-                \HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                \HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+                // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3
+                if (class_exists('PKP\plugins\Hook')) {
+                    Hook::register('LoadHandler', array($this, 'setupHandler'));
+                    Hook::register('TemplateManager::display', array($this, 'addCertificateButton'));
+                    // Note: reviewassignmentdao::_updateobject hook removed in OJS 3.5
+                    // Auto-email on review completion not supported in OJS 3.5
+                    Hook::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+
+                    // Register Mailable for OJS 3.5+ email system
+                    if (class_exists('PKP\mail\Mailable')) {
+                        Hook::register('Mailer::Mailables', array($this, 'addMailable'));
+                    }
+                } else {
+                    \HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
+                    \HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
+                    \HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
+                }
+            } catch (\Throwable $e) {
+                error_log('ReviewerCertificate: Error during plugin registration: ' . $e->getMessage());
+                // Still return $success — plugin is registered but may not be fully functional
             }
         }
 
         return $success;
+    }
+
+    /**
+     * Register Mailable with OJS 3.5+ email system
+     */
+    public function addMailable(string $hookName, array $args): void {
+        require_once($this->getPluginPath() . '/classes/ReviewerCertificateMailable.php');
+        $args[0]->push(\APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable::class);
     }
 
     /**
@@ -70,6 +88,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function getDescription() {
         return __('plugins.generic.reviewerCertificate.description');
+    }
+
+    /**
+     * @copydoc Plugin::getName()
+     *
+     * Returns a simple name without namespace backslashes.
+     * OJS 3.3's base getName() returns strtolower(get_class($this)) which
+     * includes the full namespace with backslashes, breaking jQuery selectors
+     * in the plugin grid and preventing enable/disable (Issue #65).
+     */
+    public function getName() {
+        return 'reviewercertificateplugin';
     }
 
     /**
@@ -206,7 +236,14 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $generator->setPreviewMode(true); // Enable preview mode with sample data
 
                 // Generate and output PDF
-                $pdfContent = $generator->generatePDF();
+                try {
+                    $pdfContent = $generator->generatePDF();
+                } catch (\Throwable $e) {
+                    error_log('ReviewerCertificate: Preview PDF generation failed: ' . $e->getMessage());
+                    http_response_code(500);
+                    echo 'An error occurred generating the preview. Please try again later.';
+                    exit;
+                }
 
                 header('Content-Type: application/pdf');
                 header('Content-Disposition: inline; filename="certificate-preview.pdf"');
@@ -216,6 +253,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
             case 'generateBatch':
                 // Increase execution time limit for batch operations to prevent timeouts
+                $originalTimeLimit = (int) ini_get('max_execution_time');
                 set_time_limit(300); // 5 minutes for batch operations
 
                 $context = $request->getContext();
@@ -244,17 +282,40 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $generated = 0;
                 $errors = array();
 
+                // Create ONE mysqli connection for the entire batch
+                $dbConn = null;
+                $stmt = null;
                 try {
                     // Set database lock wait timeout to fail fast if there are locks
                     try {
                         $certificateDao->update('SET SESSION innodb_lock_wait_timeout = 10');
                     } catch (Exception $e) {
-                        error_log('ReviewerCertificate: Could not set lock timeout: ' . $e->getMessage());
+                        // Non-critical: proceed without custom timeout
                     }
+
+                    $dbHost = Config::getVar('database', 'host');
+                    $dbUser = Config::getVar('database', 'username');
+                    $dbPass = Config::getVar('database', 'password');
+                    $dbName = Config::getVar('database', 'name');
+
+                    $dbConn = new \mysqli($dbHost, $dbUser, $dbPass, $dbName);
+                    if ($dbConn->connect_error) {
+                        throw new Exception("Connection failed: " . $dbConn->connect_error);
+                    }
+
+                    // Prepare ONE statement for all inserts
+                    $insertSql = "INSERT INTO reviewer_certificates
+                                  (reviewer_id, submission_id, review_id, context_id, template_id,
+                                   date_issued, certificate_code, download_count)
+                                  VALUES (?, ?, ?, ?, NULL, ?, ?, 0)";
+                    $stmt = $dbConn->prepare($insertSql);
+                    if (!$stmt) {
+                        throw new Exception("Failed to prepare statement: " . $dbConn->error);
+                    }
+
                     foreach ($reviewerIds as $reviewerId) {
 
                         // Use direct SQL query for OJS 3.4 compatibility
-                        // Note: review_id is the primary key in review_assignments table
                         $result = $certificateDao->retrieve(
                             'SELECT ra.review_id, ra.reviewer_id, ra.submission_id
                              FROM review_assignments ra
@@ -268,16 +329,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         );
 
                         if ($result) {
-                            $rowCount = 0;
                             foreach ($result as $row) {
-                                $rowCount++;
-
-                                // Double-check if certificate already exists (defensive programming)
-                                $existingCert = $certificateDao->getByReviewId($row->review_id);
-                                if ($existingCert) {
-                                    continue;
-                                }
-
                                 // Create certificate
                                 $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
                                 $certificate->setReviewerId($row->reviewer_id);
@@ -285,86 +337,41 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setReviewId($row->review_id);
                                 $certificate->setContextId($context->getId());
                                 $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-                                // Generate code without review assignment object
-                                $certificate->setCertificateCode(strtoupper(substr(md5($row->review_id . time() . uniqid()), 0, 12)));
+                                $certificate->setCertificateCode(strtoupper(bin2hex(random_bytes(8))));
                                 $certificate->setDownloadCount(0);
 
-                                $startTime = microtime(true);
                                 try {
-                                    // Create fresh mysqli connection using OJS config
-                                    // This bypasses OJS DAO infrastructure which has performance issues in web context
-                                    $dbHost = Config::getVar('database', 'host');
-                                    $dbUser = Config::getVar('database', 'username');
-                                    $dbPass = Config::getVar('database', 'password');
-                                    $dbName = Config::getVar('database', 'name');
-
-                                    $dbConn = new \mysqli($dbHost, $dbUser, $dbPass, $dbName);
-
-                                    if ($dbConn->connect_error) {
-                                        throw new Exception("Connection failed: " . $dbConn->connect_error);
-                                    }
-
-                                    // Use direct mysqli prepare/execute
-                                    $insertSql = "INSERT INTO reviewer_certificates
-                                                  (reviewer_id, submission_id, review_id, context_id, template_id,
-                                                   date_issued, certificate_code, download_count)
-                                                  VALUES (?, ?, ?, ?, NULL, ?, ?, 0)";
-
-                                    $stmt = $dbConn->prepare($insertSql);
-
-                                    if (!$stmt) {
-                                        throw new Exception("Failed to prepare statement: " . $dbConn->error);
-                                    }
-
-                                    $reviewerId = (int) $certificate->getReviewerId();
-                                    $submissionId = (int) $certificate->getSubmissionId();
-                                    $reviewId = (int) $certificate->getReviewId();
-                                    $contextId = (int) $certificate->getContextId();
-                                    $dateIssued = $certificate->getDateIssued();
-                                    $certCode = $certificate->getCertificateCode();
+                                    $paramReviewerId = (int) $certificate->getReviewerId();
+                                    $paramSubmissionId = (int) $certificate->getSubmissionId();
+                                    $paramReviewId = (int) $certificate->getReviewId();
+                                    $paramContextId = (int) $certificate->getContextId();
+                                    $paramDateIssued = $certificate->getDateIssued();
+                                    $paramCertCode = $certificate->getCertificateCode();
 
                                     $stmt->bind_param('iiiiss',
-                                        $reviewerId,
-                                        $submissionId,
-                                        $reviewId,
-                                        $contextId,
-                                        $dateIssued,
-                                        $certCode
+                                        $paramReviewerId,
+                                        $paramSubmissionId,
+                                        $paramReviewId,
+                                        $paramContextId,
+                                        $paramDateIssued,
+                                        $paramCertCode
                                     );
 
-                                    $executeResult = $stmt->execute();
-
-                                    if ($executeResult) {
-                                        $insertId = $dbConn->insert_id;
+                                    if ($stmt->execute()) {
                                         $generated++;
-                                        error_log("ReviewerCertificate: Created certificate ID $insertId for review_id={$row->review_id} (code: $certCode)");
                                     } else {
                                         throw new Exception("Execute failed: " . $stmt->error);
                                     }
-
-                                    $stmt->close();
-                                    $dbConn->close();
-
                                 } catch (Throwable $insertError) {
-                                    error_log("ReviewerCertificate: Failed to create certificate for review_id={$row->review_id}: " . $insertError->getMessage());
-
-                                    // Check if it's a lock timeout error
-                                    if (strpos($insertError->getMessage(), 'Lock wait timeout') !== false) {
-                                        error_log("ReviewerCertificate: Lock timeout detected - another process may be holding a lock");
-                                        $errors[] = "Lock timeout for review_id {$row->review_id} - please try again";
-                                    } else if (strpos($insertError->getMessage(), 'Duplicate entry') !== false) {
-                                        error_log("ReviewerCertificate: Duplicate entry detected for review_id {$row->review_id}");
-                                        $errors[] = "Certificate already exists for review_id {$row->review_id}";
+                                    if (strpos($insertError->getMessage(), 'Duplicate') !== false) {
+                                        // Certificate created by concurrent request — not an error
                                     } else {
                                         $errors[] = "Failed to create certificate for review_id {$row->review_id}";
                                     }
-                                    // Continue with next certificate even if this one fails
                                 }
                             }
                         }
                     }
-
-                    error_log("ReviewerCertificate: Batch generation completed - generated $generated certificates");
 
                     // Return response in format expected by JavaScript
                     $response = $this->createJSONMessage(true);
@@ -372,11 +379,18 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     return $response;
 
                 } catch (Throwable $e) {
-                    // Catch both Exception and Error objects (PHP 7+)
                     error_log('ReviewerCertificate batch generation error: ' . $e->getMessage());
-                    error_log('ReviewerCertificate batch generation stack trace: ' . $e->getTraceAsString());
-                    error_log('ReviewerCertificate batch generation error type: ' . get_class($e));
-                    return $this->createJSONMessage(false, 'Error generating certificates: ' . $e->getMessage());
+                    return $this->createJSONMessage(false, 'An error occurred during batch generation. Please check the server logs.');
+                } finally {
+                    // Guarantee cleanup of DB resources
+                    if ($stmt) {
+                        $stmt->close();
+                    }
+                    if ($dbConn) {
+                        $dbConn->close();
+                    }
+                    // Restore original time limit
+                    set_time_limit($originalTimeLimit);
                 }
 
             default:
@@ -390,7 +404,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * @return string
      */
     private function generateCertificateCode($reviewAssignment) {
-        return strtoupper(substr(md5($reviewAssignment->getId() . time() . uniqid()), 0, 12));
+        return strtoupper(bin2hex(random_bytes(8)));
     }
 
     /**
@@ -419,8 +433,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $handler = new \APP\plugins\generic\reviewerCertificate\controllers\CertificateHandler();
                 $handler->setPlugin($this);
             } else {
-                // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant
-                define('HANDLER_CLASS', 'CertificateHandler');
+                // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant (must be FQN)
+                define('HANDLER_CLASS', 'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler');
             }
 
             return true;
@@ -458,20 +472,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             'reviewer/review/reviewComplete.tpl',  // Alternative naming
         );
 
-        // Debug logging to help diagnose template issues
-        // Only log if we're in a reviewer context (to reduce log noise)
-        $context = $request->getContext();
-        if ($context && strpos($template, 'reviewer/') === 0) {
-            error_log("ReviewerCertificate: Template displayed: $template");
-        }
-
         if (!in_array($template, $reviewerTemplates)) {
             return false;
         }
-
-        // Log successful template match
-        error_log("ReviewerCertificate: Matched template for certificate button: $template");
-
 
         // Get template variable - might be ReviewAssignment or Submission object
         $templateVar = $templateMgr->getTemplateVars('reviewAssignment');
@@ -479,9 +482,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $templateVar = $templateMgr->getTemplateVars('submission');
         }
 
-        // Debug: Log all available template variables if nothing found
         if (!$templateVar) {
-            $allVars = $templateMgr->getTemplateVars();
             return false;
         }
 
@@ -500,6 +501,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             // Fetch review assignment for this submission and user
             // Use direct SQL query for OJS 3.5 compatibility (ReviewAssignmentDAO not available)
             $certificateDao = DAORegistry::getDAO('CertificateDAO');
+            if (!$certificateDao) {
+                return false;
+            }
             $result = $certificateDao->retrieve(
                 'SELECT * FROM review_assignments WHERE submission_id = ? AND reviewer_id = ?',
                 array((int) $templateVar->getId(), (int) $user->getId())
@@ -539,8 +543,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
 
 
         if ($certificate || $isEligible) {
-            error_log("ReviewerCertificate: Certificate is available or reviewer is eligible - showing button");
-
             // Load CSS and JS assets
             $this->addScript($request);
 
@@ -561,16 +563,11 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             // Strategy 1: Try to modify output buffer (params[2])
             if (isset($params[2]) && is_string($params[2])) {
                 $params[2] .= "\n" . $additionalContent;
-                error_log("ReviewerCertificate: Injected via params[2] modification");
             }
             // Strategy 2: Direct echo (works in most template hooks due to output buffering)
             else {
                 echo "\n" . $additionalContent;
-                error_log("ReviewerCertificate: Injected via echo (output buffering)");
             }
-
-        } else {
-            error_log("ReviewerCertificate: Certificate not available and reviewer not eligible");
         }
 
         return false;
@@ -608,13 +605,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         // Count completed reviews for this reviewer
         // Use direct SQL query for OJS 3.5 compatibility (ReviewAssignmentDAO not available)
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        if (!$certificateDao) {
+            return false;
+        }
         $result = $certificateDao->retrieve(
-            'SELECT COUNT(*) AS count FROM review_assignments WHERE reviewer_id = ? AND date_completed IS NOT NULL',
+            'SELECT COUNT(*) AS cnt FROM review_assignments WHERE reviewer_id = ? AND date_completed IS NOT NULL',
             array((int) $reviewAssignment->getReviewerId())
         );
 
-        $row = $result->current();
-        $completedReviews = $row ? (int) $row->count : 0;
+        $row = $result ? $result->current() : null;
+        $completedReviews = $row ? (int) $row->cnt : 0;
 
 
         return $completedReviews >= $minimumReviews;
@@ -625,6 +625,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     private function createCertificateRecord($reviewAssignment) {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        if (!$certificateDao) {
+            error_log('ReviewerCertificate: CertificateDAO not available for certificate creation');
+            return;
+        }
 
         // Check if certificate already exists
         if ($certificateDao->getByReviewId($reviewAssignment->getId())) {
@@ -645,7 +649,15 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
         $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
 
-        $certificateDao->insertObject($certificate);
+        try {
+            $certificateDao->insertObject($certificate);
+        } catch (\Throwable $e) {
+            if (strpos($e->getMessage(), 'Duplicate') !== false) {
+                // Certificate created by concurrent request — not an error
+                return;
+            }
+            throw $e;
+        }
     }
 
     /**
@@ -663,7 +675,35 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             $reviewer = $userDao->getById($reviewAssignment->getReviewerId());
         }
 
-        // OJS 3.3 compatibility for MailTemplate
+        if (!$reviewer) {
+            error_log('ReviewerCertificate: Cannot send notification - reviewer ID ' . $reviewAssignment->getReviewerId() . ' not found');
+            return;
+        }
+
+        // OJS 3.5+ — use Mailable system
+        if (class_exists('PKP\mail\Mailable')) {
+            require_once($this->getPluginPath() . '/classes/ReviewerCertificateMailable.php');
+            $mailable = new \APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable();
+            $mailable->setData([
+                'reviewerName' => $reviewer->getFullName(),
+                'certificateUrl' => $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())),
+                'journalName' => $context->getLocalizedName(),
+                'journalUrl' => $request->getBaseUrl() . '/' . $context->getPath(),
+            ]);
+            $template = \APP\facades\Repo::emailTemplate()->getByKey(
+                $context->getId(), $mailable::getEmailTemplateKey()
+            );
+            $locale = $context->getPrimaryLocale();
+            $mailable
+                ->sender($request->getUser())
+                ->to($reviewer->getEmail(), $reviewer->getFullName())
+                ->subject($template->getLocalizedData('subject', $locale))
+                ->body($template->getLocalizedData('body', $locale));
+            \Illuminate\Support\Facades\Mail::send($mailable);
+            return;
+        }
+
+        // OJS 3.3/3.4 — use legacy MailTemplate
         if (class_exists('PKP\mail\MailTemplate')) {
             $mail = new \PKP\mail\MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
         } else {
@@ -707,8 +747,13 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * @return \Illuminate\Database\Migrations\Migration
      */
     public function getInstallMigration() {
-        require_once($this->getPluginPath() . '/classes/migration/ReviewerCertificateInstallMigration.php');
-        return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
+        try {
+            require_once($this->getPluginPath() . '/classes/migration/ReviewerCertificateInstallMigration.php');
+            return new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration();
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: Failed to load migration: ' . $e->getMessage());
+            return null;
+        }
     }
 
     /**

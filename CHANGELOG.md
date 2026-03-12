@@ -5,6 +5,37 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-03-12
+
+### Fixed - OJS 3.3 Plugin Enable Broken (Issue #65)
+
+- **Fixed: Plugin enable checkbox broken on OJS 3.3 — clicking toggles visually but never fires AJAX**
+  - **Issue**: On OJS 3.3, the plugin enable checkbox appeared to toggle but the plugin was never actually enabled. The AJAX POST to the `/enable` endpoint never fired.
+  - **Root Cause**: OJS 3.3's base `Plugin::getName()` returns `strtolower(get_class($this))` — the fully qualified class name including namespace backslashes: `app\plugins\generic\reviewercertificate\reviewercertificateplugin`. These backslashes get embedded in the checkbox element ID and break the jQuery `pkpHandler` initialization (backslashes are CSS escape characters in selectors).
+  - **Solution**: Override `getName()` to return `'reviewercertificateplugin'` (simple name without namespace). On OJS 3.4+ this is a no-op since `getName()` already returns the short name.
+  - **File Modified**: `classes/ReviewerCertificatePluginCore.php`
+
+- **Fixed: Handler endpoints return HTTP 500 on OJS 3.3**
+  - **Issue**: Certificate download, verification, and batch generation endpoints all returned 500 errors on OJS 3.3.
+  - **Root Cause 1**: `HANDLER_CLASS` was defined as `'CertificateHandler'` (short name) but the actual class is namespaced. OJS 3.3's `PKPPageRouter` calls `get_class_methods(HANDLER_CLASS)` which fails because `'CertificateHandler'` doesn't exist in the global namespace.
+  - **Root Cause 2**: The `CertificateHandler` constructor checked `class_exists('PKP\security\Role')` to decide whether to use class constants (`Role::ROLE_ID_REVIEWER`) or global constants (`ROLE_ID_REVIEWER`). But the compat_autoloader makes `class_exists()` return true on OJS 3.3 by aliasing the class — yet the aliased OJS 3.3 `\Role` class doesn't have class constants (they're global `define()`s).
+  - **Solution**: Use the FQN for `HANDLER_CLASS` and check `defined('ROLE_ID_REVIEWER')` instead of `class_exists('PKP\security\Role')`.
+  - **Files Modified**: `classes/ReviewerCertificatePluginCore.php`, `controllers/CertificateHandler.php`
+
+- **Fixed: E2E tests now run on all OJS versions without skips**
+  - Removed all `test.skip()` and Issue #65 annotations from E2E test files
+  - All 33 E2E tests pass across OJS 3.3, 3.4, and 3.5 (0 skips)
+  - **Files Modified**: `tests/e2e/plugin-enable.spec.ts`, `tests/e2e/certificate-download.spec.ts`, `tests/e2e/batch-generation.spec.ts`, `tests/e2e/certificate-verify.spec.ts`
+
+### Technical Details
+
+- **Why `getName()` override works**: The checkbox ID becomes `select-cell-reviewercertificateplugin-enabled-...` (no backslashes), the jQuery selector matches, `pkpHandler` initializes, and checkbox clicks trigger the AJAX enable call. `plugin_settings` stores `plugin_name = 'reviewercertificateplugin'` consistently across all OJS versions.
+- **Why FQN for `HANDLER_CLASS`**: OJS 3.3's `PKPPageRouter::route()` does `get_class_methods(HANDLER_CLASS)` then `new $handlerClass()`. The FQN `'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler'` resolves correctly because the class file was already loaded via `require_once`.
+- **Why `defined()` over `class_exists()`**: The compat_autoloader creates `class_alias('Role', 'PKP\security\Role')` on OJS 3.3, making `class_exists()` unreliable for detecting OJS version. `defined('ROLE_ID_REVIEWER')` is unambiguous — only OJS 3.3 uses global `define()` for role constants.
+- **E2E verified**: 33/33 tests pass (11 per OJS version) with Playwright against Docker containers running OJS 3.3.0-22, 3.4.0-10, and 3.5.0-3.
+
+---
+
 ## [1.1.8] - 2026-01-19
 
 ### Fixed - OJS 3.3.0-22 Plugin Enable Issue (Complete Fix)
@@ -586,6 +617,7 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 | Version | Date | Type | Key Changes |
 |---------|------|------|-------------|
+| 1.2.0 | 2026-03-12 | Minor | Fixed OJS 3.3 plugin enable (Issue #65), handler 500s, role constants |
 | 1.1.2 | 2026-01-06 | Patch | Fixed OJS 3.4 backward compatibility - class_alias(), global class FQN |
 | 1.1.1 | 2026-01-05 | Patch | Fixed _getInsertId(), missing use statements, tarball structure (Issue #57) |
 | 1.1.0 | 2026-01-05 | Minor | Full OJS 3.5 compatibility - PSR-4 namespaces, .php extensions |
@@ -604,6 +636,12 @@ This release addresses multiple issues reported on PKP Community Forum:
 
 ### From 1.1.1 to 1.1.2
 - **Critical bug fixes** for OJS 3.4 backward compatibility
+- **No database changes** - Safe upgrade with no migration required
+- **No configuration changes** - All existing settings preserved
+- **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)
+
+### From 1.1.8 to 1.2.0
+- **Critical bug fix** for OJS 3.3 plugin enable (Issue #65)
 - **No database changes** - Safe upgrade with no migration required
 - **No configuration changes** - All existing settings preserved
 - **Recommended**: Clear OJS cache after upgrade (`php tools/upgrade.php check`)

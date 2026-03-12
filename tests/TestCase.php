@@ -251,9 +251,9 @@ abstract class TestCase extends PHPUnitTestCase
     protected function assertValidCertificateCode(string $code, string $message = ''): void
     {
         $this->assertMatchesRegularExpression(
-            '/^[A-Z0-9]{12}$/',
+            '/^[A-F0-9]{16}$/',
             $code,
-            $message ?: 'Certificate code should be 12 uppercase alphanumeric characters'
+            $message ?: 'Certificate code should be 16 uppercase hex characters'
         );
     }
 

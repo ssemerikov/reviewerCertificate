@@ -39,7 +39,7 @@ class SecurityTest extends TestCase
 
         // Generate 100 certificate codes
         for ($i = 0; $i < 100; $i++) {
-            $code = strtoupper(substr(md5(uniqid(strval($i), true)), 0, 12));
+            $code = strtoupper(bin2hex(random_bytes(8)));
             $codes[] = $code;
         }
 
@@ -54,22 +54,23 @@ class SecurityTest extends TestCase
     public function testCertificateCodeFormatValidation(): void
     {
         $validCodes = [
-            'ABCD1234EFGH',
-            'XYZ789012345',
-            '123456789ABC',
+            'ABCD1234EF560001',
+            'DEF7890123456789',
+            '123456789ABCDEF0',
         ];
 
         $invalidCodes = [
-            'ABC123',           // Too short
-            'ABCD1234EFGH567', // Too long
-            'abcd1234efgh',     // Lowercase
-            'ABC-123-EFGH',     // Contains hyphens
-            'ABC 123 EFGH',     // Contains spaces
+            'ABC123',                // Too short
+            'ABCD1234EF56789AB',     // Too long (17 chars)
+            'abcd1234ef567890',      // Lowercase
+            'ABCD-1234-EF5678',      // Contains hyphens
+            'ABCD 1234 EF5678',      // Contains spaces
+            'GHIJ1234KLMN5678',      // Non-hex uppercase letters
         ];
 
         foreach ($validCodes as $code) {
             $this->assertMatchesRegularExpression(
-                '/^[A-Z0-9]{12}$/',
+                '/^[A-F0-9]{16}$/',
                 $code,
                 "Code $code should be valid"
             );
@@ -77,7 +78,7 @@ class SecurityTest extends TestCase
 
         foreach ($invalidCodes as $code) {
             $this->assertDoesNotMatchRegularExpression(
-                '/^[A-Z0-9]{12}$/',
+                '/^[A-F0-9]{16}$/',
                 $code,
                 "Code $code should be invalid"
             );
@@ -89,11 +90,11 @@ class SecurityTest extends TestCase
      */
     public function testFileUploadTypeValidation(): void
     {
-        $allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        $allowedTypes = ['image/jpeg', 'image/png'];
 
         $testFiles = [
             ['type' => 'image/jpeg', 'expected' => true],
-            ['type' => 'image/jpg', 'expected' => true],
+            ['type' => 'image/jpg', 'expected' => false],  // Non-standard MIME; getimagesize() returns 'image/jpeg'
             ['type' => 'image/png', 'expected' => true],
             ['type' => 'image/gif', 'expected' => false],
             ['type' => 'application/pdf', 'expected' => false],
@@ -269,7 +270,7 @@ class SecurityTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'CERT1ABC1234',
+            'certificate_code' => 'A1B2C3D4E5F61003',
             'download_count' => 0,
         ]);
 
@@ -281,7 +282,7 @@ class SecurityTest extends TestCase
             'context_id' => 1,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'CERT2XYZ5678',
+            'certificate_code' => 'A1B2C3D4E5F61004',
             'download_count' => 0,
         ]);
 
@@ -312,7 +313,7 @@ class SecurityTest extends TestCase
             'context_id' => $context1Id,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'CTX1CERT1234',
+            'certificate_code' => 'A1B2C3D4E5F61005',
             'download_count' => 0,
         ]);
 
@@ -323,7 +324,7 @@ class SecurityTest extends TestCase
             'context_id' => $context2Id,
             'template_id' => 1,
             'date_issued' => date('Y-m-d H:i:s'),
-            'certificate_code' => 'CTX2CERT5678',
+            'certificate_code' => 'A1B2C3D4E5F61006',
             'download_count' => 0,
         ]);
 
@@ -343,7 +344,7 @@ class SecurityTest extends TestCase
      */
     public function testCertificateCodeCollisionHandling(): void
     {
-        $code = 'COLLISION123';
+        $code = 'A1B2C3D4E5F61007';
 
         // Insert first certificate
         $this->dbMock->insert('reviewer_certificates', [
@@ -397,7 +398,7 @@ class SecurityTest extends TestCase
     public function testMaximumLengthValidation(): void
     {
         $maxLengths = [
-            'certificateCode' => 12,
+            'certificateCode' => 16,
             'headerText' => 500,
             'bodyTemplate' => 5000,
             'footerText' => 500,

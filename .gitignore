@@ -18,6 +18,18 @@ FORCE_RELOAD_OPCACHE.php
 QUERY_CERTIFICATES.php
 TEST_DIRECT_INSERT.php
 
+# Local OJS test environments
+/ojs-test/
+
+# Node.js / Playwright E2E tests
+node_modules/
+package-lock.json
+test-results/
+.playwright-mcp/
+
+# Debug artifacts
+ojs33-login-debug.png
+
 # Development documentation
 CODE_ANALYSIS_REPORT.md
 OJS_3.4_COMPATIBILITY.md
