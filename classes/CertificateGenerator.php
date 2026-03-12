@@ -149,7 +149,11 @@ class CertificateGenerator {
         self::ensureTCPDF();
 
         // Create new PDF document (TCPDF is in global namespace)
-        $pdf = new \TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $orientation = $this->getTemplateSetting('pageOrientation', 'P');
+        if (!in_array($orientation, array('P', 'L'))) {
+            $orientation = 'P';
+        }
+        $pdf = new \TCPDF($orientation, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
 
         // Set document information
         $pdf->SetCreator('OJS Reviewer Certificate Plugin');
@@ -225,7 +229,7 @@ class CertificateGenerator {
             // Add background image
             try {
                 $pdf->Image($realPath, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 150, '', false, false, 0);
-            } catch (Exception $e) {
+            } catch (\Throwable $e) {
                 error_log("ReviewerCertificate: Error adding background image: " . $e->getMessage());
             }
         }
@@ -333,14 +337,22 @@ class CertificateGenerator {
         $verificationUrl = $baseUrl . '/index.php/' . $contextPath . '/certificate/verify/' . $code;
 
 
-        // Position QR code in bottom right corner
+        // Position QR code in bottom right corner — dynamic for portrait/landscape
+        $pageWidth = $pdf->getPageWidth();
+        $pageHeight = $pdf->getPageHeight();
+        $qrSize = 30;
+        $margin = 10;
+
+        $qrX = $pageWidth - $qrSize - $margin;
+        $qrY = $pageHeight - $qrSize - $margin - 5; // 5mm extra for label below
+
         $pdf->write2DBarcode(
             $verificationUrl,
             'QRCODE,H',
-            170,
-            250,
-            30,
-            30,
+            $qrX,
+            $qrY,
+            $qrSize,
+            $qrSize,
             array(),
             'N'
         );
@@ -350,7 +362,8 @@ class CertificateGenerator {
         $baseFontSize = $this->getTemplateSetting('fontSize', 12);
         $qrLabelSize = round($baseFontSize * 0.5);     // 0.5x base (default: 6)
 
-        $pdf->SetXY(150, 282);
+        $labelY = $qrY + $qrSize + 2;
+        $pdf->SetXY($qrX - 10, $labelY);
         $pdf->SetFont($pdf->getFontFamily(), '', $qrLabelSize);
         $pdf->Cell(50, 3, 'Scan to verify', 0, 0, 'C');
     }
@@ -386,15 +399,48 @@ class CertificateGenerator {
             // Reviewer information
             if ($this->reviewer) {
                 // OJS 3.5 compatibility: Use helper methods with fallbacks
-                $variables['reviewerName'] = $this->reviewer->getFullName();
                 $variables['reviewerFirstName'] = $this->getReviewerGivenName($this->reviewer);
                 $variables['reviewerLastName'] = $this->getReviewerFamilyName($this->reviewer);
+
+                // OJS 3.3 locale fix: getFullName() may return empty when names are
+                // stored under a different locale (e.g., 'en' vs 'en_US'). Fall back
+                // to constructing the name from given+family, then to direct DB query.
+                $fullName = $this->reviewer->getFullName();
+                if (empty(trim($fullName))) {
+                    $fullName = trim($variables['reviewerFirstName'] . ' ' . $variables['reviewerLastName']);
+                }
+                if (empty(trim($fullName))) {
+                    $fullName = $this->getReviewerNameFromDB($this->reviewer->getId());
+                }
+                $variables['reviewerName'] = $fullName;
+
+                // Also fill in first/last from DB if they were empty
+                if (empty($variables['reviewerFirstName']) || empty($variables['reviewerLastName'])) {
+                    $dbNames = $this->getReviewerNamesFromDB($this->reviewer->getId());
+                    if (empty($variables['reviewerFirstName']) && !empty($dbNames['givenName'])) {
+                        $variables['reviewerFirstName'] = $dbNames['givenName'];
+                    }
+                    if (empty($variables['reviewerLastName']) && !empty($dbNames['familyName'])) {
+                        $variables['reviewerLastName'] = $dbNames['familyName'];
+                    }
+                    // Rebuild full name if it was empty and we got DB names
+                    if (empty(trim($variables['reviewerName']))) {
+                        $variables['reviewerName'] = trim($dbNames['givenName'] . ' ' . $dbNames['familyName']);
+                    }
+                }
             }
 
             // Submission information - OJS 3.5 compatibility
             if ($this->submission) {
                 $variables['submissionTitle'] = $this->getSubmissionTitle($this->submission);
                 $variables['submissionId'] = $this->submission->getId();
+
+                // OJS 3.3 locale fallback for submission title
+                if (empty($variables['submissionTitle']) && $this->reviewAssignment) {
+                    $variables['submissionTitle'] = $this->getSubmissionTitleFromDB(
+                        $this->reviewAssignment->getSubmissionId()
+                    );
+                }
             }
 
             // Context information
@@ -575,6 +621,81 @@ class CertificateGenerator {
             return $context->getAcronym(null) ?: '';
         }
 
+        return '';
+    }
+
+    /**
+     * Get reviewer full name directly from database, ignoring locale.
+     * Fallback for OJS 3.3 where locale mismatch ('en' vs 'en_US') can
+     * cause getFullName() to return empty.
+     * @param int $userId
+     * @return string
+     */
+    private function getReviewerNameFromDB($userId) {
+        $names = $this->getReviewerNamesFromDB($userId);
+        return trim($names['givenName'] . ' ' . $names['familyName']);
+    }
+
+    /**
+     * Get reviewer given/family name directly from database, any locale.
+     * @param int $userId
+     * @return array ['givenName' => string, 'familyName' => string]
+     */
+    private function getReviewerNamesFromDB($userId) {
+        $result = array('givenName' => '', 'familyName' => '');
+        try {
+            $certificateDao = DAORegistry::getDAO('CertificateDAO');
+            if (!$certificateDao) {
+                return $result;
+            }
+            $rows = $certificateDao->retrieve(
+                'SELECT setting_name, setting_value FROM user_settings ' .
+                'WHERE user_id = ? AND setting_name IN (?, ?) AND setting_value IS NOT NULL AND setting_value != ? ' .
+                'ORDER BY locale LIMIT 2',
+                array((int) $userId, 'givenName', 'familyName', '')
+            );
+            foreach ($rows as $row) {
+                $row = (array) $row;
+                if ($row['setting_name'] === 'givenName' && empty($result['givenName'])) {
+                    $result['givenName'] = $row['setting_value'];
+                }
+                if ($row['setting_name'] === 'familyName' && empty($result['familyName'])) {
+                    $result['familyName'] = $row['setting_value'];
+                }
+            }
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: DB name fallback failed: ' . $e->getMessage());
+        }
+        return $result;
+    }
+
+    /**
+     * Get submission title directly from database, ignoring locale.
+     * Fallback for OJS 3.3 where locale mismatch can cause empty titles.
+     * @param int $submissionId
+     * @return string
+     */
+    private function getSubmissionTitleFromDB($submissionId) {
+        try {
+            $certificateDao = DAORegistry::getDAO('CertificateDAO');
+            if (!$certificateDao) {
+                return '';
+            }
+            $rows = $certificateDao->retrieve(
+                'SELECT ps.setting_value FROM publication_settings ps ' .
+                'JOIN publications p ON p.publication_id = ps.publication_id ' .
+                'WHERE p.submission_id = ? AND ps.setting_name = ? ' .
+                'AND ps.setting_value IS NOT NULL AND ps.setting_value != ? ' .
+                'ORDER BY ps.locale LIMIT 1',
+                array((int) $submissionId, 'title', '')
+            );
+            foreach ($rows as $row) {
+                $row = (array) $row;
+                return $row['setting_value'];
+            }
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: DB title fallback failed: ' . $e->getMessage());
+        }
         return '';
     }
 }

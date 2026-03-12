@@ -107,6 +107,58 @@ class CertificateHandler extends Handler {
     }
 
     /**
+     * Ensure plugin locale data is loaded for the current request.
+     * OJS 3.3 may fail to load locale files on public pages when registered
+     * with relative paths during plugin bootstrap.
+     */
+    private function ensurePluginLocaleLoaded() {
+        $plugin = $this->getPlugin();
+        if (!$plugin) {
+            return;
+        }
+
+        // Standard reload attempt
+        if (method_exists($plugin, 'addLocaleData')) {
+            $plugin->addLocaleData();
+        }
+
+        // Check if translations are actually available
+        $testKey = 'plugins.generic.reviewerCertificate.verify.title';
+        $translated = __($testKey);
+        if ($translated === '##' . $testKey . '##') {
+            // Translations still missing — manually register with absolute path.
+            // OJS 3.3.0-22 uses .po files (via Gettext), not .xml.
+            $localeDir = dirname(__DIR__) . '/locale';
+
+            // Determine current locale
+            $locale = 'en_US';
+            if (class_exists('AppLocale', false)) {
+                $currentLocale = \AppLocale::getLocale();
+                if ($currentLocale) {
+                    $locale = $currentLocale;
+                }
+            }
+
+            // Register .po file with absolute path
+            $localeFile = $localeDir . '/' . $locale . '/locale.po';
+            if (file_exists($localeFile) && class_exists('AppLocale', false)) {
+                \AppLocale::registerLocaleFile($locale, $localeFile);
+            }
+
+            // If locale was 'en', also try 'en_US' (or vice versa)
+            if (strpos($locale, '_') === false) {
+                $altLocale = $locale . '_US';
+            } else {
+                $altLocale = substr($locale, 0, 2);
+            }
+            $altFile = $localeDir . '/' . $altLocale . '/locale.po';
+            if (file_exists($altFile) && class_exists('AppLocale', false)) {
+                \AppLocale::registerLocaleFile($altLocale, $altFile);
+            }
+        }
+    }
+
+    /**
      * Download certificate
      * @param $args array
      * @param $request Request
@@ -221,6 +273,9 @@ class CertificateHandler extends Handler {
      * @param $request Request
      */
     public function verify($args, $request) {
+        // OJS 3.3 compatibility: ensure plugin locale is loaded for public pages
+        $this->ensurePluginLocaleLoaded();
+
         // Get certificate code from URL path or query parameter
         $certificateCode = isset($args[0]) ? $args[0] : $request->getUserVar('code');
 
@@ -397,7 +452,8 @@ class CertificateHandler extends Handler {
             'textColorG',
             'textColorB',
             'includeQRCode',
-            'minimumReviews'
+            'minimumReviews',
+            'pageOrientation'
         );
 
         foreach ($settingNames as $name) {

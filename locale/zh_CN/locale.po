@@ -38,9 +38,6 @@ msgstr "点击下载按钮后，您的证书将自动生成。"
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "下载证书"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "证书设置"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "配置审稿人的证书模板和资格标准。"
@@ -93,7 +90,6 @@ msgstr "默认模板"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "使用默认模板"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "外观设置"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "字号"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "文字颜色（RGB）"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "使用RGB值指定文字颜色（每个分量范围0-255）"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "资格标准"
 
@@ -134,7 +141,6 @@ msgstr "审稿人获得证书所需的最低完成审稿数量"
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "最低审稿数必须是大于或等于1的数字"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "验证选项"
 
@@ -172,7 +178,7 @@ msgstr "无可用的期刊上下文。请确保您从有效的期刊访问。"
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "数据库访问当前不可用。请联系系统管理员。"
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "验证证书"
 
@@ -268,9 +274,6 @@ msgstr "下载总数"
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "每份证书平均下载次数"
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "您的审稿人证书已可下载"
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "证书设置"
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "尊敬的{$reviewerName}：\n\n感谢您完成同行评审。您的审稿人荣誉证书现已可供下载。\n\n请访问以下链接下载您的证书：\n{$certificateUrl}\n\n感谢您对学术出版的贡献。"

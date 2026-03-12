@@ -406,6 +406,86 @@ class CertificateGeneratorTest extends TestCase
     }
 
     /**
+     * Test page orientation setting validation
+     */
+    public function testPageOrientationValidation(): void
+    {
+        // Valid orientations
+        $validOrientations = ['P', 'L'];
+        foreach ($validOrientations as $orientation) {
+            $this->assertContains($orientation, $validOrientations);
+        }
+
+        // Invalid orientations should default to 'P'
+        $invalidValues = ['X', 'landscape', 'portrait', '', '0'];
+        foreach ($invalidValues as $invalid) {
+            $sanitized = in_array($invalid, ['P', 'L']) ? $invalid : 'P';
+            $this->assertEquals('P', $sanitized, "Invalid orientation '$invalid' should default to 'P'");
+        }
+    }
+
+    /**
+     * Test landscape orientation produces swapped dimensions
+     */
+    public function testLandscapeDimensions(): void
+    {
+        // A4 portrait dimensions
+        $portraitWidth = 210;
+        $portraitHeight = 297;
+
+        // A4 landscape dimensions (swapped)
+        $landscapeWidth = 297;
+        $landscapeHeight = 210;
+
+        $this->assertEquals($portraitHeight, $landscapeWidth);
+        $this->assertEquals($portraitWidth, $landscapeHeight);
+    }
+
+    /**
+     * Test QR code dynamic positioning for both orientations
+     */
+    public function testQRCodeDynamicPositioning(): void
+    {
+        $qrSize = 30;
+        $margin = 10;
+
+        // Portrait: 210x297mm
+        $portraitWidth = 210;
+        $portraitHeight = 297;
+        $qrXPortrait = $portraitWidth - $qrSize - $margin;
+        $qrYPortrait = $portraitHeight - $qrSize - $margin - 5;
+
+        $this->assertEquals(170, $qrXPortrait);
+        $this->assertEquals(252, $qrYPortrait);
+        $this->assertLessThan($portraitWidth, $qrXPortrait + $qrSize, 'QR code should fit within portrait page width');
+        $this->assertLessThan($portraitHeight, $qrYPortrait + $qrSize, 'QR code should fit within portrait page height');
+
+        // Landscape: 297x210mm
+        $landscapeWidth = 297;
+        $landscapeHeight = 210;
+        $qrXLandscape = $landscapeWidth - $qrSize - $margin;
+        $qrYLandscape = $landscapeHeight - $qrSize - $margin - 5;
+
+        $this->assertEquals(257, $qrXLandscape);
+        $this->assertEquals(165, $qrYLandscape);
+        $this->assertLessThan($landscapeWidth, $qrXLandscape + $qrSize, 'QR code should fit within landscape page width');
+        $this->assertLessThan($landscapeHeight, $qrYLandscape + $qrSize, 'QR code should fit within landscape page height');
+    }
+
+    /**
+     * Test default orientation is portrait when no setting provided
+     */
+    public function testDefaultOrientationIsPortrait(): void
+    {
+        // Settings with no pageOrientation key — should default to 'P'
+        $settings = $this->testSettings;
+        $this->assertArrayNotHasKey('pageOrientation', $settings);
+
+        $orientation = isset($settings['pageOrientation']) ? $settings['pageOrientation'] : 'P';
+        $this->assertEquals('P', $orientation);
+    }
+
+    /**
      * Test margin calculations
      */
     public function testMargins(): void

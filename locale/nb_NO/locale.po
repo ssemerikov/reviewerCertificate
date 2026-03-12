@@ -38,9 +38,6 @@ msgstr "Sertifikatet ditt vil bli generert automatisk når du klikker på nedlas
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Last ned Sertifikat"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Sertifikatinnstillinger"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigurer sertifikatmaler og kvalifikasjonskriterier for fagfeller."
@@ -93,7 +90,6 @@ msgstr "Standardmal"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Bruk standardmal"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Utseendeinnstillinger"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Skriftstørrelse"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Tekstfarge (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Spesifiser tekstfargen ved hjelp av RGB-verdier (0-255 for hver komponent)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Kvalifikasjonskriterier"
 
@@ -134,19 +141,15 @@ msgstr "Minimumsantall fullførte vurderinger som kreves før en fagfelle kan mo
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Minimumsantall vurderinger må være et tall større enn eller lik 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Verifikasjonsalternativer"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Inkluder QR-kode for sertifikatverifisering"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Forhåndsvis Sertifikat"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Ugyldig bildetype. Vennligst last opp en JPG- eller PNG-fil."
 
@@ -175,15 +178,13 @@ msgstr "Ingen tidsskriftkontekst tilgjengelig. Vennligst sørg for at du får ti
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Databasetilgang er for øyeblikket utilgjengelig. Vennligst kontakt systemadministratoren."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Verifiser Sertifikat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Skriv inn en sertifikatkode for å verifisere ekthet"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Sertifikatkode"
 
@@ -215,11 +216,9 @@ msgstr "Utstedelsesdato"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Massegenerering av Sertifikater"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Generer sertifikater for flere fagfeller samtidig. Velg fagfeller fra listen nedenfor som har fullført vurderinger, men som ennå ikke har sertifikater."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Velg Fagfeller"
 
@@ -254,11 +253,9 @@ msgstr "{$count} sertifikat/sertifikater generert"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Sertifikatstatistikk"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Oversikt over sertifikatgenerering og -bruk i tidsskriftet ditt"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Totalt Utstedte Sertifikater"
 
@@ -276,4 +273,7 @@ msgstr "Totale Nedlastinger"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Gjennomsnittlige Nedlastinger per Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Sertifikatinnstillinger"
 

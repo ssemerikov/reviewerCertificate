@@ -38,9 +38,6 @@ msgstr "Vaš certifikat bit će automatski generiran kada kliknete na gumb za pr
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Preuzmi Certifikat"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Postavke Certifikata"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigurirajte predloške certifikata i kriterije prihvatljivosti za recenzente."
@@ -93,7 +90,6 @@ msgstr "Zadani predložak"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Koristi zadani predložak"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Postavke Izgleda"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Veličina Fonta"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Boja Teksta (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Odredite boju teksta koristeći RGB vrijednosti (0-255 za svaku komponentu)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Kriteriji Prihvatljivosti"
 
@@ -134,19 +141,15 @@ msgstr "Minimalan broj završenih recenzija potreban prije nego recenzent može 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Minimalan broj recenzija mora biti broj veći ili jednak 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Opcije Provjere"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Uključi QR kod za provjeru certifikata"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Pregled Certifikata"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Nevažeća vrsta slike. Molimo prenesite JPG ili PNG datoteku."
 
@@ -175,15 +178,13 @@ msgstr "Nema dostupnog konteksta časopisa. Molimo osigurajte da pristupate iz v
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Pristup bazi podataka trenutno nije dostupan. Molimo kontaktirajte administratora sustava."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Provjeri Certifikat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Unesite kod certifikata za provjeru autentičnosti"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Kod Certifikata"
 
@@ -215,11 +216,9 @@ msgstr "Datum Izdavanja"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Skupno Generiranje Certifikata"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Generirajte certifikate za više recenzenata odjednom. Odaberite recenzente s donje liste koji su završili recenzije, ali još nemaju certifikate."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Odaberi Recenzente"
 
@@ -254,11 +253,9 @@ msgstr "{$count} certifikat/certifikata uspješno generirano"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Statistika Certifikata"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Pregled generiranja i korištenja certifikata u vašem časopisu"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Ukupno Izdanih Certifikata"
 
@@ -276,4 +273,7 @@ msgstr "Ukupno Preuzimanja"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Prosječan Broj Preuzimanja po Certifikatu"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Postavke Certifikata"
 

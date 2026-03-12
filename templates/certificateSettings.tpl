@@ -191,6 +191,11 @@
 			{fbvElement type="text" id="fontSize" value=$fontSize|default:12 size=$fbvStyles.size.SMALL}
 		{/fbvFormSection}
 
+		{* Page Orientation *}
+		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.pageOrientation" description="plugins.generic.reviewerCertificate.settings.pageOrientationDescription"}
+			{fbvElement type="select" id="pageOrientation" from=$orientationOptions selected=$pageOrientation translate=false defaultValue="P"}
+		{/fbvFormSection}
+
 		{* Text Color *}
 		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.textColor" description="plugins.generic.reviewerCertificate.settings.textColorDescription"}
 			<div class="pkp_helpers_clear">

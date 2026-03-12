@@ -38,9 +38,6 @@ msgstr "Tanúsítványa automatikusan létrejön, amikor a letöltés gombra kat
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Tanúsítvány Letöltése"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Tanúsítvány Beállítások"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Tanúsítvány sablonok és jogosultsági kritériumok konfigurálása bírálók számára."
@@ -93,7 +90,6 @@ msgstr "Alapértelmezett sablon"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Alapértelmezett sablon használata"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Megjelenési Beállítások"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Betűméret"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Szövegszín (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Adja meg a szövegszínt RGB értékekkel (0-255 minden komponenshez)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Jogosultsági Kritériumok"
 
@@ -134,7 +141,6 @@ msgstr "A tanúsítvány megszerzéséhez szükséges minimum befejezett bírál
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "A minimum bírálatok számának 1-nél nagyobb vagy egyenlő számnak kell lennie"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Ellenőrzési Beállítások"
 
@@ -172,7 +178,7 @@ msgstr "Nincs elérhető folyóirat kontextus. Kérjük, győződjön meg róla,
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Az adatbázis hozzáférés jelenleg nem elérhető. Kérjük, lépjen kapcsolatba a rendszergazdával."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Tanúsítvány Ellenőrzése"
 
@@ -268,9 +274,6 @@ msgstr "Összes Letöltés"
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Átlagos Letöltés Tanúsítványonként"
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "Bírálói tanúsítványa letölthető"
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Tanúsítvány Beállítások"
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "Tisztelt {$reviewerName}!\n\nKöszönjük, hogy elvégezte a szakmai bírálatot. Elismerő bírálói tanúsítványa most letölthető.\n\nKérjük, látogasson el az alábbi linkre a tanúsítvány letöltéséhez:\n{$certificateUrl}\n\nKöszönjük hozzájárulását a tudományos publikáláshoz."

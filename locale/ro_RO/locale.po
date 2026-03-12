@@ -23,10 +23,7 @@ msgid "plugins.generic.reviewerCertificate.certificateTitle"
 msgstr "Certificat de Recenzie"
 
 msgid "plugins.generic.reviewerCertificate.certificateSubject"
-msgstr ""
-"Certificat de Recenzie Colegi\n"
-"\n"
-"ală"
+msgstr "Certificat de Recenzie Colegi\n\nală"
 
 # Dashboard messages
 msgid "plugins.generic.reviewerCertificate.certificateAvailable"
@@ -40,9 +37,6 @@ msgstr "Certificatul dumneavoastră va fi generat automat când veți apăsa but
 
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Descarcă Certificatul"
-
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Setări Certificate"
 
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
@@ -96,7 +90,6 @@ msgstr "Șablon implicit"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Utilizați șablonul implicit"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Setări Aspect"
 
@@ -118,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Dimensiune Font"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Culoare Text (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Specificați culoarea textului utilizând valori RGB (0-255 pentru fiecare componentă)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Criterii de Eligibilitate"
 
@@ -137,19 +141,15 @@ msgstr "Numărul minim de recenzii finalizate necesar înainte ca un recenzor s�
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Numărul minim de recenzii trebuie să fie un număr mai mare sau egal cu 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Opțiuni de Verificare"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Includeți codul QR pentru verificarea certificatului"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Previzualizare Certificat"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Tip de imagine nevalid. Vă rugăm să încărcați un fișier JPG sau PNG."
 
@@ -178,15 +178,13 @@ msgstr "Nu există un context de revistă disponibil. Vă rugăm să vă asigura
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Accesul la baza de date este momentan indisponibil. Vă rugăm să contactați administratorul de sistem."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Verificare Certificat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Introduceți un cod de certificat pentru a-i verifica autenticitatea"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Cod Certificat"
 
@@ -218,11 +216,9 @@ msgstr "Data Emiterii"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Generare în Lot a Certificatelor"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Generați certificate pentru mai mulți recenzori simultan. Selectați recenzorii din lista de mai jos care au finalizat recenzii dar nu au încă certificate."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Selectați Recenzori"
 
@@ -257,11 +253,9 @@ msgstr "{$count} certificat/certificate generate cu succes"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Statistici Certificate"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Prezentare generală a generării și utilizării certificatelor în revista dumneavoastră"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Total Certificate Emise"
 
@@ -279,4 +273,7 @@ msgstr "Total Descărcări"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Medie Descărcări per Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Setări Certificate"
 

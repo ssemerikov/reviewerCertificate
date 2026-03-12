@@ -139,14 +139,21 @@ Test structure:
 - `tests/Integration/` — Workflow testing
 - `tests/Compatibility/` — OJS 3.3/3.4/3.5 specific tests
 - `tests/Security/` — Authorization and input validation
-- `tests/Locale/` — Translation validation (82 keys per language)
+- `tests/Locale/` — Translation validation (86 keys per language)
 
 ## Localization
 
 32 languages in `locale/` directory with dual format support:
-- `.xml` files for OJS 3.3/3.4
-- `.po` files for OJS 3.5+ (required for translations to work)
+- `.xml` files — source of truth for all translations
+- `.po` files — **required by all OJS versions** (OJS 3.3.0-22 uses `Gettext\Translations::fromPoFile()` in `LocaleFile::load()`)
 
-Both formats must be kept in sync. Use the conversion script: `php temp/convert_xml_to_po.php`
+**Critical**: Both formats MUST be kept in sync. After editing `.xml` files, regenerate `.po`:
+```bash
+php temp/convert_xml_to_po.php
+```
+
+**Why both formats?** OJS 3.3.0-22's `LocaleFile::load()` reads `.po` files via Gettext, NOT `.xml`. If `.po` files are missing keys that exist in `.xml`, those translations will show as `##key##` at runtime. The `.xml` files remain the source of truth because they're easier to edit and some OJS admin tools reference them.
+
+Current key count: 86 per language (84 for `en/` which lacks 2 error keys).
 
 Validate translations: `vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`

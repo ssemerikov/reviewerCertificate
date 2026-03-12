@@ -38,9 +38,6 @@ msgstr "Todistuksesi luodaan automaattisesti, kun napsautat lataus-painiketta."
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Lataa Todistus"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Todistusasetukset"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Määritä todistuspohjat ja kelpoisuuskriteerit arvioitsijoille."
@@ -93,7 +90,6 @@ msgstr "Oletuspohja"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Käytä oletuspohjaa"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Ulkoasuasetukset"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Fonttikoko"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Tekstin Väri (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Määritä tekstin väri käyttämällä RGB-arvoja (0-255 kullekin komponentille)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Kelpoisuuskriteerit"
 
@@ -134,19 +141,15 @@ msgstr "Vähimmäismäärä suoritettuja arviointeja, joka vaaditaan ennen kuin 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Vähimmäismäärän arviointeja tulee olla numero, joka on suurempi tai yhtä suuri kuin 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Vahvistusvaihtoehdot"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Sisällytä QR-koodi todistuksen vahvistamiseen"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Esikatsele Todistusta"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Virheellinen kuvatyyppi. Lataa JPG- tai PNG-tiedosto."
 
@@ -175,15 +178,13 @@ msgstr "Lehden kontekstia ei ole saatavilla. Varmista, että käytät pääsyä 
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Tietokantayhteys ei ole tällä hetkellä saatavilla. Ota yhteyttä järjestelmän ylläpitäjään."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Vahvista Todistus"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Anna todistuskoodi sen aitouden vahvistamiseksi"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Todistuskoodi"
 
@@ -215,11 +216,9 @@ msgstr "Myöntämispäivä"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Todistusten Eräluonti"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Luo todistuksia useille arvioitsijoille kerralla. Valitse arvioitsijat alla olevasta luettelosta, jotka ovat suorittaneet arvioinnit mutta joilla ei vielä ole todistuksia."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Valitse Arvioitsijat"
 
@@ -254,11 +253,9 @@ msgstr "{$count} todistus/todistusta luotu onnistuneesti"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Todistustilastot"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Yleiskatsaus todistusten luomisesta ja käytöstä lehdessäsi"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Myönnettyjä Todistuksia Yhteensä"
 
@@ -276,4 +273,7 @@ msgstr "Latauksia Yhteensä"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Keskimääräinen Latausmäärä Todistusta Kohden"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Todistusasetukset"
 

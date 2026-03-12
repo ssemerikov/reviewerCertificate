@@ -63,6 +63,10 @@
 	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
 	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
 	<message key="plugins.generic.reviewerCertificate.settings.fontSize">フォントサイズ</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientation">Page Orientation</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientationDescription">Choose portrait (vertical) or landscape (horizontal) layout for the certificate</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.portrait">Portrait (Vertical)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.landscape">Landscape (Horizontal)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.textColor">テキスト色（RGB）</message>
 	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">RGB値でテキスト色を指定（各成分0〜255）</message>
 

@@ -32,13 +32,13 @@ msgstr "Your Certificate is Ready!"
 msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
 msgstr "Thank you for completing this review. You can now download your certificate of recognition."
 
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Your certificate will be generated automatically when you click the download button."
+
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Download Certificate"
 
 # Settings form
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Certificate Settings"
-
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Configure certificate templates and eligibility criteria for reviewers."
 
@@ -49,7 +49,7 @@ msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
 msgstr "Background Image"
 
 msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
-msgstr "Upload a background image for the certificate (JPG or PNG, recommended size: 2100x2970 pixels for A4)"
+msgstr "Upload a background image for the certificate (JPG or PNG, recommended size: 2100x2970 pixels for A4 portrait, 2970x2100 for landscape)"
 
 msgid "plugins.generic.reviewerCertificate.settings.currentImage"
 msgstr "Current background image"
@@ -90,7 +90,6 @@ msgstr "Default template"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Use default template"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Appearance Settings"
 
@@ -112,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Font Size"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Text Color (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Specify the text color using RGB values (0-255 for each component)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Eligibility Criteria"
 
@@ -162,12 +172,11 @@ msgstr "No reviewers selected for batch certificate generation"
 msgid "plugins.generic.reviewerCertificate.error.accessDenied"
 msgstr "Access denied. You do not have permission to download this certificate."
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "Your Review Certificate is Ready"
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "No journal context available. Please ensure you are accessing this from a valid journal."
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "Dear {$reviewerName},\n\nThank you for completing your peer review. Your certificate of recognition is now available for download.\n\nYou can download your certificate at: {$certificateUrl}\n\nThank you for your valuable contribution to our journal.\n\nSincerely,\nThe Editorial Team"
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Database access is currently unavailable. Please contact the system administrator."
 
 # Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
@@ -188,17 +197,74 @@ msgstr "Certificate Valid"
 msgid "plugins.generic.reviewerCertificate.verify.invalid"
 msgstr "Certificate Invalid"
 
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "The certificate code you entered is not valid or does not exist in our system."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Certificate Code"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Reviewer Name"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Journal Name"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Date Issued"
+
 # Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Batch Certificate Generation"
 
 msgid "plugins.generic.reviewerCertificate.batch.description"
-msgstr "Generate certificates for multiple reviewers at once"
+msgstr "Generate certificates for multiple reviewers at once. Select reviewers from the list below who have completed reviews but don't yet have certificates."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Select Reviewers"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "completed reviews"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "No eligible reviewers found. All reviewers have certificates for their completed reviews."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Hold Ctrl (Windows/Linux) or Cmd (Mac) to select multiple reviewers"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Generate Certificates"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Generating certificates..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Please select at least one reviewer"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "certificate(s) generated successfully"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "An error occurred while generating certificates. Please try again."
 
 msgid "plugins.generic.reviewerCertificate.batch.generated"
 msgstr "{$count} certificate(s) generated successfully"
 
 # Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Certificate Statistics"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Overview of certificate generation and usage in your journal"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Total Certificates Issued"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Total Downloads"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Unique Reviewers with Certificates"
+
 msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
 msgstr "Total Certificates Issued"
 
@@ -207,3 +273,7 @@ msgstr "Total Downloads"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Average Downloads per Certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Certificate Settings"
+

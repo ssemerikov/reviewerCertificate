@@ -38,9 +38,6 @@ msgstr "El vostre certificat es generarà automàticament quan feu clic al botó
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Descarregar Certificat"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Configuració de Certificats"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Configureu les plantilles de certificats i els criteris d'elegibilitat per als revisors."
@@ -93,7 +90,6 @@ msgstr "Plantilla per defecte"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Utilitzar plantilla per defecte"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Configuració d'Aparença"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Mida del Tipus de Lletra"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Color del Text (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Especifiqueu el color del text utilitzant valors RGB (0-255 per a cada component)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Criteris d'Elegibilitat"
 
@@ -134,19 +141,15 @@ msgstr "El nombre mínim de revisions completades requerides abans que un reviso
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "El nombre mínim de revisions ha de ser un número més gran o igual a 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Opcions de Verificació"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Incloure codi QR per a la verificació del certificat"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Previsualitzar Certificat"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Tipus d'imatge no vàlid. Si us plau, carregueu un fitxer JPG o PNG."
 
@@ -175,15 +178,13 @@ msgstr "No hi ha cap context de revista disponible. Assegureu-vos que accediu de
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "L'accés a la base de dades no està disponible actualment. Si us plau, contacteu amb l'administrador del sistema."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Verificar Certificat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Introduïu un codi de certificat per verificar-ne l'autenticitat"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Codi del Certificat"
 
@@ -215,11 +216,9 @@ msgstr "Data d'Emissió"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Generació Massiva de Certificats"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Genereu certificats per a múltiples revisors alhora. Seleccioneu revisors de la llista a continuació que hagin completat revisions però que encara no tinguin certificats."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Seleccionar Revisors"
 
@@ -254,11 +253,9 @@ msgstr "{$count} certificat/s generat/s amb èxit"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Estadístiques de Certificats"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Resum de la generació i ús de certificats a la vostra revista"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Total de Certificats Emesos"
 
@@ -276,4 +273,7 @@ msgstr "Total de Descàrregues"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Mitjana de Descàrregues per Certificat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Configuració de Certificats"
 

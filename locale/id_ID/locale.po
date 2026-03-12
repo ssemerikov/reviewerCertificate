@@ -38,9 +38,6 @@ msgstr "Sertifikat Anda akan dibuat secara otomatis saat Anda mengklik tombol un
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Unduh Sertifikat"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Pengaturan Sertifikat"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigurasi templat sertifikat dan kriteria kelayakan untuk mitra bestari."
@@ -93,7 +90,6 @@ msgstr "Templat bawaan"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Gunakan templat bawaan"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Pengaturan Tampilan"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Ukuran Huruf"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Warna Teks (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Tentukan warna teks menggunakan nilai RGB (0-255 untuk setiap komponen)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Kriteria Kelayakan"
 
@@ -134,19 +141,15 @@ msgstr "Jumlah minimum tinjauan yang diselesaikan yang diperlukan sebelum mitra 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Jumlah minimum tinjauan harus berupa angka yang lebih besar atau sama dengan 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Opsi Verifikasi"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Sertakan kode QR untuk verifikasi sertifikat"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Pratinjau Sertifikat"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Jenis gambar tidak valid. Harap unggah file JPG atau PNG."
 
@@ -175,15 +178,13 @@ msgstr "Tidak ada konteks jurnal yang tersedia. Pastikan Anda mengakses dari jur
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Akses basis data saat ini tidak tersedia. Harap hubungi administrator sistem."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Verifikasi Sertifikat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Masukkan kode sertifikat untuk memverifikasi keasliannya"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Kode Sertifikat"
 
@@ -215,11 +216,9 @@ msgstr "Tanggal Penerbitan"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Pembuatan Sertifikat Batch"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Buat sertifikat untuk beberapa mitra bestari sekaligus. Pilih mitra bestari dari daftar di bawah ini yang telah menyelesaikan tinjauan tetapi belum memiliki sertifikat."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Pilih Mitra Bestari"
 
@@ -254,11 +253,9 @@ msgstr "{$count} sertifikat berhasil dibuat"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Statistik Sertifikat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Ikhtisar pembuatan dan penggunaan sertifikat di jurnal Anda"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Total Sertifikat yang Diterbitkan"
 
@@ -276,4 +273,7 @@ msgstr "Total Unduhan"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Rata-rata Unduhan per Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Pengaturan Sertifikat"
 

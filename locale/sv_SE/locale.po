@@ -38,9 +38,6 @@ msgstr "Ditt certifikat kommer att genereras automatiskt när du klickar på ned
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Ladda ner Certifikat"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Certifikatinställningar"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigurera certifikatmallar och behörighetskriterier för granskare."
@@ -93,7 +90,6 @@ msgstr "Standardmall"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Använd standardmall"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Utseendeinställningar"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Teckenstorlek"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Textfärg (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Ange textfärg med RGB-värden (0-255 för varje komponent)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Behörighetskriterier"
 
@@ -134,19 +141,15 @@ msgstr "Minsta antal slutförda granskningar som krävs innan en granskare kan f
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Minsta antal granskningar måste vara ett tal större än eller lika med 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Verifieringsalternativ"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Inkludera QR-kod för certifikatverifiering"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Förhandsgranska Certifikat"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Ogiltig bildtyp. Vänligen ladda upp en JPG- eller PNG-fil."
 
@@ -175,15 +178,13 @@ msgstr "Ingen tidskriftskontext tillgänglig. Vänligen se till att du kommer å
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Databasåtkomst är för närvarande otillgänglig. Vänligen kontakta systemadministratören."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Verifiera Certifikat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Ange en certifikatkod för att verifiera äktheten"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Certifikatkod"
 
@@ -215,11 +216,9 @@ msgstr "Utfärdandedatum"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Batchgenerering av Certifikat"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Generera certifikat för flera granskare samtidigt. Välj granskare från listan nedan som har slutfört granskningar men ännu inte har certifikat."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Välj Granskare"
 
@@ -254,11 +253,9 @@ msgstr "{$count} certifikat genererade framgångsrikt"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Certifikatstatistik"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Översikt över certifikatgenerering och användning i din tidskrift"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Totalt Utfärdade Certifikat"
 
@@ -276,4 +273,7 @@ msgstr "Totalt Antal Nedladdningar"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Genomsnittligt Antal Nedladdningar per Certifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Certifikatinställningar"
 

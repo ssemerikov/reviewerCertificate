@@ -63,6 +63,10 @@
 	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
 	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
 	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Betűméret</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientation">Page Orientation</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientationDescription">Choose portrait (vertical) or landscape (horizontal) layout for the certificate</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.portrait">Portrait (Vertical)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.landscape">Landscape (Horizontal)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.textColor">Szövegszín (RGB)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Adja meg a szövegszínt RGB értékekkel (0-255 minden komponenshez)</message>
 

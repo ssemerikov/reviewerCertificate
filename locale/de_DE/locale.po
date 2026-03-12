@@ -38,9 +38,6 @@ msgstr "Ihr Zertifikat wird automatisch erstellt, wenn Sie auf die Download-Scha
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Zertifikat Herunterladen"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Zertifikat-Einstellungen"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigurieren Sie Zertifikatvorlagen und Zulassungskriterien für Gutachter."
@@ -93,7 +90,6 @@ msgstr "Standardvorlage"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Standardvorlage verwenden"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Darstellungseinstellungen"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Schriftgröße"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Textfarbe (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Geben Sie die Textfarbe mit RGB-Werten an (0-255 für jede Komponente)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Zulassungskriterien"
 
@@ -134,19 +141,15 @@ msgstr "Die Mindestanzahl abgeschlossener Begutachtungen, die erforderlich ist, 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Die Mindestanzahl der Begutachtungen muss eine Zahl größer oder gleich 1 sein"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Verifizierungsoptionen"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "QR-Code zur Zertifikatsverifizierung einschließen"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Zertifikat-Vorschau"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Ungültiger Bildtyp. Bitte laden Sie eine JPG- oder PNG-Datei hoch."
 
@@ -175,15 +178,13 @@ msgstr "Kein Zeitschriftenkontext verfügbar. Stellen Sie sicher, dass Sie von e
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Der Datenbankzugriff ist derzeit nicht verfügbar. Bitte kontaktieren Sie den Systemadministrator."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Zertifikat Verifizieren"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Geben Sie einen Zertifikatscode ein, um dessen Echtheit zu überprüfen"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Zertifikatscode"
 
@@ -215,11 +216,9 @@ msgstr "Ausstellungsdatum"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Stapelgenerierung von Zertifikaten"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Erstellen Sie Zertifikate für mehrere Gutachter gleichzeitig. Wählen Sie Gutachter aus der unten stehenden Liste aus, die Begutachtungen abgeschlossen haben, aber noch keine Zertifikate besitzen."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Gutachter Auswählen"
 
@@ -254,11 +253,9 @@ msgstr "{$count} Zertifikat(e) erfolgreich erstellt"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Zertifikat-Statistiken"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Übersicht über die Generierung und Nutzung von Zertifikaten in Ihrer Zeitschrift"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Gesamt Ausgestellte Zertifikate"
 
@@ -276,4 +273,7 @@ msgstr "Gesamt Downloads"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Durchschnittliche Downloads pro Zertifikat"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Zertifikat-Einstellungen"
 

@@ -38,9 +38,6 @@ msgstr "Il Suo certificato sarà generato automaticamente quando farà clic sul 
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Scarica Certificato"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Impostazioni Certificati"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Configura i modelli di certificato e i criteri di idoneità per i revisori."
@@ -93,7 +90,6 @@ msgstr "Modello predefinito"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Usa modello predefinito"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Impostazioni Aspetto"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Dimensione Carattere"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Colore Testo (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Specifica il colore del testo utilizzando i valori RGB (0-255 per ciascun componente)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Criteri di Idoneità"
 
@@ -134,19 +141,15 @@ msgstr "Il numero minimo di revisioni completate richiesto prima che un revisore
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Il numero minimo di revisioni deve essere un numero maggiore o uguale a 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Opzioni di Verifica"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Includi codice QR per la verifica del certificato"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Anteprima Certificato"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Tipo di immagine non valido. Si prega di caricare un file JPG o PNG."
 
@@ -175,15 +178,13 @@ msgstr "Nessun contesto di rivista disponibile. Si assicuri di accedere da una r
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "L'accesso al database non è attualmente disponibile. Si prega di contattare l'amministratore di sistema."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Verifica Certificato"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Inserisci un codice certificato per verificarne l'autenticità"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Codice Certificato"
 
@@ -215,11 +216,9 @@ msgstr "Data di Emissione"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Generazione in Batch di Certificati"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Genera certificati per più revisori contemporaneamente. Seleziona i revisori dall'elenco sottostante che hanno completato le revisioni ma non hanno ancora certificati."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Seleziona Revisori"
 
@@ -254,11 +253,9 @@ msgstr "{$count} certificato/i generato/i con successo"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Statistiche Certificati"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Panoramica della generazione e utilizzo dei certificati nella tua rivista"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Totale Certificati Emessi"
 
@@ -276,4 +273,7 @@ msgstr "Totale Download"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Media Download per Certificato"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Impostazioni Certificati"
 

@@ -38,9 +38,6 @@ msgstr "ダウンロードボタンをクリックすると、証明書が自動
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "証明書をダウンロード"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "証明書設定"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "査読者向けの証明書テンプレートと資格基準を設定します。"
@@ -93,7 +90,6 @@ msgstr "デフォルトテンプレート"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "デフォルトテンプレートを使用"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "外観設定"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "フォントサイズ"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "テキスト色（RGB）"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "RGB値でテキスト色を指定（各成分0〜255）"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "資格基準"
 
@@ -134,7 +141,6 @@ msgstr "査読者が証明書を受け取るために必要な最低完了査読
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "最低査読数は1以上の数値でなければなりません"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "検証オプション"
 
@@ -172,7 +178,7 @@ msgstr "ジャーナルコンテキストが利用できません。有効なジ
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "データベースアクセスが現在利用できません。システム管理者にお問い合わせください。"
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "証明書の検証"
 
@@ -268,9 +274,6 @@ msgstr "総ダウンロード数"
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "証明書あたりの平均ダウンロード数"
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "査読者証明書がダウンロード可能です"
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "証明書設定"
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "{$reviewerName}様\n\nピアレビューを完了していただきありがとうございます。査読者認定証がダウンロード可能になりました。\n\n以下のリンクから証明書をダウンロードしてください：\n{$certificateUrl}\n\n学術出版へのご貢献に感謝いたします。"

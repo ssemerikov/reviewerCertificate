@@ -64,6 +64,10 @@
 	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
 	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
 	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Schriftgröße</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientation">Page Orientation</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientationDescription">Choose portrait (vertical) or landscape (horizontal) layout for the certificate</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.portrait">Portrait (Vertical)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.landscape">Landscape (Horizontal)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.textColor">Textfarbe (RGB)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Geben Sie die Textfarbe mit RGB-Werten an (0-255 für jede Komponente)</message>
 

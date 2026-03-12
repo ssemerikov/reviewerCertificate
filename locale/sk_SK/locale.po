@@ -38,9 +38,6 @@ msgstr "Váš certifikát bude automaticky vygenerovaný po kliknutí na tlačid
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Stiahnuť Certifikát"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Nastavenia Certifikátu"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Nastavte šablóny certifikátov a kritériá oprávnenosti pre recenzentov."
@@ -93,7 +90,6 @@ msgstr "Predvolená šablóna"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Použiť predvolenú šablónu"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Nastavenia Vzhľadu"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Veľkosť Písma"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Farba Textu (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Zadajte farbu textu pomocou hodnôt RGB (0-255 pre každú zložku)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Kritériá Oprávnenosti"
 
@@ -134,7 +141,6 @@ msgstr "Minimálny počet dokončených recenzií potrebných pred získaním ce
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Minimálny počet recenzií musí byť číslo väčšie alebo rovné 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Možnosti Overenia"
 
@@ -172,7 +178,7 @@ msgstr "Nie je k dispozícii kontext časopisu. Uistite sa, že pristupujete z p
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Prístup k databáze je momentálne nedostupný. Prosím, kontaktujte správcu systému."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Overenie Certifikátu"
 
@@ -268,9 +274,6 @@ msgstr "Celkový Počet Stiahnutí"
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Priemerný Počet Stiahnutí na Certifikát"
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "Váš certifikát recenzenta je pripravený na stiahnutie"
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Nastavenia Certifikátu"
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "Vážený/á {$reviewerName},\n\nĎakujeme za dokončenie odborného posúdenia. Váš certifikát uznania recenzenta je teraz pripravený na stiahnutie.\n\nProsím, navštívte nasledujúci odkaz pre stiahnutie vášho certifikátu:\n{$certificateUrl}\n\nĎakujeme za váš príspevok k akademickému publikovaniu."

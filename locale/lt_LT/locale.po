@@ -38,9 +38,6 @@ msgstr "Jūsų sertifikatas bus automatiškai sugeneruotas paspaudus atsisiuntim
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Atsisiųsti Sertifikatą"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Sertifikato Nustatymai"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigūruokite sertifikatų šablonus ir tinkamumo kriterijus recenzentams."
@@ -93,7 +90,6 @@ msgstr "Numatytasis šablonas"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Naudoti numatytąjį šabloną"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Išvaizdos Nustatymai"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Šrifto Dydis"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Teksto Spalva (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Nurodykite teksto spalvą naudodami RGB reikšmes (0-255 kiekvienam komponentui)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Tinkamumo Kriterijai"
 
@@ -134,7 +141,6 @@ msgstr "Mažiausias užbaigtų recenzijų skaičius, reikalingas prieš recenzen
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Mažiausias recenzijų skaičius turi būti didesnis arba lygus 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Patikrinimo Parinktys"
 
@@ -172,7 +178,7 @@ msgstr "Nėra žurnalo konteksto. Įsitikinkite, kad prieinate iš galiojančio 
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Duomenų bazės prieiga šiuo metu negalima. Prašome susisiekti su sistemos administratoriumi."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Sertifikato Patikrinimas"
 
@@ -268,9 +274,6 @@ msgstr "Iš Viso Atsisiuntimų"
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Vidutinis Atsisiuntimų Skaičius Sertifikatui"
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "Jūsų recenzento sertifikatas paruoštas atsisiuntimui"
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Sertifikato Nustatymai"
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "Gerbiamas(-a) {$reviewerName},\n\nDėkojame, kad atlikote ekspertinį vertinimą. Jūsų recenzento pripažinimo sertifikatas dabar paruoštas atsisiuntimui.\n\nApsilankykite šioje nuorodoje, kad atsisiųstumėte sertifikatą:\n{$certificateUrl}\n\nDėkojame už jūsų indėlį į akademinę leidybą."

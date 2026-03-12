@@ -229,6 +229,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     'textColorG' => $this->getSetting($context->getId(), 'textColorG') ?: 0,
                     'textColorB' => $this->getSetting($context->getId(), 'textColorB') ?: 0,
                     'includeQRCode' => $this->getSetting($context->getId(), 'includeQRCode') ?: false,
+                    'pageOrientation' => $this->getSetting($context->getId(), 'pageOrientation') ?: 'P',
                 );
 
                 $generator->setContext($context);
@@ -414,6 +415,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $page = $params[0];
 
         if ($page == 'certificate') {
+            // OJS 3.3 compatibility: re-load locale data for handler rendering.
+            // Plugin locale may not be usable on public pages if the lazy-loaded
+            // locale file was registered with a relative path before the working
+            // directory or locale context was finalized.
+            $this->addLocaleData();
+
             require_once($this->getPluginPath() . '/controllers/CertificateHandler.php');
 
             // Check if handler class file was loaded (use FQN for namespaced class)

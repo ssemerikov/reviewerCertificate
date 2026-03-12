@@ -82,6 +82,7 @@ class CertificateSettingsForm extends Form {
             $this->setData('textColorB', $this->plugin->getSetting($this->contextId, 'textColorB') ?? 0);
             $this->setData('minimumReviews', $this->plugin->getSetting($this->contextId, 'minimumReviews') ?? 1);
             $this->setData('includeQRCode', $this->plugin->getSetting($this->contextId, 'includeQRCode') ?? false);
+            $this->setData('pageOrientation', $this->plugin->getSetting($this->contextId, 'pageOrientation') ?? 'P');
             $this->setData('backgroundImage', $this->plugin->getSetting($this->contextId, 'backgroundImage') ?? '');
         } catch (Exception $e) {
             error_log('ReviewerCertificate: Error initializing form data: ' . $e->getMessage());
@@ -96,6 +97,7 @@ class CertificateSettingsForm extends Form {
             $this->setData('textColorB', 0);
             $this->setData('minimumReviews', 1);
             $this->setData('includeQRCode', false);
+            $this->setData('pageOrientation', 'P');
             $this->setData('backgroundImage', '');
         }
     }
@@ -114,7 +116,8 @@ class CertificateSettingsForm extends Form {
             'textColorG',
             'textColorB',
             'minimumReviews',
-            'includeQRCode'
+            'includeQRCode',
+            'pageOrientation'
         ));
 
         // Preserve existing background image if no new upload
@@ -210,6 +213,13 @@ class CertificateSettingsForm extends Form {
             'dejavusans' => __('plugins.generic.reviewerCertificate.settings.font.dejavusans'),
         );
         $templateMgr->assign('fontOptions', $fontOptions);
+
+        // Available page orientations
+        $orientationOptions = array(
+            'P' => __('plugins.generic.reviewerCertificate.settings.orientation.portrait'),
+            'L' => __('plugins.generic.reviewerCertificate.settings.orientation.landscape'),
+        );
+        $templateMgr->assign('orientationOptions', $orientationOptions);
 
         // Available template variables
         $templateVariables = array(
@@ -347,6 +357,13 @@ class CertificateSettingsForm extends Form {
             $this->plugin->updateSetting($this->contextId, 'textColorB', max(0, min(255, (int) $this->getData('textColorB'))), 'int');
             $this->plugin->updateSetting($this->contextId, 'minimumReviews', max(1, (int) $this->getData('minimumReviews')), 'int');
             $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
+
+            // Validate pageOrientation against whitelist
+            $orientation = $this->getData('pageOrientation');
+            if (!in_array($orientation, array('P', 'L'))) {
+                $orientation = 'P';
+            }
+            $this->plugin->updateSetting($this->contextId, 'pageOrientation', $orientation, 'string');
 
             // Always save background image setting (preserves existing or saves new upload)
             $backgroundImage = $this->getData('backgroundImage');

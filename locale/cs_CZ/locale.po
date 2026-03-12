@@ -38,9 +38,6 @@ msgstr "Váš certifikát bude automaticky vygenerován po kliknutí na tlačít
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Stáhnout Certifikát"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Nastavení Certifikátů"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Nakonfigurujte šablony certifikátů a kritéria způsobilosti pro recenzenty."
@@ -93,7 +90,6 @@ msgstr "Výchozí šablona"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Použít výchozí šablonu"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Nastavení Vzhledu"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Velikost Písma"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Barva Textu (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Určete barvu textu pomocí hodnot RGB (0-255 pro každou složku)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Kritéria Způsobilosti"
 
@@ -134,19 +141,15 @@ msgstr "Minimální počet dokončených recenzí požadovaný před tím, než 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Minimální počet recenzí musí být číslo větší nebo rovno 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Možnosti Ověření"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
 msgstr "Zahrnout QR kód pro ověření certifikátu"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
 msgstr "Náhled Certifikátu"
 
-# Settings form
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
 msgstr "Neplatný typ obrázku. Nahrajte prosím soubor JPG nebo PNG."
 
@@ -175,15 +178,13 @@ msgstr "Není k dispozici kontext časopisu. Ujistěte se, že přistupujete z p
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Přístup k databázi je momentálně nedostupný. Kontaktujte prosím správce systému."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Ověřit Certifikát"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.verify.description"
 msgstr "Zadejte kód certifikátu pro ověření jeho pravosti"
 
-# Verification page
 msgid "plugins.generic.reviewerCertificate.verify.code"
 msgstr "Kód Certifikátu"
 
@@ -215,11 +216,9 @@ msgstr "Datum Vydání"
 msgid "plugins.generic.reviewerCertificate.batch.title"
 msgstr "Hromadné Generování Certifikátů"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.batch.description"
 msgstr "Generujte certifikáty pro více recenzentů najednou. Vyberte recenzenty ze seznamu níže, kteří dokončili recenze, ale ještě nemají certifikáty."
 
-# Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
 msgstr "Vybrat Recenzenty"
 
@@ -254,11 +253,9 @@ msgstr "{$count} certifikát/certifikáty úspěšně vygenerovány"
 msgid "plugins.generic.reviewerCertificate.statistics.title"
 msgstr "Statistiky Certifikátů"
 
-# Plugin metadata
 msgid "plugins.generic.reviewerCertificate.statistics.description"
 msgstr "Přehled generování a používání certifikátů ve vašem časopisu"
 
-# Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
 msgstr "Celkem Vydaných Certifikátů"
 
@@ -276,4 +273,7 @@ msgstr "Celkem Stažení"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Průměrný Počet Stažení na Certifikát"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Nastavení Certifikátů"
 

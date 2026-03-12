@@ -38,9 +38,6 @@ msgstr "Vaše potrdilo bo samodejno ustvarjeno, ko kliknete gumb za prenos."
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
 msgstr "Prenesi Potrdilo"
 
-msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Nastavitve Potrdila"
-
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
 msgstr "Konfigurirajte predloge potrdil in merila upravičenosti za recenzente."
@@ -93,7 +90,6 @@ msgstr "Privzeta predloga"
 msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Uporabi privzeto predlogo"
 
-# Appearance settings
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
 msgstr "Nastavitve Videza"
 
@@ -115,13 +111,24 @@ msgstr "DejaVu Sans"
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Velikost Pisave"
 
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Page Orientation"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Portrait (Vertical)"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Landscape (Horizontal)"
+
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Barva Besedila (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
 msgstr "Določite barvo besedila z uporabo RGB vrednosti (0-255 za vsako komponento)"
 
-# Eligibility settings
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
 msgstr "Merila Upravičenosti"
 
@@ -134,7 +141,6 @@ msgstr "Najmanjše število dokončanih recenzij, potrebnih preden lahko recenze
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
 msgstr "Najmanjše število recenzij mora biti število večje ali enako 1"
 
-# Verification settings
 msgid "plugins.generic.reviewerCertificate.settings.verification"
 msgstr "Možnosti Preverjanja"
 
@@ -172,7 +178,7 @@ msgstr "Kontekst revije ni na voljo. Prepričajte se, da dostopate iz veljavne r
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Dostop do baze podatkov trenutno ni na voljo. Prosimo, obrnite se na skrbnika sistema."
 
-# Verification page
+# Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
 msgstr "Preverjanje Potrdila"
 
@@ -268,9 +274,6 @@ msgstr "Skupno Število Prenosov"
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
 msgstr "Povprečno Število Prenosov na Potrdilo"
 
-# Email templates
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.subject"
-msgstr "Vaše potrdilo recenzenta je pripravljeno za prenos"
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Nastavitve Potrdila"
 
-msgid "plugins.generic.reviewerCertificate.email.certificateAvailable.body"
-msgstr "Spoštovani/a {$reviewerName},\n\nZahvaljujemo se vam za dokončanje strokovne recenzije. Vaše potrdilo priznanja recenzenta je zdaj pripravljeno za prenos.\n\nProsimo, obiščite naslednjo povezavo za prenos vašega potrdila:\n{$certificateUrl}\n\nZahvaljujemo se vam za vaš prispevek k akademskemu založništvu."
