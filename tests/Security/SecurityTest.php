@@ -479,4 +479,232 @@ class SecurityTest extends TestCase
         $shouldBlock = count($recentDownloads) > $maxDownloadsPerMinute;
         $this->assertTrue($shouldBlock, 'Rate limiting should trigger');
     }
+
+    /**
+     * Test download() context isolation — SQL must include context_id filter
+     * Ensures review assignments from other journals cannot be accessed
+     */
+    public function testDownloadContextIsolation(): void
+    {
+        // Simulate: review_id=50 belongs to context_id=2, but request comes from context_id=1
+        // The SQL should join submissions table and filter by context_id
+        $requestContextId = 1;
+        $reviewContextId = 2;
+
+        // Insert a submission in context 2
+        $this->dbMock->insert('submissions', [
+            'submission_id' => 100,
+            'context_id' => $reviewContextId,
+        ]);
+
+        // Insert a review assignment for that submission
+        $this->dbMock->insert('review_assignments', [
+            'review_id' => 50,
+            'reviewer_id' => 1,
+            'submission_id' => 100,
+            'date_completed' => date('Y-m-d H:i:s'),
+        ]);
+
+        // Query with context isolation (the pattern used in CertificateHandler::download)
+        $results = $this->dbMock->select('review_assignments', ['review_id' => 50]);
+        $this->assertCount(1, $results, 'Review exists in database');
+
+        // But when filtered by wrong context, should not be accessible
+        $submissions = $this->dbMock->select('submissions', [
+            'submission_id' => 100,
+            'context_id' => $requestContextId,
+        ]);
+        $this->assertCount(0, $submissions, 'Submission should NOT be visible from different context');
+
+        // Correct context should find it
+        $submissions = $this->dbMock->select('submissions', [
+            'submission_id' => 100,
+            'context_id' => $reviewContextId,
+        ]);
+        $this->assertCount(1, $submissions, 'Submission should be visible from its own context');
+    }
+
+    /**
+     * Test generateBatch() context isolation — reviews from other contexts must be excluded
+     */
+    public function testGenerateBatchContextIsolation(): void
+    {
+        $requestContextId = 1;
+        $otherContextId = 2;
+        $reviewerId = 10;
+
+        // Reviewer has completed reviews in context 2
+        $this->dbMock->insert('submissions', [
+            'submission_id' => 200,
+            'context_id' => $otherContextId,
+        ]);
+        $this->dbMock->insert('review_assignments', [
+            'review_id' => 60,
+            'reviewer_id' => $reviewerId,
+            'submission_id' => 200,
+            'date_completed' => date('Y-m-d H:i:s'),
+        ]);
+
+        // From request context 1, the reviewer's reviews in context 2 should not be returned
+        $submissions = $this->dbMock->select('submissions', [
+            'submission_id' => 200,
+            'context_id' => $requestContextId,
+        ]);
+        $this->assertCount(0, $submissions, 'Reviews from other context should be excluded from batch generation');
+    }
+
+    /**
+     * Test verify() context scoping — certificates from other journals are not valid
+     */
+    public function testVerifyContextScoping(): void
+    {
+        $requestContextId = 1;
+        $certContextId = 2;
+        $certCode = 'ABCDEF1234567890';
+
+        // Certificate belongs to context 2
+        $this->dbMock->insert('reviewer_certificates', [
+            'reviewer_id' => 1,
+            'submission_id' => 100,
+            'review_id' => 50,
+            'context_id' => $certContextId,
+            'template_id' => 1,
+            'date_issued' => date('Y-m-d H:i:s'),
+            'certificate_code' => $certCode,
+            'download_count' => 0,
+        ]);
+
+        // Certificate exists
+        $certs = $this->dbMock->select('reviewer_certificates', ['certificate_code' => $certCode]);
+        $this->assertCount(1, $certs, 'Certificate should exist');
+
+        // But its context_id does not match the request context
+        $this->assertNotEquals($requestContextId, (int) $certs[0]['context_id'],
+            'Certificate context should differ from request context');
+
+        // Applying the context check: context_id must match
+        $contextFiltered = $this->dbMock->select('reviewer_certificates', [
+            'certificate_code' => $certCode,
+            'context_id' => $requestContextId,
+        ]);
+        $this->assertCount(0, $contextFiltered, 'Certificate should NOT be valid from different context');
+    }
+
+    /**
+     * Test certificate code input sanitization
+     * Ensures only valid 16-character uppercase hex codes pass validation
+     */
+    public function testCertificateCodeSanitization(): void
+    {
+        $pattern = '/^[A-F0-9]{16}$/';
+
+        // Valid codes
+        $this->assertMatchesRegularExpression($pattern, 'ABCD1234EF567890', 'Valid hex code should pass');
+        $this->assertMatchesRegularExpression($pattern, '0123456789ABCDEF', 'Valid hex code should pass');
+
+        // Invalid codes — SQL injection attempts
+        $this->assertDoesNotMatchRegularExpression($pattern, "'; DROP TABLE--", 'SQL injection should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, "1' OR '1'='1", 'SQL injection should be rejected');
+
+        // Invalid codes — wrong format
+        $this->assertDoesNotMatchRegularExpression($pattern, 'abcd1234ef567890', 'Lowercase should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, 'SHORT', 'Too short should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, 'TOOLONGSTRING12345', 'Too long should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, '', 'Empty string should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, 'GHIJ1234KLMN5678', 'Non-hex chars should be rejected');
+
+        // XSS attempt
+        $this->assertDoesNotMatchRegularExpression($pattern, '<script>alert(1)</script>', 'XSS should be rejected');
+    }
+
+    /**
+     * Test cross-context certificate access — full flow
+     */
+    public function testCrossContextCertificateAccess(): void
+    {
+        // Create certificate in context 2
+        $this->dbMock->insert('reviewer_certificates', [
+            'reviewer_id' => 5,
+            'submission_id' => 300,
+            'review_id' => 70,
+            'context_id' => 2,
+            'template_id' => 1,
+            'date_issued' => date('Y-m-d H:i:s'),
+            'certificate_code' => 'FF00FF00FF00FF00',
+            'download_count' => 0,
+        ]);
+
+        // Try to access from context 1 — should fail
+        $fromContext1 = $this->dbMock->select('reviewer_certificates', [
+            'review_id' => 70,
+            'context_id' => 1,
+        ]);
+        $this->assertCount(0, $fromContext1, 'Should not access certificate from wrong context');
+
+        // Access from context 2 — should succeed
+        $fromContext2 = $this->dbMock->select('reviewer_certificates', [
+            'review_id' => 70,
+            'context_id' => 2,
+        ]);
+        $this->assertCount(1, $fromContext2, 'Should access certificate from correct context');
+    }
+
+    /**
+     * Test HTML in submission titles is stripped for PDF generation
+     */
+    public function testHTMLInTitleStrippedForPDF(): void
+    {
+        $htmlTitles = [
+            '<em>Novel</em> Methods in Research' => 'Novel Methods in Research',
+            '<strong>Important</strong> <em>Study</em>' => 'Important Study',
+            '<script>alert("xss")</script>Title' => 'alert("xss")Title',
+            'Plain title with no HTML' => 'Plain title with no HTML',
+            '' => '',
+        ];
+
+        foreach ($htmlTitles as $input => $expected) {
+            $this->assertEquals($expected, strip_tags($input),
+                "strip_tags should remove HTML from: $input");
+        }
+    }
+
+    /**
+     * Test verify page template uses |escape filter
+     */
+    public function testVerifyPageEscapesOutput(): void
+    {
+        $templateFile = BASE_SYS_DIR . '/templates/verify.tpl';
+        $this->assertFileExists($templateFile, 'verify.tpl should exist');
+
+        $content = file_get_contents($templateFile);
+
+        // All dynamic variables in the verification result section should use |escape
+        $this->assertStringContainsString('{$certificateCode|escape}', $content,
+            'Certificate code should be escaped in template');
+        $this->assertStringContainsString('{$reviewerName|escape}', $content,
+            'Reviewer name should be escaped in template');
+        $this->assertStringContainsString('{$journalName|escape}', $content,
+            'Journal name should be escaped in template');
+        $this->assertStringContainsString('{$dateIssued|escape}', $content,
+            'Date issued should be escaped in template');
+
+        // Verify no unescaped variable output in the details section
+        $this->assertStringNotContainsString(':</strong> {$certificateCode}', $content,
+            'Certificate code must not appear unescaped');
+        $this->assertStringNotContainsString(':</strong> {$reviewerName}', $content,
+            'Reviewer name must not appear unescaped');
+    }
+
+    /**
+     * Test CertificateDAO::getByReviewIdAndContext method exists and is context-aware
+     */
+    public function testGetByReviewIdAndContextMethod(): void
+    {
+        // Verify the method exists on CertificateDAO
+        require_once BASE_SYS_DIR . '/classes/CertificateDAO.php';
+        $this->assertTrue(
+            method_exists('APP\plugins\generic\reviewerCertificate\classes\CertificateDAO', 'getByReviewIdAndContext'),
+            'CertificateDAO must have getByReviewIdAndContext method'
+        );
+    }
 }

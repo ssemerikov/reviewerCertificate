@@ -101,6 +101,20 @@ OJS 3.5 removed `ReviewAssignmentDAO` entirely. Use direct SQL queries via `DAOR
 **Pattern 4: Catch `\Throwable` not `\Exception`**
 OJS 3.3.0-20+ can throw PHP `Error` types (not just `Exception`) during plugin loading. Always catch `\Throwable`.
 
+**Pattern 5: Context isolation in SQL queries (multi-journal security)**
+All queries on `review_assignments` MUST join `submissions` to filter by `context_id`. Without this, a reviewer on Journal A can access data from Journal B.
+```php
+$result = $dao->retrieve(
+    'SELECT ra.* FROM review_assignments ra
+     INNER JOIN submissions s ON ra.submission_id = s.submission_id
+     WHERE ra.review_id = ? AND s.context_id = ?',
+    array((int) $reviewId, (int) $context->getId())
+);
+```
+
+**Pattern 6: Strip HTML from submission titles for PDF**
+OJS 3.5+ supports HTML in titles (`<em>`, `<strong>`). Always use `strip_tags()` before rendering in PDF context. On Smarty templates, use `|escape` for XSS protection.
+
 ### OJS 3.5 Breaking Changes
 
 These removals affect this plugin and require fallback code:

@@ -182,8 +182,10 @@ class CertificateHandler extends Handler {
             throw new Exception('Internal error', 500);
         }
         $result = $certificateDao->retrieve(
-            'SELECT * FROM review_assignments WHERE review_id = ?',
-            array((int) $reviewId)
+            'SELECT ra.* FROM review_assignments ra
+             INNER JOIN submissions s ON ra.submission_id = s.submission_id
+             WHERE ra.review_id = ? AND s.context_id = ?',
+            array((int) $reviewId, (int) $context->getId())
         );
 
         $reviewAssignment = null;
@@ -221,7 +223,7 @@ class CertificateHandler extends Handler {
             http_response_code(500);
             throw new Exception('Internal error', 500);
         }
-        $certificate = $certificateDao->getByReviewId($reviewId);
+        $certificate = $certificateDao->getByReviewIdAndContext($reviewId, $context->getId());
 
         if (!$certificate) {
             // Create certificate if it doesn't exist — use try-catch for duplicate key race condition
@@ -279,6 +281,11 @@ class CertificateHandler extends Handler {
         // Get certificate code from URL path or query parameter
         $certificateCode = isset($args[0]) ? $args[0] : $request->getUserVar('code');
 
+        // Sanitize: certificate codes are exactly 16 uppercase hex characters
+        if ($certificateCode && !preg_match('/^[A-F0-9]{16}$/', $certificateCode)) {
+            $certificateCode = null;
+        }
+
         $templateMgr = TemplateManager::getManager($request);
         $templateMgr->assign('certificateCode', $certificateCode);
 
@@ -289,6 +296,14 @@ class CertificateHandler extends Handler {
                 $templateMgr->assign('isValid', false);
             } else {
                 $certificate = $certificateDao->getByCertificateCode($certificateCode);
+
+                // Verify certificate belongs to current journal context
+                if ($certificate) {
+                    $context = $request->getContext();
+                    if ($context && (int)$certificate->getContextId() !== (int)$context->getId()) {
+                        $certificate = null; // Not from this journal
+                    }
+                }
 
                 if ($certificate) {
                     // Get reviewer and context information - OJS 3.3 compatibility
@@ -305,16 +320,16 @@ class CertificateHandler extends Handler {
                     } else {
                         $contextDao = \Application::getContextDAO();
                     }
-                    $context = $contextDao->getById($certificate->getContextId());
+                    $certContext = $contextDao->getById($certificate->getContextId());
 
-                    if ($reviewer && $context) {
+                    if ($reviewer && $certContext) {
                         // Assign valid certificate data to template
                         $templateMgr->assign('isValid', true);
                         $templateMgr->assign('reviewerName', $reviewer->getFullName());
                         // Format date in PHP to avoid strftime() deprecation issues in PHP 8.1+
                         $formattedDate = date('F j, Y', strtotime($certificate->getDateIssued()));
                         $templateMgr->assign('dateIssued', $formattedDate);
-                        $templateMgr->assign('journalName', $context->getLocalizedName());
+                        $templateMgr->assign('journalName', $certContext->getLocalizedName());
                     } else {
                         $templateMgr->assign('isValid', false);
                     }
@@ -522,38 +537,37 @@ class CertificateHandler extends Handler {
 
         foreach ($reviewerIds as $reviewerId) {
             try {
-                // Get completed reviews for this reviewer using direct SQL for OJS 3.5 compatibility
+                // Get completed reviews for this reviewer, scoped to current context
                 $result = $certificateDao->retrieve(
-                    'SELECT * FROM review_assignments WHERE reviewer_id = ? AND date_completed IS NOT NULL',
-                    array((int) $reviewerId)
+                    'SELECT ra.* FROM review_assignments ra
+                     INNER JOIN submissions s ON ra.submission_id = s.submission_id
+                     LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
+                     WHERE ra.reviewer_id = ? AND s.context_id = ?
+                     AND ra.date_completed IS NOT NULL AND rc.certificate_id IS NULL',
+                    array((int) $reviewerId, (int) $context->getId())
                 );
 
                 if ($result) {
                     foreach ($result as $row) {
                         $reviewAssignment = $this->createReviewAssignmentFromRow($row);
 
-                        // Check if certificate already exists
-                        $existing = $certificateDao->getByReviewId($reviewAssignment->getId());
-
-                        if (!$existing) {
-                            // Create certificate
-                            require_once(dirname(__FILE__) . '/../classes/Certificate.php');
-                            $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
-                            $certificate->setReviewerId($reviewerId);
-                            $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
-                            $certificate->setReviewId($reviewAssignment->getId());
-                            $certificate->setContextId($context->getId());
-                            // OJS 3.3 compatibility
-                            if (class_exists('PKP\core\Core')) {
-                                $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-                            } else {
-                                $certificate->setDateIssued(\Core::getCurrentDate());
-                            }
-                            $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
-
-                            $certificateDao->insertObject($certificate);
-                            $generated++;
+                        // Create certificate (SQL already excludes reviews with existing certificates)
+                        require_once(dirname(__FILE__) . '/../classes/Certificate.php');
+                        $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
+                        $certificate->setReviewerId($reviewerId);
+                        $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
+                        $certificate->setReviewId($reviewAssignment->getId());
+                        $certificate->setContextId($context->getId());
+                        // OJS 3.3 compatibility
+                        if (class_exists('PKP\core\Core')) {
+                            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+                        } else {
+                            $certificate->setDateIssued(\Core::getCurrentDate());
                         }
+                        $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
+
+                        $certificateDao->insertObject($certificate);
+                        $generated++;
                     }
                 }
             } catch (\Throwable $e) {

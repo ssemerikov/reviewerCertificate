@@ -19,10 +19,10 @@
 					<div class="certificate-verify-result success">
 						<h2>{translate key="plugins.generic.reviewerCertificate.verify.valid"}</h2>
 						<div class="certificate-details">
-							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.certificateCode"}:</strong> {$certificateCode}</p>
-							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.reviewerName"}:</strong> {$reviewerName}</p>
-							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.journalName"}:</strong> {$journalName}</p>
-							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.dateIssued"}:</strong> {$dateIssued}</p>
+							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.certificateCode"}:</strong> {$certificateCode|escape}</p>
+							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.reviewerName"}:</strong> {$reviewerName|escape}</p>
+							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.journalName"}:</strong> {$journalName|escape}</p>
+							<p><strong>{translate key="plugins.generic.reviewerCertificate.verify.dateIssued"}:</strong> {$dateIssued|escape}</p>
 						</div>
 					</div>
 				{else}
@@ -38,7 +38,7 @@
 					<form method="get" action="{url page="certificate" op="verify"}">
 						<div class="form-group">
 							<label for="code">{translate key="plugins.generic.reviewerCertificate.verify.code"}</label>
-							<input type="text" id="code" name="code" class="form-control" required maxlength="12" />
+							<input type="text" id="code" name="code" class="form-control" required maxlength="16" pattern="[A-Fa-f0-9]{16}" />
 						</div>
 						<button type="submit" class="btn btn-primary">
 							{translate key="plugins.generic.reviewerCertificate.verify.button"}

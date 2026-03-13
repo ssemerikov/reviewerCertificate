@@ -51,6 +51,22 @@ class CertificateDAO extends DAO {
     }
 
     /**
+     * Retrieve a certificate by review ID and context ID
+     * @param $reviewId int
+     * @param $contextId int
+     * @return Certificate
+     */
+    public function getByReviewIdAndContext($reviewId, $contextId) {
+        $result = $this->retrieve(
+            'SELECT * FROM reviewer_certificates WHERE review_id = ? AND context_id = ?',
+            array((int) $reviewId, (int) $contextId)
+        );
+
+        $row = $result->current();
+        return $row ? $this->_fromRow((array) $row) : null;
+    }
+
+    /**
      * Retrieve a certificate by certificate code
      * @param $certificateCode string
      * @return Certificate

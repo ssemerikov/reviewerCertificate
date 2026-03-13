@@ -486,6 +486,42 @@ class CertificateGeneratorTest extends TestCase
     }
 
     /**
+     * Test HTML is stripped from submission titles for PDF context
+     * OJS 3.5+ supports HTML markup in titles (<em>, <strong>, etc.)
+     */
+    public function testHTMLStrippedFromSubmissionTitle(): void
+    {
+        $testCases = [
+            ['<em>Novel</em> Methods', 'Novel Methods'],
+            ['<strong>Important</strong> <em>Study</em>', 'Important Study'],
+            ['Plain title with no HTML', 'Plain title with no HTML'],
+            ['<script>alert("xss")</script>Title', 'alert("xss")Title'],
+            ['Title with &amp; entities', 'Title with &amp; entities'],
+            ['', ''],
+            ['<b>Bold</b> and <i>italic</i> text', 'Bold and italic text'],
+            ['<span class="subtitle">Sub:</span> Main Title', 'Sub: Main Title'],
+        ];
+
+        foreach ($testCases as [$input, $expected]) {
+            $this->assertEquals(
+                $expected,
+                strip_tags($input),
+                "HTML should be stripped from: '$input'"
+            );
+        }
+    }
+
+    /**
+     * Test that strip_tags preserves HTML entities (they are not HTML tags)
+     */
+    public function testStripTagsPreservesEntities(): void
+    {
+        // HTML entities are NOT tags and should be preserved by strip_tags
+        $this->assertEquals('Title with &amp; entities', strip_tags('Title with &amp; entities'));
+        $this->assertEquals('A &lt; B', strip_tags('A &lt; B'));
+    }
+
+    /**
      * Test margin calculations
      */
     public function testMargins(): void

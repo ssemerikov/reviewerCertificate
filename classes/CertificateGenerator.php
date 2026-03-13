@@ -520,25 +520,27 @@ class CertificateGenerator {
             return '';
         }
 
+        $title = '';
+
         // OJS 3.5+: Use getCurrentPublication()->getLocalizedTitle()
         if (method_exists($submission, 'getCurrentPublication')) {
             $publication = $submission->getCurrentPublication();
             if ($publication) {
                 if (method_exists($publication, 'getLocalizedTitle')) {
-                    return $publication->getLocalizedTitle();
-                }
-                if (method_exists($publication, 'getLocalizedFullTitle')) {
-                    return $publication->getLocalizedFullTitle();
+                    $title = $publication->getLocalizedTitle();
+                } elseif (method_exists($publication, 'getLocalizedFullTitle')) {
+                    $title = $publication->getLocalizedFullTitle();
                 }
             }
         }
 
         // OJS 3.3/3.4: Direct method on Submission
-        if (method_exists($submission, 'getLocalizedTitle')) {
-            return $submission->getLocalizedTitle();
+        if (empty($title) && method_exists($submission, 'getLocalizedTitle')) {
+            $title = $submission->getLocalizedTitle();
         }
 
-        return '';
+        // OJS 3.5+ supports HTML markup in titles — strip for PDF plain text
+        return strip_tags($title);
     }
 
     /**
@@ -691,7 +693,7 @@ class CertificateGenerator {
             );
             foreach ($rows as $row) {
                 $row = (array) $row;
-                return $row['setting_value'];
+                return strip_tags($row['setting_value']);
             }
         } catch (\Throwable $e) {
             error_log('ReviewerCertificate: DB title fallback failed: ' . $e->getMessage());
