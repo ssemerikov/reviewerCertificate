@@ -14,12 +14,7 @@
 namespace APP\plugins\generic\reviewerCertificate\classes\form;
 
 use PKP\form\Form;
-use PKP\form\validation\FormValidatorPost;
-use PKP\form\validation\FormValidatorCSRF;
-use PKP\form\validation\FormValidator;
-use PKP\form\validation\FormValidatorCustom;
 use PKP\db\DAORegistry;
-use PKP\core\Core;
 use APP\core\Application;
 use APP\template\TemplateManager;
 use Exception;
@@ -43,28 +38,18 @@ class CertificateSettingsForm extends Form {
         $this->plugin = $plugin;
         $this->contextId = $contextId;
 
-        // Add form validators - OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\form\validation\FormValidatorPost')) {
-            $this->addCheck(new FormValidatorPost($this));
-            $this->addCheck(new FormValidatorCSRF($this));
-            $this->addCheck(new FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
-            $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
-            $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
-                return is_numeric($value) && $value >= 1;
-            }));
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.form.validation.FormValidatorPost');
-            import('lib.pkp.classes.form.validation.FormValidatorCSRF');
-            import('lib.pkp.classes.form.validation.FormValidator');
-            import('lib.pkp.classes.form.validation.FormValidatorCustom');
-            $this->addCheck(new \FormValidatorPost($this));
-            $this->addCheck(new \FormValidatorCSRF($this));
-            $this->addCheck(new \FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
-            $this->addCheck(new \FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
-            $this->addCheck(new \FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
-                return is_numeric($value) && $value >= 1;
-            }));
-        }
+        // Add form validators
+        import('lib.pkp.classes.form.validation.FormValidatorPost');
+        import('lib.pkp.classes.form.validation.FormValidatorCSRF');
+        import('lib.pkp.classes.form.validation.FormValidator');
+        import('lib.pkp.classes.form.validation.FormValidatorCustom');
+        $this->addCheck(new \FormValidatorPost($this));
+        $this->addCheck(new \FormValidatorCSRF($this));
+        $this->addCheck(new \FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
+        $this->addCheck(new \FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
+        $this->addCheck(new \FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
+            return is_numeric($value) && $value >= 1;
+        }));
     }
 
     /**
@@ -171,12 +156,8 @@ class CertificateSettingsForm extends Form {
         // Derive extension from detected MIME type, not from user filename
         $extension = $mimeToExt[$detectedMime];
 
-        // Create upload directory if it doesn't exist - OJS 3.3 compatibility
-        if (class_exists('PKP\core\Core')) {
-            $baseDir = Core::getBaseDir();
-        } else {
-            $baseDir = \Core::getBaseDir();
-        }
+        // Create upload directory if it doesn't exist
+        $baseDir = \Core::getBaseDir();
         $uploadDir = $baseDir . '/files/journals/' . $context->getId() . '/reviewerCertificate';
 
         if (!file_exists($uploadDir)) {
@@ -304,13 +285,8 @@ class CertificateSettingsForm extends Form {
         $reviewers = array();
         foreach ($result as $row) {
             try {
-                // OJS 3.3 compatibility
-                if (class_exists('APP\facades\Repo')) {
-                    $user = \APP\facades\Repo::user()->get($row->reviewer_id);
-                } else {
-                    $userDao = DAORegistry::getDAO('UserDAO');
-                    $user = $userDao->getById($row->reviewer_id);
-                }
+                $userDao = DAORegistry::getDAO('UserDAO');
+                $user = $userDao->getById($row->reviewer_id);
                 if ($user) {
                     $reviewers[] = array(
                         'id' => $row->reviewer_id,

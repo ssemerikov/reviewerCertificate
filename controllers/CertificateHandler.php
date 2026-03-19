@@ -14,12 +14,7 @@
 namespace APP\plugins\generic\reviewerCertificate\controllers;
 
 use APP\handler\Handler;
-use APP\core\Application;
-use PKP\security\Role;
-use PKP\security\authorization\ContextAccessPolicy;
 use PKP\db\DAORegistry;
-use PKP\core\JSONMessage;
-use PKP\plugins\PluginRegistry;
 use APP\template\TemplateManager;
 use Exception;
 
@@ -33,29 +28,14 @@ class CertificateHandler extends Handler {
      */
     public function __construct() {
         parent::__construct();
-        // OJS 3.3 defines role IDs as global constants via define();
-        // OJS 3.4+ defines them as class constants on PKP\security\Role.
-        // Note: class_exists('PKP\security\Role') returns true on OJS 3.3 due
-        // to compat_autoloader aliasing, so check for the global constant instead.
-        if (defined('ROLE_ID_REVIEWER')) {
-            $this->addRoleAssignment(
-                array(ROLE_ID_REVIEWER),
-                array('download', 'preview')
-            );
-            $this->addRoleAssignment(
-                array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
-                array('manage', 'generateBatch')
-            );
-        } else {
-            $this->addRoleAssignment(
-                array(Role::ROLE_ID_REVIEWER),
-                array('download', 'preview')
-            );
-            $this->addRoleAssignment(
-                array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
-                array('manage', 'generateBatch')
-            );
-        }
+        $this->addRoleAssignment(
+            array(ROLE_ID_REVIEWER),
+            array('download', 'preview')
+        );
+        $this->addRoleAssignment(
+            array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
+            array('manage', 'generateBatch')
+        );
         // Make verify publicly accessible (no role restriction)
     }
 
@@ -71,13 +51,9 @@ class CertificateHandler extends Handler {
             return true;
         }
 
-        // For all other operations, require context access - OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\security\authorization\ContextAccessPolicy')) {
-            $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
-            $this->addPolicy(new \ContextAccessPolicy($request, $roleAssignments));
-        }
+        // For all other operations, require context access
+        import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
+        $this->addPolicy(new \ContextAccessPolicy($request, $roleAssignments));
 
         return parent::authorize($request, $args, $roleAssignments);
     }
@@ -96,12 +72,7 @@ class CertificateHandler extends Handler {
      */
     private function getPlugin() {
         if (!$this->plugin) {
-            // OJS 3.4+/3.3 compatibility
-            if (class_exists('PKP\plugins\PluginRegistry')) {
-                $this->plugin = PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
-            } else {
-                $this->plugin = \PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
-            }
+            $this->plugin = \PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
         }
         return $this->plugin;
     }
@@ -233,7 +204,7 @@ class CertificateHandler extends Handler {
             $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
             $certificate->setReviewId($reviewId);
             $certificate->setContextId($context->getId());
-            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+            $certificate->setDateIssued(\Core::getCurrentDate());
             $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
             $certificate->setDownloadCount(0);
 
@@ -306,20 +277,11 @@ class CertificateHandler extends Handler {
                 }
 
                 if ($certificate) {
-                    // Get reviewer and context information - OJS 3.3 compatibility
-                    if (class_exists('APP\facades\Repo')) {
-                        $reviewer = \APP\facades\Repo::user()->get($certificate->getReviewerId());
-                    } else {
-                        $userDao = DAORegistry::getDAO('UserDAO');
-                        $reviewer = $userDao->getById($certificate->getReviewerId());
-                    }
+                    // Get reviewer and context information
+                    $userDao = DAORegistry::getDAO('UserDAO');
+                    $reviewer = $userDao->getById($certificate->getReviewerId());
 
-                    // OJS 3.4+/3.3 compatibility
-                    if (class_exists('APP\core\Application')) {
-                        $contextDao = Application::getContextDAO();
-                    } else {
-                        $contextDao = \Application::getContextDAO();
-                    }
+                    $contextDao = \Application::getContextDAO();
                     $certContext = $contextDao->getById($certificate->getContextId());
 
                     if ($reviewer && $certContext) {
@@ -522,12 +484,7 @@ class CertificateHandler extends Handler {
                         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
                         $certificate->setReviewId($reviewAssignment->getId());
                         $certificate->setContextId($context->getId());
-                        // OJS 3.3 compatibility
-                        if (class_exists('PKP\core\Core')) {
-                            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-                        } else {
-                            $certificate->setDateIssued(\Core::getCurrentDate());
-                        }
+                        $certificate->setDateIssued(\Core::getCurrentDate());
                         $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
 
                         $certificateDao->insertObject($certificate);

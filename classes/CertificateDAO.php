@@ -14,7 +14,6 @@
 namespace APP\plugins\generic\reviewerCertificate\classes;
 
 use PKP\db\DAO;
-use PKP\db\DAOResultFactory;
 
 require_once(dirname(__FILE__) . '/Certificate.php');
 
@@ -99,14 +98,8 @@ class CertificateDAO extends DAO {
         $sql .= ' ORDER BY date_issued DESC';
 
         $result = $this->retrieve($sql, $params);
-        // OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\db\DAOResultFactory')) {
-            return new DAOResultFactory($result, $this, '_fromRow');
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.db.DAOResultFactory');
-            return new \DAOResultFactory($result, $this, '_fromRow');
-        }
-        return null;
+        import('lib.pkp.classes.db.DAOResultFactory');
+        return new \DAOResultFactory($result, $this, '_fromRow');
     }
 
     /**
@@ -120,14 +113,8 @@ class CertificateDAO extends DAO {
             array((int) $contextId)
         );
 
-        // OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\db\DAOResultFactory')) {
-            return new DAOResultFactory($result, $this, '_fromRow');
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.db.DAOResultFactory');
-            return new \DAOResultFactory($result, $this, '_fromRow');
-        }
-        return null;
+        import('lib.pkp.classes.db.DAOResultFactory');
+        return new \DAOResultFactory($result, $this, '_fromRow');
     }
 
     /**
@@ -353,24 +340,6 @@ class CertificateDAO extends DAO {
      * @return int
      */
     public function getInsertId(): int {
-        // OJS 3.5 removed _getInsertId() from base DAO class
-        // Use method_exists check with fallback to Laravel/PDO
-        if (method_exists($this, '_getInsertId')) {
-            return $this->_getInsertId('reviewer_certificates', 'certificate_id');
-        }
-        // Fallback for OJS 3.5+: use Illuminate DB facade
-        // Wrap in try/catch to handle OJS 3.3.0-20+ where Laravel exists but DB isn't bootstrapped
-        if (class_exists('Illuminate\Support\Facades\DB')) {
-            try {
-                $pdo = \Illuminate\Support\Facades\DB::getPdo();
-                if ($pdo !== null) {
-                    return (int) $pdo->lastInsertId();
-                }
-            } catch (\Throwable $e) {
-                // Laravel DB not bootstrapped (OJS 3.3.0-20+), fall through
-                error_log('ReviewerCertificate: getInsertId() Laravel fallback failed: ' . $e->getMessage());
-            }
-        }
-        return 0;
+        return $this->_getInsertId('reviewer_certificates', 'certificate_id');
     }
 }

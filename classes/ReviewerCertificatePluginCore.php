@@ -18,7 +18,6 @@ namespace APP\plugins\generic\reviewerCertificate;
 
 use PKP\plugins\GenericPlugin;
 use PKP\db\DAORegistry;
-use PKP\plugins\Hook;
 use PKP\config\Config;
 use APP\core\Application;
 use APP\template\TemplateManager;
@@ -40,23 +39,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
                 DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
-                // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3
-                if (class_exists('PKP\plugins\Hook')) {
-                    Hook::register('LoadHandler', array($this, 'setupHandler'));
-                    Hook::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                    // Note: reviewassignmentdao::_updateobject hook removed in OJS 3.5
-                    // Auto-email on review completion not supported in OJS 3.5
-                    Hook::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-
-                    // Register Mailable for OJS 3.5+ email system
-                    if (class_exists('PKP\mail\Mailable')) {
-                        Hook::register('Mailer::Mailables', array($this, 'addMailable'));
-                    }
-                } else {
-                    \HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
-                    \HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                    \HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-                }
+                // Register hooks
+                \HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
+                \HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
+                \HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
             } catch (\Throwable $e) {
                 error_log('ReviewerCertificate: Error during plugin registration: ' . $e->getMessage());
                 // Still return $success — plugin is registered but may not be fully functional
@@ -64,14 +50,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
 
         return $success;
-    }
-
-    /**
-     * Register Mailable with OJS 3.5+ email system
-     */
-    public function addMailable(string $hookName, array $args): void {
-        require_once($this->getPluginPath() . '/classes/ReviewerCertificateMailable.php');
-        $args[0]->push(\APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable::class);
     }
 
     /**
@@ -129,30 +107,17 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     public function getActions($request, $verb) {
         $router = $request->getRouter();
 
-        // OJS 3.3 compatibility for LinkAction and AjaxModal
-        if (class_exists('PKP\linkAction\LinkAction')) {
-            $linkAction = new \PKP\linkAction\LinkAction(
-                'settings',
-                new \PKP\linkAction\request\AjaxModal(
-                    $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
-                    $this->getDisplayName()
-                ),
-                __('manager.plugins.settings'),
-                null
-            );
-        } else {
-            import('lib.pkp.classes.linkAction.LinkAction');
-            import('lib.pkp.classes.linkAction.request.AjaxModal');
-            $linkAction = new \LinkAction(
-                'settings',
-                new \AjaxModal(
-                    $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
-                    $this->getDisplayName()
-                ),
-                __('manager.plugins.settings'),
-                null
-            );
-        }
+        import('lib.pkp.classes.linkAction.LinkAction');
+        import('lib.pkp.classes.linkAction.request.AjaxModal');
+        $linkAction = new \LinkAction(
+            'settings',
+            new \AjaxModal(
+                $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
+                $this->getDisplayName()
+            ),
+            __('manager.plugins.settings'),
+            null
+        );
 
         return array_merge(
             $this->getEnabled() ? array($linkAction) : array(),
@@ -337,7 +302,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setSubmissionId($row->submission_id);
                                 $certificate->setReviewId($row->review_id);
                                 $certificate->setContextId($context->getId());
-                                $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
+                                $certificate->setDateIssued(\Core::getCurrentDate());
                                 $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
                                 $certificate->setDownloadCount(0);
 
@@ -421,19 +386,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 return false;
             }
 
-            // OJS 3.5+ uses direct handler assignment; OJS 3.3/3.4 use HANDLER_CLASS constant
-            // Use array_key_exists() because isset() returns false for null values
-            // In OJS 3.5, $params[3] exists but is null initially
-            if (array_key_exists(3, $params)) {
-                // OJS 3.5+ pattern: assign handler via reference (per PKP Plugin Guide)
-                // Must use =& to get reference, then assign to modify original
-                $handler =& $params[3];
-                $handler = new \APP\plugins\generic\reviewerCertificate\controllers\CertificateHandler();
-                $handler->setPlugin($this);
-            } else {
-                // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant (must be FQN)
-                define('HANDLER_CLASS', 'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler');
-            }
+            // OJS 3.3 pattern: use HANDLER_CLASS constant (must be FQN)
+            define('HANDLER_CLASS', 'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler');
 
             return true;
         }
@@ -639,12 +593,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
         $certificate->setReviewId($reviewAssignment->getId());
         $certificate->setContextId(Application::get()->getRequest()->getContext()->getId());
-        // OJS 3.3 compatibility
-        if (class_exists('PKP\core\Core')) {
-            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-        } else {
-            $certificate->setDateIssued(Core::getCurrentDate());
-        }
+        $certificate->setDateIssued(\Core::getCurrentDate());
         $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
 
         try {
@@ -665,49 +614,16 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $request = Application::get()->getRequest();
         $context = $request->getContext();
 
-        // OJS 3.3 compatibility
-        if (class_exists('APP\facades\Repo')) {
-            $reviewer = \APP\facades\Repo::user()->get($reviewAssignment->getReviewerId());
-        } else {
-            $userDao = DAORegistry::getDAO('UserDAO');
-            $reviewer = $userDao->getById($reviewAssignment->getReviewerId());
-        }
+        $userDao = DAORegistry::getDAO('UserDAO');
+        $reviewer = $userDao->getById($reviewAssignment->getReviewerId());
 
         if (!$reviewer) {
             error_log('ReviewerCertificate: Cannot send notification - reviewer ID ' . $reviewAssignment->getReviewerId() . ' not found');
             return;
         }
 
-        // OJS 3.5+ — use Mailable system
-        if (class_exists('PKP\mail\Mailable')) {
-            require_once($this->getPluginPath() . '/classes/ReviewerCertificateMailable.php');
-            $mailable = new \APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable();
-            $mailable->setData([
-                'reviewerName' => $reviewer->getFullName(),
-                'certificateUrl' => $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())),
-                'journalName' => $context->getLocalizedName(),
-                'journalUrl' => $request->getBaseUrl() . '/' . $context->getPath(),
-            ]);
-            $template = \APP\facades\Repo::emailTemplate()->getByKey(
-                $context->getId(), $mailable::getEmailTemplateKey()
-            );
-            $locale = $context->getPrimaryLocale();
-            $mailable
-                ->sender($request->getUser())
-                ->to($reviewer->getEmail(), $reviewer->getFullName())
-                ->subject($template->getLocalizedData('subject', $locale))
-                ->body($template->getLocalizedData('body', $locale));
-            \Illuminate\Support\Facades\Mail::send($mailable);
-            return;
-        }
-
-        // OJS 3.3/3.4 — use legacy MailTemplate
-        if (class_exists('PKP\mail\MailTemplate')) {
-            $mail = new \PKP\mail\MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
-        } else {
-            import('lib.pkp.classes.mail.MailTemplate');
-            $mail = new \MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
-        }
+        import('lib.pkp.classes.mail.MailTemplate');
+        $mail = new \MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
 
         $mail->setReplyTo($context->getData('contactEmail'), $context->getData('contactName'));
         $mail->addRecipient($reviewer->getEmail(), $reviewer->getFullName());
@@ -761,11 +677,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * @return JSONMessage
      */
     public function createJSONMessage($status, $content = '') {
-        if (class_exists('PKP\core\JSONMessage')) {
-            return new \PKP\core\JSONMessage($status, $content);
-        } else {
-            import('lib.pkp.classes.core.JSONMessage');
-            return new \JSONMessage($status, $content);
-        }
+        import('lib.pkp.classes.core.JSONMessage');
+        return new \JSONMessage($status, $content);
     }
 }

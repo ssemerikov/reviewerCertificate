@@ -14,7 +14,6 @@
 namespace APP\plugins\generic\reviewerCertificate\classes;
 
 use PKP\core\DataObject;
-use PKP\core\Core;
 
 class Certificate extends DataObject {
 
@@ -191,14 +190,7 @@ class Certificate extends DataObject {
      */
     public function incrementDownloadCount() {
         $this->setDownloadCount($this->getDownloadCount() + 1);
-        // OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\core\Core')) {
-            $this->setLastDownloaded(Core::getCurrentDate());
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.core.Core');
-            $this->setLastDownloaded(\Core::getCurrentDate());
-        } else {
-            $this->setLastDownloaded(date('Y-m-d H:i:s'));
-        }
+        import('lib.pkp.classes.core.Core');
+        $this->setLastDownloaded(\Core::getCurrentDate());
     }
 }
