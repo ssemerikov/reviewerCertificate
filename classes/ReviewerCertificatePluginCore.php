@@ -10,8 +10,7 @@
  *
  * @brief Reviewer Certificate Plugin - Enables reviewers to generate and download personalized PDF certificates
  *
- * This file contains the main plugin implementation. It is loaded by ReviewerCertificatePlugin.php
- * after the compatibility autoloader has been registered.
+ * This file contains the main plugin implementation. It is loaded by ReviewerCertificatePlugin.php.
  */
 
 namespace APP\plugins\generic\reviewerCertificate;
@@ -40,23 +39,10 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $certificateDao = new \APP\plugins\generic\reviewerCertificate\classes\CertificateDAO();
                 DAORegistry::registerDAO('CertificateDAO', $certificateDao);
 
-                // Register hooks - use Hook class for OJS 3.4+, HookRegistry for OJS 3.3
-                if (class_exists('PKP\plugins\Hook')) {
-                    Hook::register('LoadHandler', array($this, 'setupHandler'));
-                    Hook::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                    // Note: reviewassignmentdao::_updateobject hook removed in OJS 3.5
-                    // Auto-email on review completion not supported in OJS 3.5
-                    Hook::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-
-                    // Register Mailable for OJS 3.5+ email system
-                    if (class_exists('PKP\mail\Mailable')) {
-                        Hook::register('Mailer::Mailables', array($this, 'addMailable'));
-                    }
-                } else {
-                    \HookRegistry::register('LoadHandler', array($this, 'setupHandler'));
-                    \HookRegistry::register('TemplateManager::display', array($this, 'addCertificateButton'));
-                    \HookRegistry::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
-                }
+                // Register hooks
+                Hook::register('LoadHandler', array($this, 'setupHandler'));
+                Hook::register('TemplateManager::display', array($this, 'addCertificateButton'));
+                Hook::register('reviewassignmentdao::_updateobject', array($this, 'handleReviewComplete'));
             } catch (\Throwable $e) {
                 error_log('ReviewerCertificate: Error during plugin registration: ' . $e->getMessage());
                 // Still return $success — plugin is registered but may not be fully functional
@@ -64,14 +50,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
 
         return $success;
-    }
-
-    /**
-     * Register Mailable with OJS 3.5+ email system
-     */
-    public function addMailable(string $hookName, array $args): void {
-        require_once($this->getPluginPath() . '/classes/ReviewerCertificateMailable.php');
-        $args[0]->push(\APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable::class);
     }
 
     /**
@@ -94,9 +72,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * @copydoc Plugin::getName()
      *
      * Returns a simple name without namespace backslashes.
-     * OJS 3.3's base getName() returns strtolower(get_class($this)) which
-     * includes the full namespace with backslashes, breaking jQuery selectors
-     * in the plugin grid and preventing enable/disable (Issue #65).
      */
     public function getName() {
         return 'reviewercertificateplugin';
@@ -129,30 +104,15 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     public function getActions($request, $verb) {
         $router = $request->getRouter();
 
-        // OJS 3.3 compatibility for LinkAction and AjaxModal
-        if (class_exists('PKP\linkAction\LinkAction')) {
-            $linkAction = new \PKP\linkAction\LinkAction(
-                'settings',
-                new \PKP\linkAction\request\AjaxModal(
-                    $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
-                    $this->getDisplayName()
-                ),
-                __('manager.plugins.settings'),
-                null
-            );
-        } else {
-            import('lib.pkp.classes.linkAction.LinkAction');
-            import('lib.pkp.classes.linkAction.request.AjaxModal');
-            $linkAction = new \LinkAction(
-                'settings',
-                new \AjaxModal(
-                    $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
-                    $this->getDisplayName()
-                ),
-                __('manager.plugins.settings'),
-                null
-            );
-        }
+        $linkAction = new \PKP\linkAction\LinkAction(
+            'settings',
+            new \PKP\linkAction\request\AjaxModal(
+                $router->url($request, null, null, 'manage', null, array('verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic')),
+                $this->getDisplayName()
+            ),
+            __('manager.plugins.settings'),
+            null
+        );
 
         return array_merge(
             $this->getEnabled() ? array($linkAction) : array(),
@@ -188,8 +148,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                         // If file was uploaded, redirect back to website settings plugins page instead of returning JSON
                         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
                             // File was uploaded - redirect back to Website Settings
-                            // Note: We can't control which tab opens - that's handled by JavaScript
-                            // OJS 3.5 requires $path to be array, not string
                             $request->redirect(null, 'management', 'settings', array('website'));
                         }
 
@@ -406,10 +364,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $page = $params[0];
 
         if ($page == 'certificate') {
-            // OJS 3.3 compatibility: re-load locale data for handler rendering.
-            // Plugin locale may not be usable on public pages if the lazy-loaded
-            // locale file was registered with a relative path before the working
-            // directory or locale context was finalized.
             $this->addLocaleData();
 
             require_once($this->getPluginPath() . '/controllers/CertificateHandler.php');
@@ -421,19 +375,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 return false;
             }
 
-            // OJS 3.5+ uses direct handler assignment; OJS 3.3/3.4 use HANDLER_CLASS constant
-            // Use array_key_exists() because isset() returns false for null values
-            // In OJS 3.5, $params[3] exists but is null initially
-            if (array_key_exists(3, $params)) {
-                // OJS 3.5+ pattern: assign handler via reference (per PKP Plugin Guide)
-                // Must use =& to get reference, then assign to modify original
-                $handler =& $params[3];
-                $handler = new \APP\plugins\generic\reviewerCertificate\controllers\CertificateHandler();
-                $handler->setPlugin($this);
-            } else {
-                // OJS 3.3/3.4 pattern: use HANDLER_CLASS constant (must be FQN)
-                define('HANDLER_CLASS', 'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler');
-            }
+            // OJS 3.4 pattern: use HANDLER_CLASS constant (must be FQN)
+            define('HANDLER_CLASS', 'APP\\plugins\\generic\\reviewerCertificate\\controllers\\CertificateHandler');
 
             return true;
         }
@@ -455,19 +398,11 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
 
         // Check if this is the reviewer dashboard - support multiple template patterns
-        // Different templates for different OJS versions and review states
         $reviewerTemplates = array(
-            // OJS 3.3/3.4 templates
             'reviewer/review/reviewCompleted.tpl',
             'reviewer/review/step3.tpl',
             'reviewer/review/step4.tpl',
             'reviewer/review/reviewStepHeader.tpl',
-
-            // OJS 3.5 templates - may use different paths
-            'reviewer/review/step4.tpl',  // Review completion step
-            'reviewer/review/complete.tpl',  // Potential OJS 3.5 completion template
-            'reviewer/review/reviewStep4.tpl',  // Alternative naming
-            'reviewer/review/reviewComplete.tpl',  // Alternative naming
         );
 
         if (!in_array($template, $reviewerTemplates)) {
@@ -497,7 +432,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             }
 
             // Fetch review assignment for this submission and user
-            // Use direct SQL query for OJS 3.5 compatibility (ReviewAssignmentDAO not available)
             $certificateDao = DAORegistry::getDAO('CertificateDAO');
             if (!$certificateDao) {
                 return false;
@@ -556,8 +490,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             // Store content in template variable for Smarty templates to include
             $templateMgr->assign('reviewerCertificateButtonHTML', $additionalContent);
 
-            // Multiple injection strategies for maximum compatibility across OJS versions
-
+            // Multiple injection strategies for maximum compatibility
             // Strategy 1: Try to modify output buffer (params[2])
             if (isset($params[2]) && is_string($params[2])) {
                 $params[2] .= "\n" . $additionalContent;
@@ -601,7 +534,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
 
         // Count completed reviews for this reviewer
-        // Use direct SQL query for OJS 3.5 compatibility (ReviewAssignmentDAO not available)
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         if (!$certificateDao) {
             return false;
@@ -639,12 +571,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
         $certificate->setReviewId($reviewAssignment->getId());
         $certificate->setContextId(Application::get()->getRequest()->getContext()->getId());
-        // OJS 3.3 compatibility
-        if (class_exists('PKP\core\Core')) {
-            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-        } else {
-            $certificate->setDateIssued(Core::getCurrentDate());
-        }
+        $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
         $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
 
         try {
@@ -665,49 +592,14 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         $request = Application::get()->getRequest();
         $context = $request->getContext();
 
-        // OJS 3.3 compatibility
-        if (class_exists('APP\facades\Repo')) {
-            $reviewer = \APP\facades\Repo::user()->get($reviewAssignment->getReviewerId());
-        } else {
-            $userDao = DAORegistry::getDAO('UserDAO');
-            $reviewer = $userDao->getById($reviewAssignment->getReviewerId());
-        }
+        $reviewer = \APP\facades\Repo::user()->get($reviewAssignment->getReviewerId());
 
         if (!$reviewer) {
             error_log('ReviewerCertificate: Cannot send notification - reviewer ID ' . $reviewAssignment->getReviewerId() . ' not found');
             return;
         }
 
-        // OJS 3.5+ — use Mailable system
-        if (class_exists('PKP\mail\Mailable')) {
-            require_once($this->getPluginPath() . '/classes/ReviewerCertificateMailable.php');
-            $mailable = new \APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable();
-            $mailable->setData([
-                'reviewerName' => $reviewer->getFullName(),
-                'certificateUrl' => $request->url(null, 'certificate', 'download', array($reviewAssignment->getId())),
-                'journalName' => $context->getLocalizedName(),
-                'journalUrl' => $request->getBaseUrl() . '/' . $context->getPath(),
-            ]);
-            $template = \APP\facades\Repo::emailTemplate()->getByKey(
-                $context->getId(), $mailable::getEmailTemplateKey()
-            );
-            $locale = $context->getPrimaryLocale();
-            $mailable
-                ->sender($request->getUser())
-                ->to($reviewer->getEmail(), $reviewer->getFullName())
-                ->subject($template->getLocalizedData('subject', $locale))
-                ->body($template->getLocalizedData('body', $locale));
-            \Illuminate\Support\Facades\Mail::send($mailable);
-            return;
-        }
-
-        // OJS 3.3/3.4 — use legacy MailTemplate
-        if (class_exists('PKP\mail\MailTemplate')) {
-            $mail = new \PKP\mail\MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
-        } else {
-            import('lib.pkp.classes.mail.MailTemplate');
-            $mail = new \MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
-        }
+        $mail = new \PKP\mail\MailTemplate('REVIEWER_CERTIFICATE_AVAILABLE');
 
         $mail->setReplyTo($context->getData('contactEmail'), $context->getData('contactName'));
         $mail->addRecipient($reviewer->getEmail(), $reviewer->getFullName());
@@ -755,17 +647,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     }
 
     /**
-     * Create JSONMessage - OJS 3.3 compatibility helper
+     * Create JSONMessage helper
      * @param $status bool
      * @param $content mixed
      * @return JSONMessage
      */
     public function createJSONMessage($status, $content = '') {
-        if (class_exists('PKP\core\JSONMessage')) {
-            return new \PKP\core\JSONMessage($status, $content);
-        } else {
-            import('lib.pkp.classes.core.JSONMessage');
-            return new \JSONMessage($status, $content);
-        }
+        return new \PKP\core\JSONMessage($status, $content);
     }
 }
