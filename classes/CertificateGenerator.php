@@ -32,14 +32,7 @@ class CertificateGenerator {
             return;
         }
 
-        // OJS 3.4+/3.3 compatibility: Get base directory
-        if (class_exists('PKP\core\Core')) {
-            $ojsBaseDir = Core::getBaseDir();
-        } elseif (class_exists('Core')) {
-            $ojsBaseDir = \Core::getBaseDir();
-        } else {
-            $ojsBaseDir = dirname(__FILE__, 6);
-        }
+        $ojsBaseDir = Core::getBaseDir();
 
         $tcpdfLocations = array(
             dirname(__FILE__, 2) . '/vendor/tecnickcom/tcpdf/tcpdf.php',
@@ -96,17 +89,9 @@ class CertificateGenerator {
     public function setReviewAssignment($reviewAssignment) {
         $this->reviewAssignment = $reviewAssignment;
 
-        // Load related objects - OJS 3.3 compatibility
-        if (class_exists('APP\facades\Repo')) {
-            $this->reviewer = \APP\facades\Repo::user()->get($reviewAssignment->getReviewerId());
-            $this->submission = \APP\facades\Repo::submission()->get($reviewAssignment->getSubmissionId());
-        } else {
-            // OJS 3.3 fallback using DAOs
-            $userDao = DAORegistry::getDAO('UserDAO');
-            $this->reviewer = $userDao->getById($reviewAssignment->getReviewerId());
-            $submissionDao = DAORegistry::getDAO('SubmissionDAO');
-            $this->submission = $submissionDao->getById($reviewAssignment->getSubmissionId());
-        }
+        // Load related objects
+        $this->reviewer = Repo::user()->get($reviewAssignment->getReviewerId());
+        $this->submission = Repo::submission()->get($reviewAssignment->getSubmissionId());
     }
 
     /**
@@ -205,13 +190,7 @@ class CertificateGenerator {
         }
 
         // Path traversal protection: validate the image is within allowed directory
-        if (class_exists('PKP\core\Core')) {
-            $baseDir = \PKP\core\Core::getBaseDir();
-        } elseif (class_exists('Core')) {
-            $baseDir = \Core::getBaseDir();
-        } else {
-            $baseDir = dirname(__FILE__, 6);
-        }
+        $baseDir = Core::getBaseDir();
 
         $allowedDir = realpath($baseDir . '/files/journals/');
         $realPath = realpath($backgroundImage);
@@ -522,24 +501,17 @@ class CertificateGenerator {
 
         $title = '';
 
-        // OJS 3.5+: Use getCurrentPublication()->getLocalizedTitle()
-        if (method_exists($submission, 'getCurrentPublication')) {
-            $publication = $submission->getCurrentPublication();
-            if ($publication) {
-                if (method_exists($publication, 'getLocalizedTitle')) {
-                    $title = $publication->getLocalizedTitle();
-                } elseif (method_exists($publication, 'getLocalizedFullTitle')) {
-                    $title = $publication->getLocalizedFullTitle();
-                }
+        // OJS 3.5: Use getCurrentPublication()->getLocalizedTitle()
+        $publication = $submission->getCurrentPublication();
+        if ($publication) {
+            if (method_exists($publication, 'getLocalizedTitle')) {
+                $title = $publication->getLocalizedTitle();
+            } elseif (method_exists($publication, 'getLocalizedFullTitle')) {
+                $title = $publication->getLocalizedFullTitle();
             }
         }
 
-        // OJS 3.3/3.4: Direct method on Submission
-        if (empty($title) && method_exists($submission, 'getLocalizedTitle')) {
-            $title = $submission->getLocalizedTitle();
-        }
-
-        // OJS 3.5+ supports HTML markup in titles — strip for PDF plain text
+        // OJS 3.5 supports HTML markup in titles — strip for PDF plain text
         return strip_tags($title);
     }
 

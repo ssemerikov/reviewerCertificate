@@ -33,29 +33,14 @@ class CertificateHandler extends Handler {
      */
     public function __construct() {
         parent::__construct();
-        // OJS 3.3 defines role IDs as global constants via define();
-        // OJS 3.4+ defines them as class constants on PKP\security\Role.
-        // Note: class_exists('PKP\security\Role') returns true on OJS 3.3 due
-        // to compat_autoloader aliasing, so check for the global constant instead.
-        if (defined('ROLE_ID_REVIEWER')) {
-            $this->addRoleAssignment(
-                array(ROLE_ID_REVIEWER),
-                array('download', 'preview')
-            );
-            $this->addRoleAssignment(
-                array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
-                array('manage', 'generateBatch')
-            );
-        } else {
-            $this->addRoleAssignment(
-                array(Role::ROLE_ID_REVIEWER),
-                array('download', 'preview')
-            );
-            $this->addRoleAssignment(
-                array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
-                array('manage', 'generateBatch')
-            );
-        }
+        $this->addRoleAssignment(
+            array(Role::ROLE_ID_REVIEWER),
+            array('download', 'preview')
+        );
+        $this->addRoleAssignment(
+            array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
+            array('manage', 'generateBatch')
+        );
         // Make verify publicly accessible (no role restriction)
     }
 
@@ -71,13 +56,8 @@ class CertificateHandler extends Handler {
             return true;
         }
 
-        // For all other operations, require context access - OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\security\authorization\ContextAccessPolicy')) {
-            $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
-            $this->addPolicy(new \ContextAccessPolicy($request, $roleAssignments));
-        }
+        // For all other operations, require context access
+        $this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
 
         return parent::authorize($request, $args, $roleAssignments);
     }
@@ -96,66 +76,9 @@ class CertificateHandler extends Handler {
      */
     private function getPlugin() {
         if (!$this->plugin) {
-            // OJS 3.4+/3.3 compatibility
-            if (class_exists('PKP\plugins\PluginRegistry')) {
-                $this->plugin = PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
-            } else {
-                $this->plugin = \PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
-            }
+            $this->plugin = PluginRegistry::getPlugin('generic', 'reviewercertificateplugin');
         }
         return $this->plugin;
-    }
-
-    /**
-     * Ensure plugin locale data is loaded for the current request.
-     * OJS 3.3 may fail to load locale files on public pages when registered
-     * with relative paths during plugin bootstrap.
-     */
-    private function ensurePluginLocaleLoaded() {
-        $plugin = $this->getPlugin();
-        if (!$plugin) {
-            return;
-        }
-
-        // Standard reload attempt
-        if (method_exists($plugin, 'addLocaleData')) {
-            $plugin->addLocaleData();
-        }
-
-        // Check if translations are actually available
-        $testKey = 'plugins.generic.reviewerCertificate.verify.title';
-        $translated = __($testKey);
-        if ($translated === '##' . $testKey . '##') {
-            // Translations still missing — manually register with absolute path.
-            // OJS 3.3.0-22 uses .po files (via Gettext), not .xml.
-            $localeDir = dirname(__DIR__) . '/locale';
-
-            // Determine current locale
-            $locale = 'en_US';
-            if (class_exists('AppLocale', false)) {
-                $currentLocale = \AppLocale::getLocale();
-                if ($currentLocale) {
-                    $locale = $currentLocale;
-                }
-            }
-
-            // Register .po file with absolute path
-            $localeFile = $localeDir . '/' . $locale . '/locale.po';
-            if (file_exists($localeFile) && class_exists('AppLocale', false)) {
-                \AppLocale::registerLocaleFile($locale, $localeFile);
-            }
-
-            // If locale was 'en', also try 'en_US' (or vice versa)
-            if (strpos($locale, '_') === false) {
-                $altLocale = $locale . '_US';
-            } else {
-                $altLocale = substr($locale, 0, 2);
-            }
-            $altFile = $localeDir . '/' . $altLocale . '/locale.po';
-            if (file_exists($altFile) && class_exists('AppLocale', false)) {
-                \AppLocale::registerLocaleFile($altLocale, $altFile);
-            }
-        }
     }
 
     /**
@@ -275,9 +198,6 @@ class CertificateHandler extends Handler {
      * @param $request Request
      */
     public function verify($args, $request) {
-        // OJS 3.3 compatibility: ensure plugin locale is loaded for public pages
-        $this->ensurePluginLocaleLoaded();
-
         // Get certificate code from URL path or query parameter
         $certificateCode = isset($args[0]) ? $args[0] : $request->getUserVar('code');
 
@@ -306,20 +226,9 @@ class CertificateHandler extends Handler {
                 }
 
                 if ($certificate) {
-                    // Get reviewer and context information - OJS 3.3 compatibility
-                    if (class_exists('APP\facades\Repo')) {
-                        $reviewer = \APP\facades\Repo::user()->get($certificate->getReviewerId());
-                    } else {
-                        $userDao = DAORegistry::getDAO('UserDAO');
-                        $reviewer = $userDao->getById($certificate->getReviewerId());
-                    }
-
-                    // OJS 3.4+/3.3 compatibility
-                    if (class_exists('APP\core\Application')) {
-                        $contextDao = Application::getContextDAO();
-                    } else {
-                        $contextDao = \Application::getContextDAO();
-                    }
+                    // Get reviewer and context information
+                    $reviewer = \APP\facades\Repo::user()->get($certificate->getReviewerId());
+                    $contextDao = Application::getContextDAO();
                     $certContext = $contextDao->getById($certificate->getContextId());
 
                     if ($reviewer && $certContext) {
@@ -522,12 +431,7 @@ class CertificateHandler extends Handler {
                         $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
                         $certificate->setReviewId($reviewAssignment->getId());
                         $certificate->setContextId($context->getId());
-                        // OJS 3.3 compatibility
-                        if (class_exists('PKP\core\Core')) {
-                            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-                        } else {
-                            $certificate->setDateIssued(\Core::getCurrentDate());
-                        }
+                        $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
                         $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
 
                         $certificateDao->insertObject($certificate);
