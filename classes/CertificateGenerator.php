@@ -42,7 +42,7 @@ class CertificateGenerator {
         }
 
         $tcpdfLocations = array(
-            dirname(__FILE__, 2) . '/lib/tcpdf/tcpdf.php',
+            dirname(__FILE__, 2) . '/vendor/tecnickcom/tcpdf/tcpdf.php',
             $ojsBaseDir . '/lib/pkp/lib/vendor/tecnickcom/tcpdf/tcpdf.php',
             $ojsBaseDir . '/lib/pkp/lib/tcpdf/tcpdf.php',
         );
@@ -56,8 +56,8 @@ class CertificateGenerator {
         }
 
         throw new Exception(
-            'TCPDF library not found. The plugin should include TCPDF in lib/tcpdf/ directory. ' .
-            'Please reinstall the plugin or contact the administrator.'
+            'TCPDF library not found. Please run "composer install" in the plugin directory, ' .
+            'or ensure TCPDF is available in the OJS vendor directory.'
         );
     }
 
@@ -500,7 +500,7 @@ class CertificateGenerator {
      * Get default body template
      * @return string
      */
-    private function getDefaultBodyTemplate() {
+    public static function getDefaultBodyTemplate() {
         return 'This certificate is awarded to' . "\n\n" .
                '{{$reviewerName}}' . "\n\n" .
                'In recognition of their valuable contribution as a peer reviewer for' . "\n\n" .
@@ -544,86 +544,49 @@ class CertificateGenerator {
     }
 
     /**
-     * Get reviewer given name with OJS version compatibility
-     * @param $user User
-     * @return string
+     * Call the first available method on an object (OJS version compatibility helper).
+     * @param $obj object
+     * @param $methodCalls array of [methodName, argsArray] pairs
+     * @return mixed
      */
-    private function getReviewerGivenName($user) {
-        if (!$user) {
-            return '';
-        }
-
-        if (method_exists($user, 'getLocalizedGivenName')) {
-            return $user->getLocalizedGivenName();
-        }
-        if (method_exists($user, 'getGivenName')) {
-            return $user->getGivenName(null);
-        }
-
-        return '';
-    }
-
-    /**
-     * Get reviewer family name with OJS version compatibility
-     * @param $user User
-     * @return string
-     */
-    private function getReviewerFamilyName($user) {
-        if (!$user) {
-            return '';
-        }
-
-        if (method_exists($user, 'getLocalizedFamilyName')) {
-            return $user->getLocalizedFamilyName();
-        }
-        if (method_exists($user, 'getFamilyName')) {
-            return $user->getFamilyName(null);
-        }
-
-        return '';
-    }
-
-    /**
-     * Get context (journal) name with OJS version compatibility
-     * @param $context Context
-     * @return string
-     */
-    private function getContextName($context) {
-        if (!$context) {
-            return '';
-        }
-
-        if (method_exists($context, 'getLocalizedName')) {
-            return $context->getLocalizedName();
-        }
-        if (method_exists($context, 'getName')) {
-            return $context->getName(null);
-        }
-
-        return '';
-    }
-
-    /**
-     * Get context (journal) acronym with OJS version compatibility
-     * @param $context Context
-     * @return string
-     */
-    private function getContextAcronym($context) {
-        if (!$context) {
-            return '';
-        }
-
-        if (method_exists($context, 'getLocalizedData')) {
-            $acronym = $context->getLocalizedData('acronym');
-            if ($acronym) {
-                return $acronym;
+    private function callFirstAvailable($obj, $methodCalls) {
+        if (!$obj) return '';
+        foreach ($methodCalls as list($method, $args)) {
+            if (method_exists($obj, $method)) {
+                return $obj->$method(...$args);
             }
         }
-        if (method_exists($context, 'getAcronym')) {
-            return $context->getAcronym(null) ?: '';
-        }
-
         return '';
+    }
+
+    private function getReviewerGivenName($user) {
+        return $this->callFirstAvailable($user, [
+            ['getLocalizedGivenName', []],
+            ['getGivenName', [null]],
+        ]);
+    }
+
+    private function getReviewerFamilyName($user) {
+        return $this->callFirstAvailable($user, [
+            ['getLocalizedFamilyName', []],
+            ['getFamilyName', [null]],
+        ]);
+    }
+
+    private function getContextName($context) {
+        return $this->callFirstAvailable($context, [
+            ['getLocalizedName', []],
+            ['getName', [null]],
+        ]);
+    }
+
+    private function getContextAcronym($context) {
+        if (!$context) return '';
+        if (method_exists($context, 'getLocalizedData')) {
+            $acronym = $context->getLocalizedData('acronym');
+            if ($acronym) return $acronym;
+        }
+        return method_exists($context, 'getAcronym') ? ($context->getAcronym(null) ?: '') : '';
     }
 
     /**

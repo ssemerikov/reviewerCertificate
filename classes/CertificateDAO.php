@@ -252,6 +252,36 @@ class CertificateDAO extends DAO {
     }
 
     /**
+     * Create a ReviewAssignment-like object from a database row.
+     * For OJS 3.5 compatibility where ReviewAssignmentDAO is not available.
+     * @param $row object Database row
+     * @return object Object with getter methods for review assignment data
+     */
+    public function reviewAssignmentFromRow($row) {
+        return new class($row) {
+            private $data;
+            public function __construct($row) {
+                $this->data = (array) $row;
+            }
+            public function getId() {
+                return $this->data['review_id'] ?? null;
+            }
+            public function getReviewerId() {
+                return $this->data['reviewer_id'] ?? null;
+            }
+            public function getSubmissionId() {
+                return $this->data['submission_id'] ?? null;
+            }
+            public function getDateCompleted() {
+                return $this->data['date_completed'] ?? null;
+            }
+            public function getDateNotified() {
+                return $this->data['date_notified'] ?? null;
+            }
+        };
+    }
+
+    /**
      * Construct a new certificate object
      * @return Certificate
      */

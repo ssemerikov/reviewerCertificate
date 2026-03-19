@@ -17,6 +17,7 @@ debug_config.php
 FORCE_RELOAD_OPCACHE.php
 QUERY_CERTIFICATES.php
 TEST_DIRECT_INSERT.php
+run-tests.sh
 
 # Local OJS test environments
 /ojs-test/

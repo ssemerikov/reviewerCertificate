@@ -6,6 +6,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Reviewer Certificate Plugin for Open Journal Systems (OJS). Generates personalized PDF certificates for peer reviewers after completing reviews. Compatible with OJS 3.3.x, 3.4.x, and 3.5.x.
 
+## Branching and Releases
+
+The `main` branch contains a single codebase compatible with all OJS versions. For Plugin Gallery distribution, version-specific branches exist:
+- `stable-3_3_0`, `stable-3_4_0`, `stable-3_5_0` — each declares compatibility only with its target OJS version in `version.xml`
+- Release packages: `v{VERSION}-3.3`, `v{VERSION}-3.4`, `v{VERSION}-3.5` tags on GitHub
+- Plugin Gallery PR: https://github.com/pkp/plugin-gallery/pull/473 (fork: `ssemerikov/plugin-gallery`, branch: `add-reviewer-certificate-plugin`)
+
 ## Development Commands
 
 ```bash
@@ -52,27 +59,13 @@ ReviewerCertificatePlugin.php  (entry point — thin wrapper)
 
 **Why**: `compat_autoloader.php` must register BEFORE any namespace resolution occurs. It maps 27+ OJS 3.4+ namespaced classes to their OJS 3.3 global equivalents using `import()`. This allows the same codebase to work across all OJS versions.
 
-### Plugin Structure
+### Key Components
 
-```
-ReviewerCertificatePlugin.php  # Entry point (namespace: APP\plugins\generic\reviewerCertificate)
-compat_autoloader.php          # Namespace compatibility layer (OJS 3.3 ↔ 3.4+)
-
-classes/
-  ├── ReviewerCertificatePluginCore.php  # Actual plugin implementation
-  │     Hooks: LoadHandler, TemplateManager::display, reviewassignmentdao::_updateobject
-  ├── Certificate.php          # Data object (extends PKP\core\DataObject)
-  ├── CertificateDAO.php       # Database operations (extends PKP\db\DAO)
-  ├── CertificateGenerator.php # PDF generation using bundled TCPDF (lib/tcpdf/)
-  ├── form/CertificateSettingsForm.php  # Settings form
-  └── migration/ReviewerCertificateInstallMigration.php  # Schema facade + raw SQL fallback
-
-controllers/
-  └── CertificateHandler.php   # HTTP handler
-      ├── download()     # Certificate PDF (requires reviewer role)
-      ├── verify()       # Public certificate verification (no auth)
-      └── generateBatch() # Batch generation (requires manager role)
-```
+- `ReviewerCertificatePlugin.php` — Entry point (thin wrapper, namespace `APP\plugins\generic\reviewerCertificate`)
+- `compat_autoloader.php` — Namespace compatibility layer (OJS 3.3 ↔ 3.4+)
+- `classes/ReviewerCertificatePluginCore.php` — Actual implementation. Hooks: `LoadHandler`, `TemplateManager::display`, `reviewassignmentdao::_updateobject`
+- `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `generateBatch()` (manager role)
+- `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`lib/tcpdf/`)
 
 ### OJS Version Compatibility Patterns
 
@@ -153,7 +146,7 @@ Test structure:
 - `tests/Integration/` — Workflow testing
 - `tests/Compatibility/` — OJS 3.3/3.4/3.5 specific tests
 - `tests/Security/` — Authorization and input validation
-- `tests/Locale/` — Translation validation (86 keys per language)
+- `tests/Locale/` — Translation validation (86 keys per language, not included in `composer test:all`)
 
 ## Localization
 

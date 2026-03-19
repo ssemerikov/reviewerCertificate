@@ -32,6 +32,8 @@ For developers or if the tar.gz method doesn't work:
    ```bash
    cd /path/to/ojs/plugins/generic/
    git clone https://github.com/ssemerikov/reviewerCertificate.git
+   cd reviewerCertificate
+   composer install
    ```
 
 2. **Set permissions:**
@@ -62,6 +64,7 @@ If you encounter errors like "Table 'reviewer_certificates' doesn't exist" or mi
 ```bash
 cd /path/to/ojs/plugins/generic/
 git clone https://github.com/ssemerikov/reviewerCertificate.git
+cd reviewerCertificate && composer install && cd ..
 chmod -R 755 reviewerCertificate/
 ```
 

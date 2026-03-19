@@ -238,12 +238,8 @@ class CertificateSettingsForm extends Form {
         $templateMgr->assign('templateVariables', $templateVariables);
 
         // Default templates
-        $defaultBodyTemplate = "This certificate is awarded to\n\n" .
-                              "{{\$reviewerName}}\n\n" .
-                              "In recognition of their valuable contribution as a peer reviewer for\n\n" .
-                              "{{\$journalName}}\n\n" .
-                              "Review completed on {{\$reviewDate}}\n\n" .
-                              "Manuscript: {{\$submissionTitle}}";
+        require_once(dirname(__FILE__, 2) . '/CertificateGenerator.php');
+        $defaultBodyTemplate = \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::getDefaultBodyTemplate();
 
         $templateMgr->assign('defaultBodyTemplate', $defaultBodyTemplate);
 

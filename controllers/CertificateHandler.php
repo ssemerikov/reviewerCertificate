@@ -192,7 +192,7 @@ class CertificateHandler extends Handler {
         if ($result) {
             $row = $result->current();
             if ($row) {
-                $reviewAssignment = $this->createReviewAssignmentFromRow($row);
+                $reviewAssignment = $certificateDao->reviewAssignmentFromRow($row);
             }
         }
 
@@ -234,7 +234,7 @@ class CertificateHandler extends Handler {
             $certificate->setReviewId($reviewId);
             $certificate->setContextId($context->getId());
             $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-            $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
+            $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
             $certificate->setDownloadCount(0);
 
             try {
@@ -479,42 +479,6 @@ class CertificateHandler extends Handler {
     }
 
     /**
-     * Generate certificate code
-     * @param $reviewAssignment ReviewAssignment
-     * @return string
-     */
-    private function generateCertificateCode($reviewAssignment) {
-        return strtoupper(bin2hex(random_bytes(8)));
-    }
-
-    /**
-     * Create a ReviewAssignment-like object from database row
-     * For OJS 3.5 compatibility where ReviewAssignmentDAO is not available
-     * @param $row object Database row
-     * @return object Object with getter methods for review assignment data
-     */
-    private function createReviewAssignmentFromRow($row) {
-        return new class($row) {
-            private $data;
-            public function __construct($row) {
-                $this->data = (array) $row;
-            }
-            public function getId() {
-                return $this->data['review_id'] ?? null;
-            }
-            public function getReviewerId() {
-                return $this->data['reviewer_id'] ?? null;
-            }
-            public function getSubmissionId() {
-                return $this->data['submission_id'] ?? null;
-            }
-            public function getDateCompleted() {
-                return $this->data['date_completed'] ?? null;
-            }
-        };
-    }
-
-    /**
      * Generate batch certificates
      * @param $args array
      * @param $request Request
@@ -524,7 +488,7 @@ class CertificateHandler extends Handler {
         $reviewerIds = $request->getUserVar('reviewerIds');
 
         if (!is_array($reviewerIds) || empty($reviewerIds)) {
-            return $this->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noReviewersSelected'));
+            return $this->getPlugin()->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noReviewersSelected'));
         }
 
         $generated = 0;
@@ -532,7 +496,7 @@ class CertificateHandler extends Handler {
 
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         if (!$certificateDao) {
-            return $this->createJSONMessage(false, 'Internal error: database not available');
+            return $this->getPlugin()->createJSONMessage(false, 'Internal error: database not available');
         }
 
         foreach ($reviewerIds as $reviewerId) {
@@ -549,7 +513,7 @@ class CertificateHandler extends Handler {
 
                 if ($result) {
                     foreach ($result as $row) {
-                        $reviewAssignment = $this->createReviewAssignmentFromRow($row);
+                        $reviewAssignment = $certificateDao->reviewAssignmentFromRow($row);
 
                         // Create certificate (SQL already excludes reviews with existing certificates)
                         require_once(dirname(__FILE__) . '/../classes/Certificate.php');
@@ -564,7 +528,7 @@ class CertificateHandler extends Handler {
                         } else {
                             $certificate->setDateIssued(\Core::getCurrentDate());
                         }
-                        $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
+                        $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
 
                         $certificateDao->insertObject($certificate);
                         $generated++;
@@ -575,24 +539,10 @@ class CertificateHandler extends Handler {
             }
         }
 
-        return $this->createJSONMessage(true, array(
+        return $this->getPlugin()->createJSONMessage(true, array(
             'generated' => $generated,
             'errors' => $errors
         ));
     }
 
-    /**
-     * Create JSONMessage - OJS 3.3 compatibility
-     * @param $status bool
-     * @param $content mixed
-     * @return JSONMessage
-     */
-    private function createJSONMessage($status, $content = '') {
-        if (class_exists('PKP\core\JSONMessage')) {
-            return new \PKP\core\JSONMessage($status, $content);
-        } else {
-            import('lib.pkp.classes.core.JSONMessage');
-            return new \JSONMessage($status, $content);
-        }
-    }
 }

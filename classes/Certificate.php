@@ -19,6 +19,14 @@ use PKP\core\Core;
 class Certificate extends DataObject {
 
     /**
+     * Generate a random 16-character hex certificate code
+     * @return string
+     */
+    public static function generateCode() {
+        return strtoupper(bin2hex(random_bytes(8)));
+    }
+
+    /**
      * Get certificate ID
      * @return int
      */

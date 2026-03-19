@@ -221,7 +221,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 $templateSettings = array(
                     'backgroundImage' => $this->getSetting($context->getId(), 'backgroundImage'),
                     'headerText' => $this->getSetting($context->getId(), 'headerText') ?: 'Certificate of Recognition',
-                    'bodyTemplate' => $this->getSetting($context->getId(), 'bodyTemplate') ?: $this->getDefaultBodyTemplate(),
+                    'bodyTemplate' => $this->getSetting($context->getId(), 'bodyTemplate') ?: \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::getDefaultBodyTemplate(),
                     'footerText' => $this->getSetting($context->getId(), 'footerText') ?: '',
                     'fontFamily' => $this->getSetting($context->getId(), 'fontFamily') ?: 'helvetica',
                     'fontSize' => $this->getSetting($context->getId(), 'fontSize') ?: 12,
@@ -338,7 +338,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                                 $certificate->setReviewId($row->review_id);
                                 $certificate->setContextId($context->getId());
                                 $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-                                $certificate->setCertificateCode(strtoupper(bin2hex(random_bytes(8))));
+                                $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
                                 $certificate->setDownloadCount(0);
 
                                 try {
@@ -397,15 +397,6 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             default:
                 return parent::manage($args, $request);
         }
-    }
-
-    /**
-     * Generate certificate code
-     * @param $reviewAssignment ReviewAssignment
-     * @return string
-     */
-    private function generateCertificateCode($reviewAssignment) {
-        return strtoupper(bin2hex(random_bytes(8)));
     }
 
     /**
@@ -519,7 +510,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             if ($result) {
                 $row = $result->current();
                 if ($row) {
-                    $reviewAssignment = $this->createReviewAssignmentFromRow($row);
+                    $reviewAssignment = $certificateDao->reviewAssignmentFromRow($row);
                 }
             }
 
@@ -654,7 +645,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         } else {
             $certificate->setDateIssued(Core::getCurrentDate());
         }
-        $certificate->setCertificateCode($this->generateCertificateCode($reviewAssignment));
+        $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
 
         try {
             $certificateDao->insertObject($certificate);
@@ -764,55 +755,12 @@ class ReviewerCertificatePlugin extends GenericPlugin {
     }
 
     /**
-     * Create a ReviewAssignment-like object from database row
-     * For OJS 3.5 compatibility where ReviewAssignmentDAO is not available
-     * @param $row object Database row
-     * @return object Object with getter methods for review assignment data
-     */
-    private function createReviewAssignmentFromRow($row) {
-        return new class($row) {
-            private $data;
-            public function __construct($row) {
-                $this->data = (array) $row;
-            }
-            public function getId() {
-                return $this->data['review_id'] ?? null;
-            }
-            public function getReviewerId() {
-                return $this->data['reviewer_id'] ?? null;
-            }
-            public function getSubmissionId() {
-                return $this->data['submission_id'] ?? null;
-            }
-            public function getDateCompleted() {
-                return $this->data['date_completed'] ?? null;
-            }
-            public function getDateNotified() {
-                return $this->data['date_notified'] ?? null;
-            }
-        };
-    }
-
-    /**
-     * Get default body template
-     * @return string
-     */
-    private function getDefaultBodyTemplate() {
-        return "This certificate is awarded to\n\n" .
-               "{{\$reviewerName}}\n\n" .
-               "In recognition of their valuable contribution as a peer reviewer for\n\n" .
-               "{{\$journalName}}\n\n" .
-               "Review completed on {{\$reviewDate}}\n\n" .
-               "Manuscript: {{\$submissionTitle}}";
-    }
-
-    /**
      * Create JSONMessage - OJS 3.3 compatibility helper
      * @param $status bool
      * @param $content mixed
      * @return JSONMessage
      */
-    private function createJSONMessage($status, $content = '') {
+    public function createJSONMessage($status, $content = '') {
         if (class_exists('PKP\core\JSONMessage')) {
             return new \PKP\core\JSONMessage($status, $content);
         } else {

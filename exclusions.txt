@@ -1,0 +1,12 @@
+tests/
+.github/
+.gitignore
+phpunit.xml
+composer.lock
+CLAUDE.md
+CHANGELOG.md
+INSTALL.md
+install.sql
+uninstall.sql
+schema.xml
+exclusions.txt

@@ -22,14 +22,16 @@
         </testsuite>
     </testsuites>
 
-    <coverage processUncoveredFiles="true">
+    <coverage processUncoveredFiles="false">
         <include>
-            <directory suffix=".inc.php">./</directory>
+            <directory suffix=".php">classes</directory>
+            <directory suffix=".php">controllers</directory>
         </include>
         <exclude>
             <directory>./vendor</directory>
             <directory>./tests</directory>
             <directory>./lib</directory>
+            <directory>./ojs-test</directory>
             <file>./index.php</file>
         </exclude>
         <report>
