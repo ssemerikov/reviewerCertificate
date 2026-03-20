@@ -59,6 +59,8 @@ ReviewerCertificatePlugin.php  (entry point — thin wrapper)
 
 **Why**: `compat_autoloader.php` must register BEFORE any namespace resolution occurs. It maps 27+ OJS 3.4+ namespaced classes to their OJS 3.3 global equivalents using `import()`. This allows the same codebase to work across all OJS versions.
 
+**Critical**: `compat_autoloader.php` must ONLY be included in OJS 3.3 release packages (`stable-3_3_0`). Including it in OJS 3.4+ causes `Cannot declare class` fatal errors because the namespaced classes already exist natively (see Issue #68).
+
 ### Key Components
 
 - `ReviewerCertificatePlugin.php` — Entry point (thin wrapper, namespace `APP\plugins\generic\reviewerCertificate`)
@@ -147,6 +149,31 @@ Test structure:
 - `tests/Compatibility/` — OJS 3.3/3.4/3.5 specific tests
 - `tests/Security/` — Authorization and input validation
 - `tests/Locale/` — Translation validation (86 keys per language, not included in `composer test:all`)
+- `tests/e2e/` — Playwright E2E tests against Docker OJS instances (ports 8033/8034/8035)
+
+### E2E Tests
+
+E2E tests require Docker containers running OJS 3.3, 3.4, and 3.5 (see `ojs-test/docker-compose.yml`):
+
+```bash
+# Start OJS test containers
+docker compose -f ojs-test/docker-compose.yml up -d
+
+# Run all E2E tests on all OJS versions
+npx playwright test --project=ojs33 --project=ojs34 --project=ojs35
+
+# Run a specific E2E test file
+npx playwright test plugin-page-smoke --project=ojs34
+```
+
+E2E test files:
+- `plugin-enable.spec.ts` — Plugin enable/disable and persistence
+- `plugin-settings.spec.ts` — Certificate template settings
+- `plugin-page-smoke.spec.ts` — Page load smoke tests (no 500 errors after plugin enable, Issue #68)
+- `certificate-download.spec.ts` — Reviewer certificate download
+- `certificate-verify.spec.ts` — Public certificate verification endpoint
+- `certificate-ineligible.spec.ts` — Ineligible reviewer rejection
+- `batch-generation.spec.ts` — Batch certificate generation for managers
 
 ## Localization
 
