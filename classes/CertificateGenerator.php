@@ -367,8 +367,8 @@ class CertificateGenerator {
             $variables['dateIssued'] = date('F j, Y');
 
             if ($this->context) {
-                $variables['journalName'] = $this->getContextName($this->context);
-                $variables['journalAcronym'] = $this->getContextAcronym($this->context);
+                $variables['journalName'] = $this->context->getLocalizedName() ?: '';
+                $variables['journalAcronym'] = $this->context->getLocalizedData('acronym') ?: '';
             } else {
                 $variables['journalName'] = 'Sample Journal Name';
                 $variables['journalAcronym'] = 'SJN';
@@ -377,13 +377,11 @@ class CertificateGenerator {
             // Use real data
             // Reviewer information
             if ($this->reviewer) {
-                // OJS 3.5 compatibility: Use helper methods with fallbacks
-                $variables['reviewerFirstName'] = $this->getReviewerGivenName($this->reviewer);
-                $variables['reviewerLastName'] = $this->getReviewerFamilyName($this->reviewer);
+                $variables['reviewerFirstName'] = $this->reviewer->getGivenName(null) ?: '';
+                $variables['reviewerLastName'] = $this->reviewer->getFamilyName(null) ?: '';
 
-                // OJS 3.3 locale fix: getFullName() may return empty when names are
-                // stored under a different locale (e.g., 'en' vs 'en_US'). Fall back
-                // to constructing the name from given+family, then to direct DB query.
+                // Locale fallback: getFullName() may return empty when names are
+                // stored under a different locale (e.g., 'en' vs 'en_US').
                 $fullName = $this->reviewer->getFullName();
                 if (empty(trim($fullName))) {
                     $fullName = trim($variables['reviewerFirstName'] . ' ' . $variables['reviewerLastName']);
@@ -409,12 +407,14 @@ class CertificateGenerator {
                 }
             }
 
-            // Submission information - OJS 3.5 compatibility
+            // Submission information
             if ($this->submission) {
-                $variables['submissionTitle'] = $this->getSubmissionTitle($this->submission);
+                $publication = $this->submission->getCurrentPublication();
+                $title = $publication ? $publication->getLocalizedTitle() : '';
+                $variables['submissionTitle'] = strip_tags($title ?: '');
                 $variables['submissionId'] = $this->submission->getId();
 
-                // OJS 3.3 locale fallback for submission title
+                // Locale fallback for submission title
                 if (empty($variables['submissionTitle']) && $this->reviewAssignment) {
                     $variables['submissionTitle'] = $this->getSubmissionTitleFromDB(
                         $this->reviewAssignment->getSubmissionId()
@@ -424,8 +424,8 @@ class CertificateGenerator {
 
             // Context information
             if ($this->context) {
-                $variables['journalName'] = $this->getContextName($this->context);
-                $variables['journalAcronym'] = $this->getContextAcronym($this->context);
+                $variables['journalName'] = $this->context->getLocalizedName() ?: '';
+                $variables['journalAcronym'] = $this->context->getLocalizedData('acronym') ?: '';
             }
 
             // Review information
@@ -489,82 +489,9 @@ class CertificateGenerator {
     }
 
     /**
-     * Get submission title with OJS version compatibility
-     * OJS 3.5 removed getLocalizedTitle() from Submission - must use Publication
-     * @param $submission Submission
-     * @return string
-     */
-    private function getSubmissionTitle($submission) {
-        if (!$submission) {
-            return '';
-        }
-
-        $title = '';
-
-        // OJS 3.5: Use getCurrentPublication()->getLocalizedTitle()
-        $publication = $submission->getCurrentPublication();
-        if ($publication) {
-            if (method_exists($publication, 'getLocalizedTitle')) {
-                $title = $publication->getLocalizedTitle();
-            } elseif (method_exists($publication, 'getLocalizedFullTitle')) {
-                $title = $publication->getLocalizedFullTitle();
-            }
-        }
-
-        // OJS 3.5 supports HTML markup in titles — strip for PDF plain text
-        return strip_tags($title);
-    }
-
-    /**
-     * Call the first available method on an object (OJS version compatibility helper).
-     * @param $obj object
-     * @param $methodCalls array of [methodName, argsArray] pairs
-     * @return mixed
-     */
-    private function callFirstAvailable($obj, $methodCalls) {
-        if (!$obj) return '';
-        foreach ($methodCalls as list($method, $args)) {
-            if (method_exists($obj, $method)) {
-                return $obj->$method(...$args);
-            }
-        }
-        return '';
-    }
-
-    private function getReviewerGivenName($user) {
-        return $this->callFirstAvailable($user, [
-            ['getLocalizedGivenName', []],
-            ['getGivenName', [null]],
-        ]);
-    }
-
-    private function getReviewerFamilyName($user) {
-        return $this->callFirstAvailable($user, [
-            ['getLocalizedFamilyName', []],
-            ['getFamilyName', [null]],
-        ]);
-    }
-
-    private function getContextName($context) {
-        return $this->callFirstAvailable($context, [
-            ['getLocalizedName', []],
-            ['getName', [null]],
-        ]);
-    }
-
-    private function getContextAcronym($context) {
-        if (!$context) return '';
-        if (method_exists($context, 'getLocalizedData')) {
-            $acronym = $context->getLocalizedData('acronym');
-            if ($acronym) return $acronym;
-        }
-        return method_exists($context, 'getAcronym') ? ($context->getAcronym(null) ?: '') : '';
-    }
-
-    /**
      * Get reviewer full name directly from database, ignoring locale.
-     * Fallback for OJS 3.3 where locale mismatch ('en' vs 'en_US') can
-     * cause getFullName() to return empty.
+     * Fallback when locale mismatch ('en' vs 'en_US') causes getFullName()
+     * to return empty.
      * @param int $userId
      * @return string
      */
@@ -608,7 +535,7 @@ class CertificateGenerator {
 
     /**
      * Get submission title directly from database, ignoring locale.
-     * Fallback for OJS 3.3 where locale mismatch can cause empty titles.
+     * Fallback when locale mismatch can cause empty titles.
      * @param int $submissionId
      * @return string
      */
