@@ -387,7 +387,15 @@ class CertificateHandler extends Handler {
         try {
             $pdfContent = $generator->generatePDF();
         } catch (\Throwable $e) {
-            error_log('ReviewerCertificate: PDF generation failed: ' . $e->getMessage());
+            error_log(sprintf(
+                'ReviewerCertificate: PDF generation failed [%s]: %s in %s:%d | review_id=%s reviewer_id=%s',
+                get_class($e),
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine(),
+                $reviewAssignment ? $reviewAssignment->getId() : 'null',
+                $reviewAssignment ? $reviewAssignment->getReviewerId() : 'null'
+            ));
             http_response_code(500);
             echo 'An error occurred generating the certificate. Please try again later.';
             exit;
@@ -456,6 +464,11 @@ class CertificateHandler extends Handler {
         $settings = array();
         $plugin = $this->getPlugin();
 
+        if (!$plugin) {
+            error_log('ReviewerCertificate: getTemplateSettings() called but plugin instance is null');
+            return $settings;
+        }
+
         $settingNames = array(
             'backgroundImage',
             'headerText',
@@ -507,7 +520,8 @@ class CertificateHandler extends Handler {
                      INNER JOIN submissions s ON ra.submission_id = s.submission_id
                      LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
                      WHERE ra.reviewer_id = ? AND s.context_id = ?
-                     AND ra.date_completed IS NOT NULL AND rc.certificate_id IS NULL',
+                     AND ra.date_completed IS NOT NULL AND rc.certificate_id IS NULL
+                     LIMIT 500',
                     array((int) $reviewerId, (int) $context->getId())
                 );
 

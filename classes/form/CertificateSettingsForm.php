@@ -297,12 +297,17 @@ class CertificateSettingsForm extends Form {
                    AND ra.date_completed IS NOT NULL
              GROUP BY ra.reviewer_id
              HAVING missing_certificates > 0
-             ORDER BY completed_reviews DESC',
+             ORDER BY completed_reviews DESC
+             LIMIT 100',
             array((int) $this->contextId)
         );
 
         $reviewers = array();
+        $count = 0;
         foreach ($result as $row) {
+            if ($count >= 100) {
+                break;
+            }
             try {
                 // OJS 3.3 compatibility
                 if (class_exists('APP\facades\Repo')) {
@@ -318,6 +323,7 @@ class CertificateSettingsForm extends Form {
                         'completedReviews' => $row->completed_reviews,
                         'missingCertificates' => $row->missing_certificates
                     );
+                    $count++;
                 }
             } catch (Exception $e) {
                 error_log('ReviewerCertificate: Error getting user ' . $row->reviewer_id . ': ' . $e->getMessage());

@@ -5,6 +5,79 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.0] - 2026-04-01
+
+### Fixed - Production Bugs (Reported by Olha Pinchuk)
+
+- **Fixed: Ukrainian locale keys showing as `##key##` on reviewer dashboard**
+  - **Issue**: When OJS locale is set to Ukrainian (`uk_UA`), the certificate download button on the reviewer dashboard showed raw locale keys (`##plugins.generic.reviewerCertificate.certificateAvailable##`) instead of translated text. English locale worked fine.
+  - **Root Cause**: `addCertificateButton()` hook handler did not call `$this->addLocaleData()` before rendering the template. English works as a fallback, but non-English locales require explicit locale reload.
+  - **Solution**: Added `$this->addLocaleData()` call at the start of `addCertificateButton()`, matching the pattern already used in `setupHandler()` and `ensurePluginLocaleLoaded()`.
+  - **File Modified**: `classes/ReviewerCertificatePluginCore.php`
+
+- **Fixed: Memory exhaustion (805MB OOM) on settings page with large reviewer lists**
+  - **Issue**: `Fatal error: Allowed memory size of 805306368 bytes exhausted` in `CertificateDAO.php` on journals with thousands of completed reviews.
+  - **Root Cause**: `getEligibleReviewers()` ran an unbounded SQL query (no LIMIT) loading ALL eligible reviewers, then fetched full User objects for each one via `Repo::user()->get()`. Batch generation queries also had no bounds.
+  - **Solution**: Added `LIMIT 100` to eligible reviewers query (settings UI is a multi-select — 100 is practical max), added loop counter as defense-in-depth, added `LIMIT 500` to batch generation queries (per-reviewer cap).
+  - **Files Modified**: `classes/form/CertificateSettingsForm.php`, `classes/ReviewerCertificatePluginCore.php`, `controllers/CertificateHandler.php`
+
+- **Fixed: Certificate download showing generic error without diagnostic details**
+  - **Issue**: "An error occurred generating the certificate" with no useful information in server logs for debugging.
+  - **Root Cause**: Catch block only logged `$e->getMessage()` without exception class, file, line, or review context. Also, `getTemplateSettings()` had no null-guard for plugin instance.
+  - **Solution**: Enhanced error logging with `get_class($e)`, file, line, review_id, and reviewer_id. Added null-guard in `getTemplateSettings()` to prevent NPE when plugin instance is unavailable.
+  - **File Modified**: `controllers/CertificateHandler.php`
+
+### Added
+
+- **Release build script (`release.sh`)** — Produces version-specific `tar.gz` packages for OJS Plugin Gallery with TCPDF bundled. No OJS version ships TCPDF natively, and OJS ZIP upload has no `composer install` step, so release archives must include `vendor/tecnickcom/tcpdf/`. Script auto-removes `compat_autoloader.php` from OJS 3.4/3.5 packages (prevents Issue #68).
+
+- **E2E locale smoke tests (`tests/e2e/locale-smoke.spec.ts`)** — 7 tests covering both English and Ukrainian locales across all OJS versions. Verifies no `##key##` patterns, no 500 errors after locale switch, no memory exhaustion on settings page, and no fatal errors on certificate download.
+
+### Upgrade Notes
+
+- **From 1.5.0**: Drop-in upgrade. No database changes.
+- **For ZIP installs**: Use the release archives from GitHub Releases — they include TCPDF. Do not install from the raw GitHub source archive (it lacks `vendor/`).
+
+---
+
+## [1.5.0] - 2026-03-21
+
+### Fixed - Issue #68: compat_autoloader 500 on OJS 3.4
+
+- **Fixed: Fatal "Cannot declare class" error on OJS 3.4 with One-Click Reviewer Access**
+  - **Issue**: v1.4.0-3.4 release package incorrectly included `compat_autoloader.php`, which registers `spl_autoload` mappings from OJS 3.4+ namespaced classes to OJS 3.3 global equivalents. On OJS 3.4 these classes already exist natively, causing fatal errors on ANY page load.
+  - **Solution**: Removed `compat_autoloader.php` from `stable-3_4_0` and `stable-3_5_0` branch packages. It belongs only in `stable-3_3_0`.
+
+### Added
+
+- **Page load smoke tests (`tests/e2e/plugin-page-smoke.spec.ts`)** — Verifies dashboard, website settings, and submissions pages load without 500 errors when the plugin is enabled.
+
+---
+
+## [1.4.0] - 2026-03-13
+
+### Fixed - PR #473 Review Response
+
+- **Context isolation in SQL queries** — All queries on `review_assignments` now join `submissions` to filter by `context_id`, preventing cross-journal data access in multi-journal installations.
+- **HTML title sanitization** — `strip_tags()` applied before rendering submission titles in PDF (OJS 3.5+ supports HTML in titles).
+- **Input validation** — Certificate code sanitization, review ID validation, and CSRF protection.
+- **Composer TCPDF** — Moved TCPDF from bundled `lib/tcpdf/` to Composer dependency (`tecnickcom/tcpdf: ^6.7`).
+- **Removed dangerous debug files** — Cleaned up development scripts from the repository.
+
+---
+
+## [1.3.0] - 2026-03-12
+
+### Added
+
+- **Landscape certificate layout** — New `pageOrientation` setting (portrait/landscape) in certificate template settings.
+
+### Fixed
+
+- **OJS 3.3 locale display** — Fixed locale file loading for OJS 3.3 on public certificate verification pages.
+
+---
+
 ## [1.2.0] - 2026-03-12
 
 ### Fixed - OJS 3.3 Plugin Enable Broken (Issue #65)

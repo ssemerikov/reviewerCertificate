@@ -110,6 +110,16 @@ $result = $dao->retrieve(
 **Pattern 6: Strip HTML from submission titles for PDF**
 OJS 3.5+ supports HTML in titles (`<em>`, `<strong>`). Always use `strip_tags()` before rendering in PDF context. On Smarty templates, use `|escape` for XSS protection.
 
+**Pattern 7: Call `addLocaleData()` in hook handlers that render templates**
+When a hook handler fetches a Smarty template with `{translate}` calls, the plugin's locale data must be explicitly loaded. English works as a fallback, but non-English locales require `$this->addLocaleData()` before template rendering.
+```php
+public function addCertificateButton($hookName, $params) {
+    $this->addLocaleData();  // Required for non-English locales
+    $templateMgr = $params[0];
+    // ... fetch template that uses {translate key="..."}
+}
+```
+
 ### OJS 3.5 Breaking Changes
 
 These removals affect this plugin and require fallback code:
@@ -174,6 +184,30 @@ E2E test files:
 - `certificate-verify.spec.ts` — Public certificate verification endpoint
 - `certificate-ineligible.spec.ts` — Ineligible reviewer rejection
 - `batch-generation.spec.ts` — Batch certificate generation for managers
+- `locale-smoke.spec.ts` — Locale translation tests (English + Ukrainian, no `##key##` patterns)
+
+## Release Process
+
+The plugin uses a release script (`release.sh`) to build version-specific packages for OJS Plugin Gallery distribution.
+
+**Why a release script?**
+- No OJS version ships TCPDF natively
+- OJS ZIP upload has no `composer install` step
+- Release archives must include `vendor/tecnickcom/tcpdf/`
+- `compat_autoloader.php` must be excluded from OJS 3.4/3.5 packages (causes Issue #68)
+
+**Building releases:**
+```bash
+./release.sh 1.6.0
+# Produces: reviewerCertificate-1.6.0-3_3.tar.gz, -3_4.tar.gz, -3_5.tar.gz
+```
+
+**Release packages:**
+- `reviewerCertificate-{VERSION}-3_3.tar.gz` — Includes `compat_autoloader.php` + TCPDF
+- `reviewerCertificate-{VERSION}-3_4.tar.gz` — TCPDF only (no compat_autoloader)
+- `reviewerCertificate-{VERSION}-3_5.tar.gz` — TCPDF only (no compat_autoloader)
+
+Upload to GitHub Releases with tags `v{VERSION}-3.3`, `v{VERSION}-3.4`, `v{VERSION}-3.5`.
 
 ## Localization
 

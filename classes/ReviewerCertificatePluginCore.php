@@ -325,7 +325,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                              WHERE ra.reviewer_id = ?
                                    AND s.context_id = ?
                                    AND ra.date_completed IS NOT NULL
-                                   AND rc.certificate_id IS NULL',
+                                   AND rc.certificate_id IS NULL
+                             LIMIT 500',
                             array((int) $reviewerId, (int) $context->getId())
                         );
 
@@ -445,6 +446,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      * Add certificate download button to reviewer dashboard
      */
     public function addCertificateButton($hookName, $params) {
+        // Ensure locale is loaded for non-English UIs (fixes ##key## display in uk_UA etc.)
+        $this->addLocaleData();
+
         $request = Application::get()->getRequest();
         $templateMgr = $params[0];
         $template = $params[1];
