@@ -38,6 +38,9 @@ for OJS_VERSION in 3.3 3.4 3.5; do
   cp -r ReviewerCertificatePlugin.php version.xml index.php "$DEST/"
   cp -r classes/ controllers/ locale/ templates/ "$DEST/"
 
+  # Copy email templates (required for installEmailTemplates)
+  [ -f emailTemplates.xml ] && cp emailTemplates.xml "$DEST/"
+
   # Copy compat_autoloader only for OJS 3.3 (causes fatal errors on 3.4+)
   if [ "$OJS_VERSION" = "3.3" ] && [ -f compat_autoloader.php ]; then
     cp compat_autoloader.php "$DEST/"

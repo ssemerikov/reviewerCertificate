@@ -5,6 +5,14 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.6.1] - 2026-04-01
+
+### Fixed
+
+- **Fixed: Plugin installation failure on OJS 3.4** — `emailTemplates.xml` was missing from release archives, causing `Call to a member function getContents() on null` error during plugin installation.
+
+---
+
 ## [1.6.0] - 2026-04-01
 
 ### Fixed - Production Bugs (Reported by Olha Pinchuk)
