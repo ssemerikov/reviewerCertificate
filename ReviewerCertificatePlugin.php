@@ -18,9 +18,13 @@
  * which happens when including files that use `extends NamespacedClass`.
  */
 
-// Step 1: Load the OJS 3.3 compatibility autoloader FIRST
+// Step 1: Load the OJS 3.3 compatibility autoloader FIRST (only if it exists)
 // This must happen before any file with `use` statements or class inheritance is parsed
-require_once __DIR__ . '/compat_autoloader.php';
+// Note: compat_autoloader.php is only included in OJS 3.3 release packages
+// OJS 3.4+ have native namespaced classes and don't need it
+if (file_exists(__DIR__ . '/compat_autoloader.php')) {
+    require_once __DIR__ . '/compat_autoloader.php';
+}
 
 // Step 2: Now load the main plugin implementation
 // At this point, the autoloader is registered and will handle namespaced class resolution
