@@ -130,4 +130,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Toplam Verilen Sertifika</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Toplam İndirme</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Sertifika Başına Ortalama İndirme</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Not: Helvetica, Times New Roman ve Courier yalnızca Latin karakterlerini destekler. Derginiz Kiril, Arapça, Çince veya diğer Latin dışı karakterler kullanıyorsa, eklenti bu metin öğeleri için otomatik olarak DejaVu Sans kullanacaktır.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Sertifikalarım</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Aşağıda bu dergi için tüm hakem sertifikalarınızın listesi yer almaktadır.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Düzenlenme tarihi</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Gönderi başlığı</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Sertifika kodu</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">İşlemler</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Henüz sertifikanız yok. Sertifikalar bir değerlendirmeyi tamamladıktan sonra oluşturulur.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Tüm sertifikalarımı görüntüle</message>
 </locale>

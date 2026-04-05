@@ -40,7 +40,7 @@ class CertificateHandler extends Handler {
         if (defined('ROLE_ID_REVIEWER')) {
             $this->addRoleAssignment(
                 array(ROLE_ID_REVIEWER),
-                array('download', 'preview')
+                array('download', 'preview', 'myCertificates')
             );
             $this->addRoleAssignment(
                 array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
@@ -49,7 +49,7 @@ class CertificateHandler extends Handler {
         } else {
             $this->addRoleAssignment(
                 array(Role::ROLE_ID_REVIEWER),
-                array('download', 'preview')
+                array('download', 'preview', 'myCertificates')
             );
             $this->addRoleAssignment(
                 array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
@@ -278,12 +278,33 @@ class CertificateHandler extends Handler {
         // OJS 3.3 compatibility: ensure plugin locale is loaded for public pages
         $this->ensurePluginLocaleLoaded();
 
-        // Get certificate code from URL path or query parameter
+        // Get certificate code from URL path or query parameter.
+        // Priority: $args[0] (path-based) → getUserVar('code') (query string) → URL path fallback.
+        // The URL path fallback handles OJS configurations where $args is not populated
+        // correctly (e.g., certain mod_rewrite setups on OJS 3.4).
         $certificateCode = isset($args[0]) ? $args[0] : $request->getUserVar('code');
 
-        // Sanitize: certificate codes are exactly 16 uppercase hex characters
-        if ($certificateCode && !preg_match('/^[A-F0-9]{16}$/', $certificateCode)) {
-            $certificateCode = null;
+        // Fallback: parse code from the request URI directly.
+        // Some OJS 3.4 configurations with non-standard PATH_INFO don't populate $args.
+        if (!$certificateCode) {
+            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+            if (preg_match('#/certificate/verify/([A-Fa-f0-9]{8,32})(?:[/?#]|$)#', $requestUri, $matches)) {
+                $certificateCode = $matches[1];
+            }
+        }
+
+        // Also check $_GET and $_REQUEST as final fallback for query-string 'code' parameter
+        if (!$certificateCode && !empty($_GET['code'])) {
+            $certificateCode = $_GET['code'];
+        }
+
+        // Sanitize: certificate codes are uppercase hex characters (8-32 chars).
+        // Older plugin versions generated 12-char codes; current version generates 16.
+        if ($certificateCode) {
+            $certificateCode = strtoupper(trim($certificateCode));
+            if (!preg_match('/^[A-F0-9]{8,32}$/', $certificateCode)) {
+                $certificateCode = null;
+            }
         }
 
         $templateMgr = TemplateManager::getManager($request);
@@ -326,8 +347,24 @@ class CertificateHandler extends Handler {
                         // Assign valid certificate data to template
                         $templateMgr->assign('isValid', true);
                         $templateMgr->assign('reviewerName', $reviewer->getFullName());
-                        // Format date in PHP to avoid strftime() deprecation issues in PHP 8.1+
-                        $formattedDate = date('F j, Y', strtotime($certificate->getDateIssued()));
+                        // Use review completion date (matches PDF content), fall back to certificate issuance date.
+                        // date_issued is the DB row creation time which may be identical for batch-generated certs.
+                        $displayDate = $certificate->getDateIssued();
+                        $reviewId = $certificate->getReviewId();
+                        if ($reviewId) {
+                            $raResult = $certificateDao->retrieve(
+                                'SELECT date_completed FROM review_assignments WHERE review_id = ?',
+                                array((int) $reviewId)
+                            );
+                            $raRow = $raResult->current();
+                            if ($raRow) {
+                                $raRow = (array) $raRow;
+                                if (!empty($raRow['date_completed'])) {
+                                    $displayDate = $raRow['date_completed'];
+                                }
+                            }
+                        }
+                        $formattedDate = date('F j, Y', strtotime($displayDate));
                         $templateMgr->assign('dateIssued', $formattedDate);
                         $templateMgr->assign('journalName', $certContext->getLocalizedName());
                     } else {
@@ -363,6 +400,184 @@ class CertificateHandler extends Handler {
     }
 
     /**
+     * List all certificates for the current reviewer.
+     * @param $args array
+     * @param $request Request
+     */
+    public function myCertificates($args, $request) {
+        $this->ensurePluginLocaleLoaded();
+
+        $user = $request->getUser();
+        $context = $request->getContext();
+
+        if (!$user || !$context) {
+            $request->redirect(null, 'login');
+            return;
+        }
+
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        if (!$certificateDao) {
+            echo '<p>Error: Certificate system not available.</p>';
+            return;
+        }
+
+        // Get current locale for title lookup
+        $locale = $this->getCurrentLocale();
+
+        // Query certificates with review completion dates via direct SQL.
+        // Pattern 3 (direct SQL for OJS 3.5) + Pattern 5 (context isolation via submissions join).
+        // Join review_assignments to get date_completed (the actual review date shown in PDFs),
+        // falling back to rc.date_issued when review_assignment is missing.
+        $result = $certificateDao->retrieve(
+            'SELECT rc.certificate_id, rc.review_id, rc.submission_id, rc.date_issued,
+                    rc.certificate_code, rc.download_count,
+                    ra.date_completed AS review_date_completed
+             FROM reviewer_certificates rc
+             INNER JOIN submissions s ON rc.submission_id = s.submission_id
+             LEFT JOIN review_assignments ra ON rc.review_id = ra.review_id
+             WHERE rc.reviewer_id = ? AND rc.context_id = ? AND s.context_id = ?
+             ORDER BY COALESCE(ra.date_completed, rc.date_issued) DESC
+             LIMIT 500',
+            array(
+                (int) $user->getId(),
+                (int) $context->getId(),
+                (int) $context->getId()
+            )
+        );
+
+        $certificates = array();
+        if ($result) {
+            foreach ($result as $row) {
+                $row = (array) $row;
+                $title = $this->getSubmissionTitleForListing($certificateDao, (int) $row['submission_id'], $locale);
+                // Use review completion date (matches PDF content), fall back to certificate issuance date
+                $displayDate = !empty($row['review_date_completed'])
+                    ? $row['review_date_completed']
+                    : $row['date_issued'];
+                $certificates[] = array(
+                    'certificateId' => $row['certificate_id'],
+                    'reviewId' => $row['review_id'],
+                    'submissionTitle' => $title,
+                    'dateIssued' => date('F j, Y', strtotime($displayDate)),
+                    'downloadUrl' => $request->url(null, 'certificate', 'download', array($row['review_id'])),
+                    'certificateCode' => $row['certificate_code'],
+                );
+            }
+        }
+
+        $templateMgr = TemplateManager::getManager($request);
+        $templateMgr->assign('certificates', $certificates);
+
+        // Load CSS
+        $plugin = $this->getPlugin();
+        if ($plugin) {
+            $templateMgr->addStyleSheet(
+                'reviewerCertificateCSS',
+                $request->getBaseUrl() . '/' . $plugin->getPluginPath() . '/css/certificate.css',
+                array('contexts' => 'frontend')
+            );
+            return $templateMgr->display($plugin->getTemplateResource('myCertificates.tpl'));
+        } else {
+            $pluginPath = dirname(__FILE__) . '/../templates/myCertificates.tpl';
+            if (file_exists($pluginPath)) {
+                return $templateMgr->display('file:' . $pluginPath);
+            }
+        }
+    }
+
+    /**
+     * Get current locale with fallback
+     * @return string
+     */
+    private function getCurrentLocale() {
+        // OJS 3.4+/3.5: PKP\facades\Locale (Laravel facade)
+        if (class_exists('PKP\facades\Locale')) {
+            try {
+                $locale = \PKP\facades\Locale::getLocale();
+                if ($locale) {
+                    return $locale;
+                }
+            } catch (\Throwable $e) {
+                // ignore — facade not yet bootstrapped
+            }
+        }
+        // OJS 3.3: AppLocale (global class, loaded during bootstrap)
+        if (class_exists('AppLocale')) {
+            try {
+                $locale = \AppLocale::getLocale();
+                if ($locale) {
+                    return $locale;
+                }
+            } catch (\Throwable $e) {
+                // ignore
+            }
+        }
+        try {
+            $request = Application::get()->getRequest();
+            if (method_exists($request, 'getLocale')) {
+                $locale = $request->getLocale();
+                if ($locale) {
+                    return $locale;
+                }
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+        return 'en_US';
+    }
+
+    /**
+     * Get submission title for the listing page, with locale fallback.
+     * @param $dao CertificateDAO
+     * @param int $submissionId
+     * @param string $locale
+     * @return string
+     */
+    private function getSubmissionTitleForListing($dao, $submissionId, $locale) {
+        try {
+            // Try the requested locale first, then fall back to any locale
+            $result = $dao->retrieve(
+                'SELECT ps.setting_value, ps.locale FROM publication_settings ps
+                 JOIN publications p ON p.publication_id = ps.publication_id
+                 WHERE p.submission_id = ? AND ps.setting_name = ?
+                 AND ps.setting_value IS NOT NULL AND ps.setting_value != ?
+                 ORDER BY CASE WHEN ps.locale = ? THEN 0 ELSE 1 END, ps.locale
+                 LIMIT 1',
+                array((int) $submissionId, 'title', '', $locale)
+            );
+            if ($result) {
+                foreach ($result as $row) {
+                    $row = (array) $row;
+                    return strip_tags($row['setting_value']);
+                }
+            }
+        } catch (\Throwable $e) {
+            // Fallback if publication_settings query fails (e.g. OJS 3.3 schema differences)
+        }
+
+        // Last resort: try submission_settings (OJS 3.3 stores titles differently)
+        try {
+            $result = $dao->retrieve(
+                'SELECT setting_value FROM submission_settings
+                 WHERE submission_id = ? AND setting_name = ?
+                 AND setting_value IS NOT NULL AND setting_value != ?
+                 LIMIT 1',
+                array((int) $submissionId, 'title', '')
+            );
+            if ($result) {
+                foreach ($result as $row) {
+                    $row = (array) $row;
+                    return strip_tags($row['setting_value']);
+                }
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+
+        return '(Untitled)';
+    }
+
+    /**
      * Generate and output PDF
      * @param $reviewAssignment ReviewAssignment
      * @param $certificate Certificate
@@ -378,6 +593,7 @@ class CertificateHandler extends Handler {
         $generator->setReviewAssignment($reviewAssignment);
         $generator->setCertificate($certificate);
         $generator->setContext($context);
+        $generator->setLocale($this->getCurrentLocale());
 
         // Load template settings
         $templateSettings = $this->getTemplateSettings($context);
@@ -435,6 +651,7 @@ class CertificateHandler extends Handler {
         // or modify CertificateGenerator to handle preview mode
 
         $generator->setContext($context);
+        $generator->setLocale($this->getCurrentLocale());
         $templateSettings = $this->getTemplateSettings($context);
         $generator->setTemplateSettings($templateSettings);
 

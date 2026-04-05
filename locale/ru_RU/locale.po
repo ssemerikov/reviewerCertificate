@@ -156,6 +156,9 @@ msgstr "Недопустимый тип изображения. Пожалуйс
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Ошибка загрузки файла. Пожалуйста, попробуйте еще раз."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Примечание: шрифты Helvetica, Times New Roman и Courier поддерживают только латинские символы. Если ваш журнал использует кириллические, арабские, китайские или другие нелатинские символы, плагин автоматически использует шрифт DejaVu Sans для этих текстовых элементов."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Это рецензирование еще не завершено. Сертификаты доступны только для завершенных рецензий."
@@ -276,4 +279,28 @@ msgstr "Среднее количество загрузок на сертифи
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Настройки сертификатов"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Мои сертификаты"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Ниже приведён список всех ваших рецензентских сертификатов для этого журнала."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Дата выдачи"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Название статьи"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Код сертификата"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Действия"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "У вас ещё нет сертификатов. Сертификаты генерируются после завершения рецензирования."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Просмотреть все мои сертификаты"
 

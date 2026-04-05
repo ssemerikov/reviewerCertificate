@@ -130,4 +130,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Łączna Liczba Wydanych Certyfikatów</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Łączna Liczba Pobrań</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Średnia Liczba Pobrań na Certyfikat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Uwaga: Helvetica, Times New Roman i Courier obsługują tylko znaki łacińskie. Jeśli Twoje czasopismo używa znaków cyrylicy, arabskich, chińskich lub innych nielacińskich, wtyczka automatycznie użyje czcionki DejaVu Sans dla tych elementów tekstowych.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Moje certyfikaty</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Poniżej znajduje się lista wszystkich Twoich certyfikatów recenzenta dla tego czasopisma.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Data wydania</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Tytuł zgłoszenia</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Kod certyfikatu</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Akcje</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Nie masz jeszcze żadnych certyfikatów. Certyfikaty są generowane po zakończeniu recenzji.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Zobacz wszystkie moje certyfikaty</message>
 </locale>

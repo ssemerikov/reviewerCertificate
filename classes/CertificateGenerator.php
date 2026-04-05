@@ -82,6 +82,12 @@ class CertificateGenerator {
     /** @var bool */
     private $previewMode = false;
 
+    /** @var string|null Effective font for current PDF generation (may auto-switch to dejavusans for non-Latin text) */
+    private $effectiveFont = null;
+
+    /** @var string|null Current locale for localized data retrieval */
+    private $locale = null;
+
     /**
      * Constructor
      */
@@ -139,6 +145,52 @@ class CertificateGenerator {
      */
     public function setPreviewMode($previewMode) {
         $this->previewMode = $previewMode;
+    }
+
+    /**
+     * Set locale for localized data retrieval.
+     * When set, the generator prefers this locale for reviewer names,
+     * submission titles, and journal names instead of relying on OJS's
+     * internal locale detection (which may not reflect the user's session
+     * locale, e.g. when OJS 3.5 URL-based routing has no locale prefix).
+     * @param string|null $locale
+     */
+    public function setLocale($locale) {
+        $this->locale = $locale;
+    }
+
+    /**
+     * Get the effective locale: explicit locale if set, else OJS detected locale.
+     * @return string
+     */
+    private function getEffectiveLocale() {
+        if ($this->locale) {
+            return $this->locale;
+        }
+        // OJS 3.4+/3.5: PKP\facades\Locale (Laravel facade)
+        if (class_exists('PKP\facades\Locale')) {
+            try {
+                $locale = \PKP\facades\Locale::getLocale();
+                if ($locale) return $locale;
+            } catch (\Throwable $e) {
+                // ignore — facade not yet bootstrapped
+            }
+        }
+        // OJS 3.3: AppLocale (global class)
+        if (class_exists('AppLocale', false)) {
+            $locale = \AppLocale::getLocale();
+            if ($locale) return $locale;
+        }
+        try {
+            $request = Application::get()->getRequest();
+            if (method_exists($request, 'getLocale')) {
+                $locale = $request->getLocale();
+                if ($locale) return $locale;
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+        return 'en_US';
     }
 
     /**
@@ -264,6 +316,24 @@ class CertificateGenerator {
         // Get template variables
         $variables = $this->getTemplateVariables();
 
+        // Auto-detect non-Latin characters (Cyrillic, CJK, Arabic, etc.) in template
+        // variables. TCPDF core fonts (helvetica, times, courier) only support
+        // Windows-1252 and render non-Latin chars as "??????". DejaVu Sans is the
+        // only bundled Unicode font.
+        $needsUnicodeFont = false;
+        foreach ($variables as $value) {
+            if ($this->containsNonLatin((string) $value)) {
+                $needsUnicodeFont = true;
+                break;
+            }
+        }
+
+        $configuredFont = $this->getTemplateSetting('fontFamily', 'dejavusans');
+        $unicodeFonts = array('dejavusans');
+        $this->effectiveFont = ($needsUnicodeFont && !in_array($configuredFont, $unicodeFonts))
+            ? 'dejavusans'
+            : $configuredFont;
+
         // Get base font size from settings and calculate proportional sizes
         $baseFontSize = $this->getTemplateSetting('fontSize', 12);
         $headerSize = round($baseFontSize * 2.0);      // 2x base (default: 24)
@@ -277,7 +347,7 @@ class CertificateGenerator {
             $variables
         );
 
-        $pdf->SetFont($pdf->getFontFamily(), 'B', $headerSize);
+        $pdf->SetFont($this->effectiveFont, 'B', $headerSize);
         $pdf->Cell(0, 20, $headerText, 0, 1, 'C');
         $pdf->Ln(10);
 
@@ -287,7 +357,7 @@ class CertificateGenerator {
             $variables
         );
 
-        $pdf->SetFont($pdf->getFontFamily(), '', $bodySize);
+        $pdf->SetFont($this->effectiveFont, '', $bodySize);
         $pdf->MultiCell(0, 10, $bodyTemplate, 0, 'C', 0, 1);
         $pdf->Ln(10);
 
@@ -298,7 +368,7 @@ class CertificateGenerator {
         );
 
         if ($footerText) {
-            $pdf->SetFont($pdf->getFontFamily(), 'I', $footerSize);
+            $pdf->SetFont($this->effectiveFont, 'I', $footerSize);
             $pdf->MultiCell(0, 8, $footerText, 0, 'C', 0, 1);
             $pdf->Ln(5);
         }
@@ -306,7 +376,7 @@ class CertificateGenerator {
         // Certificate code
         if ($this->certificate || $this->previewMode) {
             $code = $this->previewMode ? 'PREVIEW12345' : $this->certificate->getCertificateCode();
-            $pdf->SetFont($pdf->getFontFamily(), '', $codeSize);
+            $pdf->SetFont($this->effectiveFont, '', $codeSize);
             $pdf->Cell(0, 5, 'Certificate Code: ' . $code, 0, 1, 'C');
         }
     }
@@ -364,7 +434,7 @@ class CertificateGenerator {
 
         $labelY = $qrY + $qrSize + 2;
         $pdf->SetXY($qrX - 10, $labelY);
-        $pdf->SetFont($pdf->getFontFamily(), '', $qrLabelSize);
+        $pdf->SetFont($this->effectiveFont ?: $pdf->getFontFamily(), '', $qrLabelSize);
         $pdf->Cell(50, 3, 'Scan to verify', 0, 0, 'C');
     }
 
@@ -449,6 +519,7 @@ class CertificateGenerator {
                 $variables['journalAcronym'] = $this->getContextAcronym($this->context);
             }
 
+
             // Review information
             if ($this->reviewAssignment) {
                 $dateCompleted = $this->reviewAssignment->getDateCompleted();
@@ -497,6 +568,19 @@ class CertificateGenerator {
     }
 
     /**
+     * Check if text contains non-Latin characters requiring a Unicode font.
+     * TCPDF core fonts (helvetica, times, courier) only support Windows-1252.
+     * @param string $text
+     * @return bool
+     */
+    private function containsNonLatin($text) {
+        if (empty($text)) {
+            return false;
+        }
+        return (bool) preg_match('/[^\x00-\x7F]/', $text);
+    }
+
+    /**
      * Get default body template
      * @return string
      */
@@ -520,15 +604,21 @@ class CertificateGenerator {
             return '';
         }
 
+        $locale = $this->getEffectiveLocale();
         $title = '';
 
         // OJS 3.5+: Use getCurrentPublication()->getLocalizedTitle()
         if (method_exists($submission, 'getCurrentPublication')) {
             $publication = $submission->getCurrentPublication();
             if ($publication) {
-                if (method_exists($publication, 'getLocalizedTitle')) {
+                // Try locale-specific title first via getLocalizedData
+                if (method_exists($publication, 'getLocalizedData')) {
+                    $title = $publication->getLocalizedData('title', $locale);
+                }
+                // Fallback to getLocalizedTitle (uses OJS internal locale)
+                if (empty($title) && method_exists($publication, 'getLocalizedTitle')) {
                     $title = $publication->getLocalizedTitle();
-                } elseif (method_exists($publication, 'getLocalizedFullTitle')) {
+                } elseif (empty($title) && method_exists($publication, 'getLocalizedFullTitle')) {
                     $title = $publication->getLocalizedFullTitle();
                 }
             }
@@ -560,6 +650,12 @@ class CertificateGenerator {
     }
 
     private function getReviewerGivenName($user) {
+        $locale = $this->getEffectiveLocale();
+        // Try locale-specific name first
+        if (method_exists($user, 'getGivenName')) {
+            $name = $user->getGivenName($locale);
+            if (!empty($name)) return $name;
+        }
         return $this->callFirstAvailable($user, [
             ['getLocalizedGivenName', []],
             ['getGivenName', [null]],
@@ -567,6 +663,11 @@ class CertificateGenerator {
     }
 
     private function getReviewerFamilyName($user) {
+        $locale = $this->getEffectiveLocale();
+        if (method_exists($user, 'getFamilyName')) {
+            $name = $user->getFamilyName($locale);
+            if (!empty($name)) return $name;
+        }
         return $this->callFirstAvailable($user, [
             ['getLocalizedFamilyName', []],
             ['getFamilyName', [null]],
@@ -574,6 +675,12 @@ class CertificateGenerator {
     }
 
     private function getContextName($context) {
+        $locale = $this->getEffectiveLocale();
+        // Try locale-specific context name first
+        if (method_exists($context, 'getName')) {
+            $name = $context->getName($locale);
+            if (!empty($name)) return $name;
+        }
         return $this->callFirstAvailable($context, [
             ['getLocalizedName', []],
             ['getName', [null]],
@@ -613,11 +720,12 @@ class CertificateGenerator {
             if (!$certificateDao) {
                 return $result;
             }
+            $locale = $this->getEffectiveLocale();
             $rows = $certificateDao->retrieve(
                 'SELECT setting_name, setting_value FROM user_settings ' .
                 'WHERE user_id = ? AND setting_name IN (?, ?) AND setting_value IS NOT NULL AND setting_value != ? ' .
-                'ORDER BY locale LIMIT 2',
-                array((int) $userId, 'givenName', 'familyName', '')
+                'ORDER BY CASE WHEN locale = ? THEN 0 ELSE 1 END, locale LIMIT 2',
+                array((int) $userId, 'givenName', 'familyName', '', $locale)
             );
             foreach ($rows as $row) {
                 $row = (array) $row;
@@ -646,13 +754,14 @@ class CertificateGenerator {
             if (!$certificateDao) {
                 return '';
             }
+            $locale = $this->getEffectiveLocale();
             $rows = $certificateDao->retrieve(
                 'SELECT ps.setting_value FROM publication_settings ps ' .
                 'JOIN publications p ON p.publication_id = ps.publication_id ' .
                 'WHERE p.submission_id = ? AND ps.setting_name = ? ' .
                 'AND ps.setting_value IS NOT NULL AND ps.setting_value != ? ' .
-                'ORDER BY ps.locale LIMIT 1',
-                array((int) $submissionId, 'title', '')
+                'ORDER BY CASE WHEN ps.locale = ? THEN 0 ELSE 1 END, ps.locale LIMIT 1',
+                array((int) $submissionId, 'title', '', $locale)
             );
             foreach ($rows as $row) {
                 $row = (array) $row;

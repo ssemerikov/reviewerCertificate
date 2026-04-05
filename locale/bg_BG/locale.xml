@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Общо Издадени Сертификати</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Общо Изтегляния</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Средно Изтегляния на Сертификат</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Забележка: Helvetica, Times New Roman и Courier поддържат само латински символи. Ако вашето списание използва кирилица, арабски, китайски или други нелатински символи, приставката автоматично ще използва DejaVu Sans за тези текстови елементи.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Моите сертификати</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">По-долу е списъкът с всички ваши рецензентски сертификати за това списание.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Дата на издаване</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Заглавие на подаването</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Код на сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Действия</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Все още нямате сертификати. Сертификатите се генерират след завършване на рецензия.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Вижте всички мои сертификати</message>
 </locale>

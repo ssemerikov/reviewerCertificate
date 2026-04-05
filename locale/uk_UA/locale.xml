@@ -129,4 +129,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Всього видано сертифікатів</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Всього завантажень</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Середня кількість завантажень на сертифікат</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Примітка: шрифти Helvetica, Times New Roman та Courier підтримують лише латинські символи. Якщо ваш журнал використовує кириличні, арабські, китайські або інші нелатинські символи, плагін автоматично використає шрифт DejaVu Sans для цих текстових елементів.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Мої сертифікати</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Нижче наведено список усіх ваших рецензентських сертифікатів для цього журналу.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Дата видачі</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Назва подання</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Код сертифіката</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Дії</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">У вас ще немає сертифікатів. Сертифікати генеруються після завершення рецензування.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Переглянути всі мої сертифікати</message>
 </locale>

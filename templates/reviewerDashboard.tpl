@@ -25,5 +25,10 @@
 				{translate key="plugins.generic.reviewerCertificate.certificateWillBeGenerated"}
 			</p>
 		{/if}
+		<p style="margin-top: 10px;">
+			<a href="{url page="certificate" op="myCertificates"}" style="color: #0066cc; text-decoration: underline;">
+				{translate key="plugins.generic.reviewerCertificate.myCertificates.viewAll"}
+			</a>
+		</p>
 	</div>
 {/if}

@@ -156,6 +156,9 @@ msgstr "Virheellinen kuvatyyppi. Lataa JPG- tai PNG-tiedosto."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Tiedoston lataus epäonnistui. Yritä uudelleen."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Huomautus: Helvetica, Times New Roman ja Courier tukevat vain latinalaisia merkkejä. Jos lehtesi käyttää ei-latinalaisia merkkejä, laajennus käyttää automaattisesti DejaVu Sans -fonttia."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Tätä arviointia ei ole vielä suoritettu. Todistukset ovat saatavilla vain suoritetuille arvioinneille."
@@ -276,4 +279,28 @@ msgstr "Keskimääräinen Latausmäärä Todistusta Kohden"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Todistusasetukset"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Omat todistukset"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Alla on luettelo kaikista arvioijatodistuksistasi tässä lehdessä."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Myöntämispäivä"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Käsikirjoituksen otsikko"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Todistuksen koodi"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Toiminnot"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Sinulla ei ole vielä todistuksia. Todistukset luodaan arvioinnin suorittamisen jälkeen."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Näytä kaikki todistukseni"
 

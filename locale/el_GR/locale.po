@@ -156,6 +156,9 @@ msgstr "Μη έγκυρος τύπος εικόνας. Παρακαλώ ανεβ
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Η μεταφόρτωση αρχείου απέτυχε. Παρακαλώ δοκιμάστε ξανά."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Σημείωση: Οι γραμματοσειρές Helvetica, Times New Roman και Courier υποστηρίζουν μόνο λατινικούς χαρακτήρες. Εάν το περιοδικό σας χρησιμοποιεί μη λατινικούς χαρακτήρες, το πρόσθετο θα χρησιμοποιήσει αυτόματα τη γραμματοσειρά DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Αυτή η κριτική δεν έχει ολοκληρωθεί ακόμα. Τα πιστοποιητικά είναι διαθέσιμα μόνο για ολοκληρωμένες κριτικές."
@@ -276,4 +279,28 @@ msgstr "Μέσος Όρος Λήψεων ανά Πιστοποιητικό"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Ρυθμίσεις Πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Τα πιστοποιητικά μου"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Παρακάτω βρίσκεται η λίστα όλων των πιστοποιητικών αξιολόγησής σας για αυτό το περιοδικό."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Ημερομηνία έκδοσης"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Τίτλος υποβολής"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Κωδικός πιστοποιητικού"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Ενέργειες"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Δεν έχετε ακόμα πιστοποιητικά. Τα πιστοποιητικά δημιουργούνται μετά την ολοκλήρωση μιας αξιολόγησης."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Προβολή όλων των πιστοποιητικών μου"
 

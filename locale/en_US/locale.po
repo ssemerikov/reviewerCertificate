@@ -156,6 +156,9 @@ msgstr "Invalid image type. Please upload a JPG or PNG file."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "File upload failed. Please try again."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Note: Helvetica, Times New Roman, and Courier support Latin characters only. If your journal uses Cyrillic, Arabic, Chinese, or other non-Latin characters, the plugin will automatically use DejaVu Sans for those text elements."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "This review has not been completed yet. Certificates are only available for completed reviews."
@@ -276,4 +279,28 @@ msgstr "Average Downloads per Certificate"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Certificate Settings"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "My Certificates"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Below is a list of all your reviewer certificates for this journal."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Date Issued"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Submission Title"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Certificate Code"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Actions"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "You don't have any certificates yet. Certificates are generated after you complete a review."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "View All My Certificates"
 

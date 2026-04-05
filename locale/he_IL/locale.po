@@ -156,6 +156,9 @@ msgstr "סוג תמונה לא חוקי. אנא העלה קובץ JPG או PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "העלאת הקובץ נכשלה. אנא נסה שוב."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "הערה: גופני Helvetica, Times New Roman ו-Courier תומכים רק בתווים לטיניים. אם כתב העת שלך משתמש בתווים לא-לטיניים, התוסף ישתמש אוטומטית בגופן DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "ביקורת זו טרם הושלמה. תעודות זמינות רק לביקורות שהושלמו."
@@ -276,4 +279,28 @@ msgstr "ממוצע הורדות לתעודה"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "הגדרות תעודה"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "התעודות שלי"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "להלן רשימת כל תעודות הסוקר שלך עבור כתב עת זה."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "תאריך הנפקה"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "כותרת ההגשה"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "קוד תעודה"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "פעולות"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "אין לך עדיין תעודות. תעודות נוצרות לאחר השלמת סקירה."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "הצג את כל התעודות שלי"
 

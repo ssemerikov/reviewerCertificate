@@ -156,6 +156,9 @@ msgstr "Tip de imagine nevalid. Vă rugăm să încărcați un fișier JPG sau P
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Încărcarea fișierului a eșuat. Vă rugăm să încercați din nou."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Notă: Helvetica, Times New Roman și Courier acceptă numai caractere latine. Dacă revista dvs. folosește caractere non-latine, pluginul va folosi automat fontul DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Această recenzie nu a fost încă finalizată. Certificatele sunt disponibile doar pentru recenzii finalizate."
@@ -276,4 +279,28 @@ msgstr "Medie Descărcări per Certificat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Setări Certificate"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Certificatele mele"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Mai jos este lista tuturor certificatelor dvs. de recenzent pentru această revistă."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Data emiterii"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Titlul articolului"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Codul certificatului"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Acțiuni"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Nu aveți încă certificate. Certificatele sunt generate după finalizarea unei recenzii."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Vedeți toate certificatele mele"
 

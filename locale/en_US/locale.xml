@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total Certificates Issued</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total Downloads</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Average Downloads per Certificate</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Note: Helvetica, Times New Roman, and Courier support Latin characters only. If your journal uses Cyrillic, Arabic, Chinese, or other non-Latin characters, the plugin will automatically use DejaVu Sans for those text elements.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">My Certificates</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Below is a list of all your reviewer certificates for this journal.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Date Issued</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Submission Title</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Certificate Code</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Actions</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">You don't have any certificates yet. Certificates are generated after you complete a review.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">View All My Certificates</message>
 </locale>

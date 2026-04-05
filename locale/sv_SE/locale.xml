@@ -130,4 +130,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Totalt Utfärdade Certifikat</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Totalt Antal Nedladdningar</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Genomsnittligt Antal Nedladdningar per Certifikat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Observera: Helvetica, Times New Roman och Courier stöder bara latinska tecken. Om din tidskrift använder icke-latinska tecken kommer tillägget automatiskt att använda DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Mina certifikat</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Nedan finns en lista över alla dina granskarcertifikat för denna tidskrift.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Utfärdandedatum</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Bidragets titel</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Certifikatkod</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Åtgärder</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Du har inga certifikat ännu. Certifikat genereras efter att du har slutfört en granskning.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Visa alla mina certifikat</message>
 </locale>

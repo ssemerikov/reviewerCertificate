@@ -156,6 +156,9 @@ msgstr "画像タイプが無効です。JPGまたはPNGファイルをアップ
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "ファイルのアップロードに失敗しました。再試行してください。"
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "注意：Helvetica、Times New Roman、Courierはラテン文字のみをサポートしています。ジャーナルがキリル文字、アラビア文字、中国語、またはその他の非ラテン文字を使用している場合、プラグインはそれらのテキスト要素に自動的にDejaVu Sansを使用します。"
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "この査読はまだ完了していません。証明書は完了した査読のみ利用可能です。"
@@ -276,4 +279,28 @@ msgstr "証明書あたりの平均ダウンロード数"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "証明書設定"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "マイ証明書"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "以下は、この雑誌のすべての査読証明書の一覧です。"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "発行日"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "投稿タイトル"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "証明書コード"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "アクション"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "まだ証明書がありません。証明書は査読完了後に生成されます。"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "すべての証明書を表示"
 

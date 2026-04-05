@@ -129,4 +129,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Всего выдано сертификатов</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Всего загрузок</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Среднее количество загрузок на сертификат</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Примечание: шрифты Helvetica, Times New Roman и Courier поддерживают только латинские символы. Если ваш журнал использует кириллические, арабские, китайские или другие нелатинские символы, плагин автоматически использует шрифт DejaVu Sans для этих текстовых элементов.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Мои сертификаты</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Ниже приведён список всех ваших рецензентских сертификатов для этого журнала.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Дата выдачи</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Название статьи</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Код сертификата</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Действия</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">У вас ещё нет сертификатов. Сертификаты генерируются после завершения рецензирования.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Просмотреть все мои сертификаты</message>
 </locale>

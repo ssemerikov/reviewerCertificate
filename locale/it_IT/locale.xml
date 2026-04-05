@@ -129,4 +129,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Totale Certificati Emessi</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Totale Download</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Media Download per Certificato</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Nota: Helvetica, Times New Roman e Courier supportano solo i caratteri latini. Se la vostra rivista utilizza caratteri cirillici, arabi, cinesi o altri caratteri non latini, il plugin utilizzerà automaticamente DejaVu Sans per questi elementi di testo.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">I miei certificati</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Di seguito è riportato l elenco di tutti i certificati di revisione per questa rivista.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Data di emissione</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Titolo del contributo</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Codice del certificato</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Azioni</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Non hai ancora certificati. I certificati vengono generati dopo aver completato una revisione.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Visualizza tutti i miei certificati</message>
 </locale>

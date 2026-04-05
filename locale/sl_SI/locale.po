@@ -156,6 +156,9 @@ msgstr "Neveljavna vrsta slike. Prosimo, naložite datoteko JPG ali PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Nalaganje datoteke ni uspelo. Prosimo, poskusite znova."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Opomba: Helvetica, Times New Roman in Courier podpirajo samo latinske znake. Če vaša revija uporablja nelatinske znake, bo vtičnik samodejno uporabil pisavo DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Ta recenzija še ni dokončana. Potrdila so na voljo samo za dokončane recenzije."
@@ -276,4 +279,28 @@ msgstr "Povprečno Število Prenosov na Potrdilo"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Nastavitve Potrdila"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Moji certifikati"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Spodaj je seznam vseh vaših recenzentskih certifikatov za to revijo."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Datum izdaje"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Naslov prispevka"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Koda certifikata"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Dejanja"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Še nimate certifikatov. Certifikati se ustvarijo po zaključku recenzije."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Ogled vseh mojih certifikatov"
 

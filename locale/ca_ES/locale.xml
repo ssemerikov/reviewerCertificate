@@ -131,4 +131,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total de Certificats Emesos</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total de Descàrregues</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Mitjana de Descàrregues per Certificat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Nota: Helvetica, Times New Roman i Courier només admeten caràcters llatins. Si la vostra revista utilitza caràcters no llatins, el connector utilitzarà automàticament DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Els meus certificats</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">A continuació es mostra una llista de tots els vostres certificats de revisió per a aquesta revista.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Data d'emissió</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Títol de la tramesa</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Codi del certificat</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Accions</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Encara no teniu cap certificat. Els certificats es generen després de completar una revisió.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Veure tots els meus certificats</message>
 </locale>

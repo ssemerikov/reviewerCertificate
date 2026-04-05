@@ -132,4 +132,17 @@ ală</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total Certificate Emise</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total Descărcări</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Medie Descărcări per Certificat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Notă: Helvetica, Times New Roman și Courier acceptă numai caractere latine. Dacă revista dvs. folosește caractere non-latine, pluginul va folosi automat fontul DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Certificatele mele</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Mai jos este lista tuturor certificatelor dvs. de recenzent pentru această revistă.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Data emiterii</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Titlul articolului</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Codul certificatului</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Acțiuni</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Nu aveți încă certificate. Certificatele sunt generate după finalizarea unei recenzii.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Vedeți toate certificatele mele</message>
 </locale>

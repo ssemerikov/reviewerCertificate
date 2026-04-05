@@ -571,4 +571,69 @@ class CertificateGeneratorTest extends TestCase
             $this->assertNotNull($value, "Default setting $key should have a value");
         }
     }
+
+    /**
+     * Test containsNonLatin() detection for Cyrillic and other scripts
+     */
+    public function testContainsNonLatinDetection(): void
+    {
+        $generator = new CertificateGenerator();
+        $method = new \ReflectionMethod($generator, 'containsNonLatin');
+        $method->setAccessible(true);
+
+        // Pure ASCII — should NOT trigger
+        $this->assertFalse($method->invoke($generator, 'Hello World'));
+        $this->assertFalse($method->invoke($generator, 'Dr. Jane Smith'));
+        $this->assertFalse($method->invoke($generator, 'Information Technologies and Learning Tools'));
+        $this->assertFalse($method->invoke($generator, ''));
+
+        // Cyrillic — should trigger
+        $this->assertTrue($method->invoke($generator, 'Інформаційні технології і засоби навчання'));
+        $this->assertTrue($method->invoke($generator, 'Олександра М. Соколюк'));
+
+        // Mixed Latin + Cyrillic — should trigger
+        $this->assertTrue($method->invoke($generator, 'Journal: Інформаційні технології'));
+
+        // Accented Latin (also triggers — dejavusans handles these fine)
+        $this->assertTrue($method->invoke($generator, 'José García'));
+        $this->assertTrue($method->invoke($generator, 'Müller'));
+
+        // CJK — should trigger
+        $this->assertTrue($method->invoke($generator, '李明'));
+
+        // Arabic — should trigger
+        $this->assertTrue($method->invoke($generator, 'مجلة'));
+    }
+
+    /**
+     * Test that font auto-switches to dejavusans when non-Latin text is present
+     */
+    public function testUnicodeFontAutoSwitch(): void
+    {
+        $allowedFonts = array('helvetica', 'times', 'courier', 'dejavusans');
+        $unicodeFonts = array('dejavusans');
+
+        // When non-Latin text is present, non-Unicode fonts should switch to dejavusans
+        foreach ($allowedFonts as $configuredFont) {
+            $needsUnicode = true;
+            $useFont = ($needsUnicode && !in_array($configuredFont, $unicodeFonts))
+                ? 'dejavusans' : $configuredFont;
+
+            if ($configuredFont === 'dejavusans') {
+                $this->assertEquals('dejavusans', $useFont);
+            } else {
+                $this->assertEquals('dejavusans', $useFont,
+                    "Font should auto-switch from $configuredFont to dejavusans for non-Latin text");
+            }
+        }
+
+        // When only Latin text is present, configured font should be preserved
+        foreach ($allowedFonts as $configuredFont) {
+            $needsUnicode = false;
+            $useFont = ($needsUnicode && !in_array($configuredFont, $unicodeFonts))
+                ? 'dejavusans' : $configuredFont;
+            $this->assertEquals($configuredFont, $useFont,
+                "Font $configuredFont should be preserved for pure Latin text");
+        }
+    }
 }

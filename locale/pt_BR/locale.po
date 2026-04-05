@@ -156,6 +156,9 @@ msgstr "Tipo de imagem inválido. Por favor, envie um arquivo JPG ou PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Falha no envio do arquivo. Por favor, tente novamente."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Nota: Helvetica, Times New Roman e Courier suportam apenas caracteres latinos. Se sua revista usar caracteres cirílicos, árabes, chineses ou outros caracteres não latinos, o plugin usará automaticamente DejaVu Sans para esses elementos de texto."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Esta avaliação ainda não foi concluída. Certificados estão disponíveis apenas para avaliações concluídas."
@@ -276,4 +279,28 @@ msgstr "Média de Downloads por Certificado"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Configurações de Certificados"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Meus certificados"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Abaixo está uma lista de todos os seus certificados de revisão para esta revista."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Data de emissão"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Título da submissão"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Código do certificado"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Ações"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Você ainda não tem certificados. Os certificados são gerados após a conclusão de uma revisão."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Ver todos os meus certificados"
 

@@ -156,6 +156,9 @@ msgstr "Neplatný typ obrázku. Nahrajte prosím soubor JPG nebo PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Nahrání souboru se nezdařilo. Zkuste to prosím znovu."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Poznámka: Helvetica, Times New Roman a Courier podporují pouze latinské znaky. Pokud váš časopis používá nelatinské znaky, modul automaticky použije písmo DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Tato recenze ještě nebyla dokončena. Certifikáty jsou k dispozici pouze pro dokončené recenze."
@@ -276,4 +279,28 @@ msgstr "Průměrný Počet Stažení na Certifikát"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Nastavení Certifikátů"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Moje certifikáty"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Níže je seznam všech vašich recenzentských certifikátů pro tento časopis."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Datum vydání"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Název příspěvku"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Kód certifikátu"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Akce"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Zatím nemáte žádné certifikáty. Certifikáty se generují po dokončení recenze."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Zobrazit všechny moje certifikáty"
 

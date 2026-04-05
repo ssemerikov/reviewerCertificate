@@ -156,6 +156,9 @@ msgstr "Netinkamas paveikslėlio tipas. Prašome įkelti JPG arba PNG failą."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Failo įkėlimas nepavyko. Prašome bandyti dar kartą."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Pastaba: Helvetica, Times New Roman ir Courier šriftai palaiko tik lotyniškus simbolius. Jei jūsų žurnalas naudoja nelotyniškus simbolius, įskiepis automatiškai naudos DejaVu Sans šriftą."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Ši recenzija dar nėra užbaigta. Sertifikatai galimi tik užbaigtoms recenzijoms."
@@ -276,4 +279,28 @@ msgstr "Vidutinis Atsisiuntimų Skaičius Sertifikatui"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Sertifikato Nustatymai"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Mano sertifikatai"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Žemiau pateiktas visų jūsų recenzento sertifikatų šiam žurnalui sąrašas."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Išdavimo data"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Straipsnio pavadinimas"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Sertifikato kodas"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Veiksmai"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Dar neturite sertifikatų. Sertifikatai generuojami atlikus recenziją."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Peržiūrėti visus mano sertifikatus"
 

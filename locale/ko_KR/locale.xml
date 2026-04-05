@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">발급된 총 인증서 수</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">총 다운로드 수</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">인증서당 평균 다운로드 수</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">참고: Helvetica, Times New Roman, Courier는 라틴 문자만 지원합니다. 저널에서 키릴 문자, 아랍어, 중국어 또는 기타 비라틴 문자를 사용하는 경우 플러그인은 해당 텍스트 요소에 자동으로 DejaVu Sans를 사용합니다.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">내 인증서</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">아래는 이 저널에 대한 모든 심사 인증서 목록입니다.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">발급일</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">제출 제목</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">인증서 코드</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">작업</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">아직 인증서가 없습니다. 인증서는 심사를 완료한 후 생성됩니다.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">모든 인증서 보기</message>
 </locale>

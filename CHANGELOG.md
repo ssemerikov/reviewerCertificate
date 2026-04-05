@@ -5,6 +5,65 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2026-04-05
+
+### Added
+
+- **"My Certificates" page** (`/certificate/myCertificates`) — Reviewers who are also editors can now browse all their issued certificates in a single table, with submission titles, dates, and download links. Accessible from the reviewer dashboard via a "View All My Certificates" link. Inspired by feedback from Dr. Olha Pinchuk (ITLT Journal) who manages thousands of submissions and needed a way to locate her reviewer certificates.
+  - New template: `templates/myCertificates.tpl`
+  - New CSS styles for `.certificate-list-table`
+  - New handler method: `CertificateHandler::myCertificates()`
+  - 9 new locale keys across all 32 languages
+  - **Files Added/Modified**: `controllers/CertificateHandler.php`, `templates/myCertificates.tpl`, `templates/reviewerDashboard.tpl`, `css/certificate.css`, all 32 `locale/*/locale.xml` and `locale/*/locale.po`
+
+- **Cyrillic/Unicode PDF certificate tests** (`tests/e2e/certificate-cyrillic.spec.ts`) — E2E tests verifying PDF certificate generation in both English and Ukrainian locales, checking for correct font rendering (no "??????" garbled text).
+
+- **My Certificates E2E tests** (`tests/e2e/my-certificates.spec.ts`) — 5 test cases per OJS version covering page access, table display, download links, Ukrainian locale, and unauthenticated access rejection.
+
+- **Font auto-switch for non-Latin scripts** — `CertificateGenerator` now detects non-Latin characters (Cyrillic, CJK, Arabic, etc.) in certificate content and automatically switches to DejaVu Sans font, regardless of the configured font. Core TCPDF fonts (Helvetica, Times, Courier) only support Windows-1252 and cannot render Unicode characters.
+  - New method: `containsNonLatin($text)` — regex detection of non-Latin characters
+  - New property: `$effectiveFont` — tracks the runtime font override
+  - **File Modified**: `classes/CertificateGenerator.php`
+
+- **Locale-aware data retrieval** — Certificate generation now respects the active OJS locale when fetching reviewer names, journal names, and submission titles. Ukrainian locale returns Ukrainian data when available.
+  - New method: `CertificateGenerator::setLocale()` / `getEffectiveLocale()`
+  - Locale-aware `ORDER BY` in SQL queries: `CASE WHEN locale = ? THEN 0 ELSE 1 END`
+  - **Files Modified**: `classes/CertificateGenerator.php`, `controllers/CertificateHandler.php`
+
+### Fixed - Production Bugs (Reported by Dr. Olha Pinchuk, ITLT Journal, OJS 3.4.0.8)
+
+- **Fixed: Cyrillic journal name, submission title, and reviewer name render as "??????" in PDF certificates**
+  - **Issue**: When using Helvetica or Times font with Cyrillic (Ukrainian) text, all non-Latin characters appeared as question marks in the generated PDF.
+  - **Root Cause**: TCPDF core fonts (Helvetica, Times, Courier) only support Windows-1252 encoding. Cyrillic, CJK, and Arabic characters have no glyphs in these fonts.
+  - **Solution**: Added automatic font detection — when any certificate text field contains non-Latin characters, the generator switches to DejaVu Sans (Unicode-capable) regardless of the configured font. A warning is shown in the settings UI.
+  - **File Modified**: `classes/CertificateGenerator.php`
+
+- **Fixed: QR code verification broken — QR scan shows empty form instead of verification result**
+  - **Issue**: Scanning a QR code from a certificate PDF led to the verification page but showed an empty form instead of the certificate details. Manual code entry was rejected by form validation (pattern required exactly 16 hex chars, but older certificates have 12-char codes).
+  - **Root Cause**: (1) Some OJS 3.4 server configurations with non-standard `PATH_INFO` don't populate `$args[0]` from the URL path. (2) The HTML form pattern `[A-Fa-f0-9]{16}` rejected 12-character codes from older plugin versions.
+  - **Solution**: Added 3-tier code extraction fallback: `$args[0]` → `$request->getUserVar('code')` → `$_SERVER['REQUEST_URI']` regex parse → `$_GET['code']`. Changed form validation pattern to accept 8-32 hex characters.
+  - **Files Modified**: `controllers/CertificateHandler.php`, `templates/verify.tpl`
+
+- **Fixed: My Certificates page and verification page show incorrect date (same date for all certificates)**
+  - **Issue**: All certificates on the My Certificates page showed the same "Date Issued" value. The verification page also showed wrong dates. PDFs displayed correct dates.
+  - **Root Cause**: The `date_issued` column in `reviewer_certificates` stores the DB row creation timestamp. When certificates are batch-generated, all rows get the same timestamp. PDFs use `review_assignments.date_completed` (the actual review date).
+  - **Solution**: Both the My Certificates page and the verification page now join `review_assignments` to display `date_completed` (the review completion date, matching the PDF content), with fallback to `date_issued` when the review assignment is not found.
+  - **File Modified**: `controllers/CertificateHandler.php`
+
+### Changed
+
+- **Locale key count**: 86 → 95 per language (9 new keys for My Certificates feature and font warning)
+- **E2E test count**: 58 → 87 tests across OJS 3.3, 3.4, and 3.5
+- **Development tools**: Updated from Claude Code (Sonnet 4.5) to Claude Code (Opus 4.6)
+
+### Upgrade Notes
+
+- **From 1.6.x**: Drop-in upgrade. No database changes required.
+- **For ZIP installs**: Use the version-specific release archives from GitHub Releases — they include TCPDF.
+- **Cyrillic/Unicode users**: If you previously selected DejaVu Sans manually to work around garbled text, the plugin now handles this automatically. You can keep DejaVu Sans selected or switch to any font — the auto-switch will activate when needed.
+
+---
+
 ## [1.6.2] - 2026-04-01
 
 ### Fixed

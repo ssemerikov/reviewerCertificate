@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">已颁发证书总数</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">下载总数</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">每份证书平均下载次数</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">注意：Helvetica、Times New Roman 和 Courier 仅支持拉丁字符。如果您的期刊使用西里尔文、阿拉伯文、中文或其他非拉丁字符，插件将自动使用 DejaVu Sans 字体来显示这些文本元素。</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">我的证书</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">以下是您在本期刊所有审稿证书的列表。</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">签发日期</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">稿件标题</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">证书编号</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">操作</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">您还没有任何证书。证书在您完成审稿后生成。</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">查看我的所有证书</message>
 </locale>

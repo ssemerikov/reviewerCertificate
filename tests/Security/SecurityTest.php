@@ -53,16 +53,21 @@ class SecurityTest extends TestCase
      */
     public function testCertificateCodeFormatValidation(): void
     {
+        // Validation accepts 8-32 uppercase hex characters.
+        // Older plugin versions generated 12-char codes; current version generates 16.
         $validCodes = [
-            'ABCD1234EF560001',
-            'DEF7890123456789',
-            '123456789ABCDEF0',
+            'ABCD1234EF560001',      // 16 chars (current format)
+            'DEF7890123456789',      // 16 chars
+            '123456789ABCDEF0',      // 16 chars
+            'C75DEB37666F',          // 12 chars (old format)
+            '855B9C41EC0C',          // 12 chars (old format)
+            'ABCD1234',              // 8 chars (minimum)
+            'ABCDEF0123456789ABCDEF0123456789', // 32 chars (maximum)
         ];
 
         $invalidCodes = [
-            'ABC123',                // Too short
-            'ABCD1234EF56789AB',     // Too long (17 chars)
-            'abcd1234ef567890',      // Lowercase
+            'ABC1234',               // Too short (7 chars)
+            'ABCDEF0123456789ABCDEF01234567890', // Too long (33 chars)
             'ABCD-1234-EF5678',      // Contains hyphens
             'ABCD 1234 EF5678',      // Contains spaces
             'GHIJ1234KLMN5678',      // Non-hex uppercase letters
@@ -70,7 +75,7 @@ class SecurityTest extends TestCase
 
         foreach ($validCodes as $code) {
             $this->assertMatchesRegularExpression(
-                '/^[A-F0-9]{16}$/',
+                '/^[A-F0-9]{8,32}$/',
                 $code,
                 "Code $code should be valid"
             );
@@ -78,7 +83,7 @@ class SecurityTest extends TestCase
 
         foreach ($invalidCodes as $code) {
             $this->assertDoesNotMatchRegularExpression(
-                '/^[A-F0-9]{16}$/',
+                '/^[A-F0-9]{8,32}$/',
                 $code,
                 "Code $code should be invalid"
             );
@@ -592,24 +597,31 @@ class SecurityTest extends TestCase
 
     /**
      * Test certificate code input sanitization
-     * Ensures only valid 16-character uppercase hex codes pass validation
+     * Ensures only valid 8-32 character uppercase hex codes pass validation.
+     * Older plugin versions generated 12-char codes; current version generates 16.
      */
     public function testCertificateCodeSanitization(): void
     {
-        $pattern = '/^[A-F0-9]{16}$/';
+        $pattern = '/^[A-F0-9]{8,32}$/';
 
-        // Valid codes
-        $this->assertMatchesRegularExpression($pattern, 'ABCD1234EF567890', 'Valid hex code should pass');
-        $this->assertMatchesRegularExpression($pattern, '0123456789ABCDEF', 'Valid hex code should pass');
+        // Valid codes — current 16-char format
+        $this->assertMatchesRegularExpression($pattern, 'ABCD1234EF567890', 'Valid 16-char hex code should pass');
+        $this->assertMatchesRegularExpression($pattern, '0123456789ABCDEF', 'Valid 16-char hex code should pass');
+
+        // Valid codes — old 12-char format (from production)
+        $this->assertMatchesRegularExpression($pattern, 'C75DEB37666F', 'Valid 12-char hex code should pass');
+        $this->assertMatchesRegularExpression($pattern, '855B9C41EC0C', 'Valid 12-char hex code should pass');
+
+        // Valid codes — boundary lengths
+        $this->assertMatchesRegularExpression($pattern, 'ABCD1234', 'Valid 8-char (minimum) hex code should pass');
 
         // Invalid codes — SQL injection attempts
         $this->assertDoesNotMatchRegularExpression($pattern, "'; DROP TABLE--", 'SQL injection should be rejected');
         $this->assertDoesNotMatchRegularExpression($pattern, "1' OR '1'='1", 'SQL injection should be rejected');
 
         // Invalid codes — wrong format
-        $this->assertDoesNotMatchRegularExpression($pattern, 'abcd1234ef567890', 'Lowercase should be rejected');
-        $this->assertDoesNotMatchRegularExpression($pattern, 'SHORT', 'Too short should be rejected');
-        $this->assertDoesNotMatchRegularExpression($pattern, 'TOOLONGSTRING12345', 'Too long should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, 'SHORT', 'Too short (5 chars) should be rejected');
+        $this->assertDoesNotMatchRegularExpression($pattern, 'ABC1234', 'Too short (7 chars) should be rejected');
         $this->assertDoesNotMatchRegularExpression($pattern, '', 'Empty string should be rejected');
         $this->assertDoesNotMatchRegularExpression($pattern, 'GHIJ1234KLMN5678', 'Non-hex chars should be rejected');
 

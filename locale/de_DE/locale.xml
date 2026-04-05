@@ -129,4 +129,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Gesamt Ausgestellte Zertifikate</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Gesamt Downloads</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Durchschnittliche Downloads pro Zertifikat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Hinweis: Helvetica, Times New Roman und Courier unterstützen nur lateinische Zeichen. Wenn Ihre Zeitschrift kyrillische, arabische, chinesische oder andere nicht-lateinische Zeichen verwendet, wird das Plugin automatisch DejaVu Sans für diese Textelemente verwenden.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Meine Zertifikate</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Nachfolgend finden Sie eine Liste aller Ihrer Gutachterzertifikate für diese Zeitschrift.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Ausstellungsdatum</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Titel der Einreichung</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Zertifikatscode</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Aktionen</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Sie haben noch keine Zertifikate. Zertifikate werden nach Abschluss einer Begutachtung erstellt.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Alle meine Zertifikate anzeigen</message>
 </locale>

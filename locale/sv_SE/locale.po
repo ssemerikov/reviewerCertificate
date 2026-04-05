@@ -156,6 +156,9 @@ msgstr "Ogiltig bildtyp. Vänligen ladda upp en JPG- eller PNG-fil."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Filuppladdning misslyckades. Vänligen försök igen."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Observera: Helvetica, Times New Roman och Courier stöder bara latinska tecken. Om din tidskrift använder icke-latinska tecken kommer tillägget automatiskt att använda DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Denna granskning är inte slutförd ännu. Certifikat är endast tillgängliga för slutförda granskningar."
@@ -276,4 +279,28 @@ msgstr "Genomsnittligt Antal Nedladdningar per Certifikat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Certifikatinställningar"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Mina certifikat"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Nedan finns en lista över alla dina granskarcertifikat för denna tidskrift."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Utfärdandedatum"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Bidragets titel"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Certifikatkod"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Åtgärder"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Du har inga certifikat ännu. Certifikat genereras efter att du har slutfört en granskning."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Visa alla mina certifikat"
 

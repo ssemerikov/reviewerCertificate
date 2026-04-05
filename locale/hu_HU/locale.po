@@ -156,6 +156,9 @@ msgstr "Érvénytelen képtípus. Kérjük, töltsön fel JPG vagy PNG fájlt."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "A fájlfeltöltés sikertelen. Kérjük, próbálja újra."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Megjegyzés: A Helvetica, Times New Roman és Courier betűtípusok csak latin karaktereket támogatnak. Ha folyóirata nem latin karaktereket használ, a bővítmény automatikusan a DejaVu Sans betűtípust használja."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Ez a bírálat még nem fejeződött be. Tanúsítványok csak befejezett bírálatokhoz elérhetők."
@@ -276,4 +279,28 @@ msgstr "Átlagos Letöltés Tanúsítványonként"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Tanúsítvány Beállítások"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Tanúsítványaim"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Az alábbiakban az összes bírálói tanúsítványa található ehhez a folyóirathoz."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Kiállítás dátuma"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Kézirat címe"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Tanúsítvány kódja"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Műveletek"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Még nincsenek tanúsítványai. A tanúsítványok a bírálat befejezése után jönnek létre."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Összes tanúsítványom megtekintése"
 

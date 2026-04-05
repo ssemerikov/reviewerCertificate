@@ -156,6 +156,9 @@ msgstr "Geçersiz resim türü. Lütfen bir JPG veya PNG dosyası yükleyin."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Dosya yükleme başarısız oldu. Lütfen tekrar deneyin."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Not: Helvetica, Times New Roman ve Courier yalnızca Latin karakterlerini destekler. Derginiz Kiril, Arapça, Çince veya diğer Latin dışı karakterler kullanıyorsa, eklenti bu metin öğeleri için otomatik olarak DejaVu Sans kullanacaktır."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Bu değerlendirme henüz tamamlanmadı. Sertifikalar yalnızca tamamlanmış değerlendirmeler için kullanılabilir."
@@ -276,4 +279,28 @@ msgstr "Sertifika Başına Ortalama İndirme"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Sertifika Ayarları"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Sertifikalarım"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Aşağıda bu dergi için tüm hakem sertifikalarınızın listesi yer almaktadır."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Düzenlenme tarihi"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Gönderi başlığı"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Sertifika kodu"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "İşlemler"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Henüz sertifikanız yok. Sertifikalar bir değerlendirmeyi tamamladıktan sonra oluşturulur."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Tüm sertifikalarımı görüntüle"
 

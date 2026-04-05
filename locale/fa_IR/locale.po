@@ -156,6 +156,9 @@ msgstr "نوع تصویر نامعتبر است. لطفاً فایل JPG یا PN
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "بارگذاری فایل ناموفق بود. لطفاً دوباره تلاش کنید."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "توجه: فونت‌های Helvetica، Times New Roman و Courier فقط از حروف لاتین پشتیبانی می‌کنند. اگر مجله شما از حروف غیرلاتین استفاده می‌کند، افزونه به طور خودکار از فونت DejaVu Sans استفاده خواهد کرد."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "این داوری هنوز تکمیل نشده است. گواهی‌ها فقط برای داوری‌های تکمیل شده موجود است."
@@ -276,4 +279,28 @@ msgstr "میانگین دانلود به ازای هر گواهی"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "تنظیمات گواهی"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "گواهی‌نامه‌های من"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "در زیر لیست تمام گواهی‌نامه‌های داوری شما برای این مجله آمده است."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "تاریخ صدور"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "عنوان مقاله"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "کد گواهی‌نامه"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "عملیات"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "شما هنوز گواهی‌نامه‌ای ندارید. گواهی‌نامه‌ها پس از تکمیل داوری صادر می‌شوند."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "مشاهده همه گواهی‌نامه‌های من"
 

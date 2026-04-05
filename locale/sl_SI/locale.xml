@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Skupno Število Izdanih Potrdil</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Skupno Število Prenosov</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Povprečno Število Prenosov na Potrdilo</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Opomba: Helvetica, Times New Roman in Courier podpirajo samo latinske znake. Če vaša revija uporablja nelatinske znake, bo vtičnik samodejno uporabil pisavo DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Moji certifikati</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Spodaj je seznam vseh vaših recenzentskih certifikatov za to revijo.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Datum izdaje</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Naslov prispevka</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Koda certifikata</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Dejanja</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Še nimate certifikatov. Certifikati se ustvarijo po zaključku recenzije.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Ogled vseh mojih certifikatov</message>
 </locale>

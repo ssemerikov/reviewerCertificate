@@ -411,7 +411,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
             // Plugin locale may not be usable on public pages if the lazy-loaded
             // locale file was registered with a relative path before the working
             // directory or locale context was finalized.
-            $this->addLocaleData();
+            $this->ensurePluginLocaleLoaded();
 
             require_once($this->getPluginPath() . '/controllers/CertificateHandler.php');
 
@@ -447,7 +447,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
      */
     public function addCertificateButton($hookName, $params) {
         // Ensure locale is loaded for non-English UIs (fixes ##key## display in uk_UA etc.)
-        $this->addLocaleData();
+        $this->ensurePluginLocaleLoaded();
 
         $request = Application::get()->getRequest();
         $templateMgr = $params[0];
@@ -573,6 +573,51 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         }
 
         return false;
+    }
+
+    /**
+     * Ensure plugin locale data is loaded with absolute path fallback.
+     * Required for OJS 3.3 where relative path locale registration
+     * can fail on public pages and reviewer dashboard.
+     */
+    private function ensurePluginLocaleLoaded() {
+        // Standard reload attempt
+        $this->addLocaleData();
+
+        // Check if translations are actually available
+        $testKey = 'plugins.generic.reviewerCertificate.certificateAvailable';
+        $translated = __($testKey);
+        if ($translated === '##' . $testKey . '##') {
+            // Translations still missing — manually register with absolute path.
+            // OJS 3.3.0-22 uses .po files (via Gettext), not .xml.
+            $localeDir = dirname(__DIR__) . '/locale';
+
+            // Determine current locale
+            $locale = 'en_US';
+            if (class_exists('AppLocale', false)) {
+                $currentLocale = \AppLocale::getLocale();
+                if ($currentLocale) {
+                    $locale = $currentLocale;
+                }
+            }
+
+            // Register .po file with absolute path
+            $localeFile = $localeDir . '/' . $locale . '/locale.po';
+            if (file_exists($localeFile) && class_exists('AppLocale', false)) {
+                \AppLocale::registerLocaleFile($locale, $localeFile);
+            }
+
+            // If locale was 'en', also try 'en_US' (or vice versa)
+            if (strpos($locale, '_') === false) {
+                $altLocale = $locale . '_US';
+            } else {
+                $altLocale = substr($locale, 0, 2);
+            }
+            $altFile = $localeDir . '/' . $altLocale . '/locale.po';
+            if (file_exists($altFile) && class_exists('AppLocale', false)) {
+                \AppLocale::registerLocaleFile($altLocale, $altFile);
+            }
+        }
     }
 
     /**

@@ -156,6 +156,9 @@ msgstr "Jenis gambar tidak valid. Harap unggah file JPG atau PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Pengunggahan file gagal. Harap coba lagi."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Catatan: Helvetica, Times New Roman, dan Courier hanya mendukung karakter Latin. Jika jurnal Anda menggunakan karakter non-Latin, plugin akan secara otomatis menggunakan font DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Tinjauan ini belum diselesaikan. Sertifikat hanya tersedia untuk tinjauan yang sudah selesai."
@@ -276,4 +279,28 @@ msgstr "Rata-rata Unduhan per Sertifikat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Pengaturan Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Sertifikat Saya"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Berikut adalah daftar semua sertifikat reviewer Anda untuk jurnal ini."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Tanggal Diterbitkan"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Judul Naskah"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Kode Sertifikat"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Tindakan"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Anda belum memiliki sertifikat. Sertifikat dibuat setelah Anda menyelesaikan review."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Lihat Semua Sertifikat Saya"
 

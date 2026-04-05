@@ -13,6 +13,10 @@ The `main` branch contains a single codebase compatible with all OJS versions. F
 - Release packages: `v{VERSION}-3.3`, `v{VERSION}-3.4`, `v{VERSION}-3.5` tags on GitHub
 - Plugin Gallery PR: https://github.com/pkp/plugin-gallery/pull/473 (fork: `ssemerikov/plugin-gallery`, branch: `add-reviewer-certificate-plugin`)
 
+## Version
+
+Source of truth: `version.xml` (currently 1.7.0). The `release` field uses 4-part format `X.Y.Z.0`.
+
 ## Development Commands
 
 ```bash
@@ -46,6 +50,10 @@ find . -name "*.php" -not -path "./vendor/*" -not -path "./lib/*" -exec php -l {
 
 ## Architecture
 
+### PSR-4 Namespace
+
+Root namespace: `APP\plugins\generic\reviewerCertificate` → `./` (defined in `composer.json`). All new classes must use this namespace prefix. Test namespace: `APP\plugins\generic\reviewerCertificate\Tests` → `tests/`.
+
 ### Two-Stage Plugin Loading
 
 The plugin uses a two-stage loading architecture critical for OJS 3.3 compatibility:
@@ -66,8 +74,9 @@ ReviewerCertificatePlugin.php  (entry point — thin wrapper)
 - `ReviewerCertificatePlugin.php` — Entry point (thin wrapper, namespace `APP\plugins\generic\reviewerCertificate`)
 - `compat_autoloader.php` — Namespace compatibility layer (OJS 3.3 ↔ 3.4+)
 - `classes/ReviewerCertificatePluginCore.php` — Actual implementation. Hooks: `LoadHandler`, `TemplateManager::display`, `reviewassignmentdao::_updateobject`
-- `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `generateBatch()` (manager role)
-- `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`lib/tcpdf/`)
+- `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `myCertificates()` (reviewer), `generateBatch()` (manager role)
+- `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`vendor/tecnickcom/tcpdf/`)
+- `templates/myCertificates.tpl` — "My Certificates" page listing all certificates for a reviewer
 
 ### OJS Version Compatibility Patterns
 
@@ -120,6 +129,79 @@ public function addCertificateButton($hookName, $params) {
 }
 ```
 
+**Pattern 8: Unicode font auto-switch in PDF generation**
+TCPDF core fonts (Helvetica, Times, Courier) only support Windows-1252. When certificate content contains non-Latin characters (Cyrillic, CJK, Arabic), automatically switch to DejaVu Sans:
+```php
+// In CertificateGenerator
+private function containsNonLatin($text) {
+    return preg_match('/[^\x00-\xFF]/u', $text) || preg_match('/[\x{0400}-\x{04FF}]/u', $text);
+}
+
+public function generate($reviewAssignment, $context, $template = null) {
+    $effectiveFont = $this->fontFamily;
+    foreach ([$reviewerName, $journalName, $submissionTitle] as $text) {
+        if ($this->containsNonLatin($text)) {
+            $effectiveFont = 'dejavusans';
+            break;
+        }
+    }
+    $pdf->SetFont($effectiveFont, '', $this->fontSize);
+}
+```
+
+**Pattern 9: Locale-aware data retrieval for PDFs**
+When generating PDFs in non-English locales, fetch localized names and titles:
+```php
+// In CertificateGenerator
+public function setLocale($locale) { $this->locale = $locale; }
+
+private function getEffectiveLocale() {
+    if ($this->locale) return $this->locale;
+    if (class_exists('PKP\facades\Locale')) return \PKP\facades\Locale::getLocale();  // OJS 3.4+/3.5
+    if (class_exists('AppLocale')) return \AppLocale::getLocale();  // OJS 3.3
+    return 'en_US';
+}
+
+// In SQL queries, prioritize current locale
+private function getSubmissionTitleFromDB($submissionId, $locale) {
+    return $dao->retrieve(
+        'SELECT st.setting_value FROM submission_settings st
+         WHERE st.submission_id = ? AND st.setting_name = ? AND st.locale = ?
+         ORDER BY CASE WHEN locale = ? THEN 0 ELSE 1 END, locale',
+        [$submissionId, 'title', $locale, $locale]
+    );
+}
+```
+
+**Pattern 10: Display review completion date, not certificate issuance date**
+The `reviewer_certificates.date_issued` column stores when the DB row was created (identical for batch-generated certificates). For user-facing dates, always use `review_assignments.date_completed`:
+```php
+// My Certificates page query
+SELECT rc.*, ra.date_completed AS review_date_completed
+FROM reviewer_certificates rc
+LEFT JOIN review_assignments ra ON rc.review_id = ra.review_id
+ORDER BY COALESCE(ra.date_completed, rc.date_issued) DESC
+
+// Verification page
+$displayDate = $certificate->getDateIssued();
+$raRow = $dao->retrieve('SELECT date_completed FROM review_assignments WHERE review_id = ?', [$reviewId]);
+if (!empty($raRow['date_completed'])) $displayDate = $raRow['date_completed'];
+```
+
+**Pattern 11: URL path fallback for certificate verification**
+On some OJS 3.4 configurations, `$args[0]` is not populated from the URL path. Use a fallback chain:
+```php
+public function verify($args, $request) {
+    $code = isset($args[0]) ? $args[0] : $request->getUserVar('code');
+    if (!$code) {
+        $uri = $_SERVER['REQUEST_URI'] ?? '';
+        if (preg_match('#/certificate/verify/([A-Fa-f0-9]{8,32})#', $uri, $m)) $code = $m[1];
+    }
+    if (!$code && !empty($_GET['code'])) $code = $_GET['code'];
+    if ($code) $code = strtoupper(trim($code));
+}
+```
+
 ### OJS 3.5 Breaking Changes
 
 These removals affect this plugin and require fallback code:
@@ -153,6 +235,8 @@ Tests use mocked OJS infrastructure (see `tests/mocks/`). `OJSMockLoader` define
 OJS_VERSION=3.5 vendor/bin/phpunit --testsuite "Compatibility Tests"
 ```
 
+**Note**: `phpunit.xml` defaults to `OJS_VERSION=3.4`. Override with env var to test other versions.
+
 Test structure:
 - `tests/Unit/` — Individual class testing
 - `tests/Integration/` — Workflow testing
@@ -183,7 +267,9 @@ E2E test files:
 - `certificate-download.spec.ts` — Reviewer certificate download
 - `certificate-verify.spec.ts` — Public certificate verification endpoint
 - `certificate-ineligible.spec.ts` — Ineligible reviewer rejection
+- `certificate-cyrillic.spec.ts` — Cyrillic/Unicode PDF rendering tests (English + Ukrainian locales)
 - `batch-generation.spec.ts` — Batch certificate generation for managers
+- `my-certificates.spec.ts` — "My Certificates" page functionality
 - `locale-smoke.spec.ts` — Locale translation tests (English + Ukrainian, no `##key##` patterns)
 
 ## Release Process
@@ -222,6 +308,16 @@ php temp/convert_xml_to_po.php
 
 **Why both formats?** OJS 3.3.0-22's `LocaleFile::load()` reads `.po` files via Gettext, NOT `.xml`. If `.po` files are missing keys that exist in `.xml`, those translations will show as `##key##` at runtime. The `.xml` files remain the source of truth because they're easier to edit and some OJS admin tools reference them.
 
-Current key count: 86 per language (84 for `en/` which lacks 2 error keys).
+Current key count: 95 per language (93 for `en/` which lacks 2 error keys). Total tests: 158 PHP + 87 E2E = 245 tests.
 
 Validate translations: `vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
+
+## CI/CD
+
+GitHub Actions (`.github/workflows/test.yml`) runs on push to `main`, `develop`, `claude/**` and PRs to `main`/`develop`.
+
+**Test matrix**: PHP {7.3, 7.4, 8.0, 8.1, 8.2} × OJS {3.3, 3.4, 3.5} (OJS 3.5 excluded on PHP <8.0). Coverage uploads from PHP 8.1 + OJS 3.4. Code quality job runs `php -l` syntax check.
+
+## Bug Reports
+
+Production bug reports from users (screenshots, PDFs) are stored in `issues/` (untracked). These come from production OJS instances and may inform fixes.

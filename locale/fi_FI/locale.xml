@@ -131,4 +131,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Myönnettyjä Todistuksia Yhteensä</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Latauksia Yhteensä</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Keskimääräinen Latausmäärä Todistusta Kohden</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Huomautus: Helvetica, Times New Roman ja Courier tukevat vain latinalaisia merkkejä. Jos lehtesi käyttää ei-latinalaisia merkkejä, laajennus käyttää automaattisesti DejaVu Sans -fonttia.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Omat todistukset</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Alla on luettelo kaikista arvioijatodistuksistasi tässä lehdessä.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Myöntämispäivä</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Käsikirjoituksen otsikko</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Todistuksen koodi</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Toiminnot</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Sinulla ei ole vielä todistuksia. Todistukset luodaan arvioinnin suorittamisen jälkeen.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Näytä kaikki todistukseni</message>
 </locale>

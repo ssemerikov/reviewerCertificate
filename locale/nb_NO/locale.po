@@ -156,6 +156,9 @@ msgstr "Ugyldig bildetype. Vennligst last opp en JPG- eller PNG-fil."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Filopplasting mislyktes. Vennligst prøv igjen."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Merk: Helvetica, Times New Roman og Courier støtter kun latinske tegn. Hvis tidsskriftet bruker ikke-latinske tegn, vil tillegget automatisk bruke DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Denne vurderingen er ikke fullført ennå. Sertifikater er kun tilgjengelige for fullførte vurderinger."
@@ -276,4 +279,28 @@ msgstr "Gjennomsnittlige Nedlastinger per Sertifikat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Sertifikatinnstillinger"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Mine sertifikater"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Nedenfor finner du en liste over alle dine fagfelle-sertifikater for dette tidsskriftet."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Utstedelsesdato"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Innsendingens tittel"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Sertifikatkode"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Handlinger"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Du har ingen sertifikater ennå. Sertifikater genereres etter at du har fullført en vurdering."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Vis alle mine sertifikater"
 

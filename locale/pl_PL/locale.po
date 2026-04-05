@@ -156,6 +156,9 @@ msgstr "Nieprawidłowy typ obrazu. Proszę przesłać plik JPG lub PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Przesyłanie pliku nie powiodło się. Proszę spróbować ponownie."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Uwaga: Helvetica, Times New Roman i Courier obsługują tylko znaki łacińskie. Jeśli Twoje czasopismo używa znaków cyrylicy, arabskich, chińskich lub innych nielacińskich, wtyczka automatycznie użyje czcionki DejaVu Sans dla tych elementów tekstowych."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Ta recenzja nie została jeszcze ukończona. Certyfikaty są dostępne tylko dla ukończonych recenzji."
@@ -276,4 +279,28 @@ msgstr "Średnia Liczba Pobrań na Certyfikat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Ustawienia Certyfikatów"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Moje certyfikaty"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Poniżej znajduje się lista wszystkich Twoich certyfikatów recenzenta dla tego czasopisma."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Data wydania"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Tytuł zgłoszenia"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Kod certyfikatu"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Akcje"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Nie masz jeszcze żadnych certyfikatów. Certyfikaty są generowane po zakończeniu recenzji."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Zobacz wszystkie moje certyfikaty"
 

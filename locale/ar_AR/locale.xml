@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">إجمالي الشهادات الصادرة</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">إجمالي التنزيلات</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">متوسط التنزيلات لكل شهادة</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">ملاحظة: خطوط Helvetica وTimes New Roman وCourier تدعم الأحرف اللاتينية فقط. إذا كانت مجلتك تستخدم أحرفًا سيريلية أو عربية أو صينية أو أحرفًا غير لاتينية أخرى، فسيستخدم الملحق تلقائيًا خط DejaVu Sans لعناصر النص تلك.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">شهاداتي</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">فيما يلي قائمة بجميع شهادات المراجعة الخاصة بك لهذه المجلة.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">تاريخ الإصدار</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">عنوان المقال</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">رمز الشهادة</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">إجراءات</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">ليس لديك أي شهادات بعد. يتم إنشاء الشهادات بعد إتمام المراجعة.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">عرض جميع شهاداتي</message>
 </locale>

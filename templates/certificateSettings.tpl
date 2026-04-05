@@ -184,6 +184,9 @@
 		{* Font Family *}
 		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.fontFamily"}
 			{fbvElement type="select" id="fontFamily" from=$fontOptions selected=$fontFamily translate=false defaultValue="helvetica"}
+			<p class="description" style="color: #996600; margin-top: 5px;">
+				{translate key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"}
+			</p>
 		{/fbvFormSection}
 
 		{* Font Size *}

@@ -156,6 +156,9 @@ msgstr "نوع الصورة غير صالح. يرجى رفع ملف JPG أو PNG
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "فشل رفع الملف. يرجى المحاولة مرة أخرى."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "ملاحظة: خطوط Helvetica وTimes New Roman وCourier تدعم الأحرف اللاتينية فقط. إذا كانت مجلتك تستخدم أحرفًا سيريلية أو عربية أو صينية أو أحرفًا غير لاتينية أخرى، فسيستخدم الملحق تلقائيًا خط DejaVu Sans لعناصر النص تلك."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "لم يكتمل هذا التحكيم بعد. الشهادات متاحة فقط للتحكيمات المكتملة."
@@ -276,4 +279,28 @@ msgstr "متوسط التنزيلات لكل شهادة"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "إعدادات الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "شهاداتي"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "فيما يلي قائمة بجميع شهادات المراجعة الخاصة بك لهذه المجلة."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "تاريخ الإصدار"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "عنوان المقال"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "رمز الشهادة"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "إجراءات"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "ليس لديك أي شهادات بعد. يتم إنشاء الشهادات بعد إتمام المراجعة."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "عرض جميع شهاداتي"
 

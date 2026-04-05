@@ -129,4 +129,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Total Sertifikat yang Diterbitkan</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Total Unduhan</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Rata-rata Unduhan per Sertifikat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Catatan: Helvetica, Times New Roman, dan Courier hanya mendukung karakter Latin. Jika jurnal Anda menggunakan karakter non-Latin, plugin akan secara otomatis menggunakan font DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Sertifikat Saya</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Berikut adalah daftar semua sertifikat reviewer Anda untuk jurnal ini.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Tanggal Diterbitkan</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Judul Naskah</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Kode Sertifikat</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Tindakan</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Anda belum memiliki sertifikat. Sertifikat dibuat setelah Anda menyelesaikan review.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Lihat Semua Sertifikat Saya</message>
 </locale>

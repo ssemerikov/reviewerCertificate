@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Összes Kiállított Tanúsítvány</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Összes Letöltés</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Átlagos Letöltés Tanúsítványonként</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Megjegyzés: A Helvetica, Times New Roman és Courier betűtípusok csak latin karaktereket támogatnak. Ha folyóirata nem latin karaktereket használ, a bővítmény automatikusan a DejaVu Sans betűtípust használja.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Tanúsítványaim</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Az alábbiakban az összes bírálói tanúsítványa található ehhez a folyóirathoz.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Kiállítás dátuma</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Kézirat címe</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Tanúsítvány kódja</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Műveletek</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Még nincsenek tanúsítványai. A tanúsítványok a bírálat befejezése után jönnek létre.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Összes tanúsítványom megtekintése</message>
 </locale>

@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Συνολικά Εκδοθέντα Πιστοποιητικά</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Συνολικές Λήψεις</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Μέσος Όρος Λήψεων ανά Πιστοποιητικό</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Σημείωση: Οι γραμματοσειρές Helvetica, Times New Roman και Courier υποστηρίζουν μόνο λατινικούς χαρακτήρες. Εάν το περιοδικό σας χρησιμοποιεί μη λατινικούς χαρακτήρες, το πρόσθετο θα χρησιμοποιήσει αυτόματα τη γραμματοσειρά DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Τα πιστοποιητικά μου</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Παρακάτω βρίσκεται η λίστα όλων των πιστοποιητικών αξιολόγησής σας για αυτό το περιοδικό.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Ημερομηνία έκδοσης</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Τίτλος υποβολής</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Κωδικός πιστοποιητικού</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Ενέργειες</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Δεν έχετε ακόμα πιστοποιητικά. Τα πιστοποιητικά δημιουργούνται μετά την ολοκλήρωση μιας αξιολόγησης.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Προβολή όλων των πιστοποιητικών μου</message>
 </locale>

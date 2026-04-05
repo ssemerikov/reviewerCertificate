@@ -38,7 +38,7 @@
 					<form method="get" action="{url page="certificate" op="verify"}">
 						<div class="form-group">
 							<label for="code">{translate key="plugins.generic.reviewerCertificate.verify.code"}</label>
-							<input type="text" id="code" name="code" class="form-control" required maxlength="16" pattern="[A-Fa-f0-9]{16}" />
+							<input type="text" id="code" name="code" class="form-control" required maxlength="32" pattern="[A-Fa-f0-9]{ldelim}8,32{rdelim}" />
 						</div>
 						<button type="submit" class="btn btn-primary">
 							{translate key="plugins.generic.reviewerCertificate.verify.button"}

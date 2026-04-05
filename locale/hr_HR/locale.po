@@ -156,6 +156,9 @@ msgstr "Nevažeća vrsta slike. Molimo prenesite JPG ili PNG datoteku."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Prijenos datoteke nije uspio. Molimo pokušajte ponovno."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Napomena: Helvetica, Times New Roman i Courier podržavaju samo latinične znakove. Ako vaš časopis koristi nelatinične znakove, dodatak će automatski koristiti font DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Ova recenzija još nije završena. Certifikati su dostupni samo za završene recenzije."
@@ -276,4 +279,28 @@ msgstr "Prosječan Broj Preuzimanja po Certifikatu"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Postavke Certifikata"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Moji certifikati"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "U nastavku je popis svih vaših recenzentskih certifikata za ovaj časopis."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Datum izdavanja"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Naslov rada"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Kôd certifikata"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Radnje"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Još nemate certifikate. Certifikati se generiraju nakon dovršetka recenzije."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Pogledajte sve moje certifikate"
 

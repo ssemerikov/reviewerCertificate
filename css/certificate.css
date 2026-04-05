@@ -248,6 +248,11 @@
         padding: 20px;
         margin: 10px;
     }
+
+    .certificate-list-table th:nth-child(3),
+    .certificate-list-table td:nth-child(3) {
+        display: none;
+    }
 }
 
 /* Print Styles */
@@ -300,6 +305,60 @@
 .certificate-success-message .fa {
     margin-right: 8px;
     color: #28a745;
+}
+
+/* My Certificates Table */
+.certificate-list-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.certificate-list-table th,
+.certificate-list-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.certificate-list-table th {
+    background: #f5f5f5;
+    font-weight: 600;
+    color: #333;
+}
+
+.certificate-list-table tr:hover {
+    background: #f9f9f9;
+}
+
+.certificate-list-table code {
+    font-family: 'Courier New', monospace;
+    font-size: 0.85em;
+    background: #f0f0f0;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.certificate-download-btn {
+    display: inline-block;
+    padding: 6px 12px;
+    background: #0066cc;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 3px;
+    font-size: 0.9em;
+}
+
+.certificate-download-btn:hover {
+    background: #004d99;
+}
+
+.no-certificates {
+    padding: 30px;
+    text-align: center;
+    color: #666;
+    background: #f9f9f9;
+    border-radius: 5px;
 }
 
 /* Loading spinner */

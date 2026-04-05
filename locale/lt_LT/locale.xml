@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Iš Viso Išduotų Sertifikatų</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Iš Viso Atsisiuntimų</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Vidutinis Atsisiuntimų Skaičius Sertifikatui</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Pastaba: Helvetica, Times New Roman ir Courier šriftai palaiko tik lotyniškus simbolius. Jei jūsų žurnalas naudoja nelotyniškus simbolius, įskiepis automatiškai naudos DejaVu Sans šriftą.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Mano sertifikatai</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Žemiau pateiktas visų jūsų recenzento sertifikatų šiam žurnalui sąrašas.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Išdavimo data</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Straipsnio pavadinimas</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Sertifikato kodas</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Veiksmai</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Dar neturite sertifikatų. Sertifikatai generuojami atlikus recenziją.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Peržiūrėti visus mano sertifikatus</message>
 </locale>

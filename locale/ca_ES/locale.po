@@ -156,6 +156,9 @@ msgstr "Tipus d'imatge no vàlid. Si us plau, carregueu un fitxer JPG o PNG."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "La càrrega del fitxer ha fallat. Si us plau, torneu-ho a provar."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Nota: Helvetica, Times New Roman i Courier només admeten caràcters llatins. Si la vostra revista utilitza caràcters no llatins, el connector utilitzarà automàticament DejaVu Sans."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Aquesta revisió encara no s'ha completat. Els certificats només estan disponibles per a revisions completades."
@@ -276,4 +279,28 @@ msgstr "Mitjana de Descàrregues per Certificat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Configuració de Certificats"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Els meus certificats"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "A continuació es mostra una llista de tots els vostres certificats de revisió per a aquesta revista."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Data d'emissió"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Títol de la tramesa"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Codi del certificat"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Accions"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Encara no teniu cap certificat. Els certificats es generen després de completar una revisió."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Veure tots els meus certificats"
 

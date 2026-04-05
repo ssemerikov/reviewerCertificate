@@ -130,4 +130,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Totalt Utstedte Sertifikater</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Totale Nedlastinger</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Gjennomsnittlige Nedlastinger per Sertifikat</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Merk: Helvetica, Times New Roman og Courier støtter kun latinske tegn. Hvis tidsskriftet bruker ikke-latinske tegn, vil tillegget automatisk bruke DejaVu Sans.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Mine sertifikater</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Nedenfor finner du en liste over alle dine fagfelle-sertifikater for dette tidsskriftet.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Utstedelsesdato</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Innsendingens tittel</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Sertifikatkode</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Handlinger</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Du har ingen sertifikater ennå. Sertifikater genereres etter at du har fullført en vurdering.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Vis alle mine sertifikater</message>
 </locale>

@@ -128,4 +128,17 @@
 	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">発行済み証明書総数</message>
 	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">総ダウンロード数</message>
 	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">証明書あたりの平均ダウンロード数</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">注意：Helvetica、Times New Roman、Courierはラテン文字のみをサポートしています。ジャーナルがキリル文字、アラビア文字、中国語、またはその他の非ラテン文字を使用している場合、プラグインはそれらのテキスト要素に自動的にDejaVu Sansを使用します。</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">マイ証明書</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">以下は、この雑誌のすべての査読証明書の一覧です。</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">発行日</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">投稿タイトル</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">証明書コード</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">アクション</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">まだ証明書がありません。証明書は査読完了後に生成されます。</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">すべての証明書を表示</message>
 </locale>

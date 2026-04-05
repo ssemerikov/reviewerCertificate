@@ -156,6 +156,9 @@ msgstr "Ungültiger Bildtyp. Bitte laden Sie eine JPG- oder PNG-Datei hoch."
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
 msgstr "Datei-Upload fehlgeschlagen. Bitte versuchen Sie es erneut."
 
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Hinweis: Helvetica, Times New Roman und Courier unterstützen nur lateinische Zeichen. Wenn Ihre Zeitschrift kyrillische, arabische, chinesische oder andere nicht-lateinische Zeichen verwendet, wird das Plugin automatisch DejaVu Sans für diese Textelemente verwenden."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Diese Begutachtung wurde noch nicht abgeschlossen. Zertifikate sind nur für abgeschlossene Begutachtungen verfügbar."
@@ -276,4 +279,28 @@ msgstr "Durchschnittliche Downloads pro Zertifikat"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Zertifikat-Einstellungen"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Meine Zertifikate"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Nachfolgend finden Sie eine Liste aller Ihrer Gutachterzertifikate für diese Zeitschrift."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Ausstellungsdatum"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Titel der Einreichung"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Zertifikatscode"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Aktionen"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Sie haben noch keine Zertifikate. Zertifikate werden nach Abschluss einer Begutachtung erstellt."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Alle meine Zertifikate anzeigen"
 
