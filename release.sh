@@ -36,7 +36,7 @@ for OJS_VERSION in 3.3 3.4 3.5; do
 
   # Copy plugin source files
   cp -r ReviewerCertificatePlugin.php version.xml index.php "$DEST/"
-  cp -r classes/ controllers/ locale/ templates/ "$DEST/"
+  cp -r classes/ controllers/ locale/ templates/ css/ js/ "$DEST/"
 
   # Copy email templates (required for installEmailTemplates)
   [ -f emailTemplates.xml ] && cp emailTemplates.xml "$DEST/"

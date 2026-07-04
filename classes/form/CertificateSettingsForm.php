@@ -84,6 +84,12 @@ class CertificateSettingsForm extends Form {
             $this->setData('includeQRCode', $this->plugin->getSetting($this->contextId, 'includeQRCode') ?? false);
             $this->setData('pageOrientation', $this->plugin->getSetting($this->contextId, 'pageOrientation') ?? 'P');
             $this->setData('backgroundImage', $this->plugin->getSetting($this->contextId, 'backgroundImage') ?? '');
+            // Acknowledgement email templates — show localized defaults so
+            // editors see and can adjust the actual letter text
+            $this->setData('ackEmailSubject', $this->plugin->getSetting($this->contextId, 'ackEmailSubject')
+                ?: __('plugins.generic.reviewerCertificate.emailCertificate.defaultSubject'));
+            $this->setData('ackEmailBody', $this->plugin->getSetting($this->contextId, 'ackEmailBody')
+                ?: __('plugins.generic.reviewerCertificate.emailCertificate.defaultBody'));
         } catch (Exception $e) {
             error_log('ReviewerCertificate: Error initializing form data: ' . $e->getMessage());
             // Set default values on error
@@ -117,7 +123,9 @@ class CertificateSettingsForm extends Form {
             'textColorB',
             'minimumReviews',
             'includeQRCode',
-            'pageOrientation'
+            'pageOrientation',
+            'ackEmailSubject',
+            'ackEmailBody'
         ));
 
         // Preserve existing background image if no new upload
@@ -171,16 +179,17 @@ class CertificateSettingsForm extends Form {
         // Derive extension from detected MIME type, not from user filename
         $extension = $mimeToExt[$detectedMime];
 
-        // Create upload directory if it doesn't exist - OJS 3.3 compatibility
-        if (class_exists('PKP\core\Core')) {
-            $baseDir = Core::getBaseDir();
-        } else {
-            $baseDir = \Core::getBaseDir();
-        }
-        $uploadDir = $baseDir . '/files/journals/' . $context->getId() . '/reviewerCertificate';
+        // Upload under the configured files_dir, not a hardcoded {base}/files
+        // (Issues #69/#71 — files_dir usually lives outside the web root)
+        require_once(dirname(__FILE__, 2) . '/CertificateGenerator.php');
+        $uploadDir = \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::getBackgroundUploadDir($context->getId());
 
         if (!file_exists($uploadDir)) {
-            mkdir($uploadDir, 0755, true);
+            if (!@mkdir($uploadDir, 0755, true)) {
+                error_log('ReviewerCertificate: Could not create upload directory ' . $uploadDir);
+                $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.uploadFailed'));
+                return;
+            }
         }
 
         // Generate unique filename using safe extension
@@ -370,6 +379,10 @@ class CertificateSettingsForm extends Form {
             // Always save background image setting (preserves existing or saves new upload)
             $backgroundImage = $this->getData('backgroundImage');
             $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage ? $backgroundImage : '', 'string');
+
+            // Acknowledgement email templates
+            $this->plugin->updateSetting($this->contextId, 'ackEmailSubject', (string) $this->getData('ackEmailSubject'), 'string');
+            $this->plugin->updateSetting($this->contextId, 'ackEmailBody', (string) $this->getData('ackEmailBody'), 'string');
         } catch (\Exception $e) {
             // Log error but don't fail - settings may already exist from previous install
             error_log('ReviewerCertificate: Error saving settings (may be duplicate key on reinstall): ' . $e->getMessage());

@@ -1,17 +1,18 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.7.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.8.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.7.0)**: 
-- **New**: "My Certificates" page for reviewers to browse all their issued certificates
-- **Fixed**: Cyrillic/Unicode PDF rendering (no more "??????" garbled text)
-- **Fixed**: QR code verification now works with older 12-character codes
-- **Fixed**: Correct dates shown on My Certificates and verification pages
-- All 87 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.8.0)**:
+- **New**: "Email me the certificate" — reviewers can email themselves the journal's acknowledgement letter with the certificate PDF attached (letter template editable per journal, ready to forward to Web of Science)
+- **Fixed**: Background images now work when `files_dir` is outside the OJS directory (#69, #71)
+- **Fixed**: Non-English UI no longer shows raw `##key##` strings on OJS 3.4+/3.5 (#72)
+- **Fixed**: No more "Cannot redeclare class" cron warnings on OJS 3.4 git installs (#71)
+- **Fixed**: Release packages now include the plugin CSS/JS
+- All 177 PHP + 96 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -43,7 +44,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 32 languages with complete coverage (95 message keys each)
+  - 32 languages with complete coverage (103 message keys each)
   - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
   - Dual format support: `.xml` (OJS 3.3/3.4) and `.po` (OJS 3.5) locale files
   - Automatic language detection from OJS settings
@@ -77,6 +78,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
    - Use `-3_3.tar.gz` for OJS 3.3.x
    - Use `-3_4.tar.gz` for OJS 3.4.x
    - Use `-3_5.tar.gz` for OJS 3.5.x
+   - ⚠️ Do **not** use the auto-generated "Source code" archives — they lack the bundled TCPDF library (git installs must run `composer install` instead)
 
 2. In OJS, go to **Settings → Website → Plugins**
 

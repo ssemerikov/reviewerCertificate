@@ -15,7 +15,7 @@ The `main` branch contains a single codebase compatible with all OJS versions. F
 
 ## Version
 
-Source of truth: `version.xml` (currently 1.7.0). The `release` field uses 4-part format `X.Y.Z.0`.
+Source of truth: `version.xml` (currently 1.8.0). The `release` field uses 4-part format `X.Y.Z.0`.
 
 ## Development Commands
 
@@ -74,7 +74,7 @@ ReviewerCertificatePlugin.php  (entry point — thin wrapper)
 - `ReviewerCertificatePlugin.php` — Entry point (thin wrapper, namespace `APP\plugins\generic\reviewerCertificate`)
 - `compat_autoloader.php` — Namespace compatibility layer (OJS 3.3 ↔ 3.4+)
 - `classes/ReviewerCertificatePluginCore.php` — Actual implementation. Hooks: `LoadHandler`, `TemplateManager::display`, `reviewassignmentdao::_updateobject`
-- `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `myCertificates()` (reviewer), `generateBatch()` (manager role)
+- `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `myCertificates()` (reviewer), `emailCertificate()` (reviewer, POST+CSRF only — emails the acknowledgement letter with the certificate PDF attached), `generateBatch()` (manager role)
 - `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`vendor/tecnickcom/tcpdf/`)
 - `templates/myCertificates.tpl` — "My Certificates" page listing all certificates for a reviewer
 
@@ -245,13 +245,18 @@ Test structure:
 - `tests/Locale/` — Translation validation (86 keys per language, not included in `composer test:all`)
 - `tests/e2e/` — Playwright E2E tests against Docker OJS instances (ports 8033/8034/8035)
 
+**Gotcha**: `tests/compatibility/` (lowercase) also exists with `ClassLoadingTest.php`, but it is NOT in any phpunit testsuite — the "Compatibility Tests" suite only runs `tests/Compatibility/` (capital C). It only runs when invoked directly: `vendor/bin/phpunit tests/compatibility/ClassLoadingTest.php`.
+
 ### E2E Tests
 
 E2E tests require Docker containers running OJS 3.3, 3.4, and 3.5 (see `ojs-test/docker-compose.yml`):
 
 ```bash
-# Start OJS test containers
+# Start OJS test containers (includes the Mailpit SMTP sink)
 docker compose -f ojs-test/docker-compose.yml up -d
+
+# One-time after (re)creating containers: point OJS at Mailpit
+./ojs-test/setup-smtp.sh
 
 # Run all E2E tests on all OJS versions
 npx playwright test --project=ojs33 --project=ojs34 --project=ojs35
@@ -259,6 +264,8 @@ npx playwright test --project=ojs33 --project=ojs34 --project=ojs35
 # Run a specific E2E test file
 npx playwright test plugin-page-smoke --project=ojs34
 ```
+
+Email delivery is asserted for real: `my-certificates-email.spec.ts` polls the Mailpit API (`http://localhost:8125/api/v1`) for the received message and its PDF attachment. All three OJS containers share one Mailpit, so that spec counts messages instead of clearing the mailbox.
 
 E2E test files:
 - `plugin-enable.spec.ts` — Plugin enable/disable and persistence
@@ -270,6 +277,7 @@ E2E test files:
 - `certificate-cyrillic.spec.ts` — Cyrillic/Unicode PDF rendering tests (English + Ukrainian locales)
 - `batch-generation.spec.ts` — Batch certificate generation for managers
 - `my-certificates.spec.ts` — "My Certificates" page functionality
+- `my-certificates-email.spec.ts` — Email-certificate action (delivery + PDF attachment asserted via Mailpit)
 - `locale-smoke.spec.ts` — Locale translation tests (English + Ukrainian, no `##key##` patterns)
 
 ## Release Process
@@ -279,8 +287,10 @@ The plugin uses a release script (`release.sh`) to build version-specific packag
 **Why a release script?**
 - No OJS version ships TCPDF natively
 - OJS ZIP upload has no `composer install` step
-- Release archives must include `vendor/tecnickcom/tcpdf/`
+- Release archives must include `vendor/tecnickcom/tcpdf/` plus the Composer autoloader (`vendor/autoload.php`, `vendor/composer/`)
 - `compat_autoloader.php` must be excluded from OJS 3.4/3.5 packages (causes Issue #68)
+
+The script runs `composer install --no-dev` first, so re-run `composer install` afterwards to restore phpunit. `exclusions.txt` in the repo root is legacy and referenced by nothing.
 
 **Building releases:**
 ```bash
@@ -308,7 +318,12 @@ php temp/convert_xml_to_po.php
 
 **Why both formats?** OJS 3.3.0-22's `LocaleFile::load()` reads `.po` files via Gettext, NOT `.xml`. If `.po` files are missing keys that exist in `.xml`, those translations will show as `##key##` at runtime. The `.xml` files remain the source of truth because they're easier to edit and some OJS admin tools reference them.
 
-Current key count: 95 per language (93 for `en/` which lacks 2 error keys). Total tests: 158 PHP + 87 E2E = 245 tests.
+**Locale directory naming (dual convention):** OJS 3.3 resolves locales by long codes (`uk_UA`, `de_DE`); OJS 3.4+/3.5 resolve by short codes (`uk`, `de`). Both forms ship as **real directories** (symlinks were dropped for Issue #72 — they get lost in git clones, GitHub source archives, and many deploy flows). The long-form directories are the source of truth:
+- Edit translations only in the long-form directory, then run `php temp/convert_xml_to_po.php` — it regenerates `.po` files AND copies both files into the short-form directory.
+- The long→short mapping lives in `temp/convert_xml_to_po.php` and `tests/Locale/LocaleValidationTest.php` (`SHORT_LOCALE_MAP`); `testShortCodeLocaleDirsAreRealAndInSync` fails if the copies drift.
+- When adding a language, create the `xx_XX` directory, add the mapping entry in both files, and re-run the converter.
+
+Current key count: 103 per language (101 for `en/` which lacks 2 error keys). Total tests: 177 PHP + 96 E2E = 273 tests.
 
 Validate translations: `vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
 

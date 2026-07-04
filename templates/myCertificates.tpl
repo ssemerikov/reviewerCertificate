@@ -13,6 +13,17 @@
 		<h1>{translate key="plugins.generic.reviewerCertificate.myCertificates.title"}</h1>
 		<p>{translate key="plugins.generic.reviewerCertificate.myCertificates.description"}</p>
 
+		{if $certificateEmailSent}
+			<div class="certificate-email-banner certificate-email-banner-success" role="status">
+				{translate key="plugins.generic.reviewerCertificate.myCertificates.emailSent"}
+			</div>
+		{/if}
+		{if $certificateEmailError}
+			<div class="certificate-email-banner certificate-email-banner-error" role="alert">
+				{translate key="plugins.generic.reviewerCertificate.myCertificates.emailError"}
+			</div>
+		{/if}
+
 		{if $certificates|@count > 0}
 			<table class="certificate-list-table">
 				<thead>
@@ -33,6 +44,12 @@
 								<a href="{$cert.downloadUrl}" class="certificate-download-btn" target="_blank">
 									{translate key="plugins.generic.reviewerCertificate.downloadCertificate"}
 								</a>
+								<form class="certificate-email-form" method="post" action="{$cert.emailUrl}">
+									{csrf}
+									<button type="submit" class="certificate-email-btn">
+										{translate key="plugins.generic.reviewerCertificate.myCertificates.emailAction"}
+									</button>
+								</form>
 							</td>
 						</tr>
 					{/foreach}

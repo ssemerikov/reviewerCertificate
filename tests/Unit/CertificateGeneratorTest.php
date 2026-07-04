@@ -636,4 +636,228 @@ class CertificateGeneratorTest extends TestCase
                 "Font $configuredFont should be preserved for pure Latin text");
         }
     }
+
+    // ---- files_dir resolution and background path validation (Issues #69, #71) ----
+
+    private function makeFilesDirFixture(): string
+    {
+        $dir = sys_get_temp_dir() . '/rc_files_' . uniqid();
+        mkdir($dir . '/journals/1/reviewerCertificate', 0755, true);
+        return $dir;
+    }
+
+    private function removeDirRecursive($dir): void
+    {
+        if (!$dir || !is_dir($dir)) {
+            return;
+        }
+        $items = new \RecursiveIteratorIterator(
+            new \RecursiveDirectoryIterator($dir, \FilesystemIterator::SKIP_DOTS),
+            \RecursiveIteratorIterator::CHILD_FIRST
+        );
+        foreach ($items as $item) {
+            $item->isDir() ? rmdir($item->getPathname()) : unlink($item->getPathname());
+        }
+        rmdir($dir);
+    }
+
+    /**
+     * files_dir from config.inc.php must be used when set (Issue #69/#71:
+     * previously {ojs_base}/files was hardcoded).
+     */
+    public function testGetFilesDirUsesConfiguredFilesDir(): void
+    {
+        \Config::setMockVar('files', 'files_dir', '/custom/ojs-files');
+        try {
+            $this->assertEquals('/custom/ojs-files', CertificateGenerator::getFilesDir());
+        } finally {
+            \Config::clearMockVars();
+        }
+    }
+
+    /**
+     * Without a configured files_dir, fall back to the legacy {base}/files.
+     */
+    public function testGetFilesDirFallsBackToBaseFiles(): void
+    {
+        \Config::clearMockVars();
+        $this->assertEquals(BASE_SYS_DIR . '/files', CertificateGenerator::getFilesDir());
+    }
+
+    /**
+     * OJS's config template ships files_dir as a relative path ("files");
+     * it must be anchored to the OJS base dir, not the process cwd.
+     */
+    public function testGetFilesDirAnchorsRelativePathToBaseDir(): void
+    {
+        \Config::setMockVar('files', 'files_dir', 'my/files');
+        try {
+            $this->assertEquals(BASE_SYS_DIR . '/my/files', CertificateGenerator::getFilesDir());
+        } finally {
+            \Config::clearMockVars();
+        }
+    }
+
+    /**
+     * Upload destination must live under the configured files_dir.
+     */
+    public function testBackgroundUploadDirComputedFromFilesDir(): void
+    {
+        \Config::setMockVar('files', 'files_dir', '/custom/ojs-files');
+        try {
+            $this->assertEquals(
+                '/custom/ojs-files/journals/7/reviewerCertificate',
+                CertificateGenerator::getBackgroundUploadDir(7)
+            );
+        } finally {
+            \Config::clearMockVars();
+        }
+    }
+
+    /**
+     * A background image stored under the configured files_dir must pass
+     * validation (Issue #69: it was rejected as "outside allowed directory").
+     */
+    public function testBackgroundPathInsideConfiguredFilesDirIsAllowed(): void
+    {
+        $filesDir = $this->makeFilesDirFixture();
+        $image = $filesDir . '/journals/1/reviewerCertificate/bg.png';
+        file_put_contents($image, 'png');
+
+        \Config::setMockVar('files', 'files_dir', $filesDir);
+        try {
+            $this->assertTrue(CertificateGenerator::isBackgroundPathAllowed($image));
+        } finally {
+            \Config::clearMockVars();
+            $this->removeDirRecursive($filesDir);
+        }
+    }
+
+    /**
+     * Paths outside files_dir (and outside legacy {base}/files) must be rejected.
+     */
+    public function testBackgroundPathOutsideFilesDirIsRejected(): void
+    {
+        $filesDir = $this->makeFilesDirFixture();
+        $outside = tempnam(sys_get_temp_dir(), 'rc_outside_');
+        file_put_contents($outside, 'png');
+
+        \Config::setMockVar('files', 'files_dir', $filesDir);
+        try {
+            $this->assertFalse(CertificateGenerator::isBackgroundPathAllowed($outside));
+            $this->assertFalse(CertificateGenerator::isBackgroundPathAllowed('/etc/passwd'));
+            $this->assertFalse(CertificateGenerator::isBackgroundPathAllowed(''));
+        } finally {
+            \Config::clearMockVars();
+            unlink($outside);
+            $this->removeDirRecursive($filesDir);
+        }
+    }
+
+    /**
+     * A sibling directory sharing the allowed dir's name as a prefix
+     * (e.g. journalsevil next to journals) must NOT pass the check.
+     */
+    public function testBackgroundPathSiblingPrefixDirIsRejected(): void
+    {
+        $filesDir = $this->makeFilesDirFixture();
+        mkdir($filesDir . '/journalsevil', 0755, true);
+        $evil = $filesDir . '/journalsevil/bg.png';
+        file_put_contents($evil, 'png');
+
+        \Config::setMockVar('files', 'files_dir', $filesDir);
+        try {
+            $this->assertFalse(CertificateGenerator::isBackgroundPathAllowed($evil));
+        } finally {
+            \Config::clearMockVars();
+            $this->removeDirRecursive($filesDir);
+        }
+    }
+
+    // ---- email letter rendering (Email Certificate feature) ----
+
+    /**
+     * renderText() must expose the PDF template variable engine for the
+     * acknowledgement email subject/body.
+     */
+    public function testRenderTextSubstitutesTemplateVariables(): void
+    {
+        $generator = new CertificateGenerator();
+        $generator->setPreviewMode(true);
+        $generator->setContext($this->createMockContext(1, 'Test Journal', 'TJ'));
+
+        $out = $generator->renderText(
+            'Dear {{$reviewerName}}, thank you for reviewing "{{$submissionTitle}}" for {{$journalName}} ({{$journalAcronym}}).'
+        );
+
+        $this->assertStringContainsString('Dr. Jane Smith', $out);
+        $this->assertStringContainsString('Test Journal', $out);
+        $this->assertStringContainsString('(TJ)', $out);
+        $this->assertStringNotContainsString('{{$', $out, 'All placeholders must be substituted');
+    }
+
+    /**
+     * The acknowledgement letter signature needs the journal's principal
+     * contact as {{$editorName}}.
+     */
+    public function testEditorNameVariableFromContextContact(): void
+    {
+        $context = new class {
+            public function getId() { return 1; }
+            public function getLocalizedName() { return 'Test Journal'; }
+            public function getName() { return 'Test Journal'; }
+            public function getAcronym() { return 'TJ'; }
+            public function getData($key) {
+                return $key === 'contactName' ? 'Prof. Chief Editor' : null;
+            }
+        };
+
+        $generator = new CertificateGenerator();
+        $generator->setPreviewMode(true);
+        $generator->setContext($context);
+
+        $out = $generator->renderText('Best regards, {{$editorName}}');
+        $this->assertStringContainsString('Prof. Chief Editor', $out);
+    }
+
+    /**
+     * A context without contact data must not leave the raw placeholder in
+     * the letter.
+     */
+    public function testEditorNamePlaceholderNeverLeaks(): void
+    {
+        $generator = new CertificateGenerator();
+        $generator->setPreviewMode(true);
+        $generator->setContext($this->createMockContext(1, 'Test Journal', 'TJ'));
+
+        $out = $generator->renderText('Best regards, {{$editorName}}');
+        $this->assertStringNotContainsString('{{$editorName}}', $out);
+    }
+
+    /**
+     * Images uploaded by older plugin versions to the legacy hardcoded
+     * {base}/files/journals location must keep working after the fix.
+     */
+    public function testLegacyBaseFilesJournalsPathStillAllowed(): void
+    {
+        $legacyDir = BASE_SYS_DIR . '/files/journals/1/reviewerCertificate';
+        $preexisting = is_dir(BASE_SYS_DIR . '/files');
+        if (!is_dir($legacyDir)) {
+            mkdir($legacyDir, 0755, true);
+        }
+        $image = $legacyDir . '/bg.png';
+        file_put_contents($image, 'png');
+
+        \Config::setMockVar('files', 'files_dir', sys_get_temp_dir() . '/rc_elsewhere');
+        try {
+            $this->assertTrue(CertificateGenerator::isBackgroundPathAllowed($image));
+        } finally {
+            \Config::clearMockVars();
+            if (!$preexisting) {
+                $this->removeDirRecursive(BASE_SYS_DIR . '/files');
+            } else {
+                unlink($image);
+            }
+        }
+    }
 }

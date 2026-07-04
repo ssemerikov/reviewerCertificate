@@ -27,6 +27,6 @@
   },
   "homepage": "https://github.com/ssemerikov/reviewerCertificate#readme",
   "devDependencies": {
-    "@playwright/test": "^1.58.2"
+    "@playwright/test": "^1.60.0"
   }
 }

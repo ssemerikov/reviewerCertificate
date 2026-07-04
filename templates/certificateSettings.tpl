@@ -238,6 +238,19 @@
 
 	{/fbvFormArea}
 
+	{fbvFormArea id="certificateAckEmail" title="plugins.generic.reviewerCertificate.settings.ackEmailBody"}
+
+		{* Acknowledgement email sent from the My Certificates page *}
+		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.ackEmailSubject" description="plugins.generic.reviewerCertificate.settings.ackEmailDescription"}
+			{fbvElement type="text" id="ackEmailSubject" value=$ackEmailSubject maxlength="255" size=$fbvStyles.size.LARGE}
+		{/fbvFormSection}
+
+		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.ackEmailBody"}
+			{fbvElement type="textarea" id="ackEmailBody" value=$ackEmailBody height=$fbvStyles.height.TALL rich=false}
+		{/fbvFormSection}
+
+	{/fbvFormArea}
+
 	{fbvFormButtons}
 	<p>
 		<a href="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="preview"}" target="_blank" class="pkp_button">
@@ -278,7 +291,7 @@
 			<select id="batchReviewers" name="reviewerIds[]" multiple size="10" style="width: 100%; padding: 10px;">
 				{if $eligibleReviewers}
 					{foreach from=$eligibleReviewers item=reviewer}
-						<option value="{$reviewer.id}">{$reviewer.name} ({$reviewer.completedReviews} {translate key="plugins.generic.reviewerCertificate.batch.completedReviews"})</option>
+						<option value="{$reviewer.id|escape}">{$reviewer.name|escape} ({$reviewer.completedReviews|escape} {translate key="plugins.generic.reviewerCertificate.batch.completedReviews"})</option>
 					{/foreach}
 				{else}
 					<option disabled>{translate key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers"}</option>

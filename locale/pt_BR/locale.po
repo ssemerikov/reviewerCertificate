@@ -304,3 +304,27 @@ msgstr "Você ainda não tem certificados. Os certificados são gerados após a 
 msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
 msgstr "Ver todos os meus certificados"
 
+msgid "plugins.generic.reviewerCertificate.myCertificates.emailAction"
+msgstr "Enviar o certificado para meu e-mail"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.emailSent"
+msgstr "O certificado foi enviado para o seu endereço de e-mail."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.emailError"
+msgstr "Não foi possível enviar o e-mail. Tente novamente mais tarde ou entre em contato com a revista."
+
+msgid "plugins.generic.reviewerCertificate.settings.ackEmailSubject"
+msgstr "Assunto do e-mail de agradecimento"
+
+msgid "plugins.generic.reviewerCertificate.settings.ackEmailBody"
+msgstr "Corpo do e-mail de agradecimento"
+
+msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
+msgstr "Carta enviada ao avaliador a partir da página \"Meus certificados\", com o certificado em PDF anexado. Aceita as mesmas variáveis de modelo do texto do certificado, além de {{$editorName}}."
+
+msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
+msgstr "Acknowledgement of your review for {{$journalName}}"
+
+msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultBody"
+msgstr "Dear {{$reviewerName}},\n\nWe are immensely grateful for your efforts and time devoted to reviewing the manuscript entitled \"{{$submissionTitle}}\" submitted to {{$journalName}}. Your meticulous and insightful evaluation has provided valuable feedback that has helped the authors improve their work and advance their research endeavors.\n\nYour contribution to maintaining the quality of the articles published in our journal is highly appreciated. We understand that reviewing manuscripts is a demanding task, and we acknowledge the effort you put into thoroughly analyzing the submission and providing constructive criticism to the authors.\n\nTo show our appreciation for your hard work, we would like to kindly ask you to forward this letter to reviews@webofscience.com. Please note that in accordance with our editorial policy, the content of the review will remain confidential and will not be displayed on Web of Science.\n\nYour reviewer certificate is attached to this letter.\n\nOnce again, we extend our gratitude for your commitment to the advancement of research in your field. We hope to continue collaborating with you in the future.\n\nBest regards,\n\n{{$editorName}}\n{{$journalName}}"
+

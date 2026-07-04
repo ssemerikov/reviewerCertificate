@@ -4,7 +4,12 @@
 
 The easiest way to install the plugin - no command line needed!
 
-1. **Download** `reviewerCertificate.tar.gz` from [GitHub Releases](https://github.com/ssemerikov/reviewerCertificate/releases)
+1. **Download** the package matching your OJS version from [GitHub Releases](https://github.com/ssemerikov/reviewerCertificate/releases):
+   - `reviewerCertificate-{VERSION}-3_3.tar.gz` for OJS 3.3.x
+   - `reviewerCertificate-{VERSION}-3_4.tar.gz` for OJS 3.4.x
+   - `reviewerCertificate-{VERSION}-3_5.tar.gz` for OJS 3.5.x
+
+   > ⚠️ **Do NOT download the auto-generated "Source code (zip/tar.gz)" archives** on the release page. They do not contain the bundled TCPDF library (certificate generation will fail with "TCPDF library not found") and they include development files not meant for production installs. Always use one of the three `reviewerCertificate-...-3_X.tar.gz` assets listed above.
 
 2. **Log in** to OJS as Administrator
 
@@ -12,7 +17,7 @@ The easiest way to install the plugin - no command line needed!
 
 4. **Click** "Upload A New Plugin" button
 
-5. **Select** the downloaded `reviewerCertificate.tar.gz` file
+5. **Select** the downloaded `reviewerCertificate-{VERSION}-3_X.tar.gz` file
 
 6. **Click** "Save" to upload and install
 
@@ -35,6 +40,8 @@ For developers or if the tar.gz method doesn't work:
    cd reviewerCertificate
    composer install
    ```
+
+   > ⚠️ `composer install` is **required** for git installs — the repository does not include the TCPDF library that the release packages bundle. Without it, certificate generation fails with "TCPDF library not found".
 
 2. **Set permissions:**
    ```bash

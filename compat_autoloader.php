@@ -17,9 +17,16 @@
 
 // OJS 3.3 Compatibility Autoloader
 // Intercepts class resolution and creates aliases for OJS 3.3
+//
+// Issue #71: this file is only packaged for OJS 3.3, but git/source installs
+// ship it on every OJS version. On OJS 3.4+ the namespaced classes exist
+// natively, so registering this autoloader is at best useless and at worst
+// causes "Cannot redeclare class" warnings (e.g. under the scheduled-tasks
+// CLI). Detect native namespaced OJS and do nothing.
 if (!defined('REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER')) {
     define('REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER', true);
 
+    if (!class_exists('PKP\plugins\Hook')) {
     spl_autoload_register(function ($class) {
         // Map OJS 3.4+ namespaced classes to OJS 3.3 global classes
         static $classMap = [
@@ -59,6 +66,12 @@ if (!defined('REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER')) {
                 import($importPath);
             }
 
+            // On hybrid installs import() may have loaded the namespaced class
+            // itself — aliasing over it would warn "Cannot redeclare class"
+            if (class_exists($class, false)) {
+                return true;
+            }
+
             // Create alias if global class exists
             if (class_exists($globalClass, false)) {
                 class_alias($globalClass, $class);
@@ -70,4 +83,5 @@ if (!defined('REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER')) {
         }
         return false;
     }, true, true); // prepend=true to run before other autoloaders
+    }
 }

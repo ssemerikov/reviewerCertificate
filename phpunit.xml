@@ -27,13 +27,9 @@
             <directory suffix=".php">classes</directory>
             <directory suffix=".php">controllers</directory>
         </include>
-        <exclude>
-            <directory>./vendor</directory>
-            <directory>./tests</directory>
-            <directory>./lib</directory>
-            <directory>./ojs-test</directory>
-            <file>./index.php</file>
-        </exclude>
+        <!-- No <exclude> needed: <include> already limits coverage to classes/ and
+             controllers/. Excluding ./ojs-test made PHPUnit iterate root-owned Docker
+             volume dirs at startup and crash with Permission denied. -->
         <report>
             <html outputDirectory="tests/coverage/html"/>
             <text outputFile="tests/coverage/coverage.txt"/>

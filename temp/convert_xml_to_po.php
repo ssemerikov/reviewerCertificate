@@ -118,6 +118,53 @@ foreach ($dirs as $xmlPath) {
 
 echo "\nConverted $count locale files.\n";
 
+// ---------------------------------------------------------------------------
+// Sync short-code locale directories (Issue #72).
+// OJS 3.3 resolves long codes (uk_UA); OJS 3.4+/3.5 resolve short codes (uk).
+// The long-form directories are the source of truth; the short-form ones are
+// materialized as REAL directories here — symlinks get dropped by git clones,
+// GitHub source archives, and many deploy flows.
+// en_US→en already ships as a real directory; pt_BR keeps its code in 3.4+.
+// ---------------------------------------------------------------------------
+$shortLocaleMap = [
+    'ar_AR' => 'ar', 'bg_BG' => 'bg', 'ca_ES' => 'ca', 'cs_CZ' => 'cs',
+    'de_DE' => 'de', 'el_GR' => 'el', 'es_ES' => 'es', 'fa_IR' => 'fa',
+    'fi_FI' => 'fi', 'fr_FR' => 'fr', 'he_IL' => 'he', 'hr_HR' => 'hr',
+    'hu_HU' => 'hu', 'id_ID' => 'id', 'it_IT' => 'it', 'ja_JP' => 'ja',
+    'ko_KR' => 'ko', 'lt_LT' => 'lt', 'nb_NO' => 'nb', 'nl_NL' => 'nl',
+    'pl_PL' => 'pl', 'ro_RO' => 'ro', 'ru_RU' => 'ru', 'sk_SK' => 'sk',
+    'sl_SI' => 'sl', 'sv_SE' => 'sv', 'tr_TR' => 'tr', 'uk_UA' => 'uk',
+    'zh_CN' => 'zh_Hans',
+];
+
+$synced = 0;
+foreach ($shortLocaleMap as $long => $short) {
+    $longDir = $localeDir . '/' . $long;
+    $shortDir = $localeDir . '/' . $short;
+
+    if (!is_dir($longDir)) {
+        echo "WARNING: source locale dir missing: $long\n";
+        continue;
+    }
+
+    // Replace a legacy symlink with a real directory
+    if (is_link($shortDir)) {
+        unlink($shortDir);
+    }
+    if (!is_dir($shortDir)) {
+        mkdir($shortDir, 0755, true);
+    }
+
+    foreach (['locale.xml', 'locale.po'] as $file) {
+        if (file_exists($longDir . '/' . $file)) {
+            copy($longDir . '/' . $file, $shortDir . '/' . $file);
+        }
+    }
+    $synced++;
+}
+
+echo "Synced $synced short-code locale directories.\n";
+
 function escapePoString($str) {
     $str = str_replace('\\', '\\\\', $str);
     $str = str_replace('"', '\\"', $str);

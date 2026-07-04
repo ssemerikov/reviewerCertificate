@@ -179,21 +179,36 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 require_once($this->getPluginPath() . '/classes/form/CertificateSettingsForm.php');
                 $form = new \APP\plugins\generic\reviewerCertificate\classes\form\CertificateSettingsForm($this, $context->getId());
 
+                // When a file is selected, the template JS bypasses the
+                // AjaxFormHandler and submits a regular multipart POST — the
+                // browser navigates to this response, so returning JSON would
+                // render raw {"status":...} text (Issue #71). Any $_FILES
+                // entry (even a failed upload, e.g. UPLOAD_ERR_INI_SIZE)
+                // means we are on that non-AJAX path and must redirect.
+                $isNonAjaxUpload = isset($_FILES['backgroundImage'])
+                    && (empty($_SERVER['HTTP_X_REQUESTED_WITH'])
+                        || strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) !== 'xmlhttprequest');
+
                 if ($request->getUserVar('save')) {
                     $form->readInputData();
                     if ($form->validate()) {
                         $form->execute();
 
-                        // Check if this was a file upload (regular POST instead of AJAX)
-                        // If file was uploaded, redirect back to website settings plugins page instead of returning JSON
-                        if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
-                            // File was uploaded - redirect back to Website Settings
+                        if ($isNonAjaxUpload) {
+                            // Redirect back to Website Settings
                             // Note: We can't control which tab opens - that's handled by JavaScript
                             // OJS 3.5 requires $path to be array, not string
                             $request->redirect(null, 'management', 'settings', array('website'));
                         }
 
                         return $this->createJSONMessage(true);
+                    }
+
+                    if ($isNonAjaxUpload) {
+                        // Validation failed on a full-page POST: raw JSON would
+                        // be worse than losing the inline error message
+                        error_log('ReviewerCertificate: settings validation failed on non-AJAX upload POST');
+                        $request->redirect(null, 'management', 'settings', array('website'));
                     }
                 } else {
                     $form->initData();
@@ -699,7 +714,8 @@ class ReviewerCertificatePlugin extends GenericPlugin {
         try {
             $certificateDao->insertObject($certificate);
         } catch (\Throwable $e) {
-            if (strpos($e->getMessage(), 'Duplicate') !== false) {
+            // MySQL says "Duplicate entry", PostgreSQL "duplicate key" — match case-insensitively
+            if (stripos($e->getMessage(), 'duplicate') !== false) {
                 // Certificate created by concurrent request — not an error
                 return;
             }

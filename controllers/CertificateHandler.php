@@ -40,7 +40,7 @@ class CertificateHandler extends Handler {
         if (defined('ROLE_ID_REVIEWER')) {
             $this->addRoleAssignment(
                 array(ROLE_ID_REVIEWER),
-                array('download', 'preview', 'myCertificates')
+                array('download', 'preview', 'myCertificates', 'emailCertificate')
             );
             $this->addRoleAssignment(
                 array(ROLE_ID_MANAGER, ROLE_ID_SITE_ADMIN),
@@ -49,7 +49,7 @@ class CertificateHandler extends Handler {
         } else {
             $this->addRoleAssignment(
                 array(Role::ROLE_ID_REVIEWER),
-                array('download', 'preview', 'myCertificates')
+                array('download', 'preview', 'myCertificates', 'emailCertificate')
             );
             $this->addRoleAssignment(
                 array(Role::ROLE_ID_MANAGER, Role::ROLE_ID_SITE_ADMIN),
@@ -165,11 +165,33 @@ class CertificateHandler extends Handler {
      */
     public function download($args, $request) {
         $reviewId = isset($args[0]) ? (int) $args[0] : null;
+
+        $reviewAssignment = $this->loadAuthorizedReviewAssignment($reviewId, $request, 'download');
+        $certificate = $this->getOrCreateCertificate($reviewId, $reviewAssignment, $request->getContext());
+
+        // Update download statistics
+        $certificateDao = DAORegistry::getDAO('CertificateDAO');
+        $certificate->incrementDownloadCount();
+        $certificateDao->updateObject($certificate);
+
+        // Generate PDF
+        $this->generateAndOutputPDF($reviewAssignment, $certificate, $request->getContext());
+    }
+
+    /**
+     * Load a review assignment and enforce ownership, completion and context
+     * isolation. Shared by download() and emailCertificate().
+     * @param $reviewId int|null
+     * @param $request Request
+     * @param $opLabel string For log messages
+     * @return object ReviewAssignment(-like) object
+     */
+    private function loadAuthorizedReviewAssignment($reviewId, $request, $opLabel) {
         $user = $request->getUser();
         $context = $request->getContext();
 
         if (!$reviewId || !$user) {
-            error_log('Certificate download failed: Missing review ID or user');
+            error_log('Certificate ' . $opLabel . ' failed: Missing review ID or user');
             http_response_code(404);
             throw new Exception('Not found', 404);
         }
@@ -177,7 +199,7 @@ class CertificateHandler extends Handler {
         // Get review assignment using direct SQL for OJS 3.5 compatibility
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         if (!$certificateDao) {
-            error_log('Certificate download failed: CertificateDAO not available');
+            error_log('Certificate ' . $opLabel . ' failed: CertificateDAO not available');
             http_response_code(500);
             throw new Exception('Internal error', 500);
         }
@@ -197,29 +219,39 @@ class CertificateHandler extends Handler {
         }
 
         if (!$reviewAssignment) {
-            error_log('Certificate download failed: Review assignment not found');
+            error_log('Certificate ' . $opLabel . ' failed: Review assignment not found');
             http_response_code(404);
             throw new Exception('Review assignment not found', 404);
         }
 
         // Validate access - user must be the reviewer
         if ((int)$reviewAssignment->getReviewerId() !== (int)$user->getId()) {
-            error_log('Certificate download failed: Access denied for user ' . $user->getId() . ', review belongs to reviewer ' . $reviewAssignment->getReviewerId());
+            error_log('Certificate ' . $opLabel . ' failed: Access denied for user ' . $user->getId() . ', review belongs to reviewer ' . $reviewAssignment->getReviewerId());
             http_response_code(403);
             throw new Exception(__('plugins.generic.reviewerCertificate.error.accessDenied'), 403);
         }
 
         // Check if review is completed
         if (!$reviewAssignment->getDateCompleted()) {
-            error_log('Certificate download failed: Review not completed');
+            error_log('Certificate ' . $opLabel . ' failed: Review not completed');
             http_response_code(400);
             throw new Exception(__('plugins.generic.reviewerCertificate.error.reviewNotCompleted'), 400);
         }
 
-        // Get or create certificate
+        return $reviewAssignment;
+    }
+
+    /**
+     * Get the certificate record for a review, creating it on first access.
+     * @param $reviewId int
+     * @param $reviewAssignment object
+     * @param $context Context
+     * @return \APP\plugins\generic\reviewerCertificate\classes\Certificate
+     */
+    private function getOrCreateCertificate($reviewId, $reviewAssignment, $context) {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
         if (!$certificateDao) {
-            error_log('Certificate download failed: CertificateDAO not available');
+            error_log('Certificate lookup failed: CertificateDAO not available');
             http_response_code(500);
             throw new Exception('Internal error', 500);
         }
@@ -240,7 +272,8 @@ class CertificateHandler extends Handler {
             try {
                 $certificateDao->insertObject($certificate);
             } catch (\Throwable $e) {
-                if (strpos($e->getMessage(), 'Duplicate') !== false) {
+                // MySQL says "Duplicate entry", PostgreSQL "duplicate key" — match case-insensitively
+                if (stripos($e->getMessage(), 'duplicate') !== false) {
                     $certificate = $certificateDao->getByReviewId($reviewId);
                 } else {
                     throw $e;
@@ -248,12 +281,181 @@ class CertificateHandler extends Handler {
             }
         }
 
-        // Update download statistics
-        $certificate->incrementDownloadCount();
-        $certificateDao->updateObject($certificate);
+        return $certificate;
+    }
 
-        // Generate PDF
-        $this->generateAndOutputPDF($reviewAssignment, $certificate, $context);
+    /**
+     * Email the acknowledgement letter with the certificate PDF attached to
+     * the logged-in reviewer. POST + CSRF only; reviewer role.
+     * @param $args array [0] => review ID
+     * @param $request Request
+     */
+    public function emailCertificate($args, $request) {
+        $this->ensurePluginLocaleLoaded();
+
+        if (strtoupper($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+            http_response_code(405);
+            throw new Exception('Method not allowed', 405);
+        }
+        if (method_exists($request, 'checkCSRF') && !$request->checkCSRF()) {
+            error_log('Certificate email failed: CSRF check failed');
+            http_response_code(403);
+            throw new Exception('Forbidden', 403);
+        }
+
+        $reviewId = isset($args[0]) ? (int) $args[0] : null;
+        $context = $request->getContext();
+        $user = $request->getUser();
+
+        $reviewAssignment = $this->loadAuthorizedReviewAssignment($reviewId, $request, 'email');
+        $certificate = $this->getOrCreateCertificate($reviewId, $reviewAssignment, $context);
+
+        // Build the PDF and the letter with the same variable engine
+        $generator = $this->createConfiguredGenerator($reviewAssignment, $certificate, $context);
+        try {
+            $pdfContent = $generator->generatePDF();
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: email PDF generation failed: ' . $e->getMessage());
+            $request->redirect(null, 'certificate', 'myCertificates', null, array('emailError' => 1));
+            return;
+        }
+
+        $plugin = $this->getPlugin();
+        $subjectTemplate = $plugin ? $plugin->getSetting($context->getId(), 'ackEmailSubject') : null;
+        $bodyTemplate = $plugin ? $plugin->getSetting($context->getId(), 'ackEmailBody') : null;
+        if (!$subjectTemplate) {
+            $subjectTemplate = __('plugins.generic.reviewerCertificate.emailCertificate.defaultSubject');
+        }
+        if (!$bodyTemplate) {
+            $bodyTemplate = __('plugins.generic.reviewerCertificate.emailCertificate.defaultBody');
+        }
+
+        $subject = $generator->renderText($subjectTemplate);
+        $body = $generator->renderText($bodyTemplate);
+        $fileName = 'reviewer_certificate_' . $certificate->getCertificateId() . '.pdf';
+
+        try {
+            $sent = $this->sendAcknowledgementEmail($user, $context, $subject, $body, $pdfContent, $fileName, $request);
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: acknowledgement email failed: ' . $e->getMessage());
+            $sent = false;
+        }
+
+        $request->redirect(
+            null, 'certificate', 'myCertificates', null,
+            $sent ? array('emailSent' => 1) : array('emailError' => 1)
+        );
+    }
+
+    /**
+     * Send the acknowledgement letter (version-branched mail APIs).
+     * @param $user User Recipient (the reviewer)
+     * @param $context Context
+     * @param $subject string Rendered subject
+     * @param $body string Rendered plain-text body
+     * @param $pdfContent string PDF bytes to attach
+     * @param $fileName string Attachment file name
+     * @param $request Request
+     * @return bool
+     */
+    private function sendAcknowledgementEmail($user, $context, $subject, $body, $pdfContent, $fileName, $request) {
+        $contactEmail = $this->getContextSettingCompat($context, 'contactEmail');
+        $contactName = $this->getContextSettingCompat($context, 'contactName');
+
+        // Fallback chain — mailers reject messages without a From header:
+        // journal contact → site contact → noreply@<host>
+        if (!$contactEmail) {
+            try {
+                $site = method_exists($request, 'getSite') ? $request->getSite() : null;
+                if ($site) {
+                    $contactEmail = $this->getContextSettingCompat($site, 'contactEmail');
+                    if (!$contactName) {
+                        $contactName = $this->getContextSettingCompat($site, 'contactName');
+                    }
+                }
+            } catch (\Throwable $e) {
+                // ignore
+            }
+        }
+        if (!$contactEmail) {
+            $host = parse_url($request->getBaseUrl(), PHP_URL_HOST);
+            $contactEmail = 'noreply@' . ($host ?: 'localhost');
+        }
+        if (!$contactName) {
+            $contactName = method_exists($context, 'getLocalizedName')
+                ? (string) $context->getLocalizedName()
+                : '';
+        }
+
+        // OJS 3.4/3.5 — Laravel Mailable system. Uses the dedicated Ack
+        // mailable: ReviewerCertificateMailable carries the Sender trait for
+        // the notification email, and that trait forbids the ->from() call
+        // needed here to write from the journal contact address.
+        if (class_exists('PKP\mail\Mailable')) {
+            require_once(dirname(__FILE__) . '/../classes/ReviewerCertificateAckMailable.php');
+            $mailable = new \APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateAckMailable();
+            if ($contactEmail) {
+                $mailable->from($contactEmail, $contactName ?: null);
+            }
+            $mailable
+                ->to($user->getEmail(), $user->getFullName())
+                ->subject($subject)
+                ->body(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')))
+                ->attachData($pdfContent, $fileName, array('mime' => 'application/pdf'));
+            \Illuminate\Support\Facades\Mail::send($mailable);
+            return true;
+        }
+
+        // OJS 3.3 — legacy Mail class with a temp file attachment
+        if (function_exists('import')) {
+            import('lib.pkp.classes.mail.Mail');
+        }
+        if (!class_exists('Mail')) {
+            error_log('ReviewerCertificate: no mail API available');
+            return false;
+        }
+        $mail = new \Mail();
+        if ($contactEmail) {
+            $mail->setFrom($contactEmail, $contactName ?: '');
+            $mail->setReplyTo($contactEmail, $contactName ?: '');
+        }
+        $mail->addRecipient($user->getEmail(), $user->getFullName());
+        $mail->setSubject($subject);
+        $mail->setBody(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')));
+
+        $tmpFile = tempnam(sys_get_temp_dir(), 'rc_cert_');
+        file_put_contents($tmpFile, $pdfContent);
+        $mail->addAttachment($tmpFile, $fileName, 'application/pdf');
+        try {
+            $sent = $mail->send();
+        } finally {
+            @unlink($tmpFile);
+        }
+        return (bool) $sent;
+    }
+
+    /**
+     * Context setting accessor compatible with OJS 3.3 (getSetting) and
+     * 3.4+/3.5 (getData).
+     */
+    private function getContextSettingCompat($context, $name) {
+        try {
+            if (method_exists($context, 'getData')) {
+                $value = $context->getData($name);
+                if ($value) {
+                    return is_array($value) ? (string) reset($value) : (string) $value;
+                }
+            }
+            if (method_exists($context, 'getSetting')) {
+                $value = $context->getSetting($name);
+                if ($value) {
+                    return is_array($value) ? (string) reset($value) : (string) $value;
+                }
+            }
+        } catch (\Throwable $e) {
+            // ignore
+        }
+        return '';
     }
 
     /**
@@ -460,6 +662,7 @@ class CertificateHandler extends Handler {
                     'submissionTitle' => $title,
                     'dateIssued' => date('F j, Y', strtotime($displayDate)),
                     'downloadUrl' => $request->url(null, 'certificate', 'download', array($row['review_id'])),
+                    'emailUrl' => $request->url(null, 'certificate', 'emailCertificate', array($row['review_id'])),
                     'certificateCode' => $row['certificate_code'],
                 );
             }
@@ -467,6 +670,9 @@ class CertificateHandler extends Handler {
 
         $templateMgr = TemplateManager::getManager($request);
         $templateMgr->assign('certificates', $certificates);
+        // Result banners after the email action (redirect flags)
+        $templateMgr->assign('certificateEmailSent', (bool) $request->getUserVar('emailSent'));
+        $templateMgr->assign('certificateEmailError', (bool) $request->getUserVar('emailError'));
 
         // Load CSS
         $plugin = $this->getPlugin();
@@ -584,20 +790,7 @@ class CertificateHandler extends Handler {
      * @param $context Context
      */
     private function generateAndOutputPDF($reviewAssignment, $certificate, $context) {
-        // Load generator
-        $plugin = $this->getPlugin();
-        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.php');
-        $generator = new \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator();
-
-        // Set up generator
-        $generator->setReviewAssignment($reviewAssignment);
-        $generator->setCertificate($certificate);
-        $generator->setContext($context);
-        $generator->setLocale($this->getCurrentLocale());
-
-        // Load template settings
-        $templateSettings = $this->getTemplateSettings($context);
-        $generator->setTemplateSettings($templateSettings);
+        $generator = $this->createConfiguredGenerator($reviewAssignment, $certificate, $context);
 
         // Generate PDF
         try {
@@ -626,6 +819,27 @@ class CertificateHandler extends Handler {
 
         echo $pdfContent;
         exit;
+    }
+
+    /**
+     * Build a fully configured CertificateGenerator for a review assignment.
+     * Shared by download (output) and emailCertificate (attachment + letter).
+     * @param $reviewAssignment object
+     * @param $certificate Certificate
+     * @param $context Context
+     * @return \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator
+     */
+    private function createConfiguredGenerator($reviewAssignment, $certificate, $context) {
+        require_once(dirname(__FILE__) . '/../classes/CertificateGenerator.php');
+        $generator = new \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator();
+
+        $generator->setReviewAssignment($reviewAssignment);
+        $generator->setCertificate($certificate);
+        $generator->setContext($context);
+        $generator->setLocale($this->getCurrentLocale());
+        $generator->setTemplateSettings($this->getTemplateSettings($context));
+
+        return $generator;
     }
 
     /**

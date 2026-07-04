@@ -1,0 +1,100 @@
+services:
+  mailpit:
+    image: axllent/mailpit
+    ports:
+      - "8125:8025"   # web UI + API (http://localhost:8125)
+      - "1125:1025"   # SMTP (containers use mailpit:1025)
+    environment:
+      MP_SMTP_AUTH_ACCEPT_ANY: 1
+      MP_SMTP_AUTH_ALLOW_INSECURE: 1
+
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ojs_test_root
+      MYSQL_USER: ojs
+      MYSQL_PASSWORD: ojs_test_pass
+    volumes:
+      - ./data/mysql:/var/lib/mysql
+    ports:
+      - "13306:3306"
+    command: --default-authentication-plugin=mysql_native_password
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pojs_test_root"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  ojs33:
+    image: pkpofficial/ojs:3_3_0-22
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8033:80"
+      - "8433:443"
+    volumes:
+      - ojs33_data:/var/www/html
+      - ojs33_files:/var/www/files
+      - ../:/var/www/html/plugins/generic/reviewerCertificate:ro
+      - ./cert-assets:/var/www/html/files/journals/cert-assets
+    environment:
+      OJS_CLI_INSTALL: 0
+      OJS_DB_HOST: db
+      OJS_DB_DRIVER: mysqli
+      OJS_DB_USER: ojs
+      OJS_DB_PASSWORD: ojs_test_pass
+      OJS_DB_NAME: ojs33
+      SERVERNAME: localhost
+
+  ojs34:
+    image: pkpofficial/ojs:3_4_0-10
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8034:80"
+      - "8434:443"
+    volumes:
+      - ojs34_data:/var/www/html
+      - ojs34_files:/var/www/files
+      - ../:/var/www/html/plugins/generic/reviewerCertificate:ro
+      - ./cert-assets:/var/www/html/files/journals/cert-assets
+    environment:
+      OJS_CLI_INSTALL: 0
+      OJS_DB_HOST: db
+      OJS_DB_DRIVER: mysqli
+      OJS_DB_USER: ojs
+      OJS_DB_PASSWORD: ojs_test_pass
+      OJS_DB_NAME: ojs34
+      SERVERNAME: localhost
+
+  ojs35:
+    image: pkpofficial/ojs:3_5_0-3
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8035:80"
+      - "8435:443"
+    volumes:
+      - ojs35_data:/var/www/html
+      - ojs35_files:/var/www/files
+      - ../:/var/www/html/plugins/generic/reviewerCertificate:ro
+      - ./cert-assets:/var/www/html/files/journals/cert-assets
+    environment:
+      OJS_CLI_INSTALL: 0
+      OJS_DB_HOST: db
+      OJS_DB_DRIVER: mysqli
+      OJS_DB_USER: ojs
+      OJS_DB_PASSWORD: ojs_test_pass
+      OJS_DB_NAME: ojs35
+      SERVERNAME: localhost
+
+volumes:
+  ojs33_data:
+  ojs33_files:
+  ojs34_data:
+  ojs34_files:
+  ojs35_data:
+  ojs35_files:

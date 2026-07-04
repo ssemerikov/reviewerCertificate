@@ -374,6 +374,48 @@ class CompatAutoloaderTest extends TestCase {
     }
 
     /**
+     * Issue #71: on OJS 3.4+ (native namespaced classes present) the compat
+     * autoloader must not register at all — a git/source install ships the
+     * file, and registering it caused "Cannot redeclare class" warnings under
+     * the scheduled-tasks CLI.
+     *
+     * PKP\plugins\Hook exists in this process (mocked), which is exactly the
+     * "native namespaced OJS" signal, so including the file must be a no-op.
+     */
+    public function testAutoloaderSkipsRegistrationWhenNamespacedOJSDetected(): void {
+        $this->assertTrue(
+            class_exists('PKP\plugins\Hook'),
+            'Precondition: namespaced OJS classes exist in the test environment'
+        );
+
+        $before = count(spl_autoload_functions());
+        require $this->autoloaderPath;
+        $after = count(spl_autoload_functions());
+
+        $this->assertEquals(
+            $before,
+            $after,
+            'compat_autoloader must not register an autoloader when OJS 3.4+ native classes exist'
+        );
+    }
+
+    /**
+     * Issue #71: even when registered (OJS 3.3), class_alias() must be guarded
+     * so it never fires for a class that already exists — import() on hybrid
+     * installs can load the namespaced class itself, and an unguarded alias
+     * then warns "Cannot redeclare class".
+     */
+    public function testClassAliasGuardedAgainstAlreadyExistingClass(): void {
+        $content = file_get_contents($this->autoloaderPath);
+
+        $this->assertStringContainsString(
+            'class_exists($class, false)',
+            $content,
+            'Autoloader must re-check the requested class after import() and skip class_alias if it now exists'
+        );
+    }
+
+    /**
      * Test link action classes are in class map
      */
     public function testLinkActionClassesInMap(): void {

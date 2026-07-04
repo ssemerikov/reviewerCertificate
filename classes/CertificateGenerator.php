@@ -61,6 +61,90 @@ class CertificateGenerator {
         );
     }
 
+    /**
+     * Get the OJS base directory (OJS 3.3/3.4+/test compatibility)
+     * @return string
+     */
+    private static function getOJSBaseDir() {
+        if (class_exists('PKP\core\Core')) {
+            return Core::getBaseDir();
+        }
+        if (class_exists('Core')) {
+            return \Core::getBaseDir();
+        }
+        return dirname(__FILE__, 6);
+    }
+
+    /**
+     * Resolve the OJS files directory from config.inc.php.
+     *
+     * Issues #69/#71: this must NOT be hardcoded to {base}/files — most
+     * production installs keep files_dir outside the web root. A relative
+     * files_dir (OJS's config template default is "files") is anchored to
+     * the OJS base dir, because under CLI (cron) the cwd is not the base dir.
+     *
+     * @return string Absolute path, no trailing slash
+     */
+    public static function getFilesDir() {
+        $filesDir = null;
+        if (class_exists('PKP\config\Config')) {
+            $filesDir = \PKP\config\Config::getVar('files', 'files_dir');
+        } elseif (class_exists('Config')) {
+            $filesDir = \Config::getVar('files', 'files_dir');
+        }
+
+        if (!$filesDir) {
+            $filesDir = self::getOJSBaseDir() . '/files';
+        } elseif (!preg_match('#^(/|[A-Za-z]:[/\\\\])#', $filesDir)) {
+            $filesDir = self::getOJSBaseDir() . '/' . $filesDir;
+        }
+
+        return rtrim($filesDir, '/');
+    }
+
+    /**
+     * Directory where background images are uploaded for a journal.
+     * @param $contextId int
+     * @return string
+     */
+    public static function getBackgroundUploadDir($contextId) {
+        return self::getFilesDir() . '/journals/' . (int) $contextId . '/reviewerCertificate';
+    }
+
+    /**
+     * Path traversal protection for stored background image paths.
+     *
+     * Accepts files under {files_dir}/journals/ and, for images uploaded by
+     * plugin versions <= 1.7.0, under the legacy hardcoded {base}/files/journals/.
+     *
+     * @param $path string Stored background image path
+     * @return bool
+     */
+    public static function isBackgroundPathAllowed($path) {
+        if (!$path) {
+            return false;
+        }
+
+        $realPath = realpath($path);
+        if ($realPath === false) {
+            return false;
+        }
+
+        $allowedDirs = array(
+            realpath(self::getFilesDir() . '/journals'),
+            realpath(self::getOJSBaseDir() . '/files/journals'),
+        );
+
+        foreach ($allowedDirs as $allowedDir) {
+            if ($allowedDir !== false
+                && strpos($realPath, rtrim($allowedDir, '/') . '/') === 0) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     /** @var ReviewAssignment */
     private $reviewAssignment;
 
@@ -256,22 +340,13 @@ class CertificateGenerator {
             return;
         }
 
-        // Path traversal protection: validate the image is within allowed directory
-        if (class_exists('PKP\core\Core')) {
-            $baseDir = \PKP\core\Core::getBaseDir();
-        } elseif (class_exists('Core')) {
-            $baseDir = \Core::getBaseDir();
-        } else {
-            $baseDir = dirname(__FILE__, 6);
-        }
-
-        $allowedDir = realpath($baseDir . '/files/journals/');
-        $realPath = realpath($backgroundImage);
-
-        if ($realPath === false || $allowedDir === false || strpos($realPath, $allowedDir) !== 0) {
-            error_log("ReviewerCertificate: Background image path outside allowed directory");
+        // Path traversal protection: image must live under the configured
+        // files_dir (or the legacy hardcoded location) — see Issues #69/#71
+        if (!self::isBackgroundPathAllowed($backgroundImage)) {
+            error_log('ReviewerCertificate: Background image path outside allowed directory: ' . $backgroundImage);
             return;
         }
+        $realPath = realpath($backgroundImage);
 
         if (file_exists($realPath)) {
             // Get page dimensions
@@ -536,11 +611,53 @@ class CertificateGenerator {
             }
         }
 
+        // Journal principal contact — used as the letter signature
+        // ({{$editorName}}) in the acknowledgement email
+        $variables['editorName'] = $this->getContextContactName($this->context);
+
         // Current date (always set)
         $variables['currentDate'] = date('F j, Y');
         $variables['currentYear'] = date('Y');
 
         return $variables;
+    }
+
+    /**
+     * Journal principal contact name (OJS 3.3 getSetting / 3.4+ getData compat)
+     * @param $context Context|null
+     * @return string
+     */
+    private function getContextContactName($context) {
+        if (!$context) {
+            return '';
+        }
+        try {
+            if (method_exists($context, 'getData')) {
+                $name = $context->getData('contactName');
+                if ($name) {
+                    return is_array($name) ? (string) reset($name) : (string) $name;
+                }
+            }
+            if (method_exists($context, 'getSetting')) {
+                $name = $context->getSetting('contactName');
+                if ($name) {
+                    return is_array($name) ? (string) reset($name) : (string) $name;
+                }
+            }
+        } catch (\Throwable $e) {
+            // fall through to empty
+        }
+        return '';
+    }
+
+    /**
+     * Render a text template (email subject/body) with the same variable
+     * engine used for the PDF body.
+     * @param $template string
+     * @return string
+     */
+    public function renderText($template) {
+        return $this->replaceVariables((string) $template, $this->getTemplateVariables());
     }
 
     /**

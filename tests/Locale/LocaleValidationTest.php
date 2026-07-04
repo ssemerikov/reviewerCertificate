@@ -18,6 +18,21 @@ class LocaleValidationTest extends PHPUnitTestCase {
     private $referenceLocale = 'en_US';
     private $supportedLocales = ['en_US', 'uk_UA', 'ru_RU', 'es_ES', 'pt_BR', 'fr_FR', 'de_DE', 'it_IT', 'tr_TR', 'pl_PL', 'id_ID', 'nl_NL', 'cs_CZ', 'ca_ES', 'nb_NO', 'sv_SE', 'hr_HR', 'fi_FI', 'ro_RO'];
 
+    /**
+     * OJS 3.3 long locale codes → OJS 3.4+/3.5 short codes (Issue #72).
+     * en_US→en already ships as a real directory; pt_BR keeps its code in OJS 3.4+.
+     */
+    const SHORT_LOCALE_MAP = [
+        'ar_AR' => 'ar', 'bg_BG' => 'bg', 'ca_ES' => 'ca', 'cs_CZ' => 'cs',
+        'de_DE' => 'de', 'el_GR' => 'el', 'es_ES' => 'es', 'fa_IR' => 'fa',
+        'fi_FI' => 'fi', 'fr_FR' => 'fr', 'he_IL' => 'he', 'hr_HR' => 'hr',
+        'hu_HU' => 'hu', 'id_ID' => 'id', 'it_IT' => 'it', 'ja_JP' => 'ja',
+        'ko_KR' => 'ko', 'lt_LT' => 'lt', 'nb_NO' => 'nb', 'nl_NL' => 'nl',
+        'pl_PL' => 'pl', 'ro_RO' => 'ro', 'ru_RU' => 'ru', 'sk_SK' => 'sk',
+        'sl_SI' => 'sl', 'sv_SE' => 'sv', 'tr_TR' => 'tr', 'uk_UA' => 'uk',
+        'zh_CN' => 'zh_Hans',
+    ];
+
     protected function setUp(): void {
         parent::setUp();
         $this->baseDir = dirname(dirname(__DIR__));
@@ -54,6 +69,85 @@ class LocaleValidationTest extends PHPUnitTestCase {
                 "Locale file for {$locale} should be readable"
             );
         }
+    }
+
+    /**
+     * Keys required by the Email Certificate feature (must exist in every language).
+     */
+    const ACK_EMAIL_KEYS = [
+        'plugins.generic.reviewerCertificate.myCertificates.emailAction',
+        'plugins.generic.reviewerCertificate.myCertificates.emailSent',
+        'plugins.generic.reviewerCertificate.myCertificates.emailError',
+        'plugins.generic.reviewerCertificate.settings.ackEmailSubject',
+        'plugins.generic.reviewerCertificate.settings.ackEmailBody',
+        'plugins.generic.reviewerCertificate.settings.ackEmailDescription',
+        'plugins.generic.reviewerCertificate.emailCertificate.defaultSubject',
+        'plugins.generic.reviewerCertificate.emailCertificate.defaultBody',
+    ];
+
+    /**
+     * Every language must carry the acknowledgement email keys, and the
+     * default letter must contain the placeholders the feature relies on.
+     */
+    public function testAckEmailKeysPresentInAllLocales() {
+        $longDirs = array_merge(array_keys(self::SHORT_LOCALE_MAP), ['en', 'en_US', 'pt_BR']);
+
+        foreach ($longDirs as $localeName) {
+            $file = $this->localeDir . '/' . $localeName . '/locale.xml';
+            $content = file_get_contents($file);
+            foreach (self::ACK_EMAIL_KEYS as $key) {
+                $this->assertStringContainsString(
+                    'key="' . $key . '"',
+                    $content,
+                    "Locale {$localeName} must define {$key}"
+                );
+            }
+        }
+
+        // Default letter must be parameterized, not hardcoded to one journal
+        $xml = simplexml_load_file($this->localeDir . '/en_US/locale.xml');
+        $body = '';
+        $subject = '';
+        foreach ($xml->message as $msg) {
+            if ((string) $msg['key'] === 'plugins.generic.reviewerCertificate.emailCertificate.defaultBody') {
+                $body = (string) $msg;
+            }
+            if ((string) $msg['key'] === 'plugins.generic.reviewerCertificate.emailCertificate.defaultSubject') {
+                $subject = (string) $msg;
+            }
+        }
+        foreach (['{{$reviewerName}}', '{{$submissionTitle}}', '{{$journalName}}', '{{$editorName}}'] as $placeholder) {
+            $this->assertStringContainsString($placeholder, $body, "Default body must contain {$placeholder}");
+        }
+        $this->assertStringContainsString('{{$journalName}}', $subject);
+    }
+
+    /**
+     * Issue #72: OJS 3.4+/3.5 resolve locales by short codes (hr, uk, ...).
+     * Every short-code directory must exist as a REAL directory — symlinks
+     * are silently dropped by git clones, GitHub source archives, and many
+     * deploy flows, which made non-English UIs show raw ##key## strings.
+     */
+    public function testShortCodeLocaleDirsAreRealAndInSync() {
+        foreach (self::SHORT_LOCALE_MAP as $long => $short) {
+            $longDir = $this->localeDir . '/' . $long;
+            $shortDir = $this->localeDir . '/' . $short;
+
+            $this->assertDirectoryExists($shortDir, "Short-code locale dir {$short} must exist (OJS 3.4+ looks it up)");
+            $this->assertFalse(is_link($shortDir), "locale/{$short} must be a real directory, not a symlink");
+
+            foreach (['locale.po', 'locale.xml'] as $file) {
+                $this->assertFileExists($shortDir . '/' . $file, "locale/{$short}/{$file} must exist");
+                $this->assertFileEquals(
+                    $longDir . '/' . $file,
+                    $shortDir . '/' . $file,
+                    "locale/{$short}/{$file} must be identical to locale/{$long}/{$file} (run php temp/convert_xml_to_po.php to sync)"
+                );
+            }
+        }
+
+        // The English short dir predates this fix but must also be real
+        $this->assertFalse(is_link($this->localeDir . '/en'), 'locale/en must be a real directory');
     }
 
     /**

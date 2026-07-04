@@ -5,6 +5,32 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2026-07-04
+
+### Added
+
+- **Email certificate to reviewer** (My Certificates page) — Next to each Download button there is now an "Email me the certificate" action that sends the journal's acknowledgement letter to the reviewer with the certificate PDF attached. The letter is designed to be forwarded to Web of Science (reviews@webofscience.com) as review-verification evidence.
+  - Subject and body are editable per journal in the plugin settings (`ackEmailSubject`/`ackEmailBody`), pre-filled with a professional default letter; supports the same template variables as the certificate body plus the new `{{$editorName}}` (journal principal contact)
+  - Endpoint `certificate/emailCertificate/{reviewId}`: reviewer role, POST + CSRF only, same ownership/context checks as download
+  - Sends via OJS's configured mail transport on all versions: legacy `Mail` on OJS 3.3, `Mailable` (Laravel) on OJS 3.4/3.5 — new class `ReviewerCertificateAckMailable`
+  - 8 new locale keys across all 32 languages (now 103 keys per language)
+  - E2E-verified real email delivery (new Mailpit SMTP sink in the test stack; `tests/e2e/my-certificates-email.spec.ts` asserts message receipt and PDF attachment on OJS 3.3, 3.4 and 3.5)
+
+### Fixed
+
+- **Background image broken on installs with a custom `files_dir`** (Issues #69, #71) — The upload path and the path-traversal allowlist were both hardcoded to `{ojs_base}/files/`; on the recommended OJS setup (files directory outside the web root) uploads landed in the wrong place and the PDF generator rejected the image with "Background image path outside allowed directory". Both now resolve `files_dir` from `config.inc.php` (relative values anchored to the OJS base dir); images uploaded by older plugin versions to the legacy location keep working.
+- **"Cannot redeclare class" warnings from scheduled tasks on OJS 3.4 git installs** (Issue #71) — `compat_autoloader.php` now skips registration entirely when native namespaced OJS classes are present, and guards `class_alias()` against already-loaded classes.
+- **Non-English UI showed raw `##key##` strings on OJS 3.4+/3.5** (Issue #72, reported for Croatian) — Short locale code directories (`hr`, `uk`, `de`, …) previously existed only as symlinks that were lost in git clones and GitHub source archives. All 29 short-code directories now ship as real directories, kept in sync by `temp/convert_xml_to_po.php` and guarded by a new locale test.
+- **Raw JSON shown after saving settings with a background image** (Issue #71 comment) — Non-AJAX multipart submissions now always redirect back to Website Settings, including upload-error and validation-failure paths.
+- **Release packages were missing `css/` and `js/`** — `release.sh` never copied them, so tarball installs had an unstyled My Certificates page and missing dashboard JavaScript (404s on `certificate.css`/`certificate.js`).
+- **Fatal error in review-completion email on OJS 3.4** — `ReviewerCertificateMailable` lacked the `Sender` trait, so the `->sender()` call in the auto-notification crashed the review-completion hook with an undefined-method error.
+- **Stored XSS in batch-generation reviewer list** — Reviewer display names were rendered unescaped in the manager-facing settings form; a reviewer-controlled name could execute script in a manager session. Now escaped.
+- **PostgreSQL compatibility** — Duplicate-key detection during concurrent certificate creation matched MySQL's "Duplicate entry" case-sensitively; now case-insensitive to also match PostgreSQL's "duplicate key".
+
+### Documentation
+
+- INSTALL.md/README now warn against installing GitHub's auto-generated "Source code" archives (no bundled TCPDF, includes `compat_autoloader.php` which breaks OJS 3.4+) and point to the version-specific release packages.
+
 ## [1.7.0] - 2026-04-05
 
 ### Added

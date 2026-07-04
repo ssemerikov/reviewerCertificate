@@ -377,3 +377,41 @@
         transform: rotate(360deg);
     }
 }
+
+/* Email certificate action (My Certificates page) */
+.certificate-email-form {
+    display: inline-block;
+    margin-left: 8px;
+}
+
+.certificate-email-btn {
+    background-color: #006798;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.certificate-email-btn:hover {
+    background-color: #00557d;
+}
+
+.certificate-email-banner {
+    margin: 12px 0;
+    padding: 10px 14px;
+    border-radius: 4px;
+}
+
+.certificate-email-banner-success {
+    background-color: #e6f4ea;
+    border: 1px solid #34a853;
+    color: #1e4620;
+}
+
+.certificate-email-banner-error {
+    background-color: #fdecea;
+    border: 1px solid #ea4335;
+    color: #5f2120;
+}

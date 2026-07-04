@@ -289,10 +289,12 @@ class OJSMockLoader
                     }
 
                     public function readInputData() {}
+                    public function readUserVars($vars) {}
                     public function validate() { return true; }
                     public function execute() { return true; }
                     public function fetch($request, $template = null, $display = false) { return ""; }
                     public function addCheck($check) { $this->_checks[] = $check; }
+                    public function addError($field, $message) {}
                 }
             ');
         }
@@ -486,11 +488,17 @@ class OJSMockLoader
 
                     public function readInputData() {}
 
+                    public function readUserVars($vars) {}
+
                     public function validate() {
                         return true;
                     }
 
                     public function execute() {}
+
+                    public function addCheck($check) {}
+
+                    public function addError($field, $message) {}
                 }
             ');
         }
@@ -574,15 +582,58 @@ class OJSMockLoader
             ');
         }
 
-        // Create Config mock
+        // Create PKP mail mocks (OJS 3.4+/3.5 Mailable system)
+        // eval() is safe here: test-only code defining classes from static strings
+        if (!trait_exists('PKP\mail\traits\Configurable')) {
+            eval('
+                namespace PKP\mail\traits;
+                trait Configurable {}
+                trait Sender {
+                    public $mockSender;
+                    public function sender($sender, $defaultLocale = null) {
+                        $this->mockSender = $sender;
+                        return $this;
+                    }
+                }
+            ');
+        }
+        if (!class_exists('PKP\mail\Mailable')) {
+            eval('
+                namespace PKP\mail;
+                class Mailable {
+                    protected static ?string $name = null;
+                    protected static ?string $description = null;
+                    protected static ?string $emailTemplateKey = null;
+                    public function __construct($variables = []) {}
+                    public static function getEmailTemplateKey() { return static::$emailTemplateKey; }
+                }
+            ');
+        }
+
+        // Create Config mock (supports per-test overrides via setMockVar/clearMockVars)
+        // eval() is safe here: test-only code defining a class from a static string,
+        // required because the class must be defined conditionally (see file header)
         if (!class_exists('Config')) {
             eval('
                 class Config {
+                    public static $mockVars = [];
+
                     public static function getVar($section, $key, $default = null) {
+                        if (isset(self::$mockVars[$section][$key])) {
+                            return self::$mockVars[$section][$key];
+                        }
                         if ($section === "database" && $key === "driver") {
                             return "mysqli";
                         }
                         return $default;
+                    }
+
+                    public static function setMockVar($section, $key, $value) {
+                        self::$mockVars[$section][$key] = $value;
+                    }
+
+                    public static function clearMockVars() {
+                        self::$mockVars = [];
                     }
                 }
             ');

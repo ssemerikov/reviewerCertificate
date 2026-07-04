@@ -143,4 +143,27 @@
 	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Ações</message>
 	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Você ainda não tem certificados. Os certificados são gerados após a conclusão de uma revisão.</message>
 	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Ver todos os meus certificados</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.emailAction">Enviar o certificado para meu e-mail</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.emailSent">O certificado foi enviado para o seu endereço de e-mail.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.emailError">Não foi possível enviar o e-mail. Tente novamente mais tarde ou entre em contato com a revista.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Assunto do e-mail de agradecimento</message>
+	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Corpo do e-mail de agradecimento</message>
+	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Carta enviada ao avaliador a partir da página "Meus certificados", com o certificado em PDF anexado. Aceita as mesmas variáveis de modelo do texto do certificado, além de {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
+
+We are immensely grateful for your efforts and time devoted to reviewing the manuscript entitled "{{$submissionTitle}}" submitted to {{$journalName}}. Your meticulous and insightful evaluation has provided valuable feedback that has helped the authors improve their work and advance their research endeavors.
+
+Your contribution to maintaining the quality of the articles published in our journal is highly appreciated. We understand that reviewing manuscripts is a demanding task, and we acknowledge the effort you put into thoroughly analyzing the submission and providing constructive criticism to the authors.
+
+To show our appreciation for your hard work, we would like to kindly ask you to forward this letter to reviews@webofscience.com. Please note that in accordance with our editorial policy, the content of the review will remain confidential and will not be displayed on Web of Science.
+
+Your reviewer certificate is attached to this letter.
+
+Once again, we extend our gratitude for your commitment to the advancement of research in your field. We hope to continue collaborating with you in the future.
+
+Best regards,
+
+{{$editorName}}
+{{$journalName}}</message>
 </locale>
