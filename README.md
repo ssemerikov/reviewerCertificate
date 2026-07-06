@@ -26,7 +26,7 @@ This plugin was developed with the assistance of **Claude Code (Opus 4.6)**, an 
 - **Implementation**: Writing PHP classes, controllers, and data access objects
 - **OJS Integration**: Ensuring compatibility with OJS 3.3.x, 3.4.x, and 3.5.x APIs
 - **Database Design**: Creating the migration system and schema with automatic fallback for legacy versions
-- **Testing & Debugging**: Comprehensive test suite with 158 PHP tests + 87 E2E tests across all OJS versions
+- **Testing & Debugging**: Comprehensive test suite with 177 PHP tests + 96 E2E tests across all OJS versions
 - **Documentation**: Creating comprehensive user and technical documentation
 
 The iterative development approach with Claude Code enabled rapid prototyping, thorough testing across OJS versions, and production-ready code quality.
@@ -42,9 +42,9 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 32 languages with complete coverage (103 message keys each)
+  - 31 languages with complete coverage (103 message keys each)
   - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
-  - Dual format support: `.xml` (OJS 3.3/3.4) and `.po` (OJS 3.5) locale files
+  - Dual format: `.xml` (source of truth) and `.po` (required at runtime by all OJS versions) locale files
   - Automatic language detection from OJS settings
   - All translations validated with comprehensive test suite
 - **Batch Generation**: Generate certificates for multiple reviewers at once
@@ -57,7 +57,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
   - GD or Imagick (for image processing)
   - mbstring
   - zip
-- **TCPDF Library**: ✅ Bundled with plugin (v6.10.0) - no additional installation required!
+- **TCPDF Library**: ✅ Bundled with plugin (v6.11.2) - no additional installation required!
 - **Memory**: 128MB minimum PHP memory limit (256MB recommended for large background images)
 
 ### Version Compatibility
@@ -189,14 +189,13 @@ We deeply appreciate your expertise and dedication to advancing scholarly commun
 
 ## Language Support
 
-The Reviewer Certificate Plugin is fully internationalized and available in 32 languages.
+The Reviewer Certificate Plugin is fully internationalized and available in 31 languages.
 
 ### Supported Languages
 
 | Language | Locale Code | Native Name | Status |
 |----------|-------------|-------------|--------|
 | English (US) | `en_US` | English | ✅ Complete |
-| English | `en` | English | ✅ Complete |
 | Ukrainian | `uk_UA` | Українська | ✅ Complete |
 | Russian | `ru_RU` | Русский | ✅ Complete |
 | Spanish | `es_ES` | Español | ✅ Complete |
@@ -333,7 +332,7 @@ The plugin creates these tables:
 | 3.4.x | 7.4 - 8.2 | ✅ Fully tested |
 | 3.5.x | 8.0 - 8.2 | ✅ Fully tested |
 
-**Test Coverage**: 158 PHP unit tests + 87 E2E tests = 245 total tests
+**Test Coverage**: 177 PHP unit tests + 96 E2E tests = 273 total tests
 
 ## Support
 
@@ -371,6 +370,8 @@ We extend our sincere gratitude to the following contributors who helped improve
 - **Dr. Uğur Koçak** ([@drugurkocak](https://github.com/drugurkocak)) — For extensive testing across OJS 3.5 and detailed bug reports that led to fixes in versions 1.0.7 through 1.1.2.
 
 - **Pedro Felipe Rocha** — For Brazilian Portuguese translation and feedback on OJS 3.5 locale requirements.
+
+- **Željko Filajdić** (Diacovensia – Teološki prilozi, Catholic Faculty of Theology in Đakovo, Croatia) — For reporting the short locale-code issue (#72) and contributing a professionally proofread Croatian translation, shipped in v1.8.1.
 
 - **Dr. Pavlo Nechypurenko** — For reporting the font size configuration issue fixed in v1.0.3.
 

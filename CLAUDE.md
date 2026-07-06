@@ -307,7 +307,7 @@ Upload to GitHub Releases with tags `v{VERSION}-3.3`, `v{VERSION}-3.4`, `v{VERSI
 
 ## Localization
 
-31 languages in `locale/` (61 directories total: 31 long-form + 30 short-form; README's "32 languages" counts `en` and `en_US` separately) with dual format support:
+31 languages in `locale/` (61 directories total: 31 long-form + 30 short-form — `pt_BR` is the only long-form dir with no short form) with dual format support:
 - `.xml` files — source of truth for all translations
 - `.po` files — **required by all OJS versions** (OJS 3.3.0-22 uses `Gettext\Translations::fromPoFile()` in `LocaleFile::load()`)
 
