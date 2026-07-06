@@ -24,7 +24,5 @@
 	<compatibility>
 		<application>ojs2</application>
 		<version>3.3.0.0</version>
-		<version>3.4.0.0</version>
-		<version>3.5.0.0</version>
 	</compatibility>
 </version>
