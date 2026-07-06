@@ -20,7 +20,7 @@ Email: semerikov@gmail.com
 
 ## Development
 
-This plugin was developed with the assistance of **Claude Code (Opus 4.6)**, an AI-powered coding assistant by Anthropic. Claude Code was used throughout the development process for:
+This plugin was developed with the assistance of **Claude Code (Sonnet 5)**, an AI-powered coding assistant by Anthropic. Claude Code was used throughout the development process for:
 
 - **Code Architecture**: Designing the plugin structure and component organization
 - **Implementation**: Writing PHP classes, controllers, and data access objects
@@ -384,7 +384,7 @@ Thank you to everyone in the PKP Community Forum who provided feedback and helpe
 
 Developed for the Open Journal Systems community to support and recognize peer reviewers' contributions to scholarly publishing.
 
-**Development Tools**: Built with Claude Code (Opus 4.6) by Anthropic
+**Development Tools**: Built with Claude Code (Sonnet 5) by Anthropic
 
 ## Additional Resources
 
