@@ -112,16 +112,16 @@ msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Tamanho da Fonte"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
-msgstr "Page Orientation"
+msgstr "Orientação da Página"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
-msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+msgstr "Escolha o layout retrato (vertical) ou paisagem (horizontal) para o certificado"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
-msgstr "Portrait (Vertical)"
+msgstr "Retrato (Vertical)"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
-msgstr "Landscape (Horizontal)"
+msgstr "Paisagem (Horizontal)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Cor do Texto (RGB)"

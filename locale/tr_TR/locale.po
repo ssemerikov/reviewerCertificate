@@ -112,16 +112,16 @@ msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Yazı Tipi Boyutu"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
-msgstr "Page Orientation"
+msgstr "Sayfa Yönü"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
-msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+msgstr "Sertifika için dikey veya yatay düzeni seçin"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
-msgstr "Portrait (Vertical)"
+msgstr "Dikey"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
-msgstr "Landscape (Horizontal)"
+msgstr "Yatay"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Metin Rengi (RGB)"

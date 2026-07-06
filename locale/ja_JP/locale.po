@@ -112,16 +112,16 @@ msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "フォントサイズ"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
-msgstr "Page Orientation"
+msgstr "ページの向き"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
-msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+msgstr "証明書のレイアウトを縦向きまたは横向きから選択してください"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
-msgstr "Portrait (Vertical)"
+msgstr "縦向き"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
-msgstr "Landscape (Horizontal)"
+msgstr "横向き"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "テキスト色（RGB）"

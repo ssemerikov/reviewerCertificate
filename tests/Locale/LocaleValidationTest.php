@@ -20,11 +20,11 @@ class LocaleValidationTest extends PHPUnitTestCase {
 
     /**
      * OJS 3.3 long locale codes → OJS 3.4+/3.5 short codes (Issue #72).
-     * en_US→en already ships as a real directory; pt_BR keeps its code in OJS 3.4+.
+     * pt_BR keeps its code in OJS 3.4+ so it has no short form.
      */
     const SHORT_LOCALE_MAP = [
         'ar_AR' => 'ar', 'bg_BG' => 'bg', 'ca_ES' => 'ca', 'cs_CZ' => 'cs',
-        'de_DE' => 'de', 'el_GR' => 'el', 'es_ES' => 'es', 'fa_IR' => 'fa',
+        'de_DE' => 'de', 'el_GR' => 'el', 'en_US' => 'en', 'es_ES' => 'es', 'fa_IR' => 'fa',
         'fi_FI' => 'fi', 'fr_FR' => 'fr', 'he_IL' => 'he', 'hr_HR' => 'hr',
         'hu_HU' => 'hu', 'id_ID' => 'id', 'it_IT' => 'it', 'ja_JP' => 'ja',
         'ko_KR' => 'ko', 'lt_LT' => 'lt', 'nb_NO' => 'nb', 'nl_NL' => 'nl',
@@ -90,7 +90,7 @@ class LocaleValidationTest extends PHPUnitTestCase {
      * default letter must contain the placeholders the feature relies on.
      */
     public function testAckEmailKeysPresentInAllLocales() {
-        $longDirs = array_merge(array_keys(self::SHORT_LOCALE_MAP), ['en', 'en_US', 'pt_BR']);
+        $longDirs = array_merge(array_keys(self::SHORT_LOCALE_MAP), ['en', 'pt_BR']);
 
         foreach ($longDirs as $localeName) {
             $file = $this->localeDir . '/' . $localeName . '/locale.xml';
@@ -145,9 +145,6 @@ class LocaleValidationTest extends PHPUnitTestCase {
                 );
             }
         }
-
-        // The English short dir predates this fix but must also be real
-        $this->assertFalse(is_link($this->localeDir . '/en'), 'locale/en must be a real directory');
     }
 
     /**

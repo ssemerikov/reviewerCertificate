@@ -112,16 +112,16 @@ msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Šrifto Dydis"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
-msgstr "Page Orientation"
+msgstr "Puslapio orientacija"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
-msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+msgstr "Pasirinkite stačią (vertikalų) arba gulsčią (horizontalų) sertifikato išdėstymą"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
-msgstr "Portrait (Vertical)"
+msgstr "Stačias (vertikalus)"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
-msgstr "Landscape (Horizontal)"
+msgstr "Gulsčias (horizontalus)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Teksto Spalva (RGB)"

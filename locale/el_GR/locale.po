@@ -112,16 +112,16 @@ msgid "plugins.generic.reviewerCertificate.settings.fontSize"
 msgstr "Μέγεθος Γραμματοσειράς"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
-msgstr "Page Orientation"
+msgstr "Προσανατολισμός σελίδας"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
-msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+msgstr "Επιλέξτε κατακόρυφη (πορτραίτο) ή οριζόντια (τοπίο) διάταξη για το πιστοποιητικό"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
-msgstr "Portrait (Vertical)"
+msgstr "Κατακόρυφος (πορτραίτο)"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
-msgstr "Landscape (Horizontal)"
+msgstr "Οριζόντιος (τοπίο)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
 msgstr "Χρώμα Κειμένου (RGB)"

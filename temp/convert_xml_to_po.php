@@ -124,11 +124,11 @@ echo "\nConverted $count locale files.\n";
 // The long-form directories are the source of truth; the short-form ones are
 // materialized as REAL directories here — symlinks get dropped by git clones,
 // GitHub source archives, and many deploy flows.
-// en_US→en already ships as a real directory; pt_BR keeps its code in 3.4+.
+// pt_BR keeps its code in 3.4+ so it has no short form.
 // ---------------------------------------------------------------------------
 $shortLocaleMap = [
     'ar_AR' => 'ar', 'bg_BG' => 'bg', 'ca_ES' => 'ca', 'cs_CZ' => 'cs',
-    'de_DE' => 'de', 'el_GR' => 'el', 'es_ES' => 'es', 'fa_IR' => 'fa',
+    'de_DE' => 'de', 'el_GR' => 'el', 'en_US' => 'en', 'es_ES' => 'es', 'fa_IR' => 'fa',
     'fi_FI' => 'fi', 'fr_FR' => 'fr', 'he_IL' => 'he', 'hr_HR' => 'hr',
     'hu_HU' => 'hu', 'id_ID' => 'id', 'it_IT' => 'it', 'ja_JP' => 'ja',
     'ko_KR' => 'ko', 'lt_LT' => 'lt', 'nb_NO' => 'nb', 'nl_NL' => 'nl',

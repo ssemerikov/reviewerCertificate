@@ -5,6 +5,17 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.1] - 2026-07-06
+
+### Changed
+
+- **Croatian translation professionally proofread** (Issue #72) — Željko Filajdić (*Diacovensia – Teološki prilozi*, Catholic Faculty of Theology in Đakovo, Croatia) contributed a native-speaker, professionally proofread revision of the complete Croatian localization: English-style Title Case corrected to Croatian sentence case, terminology unified on "potvrda" (the established Croatian academic term), the four page-orientation strings and the default acknowledgement-letter subject/body translated, and the font guidance now lists the Croatian diacritics (č, ć, đ, š, ž) explicitly. Many thanks to Željko and the Diacovensia editorial staff.
+
+### Fixed
+
+- **Page-orientation settings strings untranslated in all 30 non-English languages** — `settings.pageOrientation`, `settings.pageOrientationDescription`, `settings.orientation.portrait` and `settings.orientation.landscape` shipped in English everywhere except `en_US`. The Croatian proofread caught this for `hr_HR`; all 30 languages are now translated.
+- **English (`en`) locale missing 2 error keys on OJS 3.4+/3.5** — `error.noContext` and `error.daoNotAvailable` existed in `en_US` but not in the short-form `en/` directory that OJS 3.4+ actually resolves, so those errors would have rendered as raw `##key##` strings. `en_US → en` is now part of the automatic sync in `temp/convert_xml_to_po.php`, and the locale test suite fails if the copies ever drift.
+
 ## [1.8.0] - 2026-07-04
 
 ### Added

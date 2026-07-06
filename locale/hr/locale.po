@@ -13,76 +13,76 @@ msgstr ""
 
 # Plugin metadata
 msgid "plugins.generic.reviewerCertificate.displayName"
-msgstr "Dodatak za Certifikate Recenzenata"
+msgstr "Dodatak za potvrde recenzentima"
 
 msgid "plugins.generic.reviewerCertificate.description"
-msgstr "Omogućuje recenzentima stvaranje i preuzimanje personaliziranih PDF certifikata za priznanje nakon završetka recenzija."
+msgstr "Recenzentima omogućuje preuzimanje personaliziranih PDF potvrda o izrađenim recenzijama."
 
 # Certificate titles
 msgid "plugins.generic.reviewerCertificate.certificateTitle"
-msgstr "Certifikat o Recenziji"
+msgstr "Potvrda o recenziji"
 
 msgid "plugins.generic.reviewerCertificate.certificateSubject"
-msgstr "Certifikat o Stručnoj Recenziji"
+msgstr "Potvrda o izrađenoj recenziji"
 
 # Dashboard messages
 msgid "plugins.generic.reviewerCertificate.certificateAvailable"
-msgstr "Vaš certifikat je spreman!"
+msgstr "Vaša je potvrda spremna!"
 
 msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
-msgstr "Hvala što ste dovršili ovu recenziju. Sada možete preuzeti svoj certifikat za priznanje."
+msgstr "Hvala vam na izrađenoj recenziji. Potvrdu o recenziranju sada možete preuzeti."
 
 msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
-msgstr "Vaš certifikat bit će automatski generiran kada kliknete na gumb za preuzimanje."
+msgstr "Potvrda će se automatski generirati kada kliknete gumb za preuzimanje."
 
 msgid "plugins.generic.reviewerCertificate.downloadCertificate"
-msgstr "Preuzmi Certifikat"
+msgstr "Preuzmi potvrdu"
 
 # Settings form
 msgid "plugins.generic.reviewerCertificate.settings.description"
-msgstr "Konfigurirajte predloške certifikata i kriterije prihvatljivosti za recenzente."
+msgstr "Podesite predložak potvrde i uvjete za njezino stjecanje."
 
 msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
-msgstr "Postavke Predloška Certifikata"
+msgstr "Postavke predloška potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
-msgstr "Pozadinska Slika"
+msgstr "Pozadinska slika"
 
 msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
-msgstr "Prenesite pozadinsku sliku za certifikat (JPG ili PNG, preporučena veličina: 2100x2970 piksela za A4)"
+msgstr "Učitajte pozadinsku sliku potvrde (JPG ili PNG; preporučena veličina: 2100 × 2970 piksela za A4)"
 
 msgid "plugins.generic.reviewerCertificate.settings.currentImage"
-msgstr "Trenutna pozadinska slika"
+msgstr "Trenutačna pozadinska slika"
 
 msgid "plugins.generic.reviewerCertificate.settings.headerText"
-msgstr "Tekst Zaglavlja"
+msgstr "Tekst zaglavlja"
 
 msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
-msgstr "Glavni naslov prikazan na vrhu certifikata"
+msgstr "Glavni naslov na vrhu potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
 msgstr "Tekst zaglavlja je obavezan"
 
 msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
-msgstr "Predložak Tijela Certifikata"
+msgstr "Predložak tijela potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
-msgstr "Glavni sadržaj certifikata. Koristite varijable predloška za umetanje dinamičkog sadržaja."
+msgstr "Glavni sadržaj potvrde. Za umetanje dinamičkih podataka koristite varijable predloška."
 
 msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
-msgstr "Predložak tijela certifikata je obavezan"
+msgstr "Predložak tijela potvrde je obavezan"
 
 msgid "plugins.generic.reviewerCertificate.settings.footerText"
-msgstr "Tekst Podnožja"
+msgstr "Tekst podnožja"
 
 msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
-msgstr "Opcionalni tekst prikazan na dnu certifikata"
+msgstr "Neobavezan tekst pri dnu potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
-msgstr "Dostupne Varijable Predloška"
+msgstr "Dostupne varijable predloška"
 
 msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
-msgstr "Koristite ove varijable u svojim predlošcima za umetanje dinamičkog sadržaja:"
+msgstr "U predlošcima koristite ove varijable za umetanje dinamičkih podataka:"
 
 msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
 msgstr "Zadani predložak"
@@ -91,10 +91,10 @@ msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
 msgstr "Koristi zadani predložak"
 
 msgid "plugins.generic.reviewerCertificate.settings.appearance"
-msgstr "Postavke Izgleda"
+msgstr "Postavke izgleda"
 
 msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
-msgstr "Obitelj Fontova"
+msgstr "Font"
 
 msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
 msgstr "Helvetica"
@@ -109,182 +109,182 @@ msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
 msgstr "DejaVu Sans"
 
 msgid "plugins.generic.reviewerCertificate.settings.fontSize"
-msgstr "Veličina Fonta"
+msgstr "Veličina fonta"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
-msgstr "Page Orientation"
+msgstr "Usmjerenje stranice"
 
 msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
-msgstr "Choose portrait (vertical) or landscape (horizontal) layout for the certificate"
+msgstr "Odaberite uspravno ili položeno usmjerenje potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
-msgstr "Portrait (Vertical)"
+msgstr "Uspravno (portret)"
 
 msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
-msgstr "Landscape (Horizontal)"
+msgstr "Položeno (pejzaž)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColor"
-msgstr "Boja Teksta (RGB)"
+msgstr "Boja teksta (RGB)"
 
 msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
-msgstr "Odredite boju teksta koristeći RGB vrijednosti (0-255 za svaku komponentu)"
+msgstr "Boju teksta odredite RGB vrijednostima (0–255 za svaku komponentu)"
 
 msgid "plugins.generic.reviewerCertificate.settings.eligibility"
-msgstr "Kriteriji Prihvatljivosti"
+msgstr "Uvjeti za stjecanje potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
-msgstr "Minimalan Broj Završenih Recenzija"
+msgstr "Najmanji broj dovršenih recenzija"
 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
-msgstr "Minimalan broj završenih recenzija potreban prije nego recenzent može primiti certifikat"
+msgstr "Najmanji broj dovršenih recenzija potreban da bi recenzent mogao preuzeti potvrdu"
 
 msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
-msgstr "Minimalan broj recenzija mora biti broj veći ili jednak 1"
+msgstr "Najmanji broj recenzija mora biti broj veći ili jednak 1"
 
 msgid "plugins.generic.reviewerCertificate.settings.verification"
-msgstr "Opcije Provjere"
+msgstr "Mogućnosti provjere"
 
 msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
-msgstr "Uključi QR kod za provjeru certifikata"
+msgstr "Uključi QR kod za provjeru potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
-msgstr "Pregled Certifikata"
+msgstr "Pregled potvrde"
 
 msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
-msgstr "Nevažeća vrsta slike. Molimo prenesite JPG ili PNG datoteku."
+msgstr "Nepodržana vrsta slike. Učitajte JPG ili PNG datoteku."
 
 msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
-msgstr "Prijenos datoteke nije uspio. Molimo pokušajte ponovno."
+msgstr "Učitavanje datoteke nije uspjelo. Pokušajte ponovno."
 
 msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
-msgstr "Napomena: Helvetica, Times New Roman i Courier podržavaju samo latinične znakove. Ako vaš časopis koristi nelatinične znakove, dodatak će automatski koristiti font DejaVu Sans."
+msgstr "Napomena: Helvetica, Times New Roman i Courier podržavaju samo osnovni latinični skup znakova. Za ispravan prikaz dijakritičkih znakova (č, ć, đ, š, ž) odaberite font DejaVu Sans."
 
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
-msgstr "Ova recenzija još nije završena. Certifikati su dostupni samo za završene recenzije."
+msgstr "Ova recenzija još nije dovršena. Potvrde su dostupne samo za dovršene recenzije."
 
 msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
-msgstr "Nije dostavljen kod certifikata"
+msgstr "Kod potvrde nije naveden"
 
 msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
-msgstr "Nevažeći kod certifikata. Ovaj certifikat nije mogao biti provjeren."
+msgstr "Nevažeći kod potvrde. Potvrdu nije moguće provjeriti."
 
 msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
-msgstr "Nisu odabrani recenzenti za skupno generiranje certifikata"
+msgstr "Nije odabran nijedan recenzent za skupno generiranje potvrda"
 
 msgid "plugins.generic.reviewerCertificate.error.accessDenied"
-msgstr "Pristup odbijen. Nemate dopuštenje za preuzimanje ovog certifikata."
+msgstr "Pristup odbijen. Nemate dopuštenje za preuzimanje ove potvrde."
 
 msgid "plugins.generic.reviewerCertificate.error.noContext"
-msgstr "Nema dostupnog konteksta časopisa. Molimo osigurajte da pristupate iz važećeg časopisa."
+msgstr "Kontekst časopisa nije dostupan. Stranici pristupite iz važećeg časopisa."
 
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
-msgstr "Pristup bazi podataka trenutno nije dostupan. Molimo kontaktirajte administratora sustava."
+msgstr "Pristup bazi podataka trenutačno nije dostupan. Obratite se administratoru sustava."
 
 # Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
-msgstr "Provjeri Certifikat"
+msgstr "Provjera potvrde"
 
 msgid "plugins.generic.reviewerCertificate.verify.description"
-msgstr "Unesite kod certifikata za provjeru autentičnosti"
+msgstr "Unesite kod potvrde radi provjere njezine vjerodostojnosti"
 
 msgid "plugins.generic.reviewerCertificate.verify.code"
-msgstr "Kod Certifikata"
+msgstr "Kod potvrde"
 
 msgid "plugins.generic.reviewerCertificate.verify.button"
-msgstr "Provjeri Certifikat"
+msgstr "Provjeri potvrdu"
 
 msgid "plugins.generic.reviewerCertificate.verify.valid"
-msgstr "Važeći Certifikat"
+msgstr "Potvrda je vjerodostojna"
 
 msgid "plugins.generic.reviewerCertificate.verify.invalid"
-msgstr "Nevažeći Certifikat"
+msgstr "Potvrda nije vjerodostojna"
 
 msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
-msgstr "Kod certifikata koji ste unijeli nije važeći ili ne postoji u našem sustavu."
+msgstr "Uneseni kod nije važeći ili ne postoji u našoj evidenciji."
 
 msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
-msgstr "Kod Certifikata"
+msgstr "Kod potvrde"
 
 msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
-msgstr "Ime Recenzenta"
+msgstr "Ime recenzenta"
 
 msgid "plugins.generic.reviewerCertificate.verify.journalName"
-msgstr "Naziv Časopisa"
+msgstr "Naziv časopisa"
 
 msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
-msgstr "Datum Izdavanja"
+msgstr "Datum izdavanja"
 
 # Batch generation
 msgid "plugins.generic.reviewerCertificate.batch.title"
-msgstr "Skupno Generiranje Certifikata"
+msgstr "Skupno generiranje potvrda"
 
 msgid "plugins.generic.reviewerCertificate.batch.description"
-msgstr "Generirajte certifikate za više recenzenata odjednom. Odaberite recenzente s donje liste koji su završili recenzije, ali još nemaju certifikate."
+msgstr "Generirajte potvrde za više recenzenata odjednom. S popisa u nastavku odaberite recenzente koji su dovršili recenzije, a još nemaju potvrde."
 
 msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
-msgstr "Odaberi Recenzente"
+msgstr "Odaberite recenzente"
 
 msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
-msgstr "završenih recenzija"
+msgstr "dovršenih recenzija"
 
 msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
-msgstr "Nisu pronađeni prihvatljivi recenzenti. Svi recenzenti imaju certifikate za svoje završene recenzije."
+msgstr "Nema recenzenata koji ispunjavaju uvjete. Svi recenzenti već imaju potvrde za svoje dovršene recenzije."
 
 msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
-msgstr "Držite Ctrl (Windows/Linux) ili Cmd (Mac) za odabir više recenzenata"
+msgstr "Za odabir više recenzenata držite Ctrl (Windows/Linux) ili Cmd (Mac)"
 
 msgid "plugins.generic.reviewerCertificate.batch.generate"
-msgstr "Generiraj Certifikate"
+msgstr "Generiraj potvrde"
 
 msgid "plugins.generic.reviewerCertificate.batch.generating"
-msgstr "Generiranje certifikata..."
+msgstr "Generiranje potvrda..."
 
 msgid "plugins.generic.reviewerCertificate.batch.noSelection"
-msgstr "Molimo odaberite barem jednog recenzenta"
+msgstr "Odaberite barem jednog recenzenta"
 
 msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
-msgstr "certifikat/certifikata uspješno generirano"
+msgstr "potvrda uspješno generirano"
 
 msgid "plugins.generic.reviewerCertificate.batch.error"
-msgstr "Došlo je do pogreške pri generiranju certifikata. Molimo pokušajte ponovno."
+msgstr "Pri generiranju potvrda došlo je do pogreške. Pokušajte ponovno."
 
 msgid "plugins.generic.reviewerCertificate.batch.generated"
-msgstr "{$count} certifikat/certifikata uspješno generirano"
+msgstr "Uspješno generirano potvrda: {$count}"
 
 # Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.title"
-msgstr "Statistika Certifikata"
+msgstr "Statistika potvrda"
 
 msgid "plugins.generic.reviewerCertificate.statistics.description"
-msgstr "Pregled generiranja i korištenja certifikata u vašem časopisu"
+msgstr "Pregled izdavanja i preuzimanja potvrda u vašem časopisu"
 
 msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
-msgstr "Ukupno Izdanih Certifikata"
+msgstr "Ukupno izdanih potvrda"
 
 msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
-msgstr "Ukupno Preuzimanja"
+msgstr "Ukupno preuzimanja"
 
 msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
-msgstr "Jedinstvenih Recenzenata s Certifikatima"
+msgstr "Broj recenzenata s potvrdama"
 
 msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
-msgstr "Ukupno Izdanih Certifikata"
+msgstr "Ukupno izdanih potvrda"
 
 msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
-msgstr "Ukupno Preuzimanja"
+msgstr "Ukupno preuzimanja"
 
 msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
-msgstr "Prosječan Broj Preuzimanja po Certifikatu"
+msgstr "Prosječan broj preuzimanja po potvrdi"
 
 msgid "plugins.generic.reviewerCertificate.settings"
-msgstr "Postavke Certifikata"
+msgstr "Postavke potvrda"
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.title"
-msgstr "Moji certifikati"
+msgstr "Moje potvrde"
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.description"
-msgstr "U nastavku je popis svih vaših recenzentskih certifikata za ovaj časopis."
+msgstr "U nastavku je popis svih vaših potvrda o recenzijama za ovaj časopis."
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
 msgstr "Datum izdavanja"
@@ -293,16 +293,16 @@ msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
 msgstr "Naslov rada"
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
-msgstr "Kôd certifikata"
+msgstr "Kod potvrde"
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
 msgstr "Radnje"
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
-msgstr "Još nemate certifikate. Certifikati se generiraju nakon dovršetka recenzije."
+msgstr "Još nemate potvrda. Potvrde se generiraju nakon dovršetka recenzije."
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
-msgstr "Pogledajte sve moje certifikate"
+msgstr "Prikaži sve moje potvrde"
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.emailAction"
 msgstr "Pošalji mi potvrdu e-poštom"
@@ -320,11 +320,11 @@ msgid "plugins.generic.reviewerCertificate.settings.ackEmailBody"
 msgstr "Tekst zahvalne poruke"
 
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
-msgstr "Pismo koje se recenzentu šalje sa stranice Moje potvrde, s priloženom potvrdom u PDF-u. Podržava iste varijable predloška kao i tekst potvrde, uz {{$editorName}}."
+msgstr "Pismo koje se recenzentu šalje sa stranice »Moje potvrde«, s priloženom potvrdom u PDF-u. Podržava iste varijable predloška kao i tekst potvrde, uz {{$editorName}}."
 
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
-msgstr "Acknowledgement of your review for {{$journalName}}"
+msgstr "Zahvala za recenziju za časopis {{$journalName}}"
 
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultBody"
-msgstr "Dear {{$reviewerName}},\n\nWe are immensely grateful for your efforts and time devoted to reviewing the manuscript entitled \"{{$submissionTitle}}\" submitted to {{$journalName}}. Your meticulous and insightful evaluation has provided valuable feedback that has helped the authors improve their work and advance their research endeavors.\n\nYour contribution to maintaining the quality of the articles published in our journal is highly appreciated. We understand that reviewing manuscripts is a demanding task, and we acknowledge the effort you put into thoroughly analyzing the submission and providing constructive criticism to the authors.\n\nTo show our appreciation for your hard work, we would like to kindly ask you to forward this letter to reviews@webofscience.com. Please note that in accordance with our editorial policy, the content of the review will remain confidential and will not be displayed on Web of Science.\n\nYour reviewer certificate is attached to this letter.\n\nOnce again, we extend our gratitude for your commitment to the advancement of research in your field. We hope to continue collaborating with you in the future.\n\nBest regards,\n\n{{$editorName}}\n{{$journalName}}"
+msgstr "Poštovani/a {{$reviewerName}},\n\nod srca zahvaljujemo na trudu i vremenu koje ste uložili u recenziju rada »{{$submissionTitle}}« za časopis {{$journalName}}. Vaša stručna prosudba neprocjenjiv je doprinos kvaliteti časopisa.\n\nU prilogu Vam dostavljamo potvrdu o obavljenoj recenziji.\n\nSa zahvalnošću,\n{{$editorName}}\nUredništvo časopisa {{$journalName}}"
 

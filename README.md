@@ -1,17 +1,15 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.8.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.8.1** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.8.0)**:
-- **New**: "Email me the certificate" — reviewers can email themselves the journal's acknowledgement letter with the certificate PDF attached (letter template editable per journal, ready to forward to Web of Science)
-- **Fixed**: Background images now work when `files_dir` is outside the OJS directory (#69, #71)
-- **Fixed**: Non-English UI no longer shows raw `##key##` strings on OJS 3.4+/3.5 (#72)
-- **Fixed**: No more "Cannot redeclare class" cron warnings on OJS 3.4 git installs (#71)
-- **Fixed**: Release packages now include the plugin CSS/JS
+**Latest Release (v1.8.1)**:
+- **Improved**: Croatian translation professionally proofread by a native speaker — contributed by Željko Filajdić (*Diacovensia*, Catholic Faculty of Theology in Đakovo) (#72)
+- **Fixed**: Page-orientation settings strings were untranslated (English) in all 30 non-English languages
+- **Fixed**: The English (`en`) locale was missing 2 error-message keys on OJS 3.4+/3.5; `en` is now kept in sync automatically
 - All 177 PHP + 96 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author

@@ -15,7 +15,7 @@ The `main` branch contains a single codebase compatible with all OJS versions. F
 
 ## Version
 
-Source of truth: `version.xml` (currently 1.8.0). The `release` field uses 4-part format `X.Y.Z.0`.
+Source of truth: `version.xml` (currently 1.8.1). The `release` field uses 4-part format `X.Y.Z.0`.
 
 ## Development Commands
 
@@ -73,7 +73,7 @@ ReviewerCertificatePlugin.php  (entry point — thin wrapper)
 
 - `ReviewerCertificatePlugin.php` — Entry point (thin wrapper, namespace `APP\plugins\generic\reviewerCertificate`)
 - `compat_autoloader.php` — Namespace compatibility layer (OJS 3.3 ↔ 3.4+)
-- `classes/ReviewerCertificatePluginCore.php` — Actual implementation. Hooks: `LoadHandler`, `TemplateManager::display`, `reviewassignmentdao::_updateobject`
+- `classes/ReviewerCertificatePluginCore.php` — Actual implementation. Hooks: `LoadHandler`, `TemplateManager::display`, `reviewassignmentdao::_updateobject`, plus `Mailer::Mailables` on OJS 3.4+ (registers the acknowledgement-letter mailable)
 - `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `myCertificates()` (reviewer), `emailCertificate()` (reviewer, POST+CSRF only — emails the acknowledgement letter with the certificate PDF attached), `generateBatch()` (manager role)
 - `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`vendor/tecnickcom/tcpdf/`)
 - `templates/myCertificates.tpl` — "My Certificates" page listing all certificates for a reviewer
@@ -225,7 +225,7 @@ Two-path strategy in `classes/migration/ReviewerCertificateInstallMigration.php`
 
 ### Template Variables
 
-Available in certificate body template: `{{$reviewerName}}`, `{{$reviewerFirstName}}`, `{{$reviewerLastName}}`, `{{$journalName}}`, `{{$journalAcronym}}`, `{{$submissionTitle}}`, `{{$reviewDate}}`, `{{$reviewYear}}`, `{{$currentDate}}`, `{{$currentYear}}`, `{{$certificateCode}}`
+Available in certificate body template: `{{$reviewerName}}`, `{{$reviewerFirstName}}`, `{{$reviewerLastName}}`, `{{$journalName}}`, `{{$journalAcronym}}`, `{{$submissionTitle}}`, `{{$reviewDate}}`, `{{$reviewYear}}`, `{{$currentDate}}`, `{{$currentYear}}`, `{{$certificateCode}}`, `{{$editorName}}` (journal contact name)
 
 ## Testing
 
@@ -242,7 +242,7 @@ Test structure:
 - `tests/Integration/` — Workflow testing
 - `tests/Compatibility/` — OJS 3.3/3.4/3.5 specific tests
 - `tests/Security/` — Authorization and input validation
-- `tests/Locale/` — Translation validation (86 keys per language, not included in `composer test:all`)
+- `tests/Locale/` — Translation validation (key parity across all languages, not included in `composer test:all`)
 - `tests/e2e/` — Playwright E2E tests against Docker OJS instances (ports 8033/8034/8035)
 
 **Gotcha**: `tests/compatibility/` (lowercase) also exists with `ClassLoadingTest.php`, but it is NOT in any phpunit testsuite — the "Compatibility Tests" suite only runs `tests/Compatibility/` (capital C). It only runs when invoked directly: `vendor/bin/phpunit tests/compatibility/ClassLoadingTest.php`.
@@ -307,7 +307,7 @@ Upload to GitHub Releases with tags `v{VERSION}-3.3`, `v{VERSION}-3.4`, `v{VERSI
 
 ## Localization
 
-32 languages in `locale/` directory with dual format support:
+31 languages in `locale/` (61 directories total: 31 long-form + 30 short-form; README's "32 languages" counts `en` and `en_US` separately) with dual format support:
 - `.xml` files — source of truth for all translations
 - `.po` files — **required by all OJS versions** (OJS 3.3.0-22 uses `Gettext\Translations::fromPoFile()` in `LocaleFile::load()`)
 
@@ -321,9 +321,10 @@ php temp/convert_xml_to_po.php
 **Locale directory naming (dual convention):** OJS 3.3 resolves locales by long codes (`uk_UA`, `de_DE`); OJS 3.4+/3.5 resolve by short codes (`uk`, `de`). Both forms ship as **real directories** (symlinks were dropped for Issue #72 — they get lost in git clones, GitHub source archives, and many deploy flows). The long-form directories are the source of truth:
 - Edit translations only in the long-form directory, then run `php temp/convert_xml_to_po.php` — it regenerates `.po` files AND copies both files into the short-form directory.
 - The long→short mapping lives in `temp/convert_xml_to_po.php` and `tests/Locale/LocaleValidationTest.php` (`SHORT_LOCALE_MAP`); `testShortCodeLocaleDirsAreRealAndInSync` fails if the copies drift.
+- `en_US → en` is in the converter's map like every other locale; `pt_BR` is the only long-form dir with no short form (same code in all OJS versions).
 - When adding a language, create the `xx_XX` directory, add the mapping entry in both files, and re-run the converter.
 
-Current key count: 103 per language (101 for `en/` which lacks 2 error keys). Total tests: 177 PHP + 96 E2E = 273 tests.
+Current key count: 103 per language. Total tests: 177 PHP + 96 E2E = 273 tests.
 
 Validate translations: `vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
 
