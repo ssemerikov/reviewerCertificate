@@ -7,7 +7,7 @@
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
 **Latest Release (v1.8.1)**:
-- **Improved**: Croatian translation professionally proofread by a native speaker — contributed by Željko Filajdić (*Diacovensia*, Catholic Faculty of Theology in Đakovo) (#72)
+- **Improved**: Croatian translation revised by a native speaker — translated and proofread by Željko Filajdić (*Diacovensia*, Catholic Faculty of Theology in Đakovo) (#72)
 - **Fixed**: Page-orientation settings strings were untranslated (English) in all 30 non-English languages
 - **Fixed**: The English (`en`) locale was missing 2 error-message keys on OJS 3.4+/3.5; `en` is now kept in sync automatically
 - All 177 PHP + 96 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
@@ -371,7 +371,7 @@ We extend our sincere gratitude to the following contributors who helped improve
 
 - **Pedro Felipe Rocha** — For Brazilian Portuguese translation and feedback on OJS 3.5 locale requirements.
 
-- **Željko Filajdić** (Diacovensia – Teološki prilozi, Catholic Faculty of Theology in Đakovo, Croatia) — For reporting the short locale-code issue (#72) and contributing a professionally proofread Croatian translation, shipped in v1.8.1.
+- **Željko Filajdić** (Diacovensia – Teološki prilozi, Catholic Faculty of Theology in Đakovo, Croatia) — For reporting the short locale-code issue (#72) and contributing a native-speaker Croatian translation, translated and proofread by the journal's editorial staff, shipped in v1.8.1.
 
 - **Dr. Pavlo Nechypurenko** — For reporting the font size configuration issue fixed in v1.0.3.
 

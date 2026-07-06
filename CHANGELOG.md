@@ -9,7 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Croatian translation professionally proofread** (Issue #72) — Željko Filajdić (*Diacovensia – Teološki prilozi*, Catholic Faculty of Theology in Đakovo, Croatia) contributed a native-speaker, professionally proofread revision of the complete Croatian localization: English-style Title Case corrected to Croatian sentence case, terminology unified on "potvrda" (the established Croatian academic term), the four page-orientation strings and the default acknowledgement-letter subject/body translated, and the font guidance now lists the Croatian diacritics (č, ć, đ, š, ž) explicitly. Many thanks to Željko and the Diacovensia editorial staff.
+- **Croatian translation revised by the journal's editorial staff** (Issue #72) — Željko Filajdić (*Diacovensia – Teološki prilozi*, Catholic Faculty of Theology in Đakovo, Croatia), as both translator and proofreader, contributed a native-speaker revision of the complete Croatian localization: English-style Title Case corrected to Croatian sentence case, terminology unified on "potvrda" (the established Croatian academic term), the four page-orientation strings and the default acknowledgement-letter subject/body translated, and the font guidance now lists the Croatian diacritics (č, ć, đ, š, ž) explicitly. Many thanks to Željko and the Diacovensia editorial staff.
 
 ### Fixed
 
