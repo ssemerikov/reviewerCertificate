@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Тема на благодарственото писмо</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Текст на благодарственото писмо</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Писмо, изпращано на рецензента от страницата „Моите сертификати", с прикачен PDF сертификат. Поддържа същите променливи на шаблона като текста на сертификата, плюс {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF файлът на сертификата не можа да бъде прикачен към това писмо (възможно е да надвишава ограничението за размер на пощенския сървър). Можете да изтеглите сертификата си тук:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

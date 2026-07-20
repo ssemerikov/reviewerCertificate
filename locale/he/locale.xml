@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">נושא מכתב התודה</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">גוף מכתב התודה</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">מכתב הנשלח לסוקר מעמוד התעודות שלי, עם קובץ ה-PDF של התעודה כקובץ מצורף. תומך באותם משתני תבנית כמו טקסט התעודה, וכן {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">לא ניתן היה לצרף את קובץ ה-PDF של התעודה להודעה זו (ייתכן שהוא חורג ממגבלת הגודל של שרת הדואר). ניתן להוריד את התעודה כאן:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

@@ -322,6 +322,9 @@ msgstr "Cos del correu d'agraïment"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Carta enviada al revisor des de la pàgina «Els meus certificats», amb el certificat PDF adjunt. Admet les mateixes variables de plantilla que el text del certificat, a més de {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "No s'ha pogut adjuntar el PDF del certificat a aquest correu (potser supera el límit de mida del servidor de correu). Podeu descarregar el vostre certificat aquí:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

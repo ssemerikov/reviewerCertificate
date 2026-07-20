@@ -149,6 +149,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Emne for takkebrevet</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Takkebrevets tekst</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Brev som sendes til fagfellen fra siden Mine sertifikater, med sertifikatet vedlagt som PDF. Støtter de samme malvariablene som sertifikatteksten, i tillegg til {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF-en med sertifikatet kunne ikke legges ved denne e-posten (den kan overskride e-postserverens størrelsesgrense). Du kan laste ned sertifikatet ditt her:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

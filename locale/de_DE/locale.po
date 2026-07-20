@@ -322,6 +322,9 @@ msgstr "Text der Dankes-E-Mail"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Brief, der Gutachter/innen von der Seite „Meine Zertifikate\" gesendet wird, mit dem Zertifikat-PDF im Anhang. Unterstützt dieselben Vorlagenvariablen wie der Zertifikattext sowie {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Das Zertifikat-PDF konnte dieser E-Mail nicht angehängt werden (es überschreitet möglicherweise die Größenbeschränkung des Mailservers). Sie können Ihr Zertifikat hier herunterladen:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

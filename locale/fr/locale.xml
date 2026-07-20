@@ -148,6 +148,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Objet du courriel de remerciement</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Corps du courriel de remerciement</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Lettre envoyée à l'évaluateur depuis la page « Mes certificats », avec le certificat PDF en pièce jointe. Prend en charge les mêmes variables de modèle que le texte du certificat, ainsi que {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Le PDF du certificat n'a pas pu être joint à ce courriel (il dépasse peut-être la limite de taille du serveur de messagerie). Vous pouvez télécharger votre certificat ici :</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

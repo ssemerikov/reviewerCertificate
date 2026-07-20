@@ -149,6 +149,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Teşekkür e-postası konusu</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Teşekkür e-postası metni</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Sertifikalarım sayfasından hakeme gönderilen, sertifika PDF'inin eklendiği mektup. Sertifika metniyle aynı şablon değişkenlerini ve ayrıca {{$editorName}} değişkenini destekler.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Sertifika PDF'i bu e-postaya eklenemedi (posta sunucusunun boyut sınırını aşıyor olabilir). Sertifikanızı buradan indirebilirsiniz:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

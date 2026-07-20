@@ -322,6 +322,9 @@ msgstr "Text děkovného e-mailu"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Dopis zasílaný recenzentovi ze stránky Moje certifikáty s přiloženým PDF certifikátem. Podporuje stejné proměnné šablony jako text certifikátu a navíc {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "PDF certifikátu se nepodařilo přiložit k tomuto e-mailu (může překračovat limit velikosti poštovního serveru). Certifikát si můžete stáhnout zde:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

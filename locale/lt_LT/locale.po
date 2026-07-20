@@ -322,6 +322,9 @@ msgstr "Padėkos laiško tekstas"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Laiškas, siunčiamas recenzentui iš puslapio „Mano sertifikatai\", su pridėtu PDF sertifikatu. Palaiko tuos pačius šablono kintamuosius kaip sertifikato tekstas ir {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Sertifikato PDF nepavyko pridėti prie šio laiško (jis gali viršyti pašto serverio dydžio limitą). Sertifikatą galite atsisiųsti čia:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

@@ -149,6 +149,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Temat wiadomości z podziękowaniem</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Treść wiadomości z podziękowaniem</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">List wysyłany do recenzenta ze strony „Moje certyfikaty" z załączonym certyfikatem PDF. Obsługuje te same zmienne szablonu co treść certyfikatu oraz {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Nie udało się załączyć pliku PDF certyfikatu do tej wiadomości (może przekraczać limit rozmiaru serwera pocztowego). Certyfikat można pobrać tutaj:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

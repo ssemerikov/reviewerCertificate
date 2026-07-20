@@ -322,6 +322,9 @@ msgstr "謝辞メールの本文"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "マイ証明書ページから査読者に送信されるレター。証明書のPDFが添付されます。証明書本文と同じテンプレート変数に加えて {{$editorName}} が使用できます。"
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "証明書のPDFをこのメールに添付できませんでした（メールサーバーのサイズ制限を超えている可能性があります）。証明書は以下からダウンロードできます:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

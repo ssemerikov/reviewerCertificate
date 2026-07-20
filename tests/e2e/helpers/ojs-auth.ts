@@ -8,10 +8,11 @@ const TEST_PASSWORD = 'testpass123';
  */
 async function login(page: Page, username: string, password: string = TEST_PASSWORD) {
   // Navigate to the site-level login (works for all versions)
-  await page.goto('/index.php/index/login', { waitUntil: 'networkidle' });
+  await page.goto('/index.php/index/login', { waitUntil: 'networkidle', timeout: 45000 });
 
-  // Wait for form to be ready
-  await page.waitForSelector('input[name="username"]', { timeout: 10000 });
+  // Wait for form to be ready. Generous timeout: with all three OJS projects
+  // running in parallel against one shared MySQL, page loads can take >10s.
+  await page.waitForSelector('input[name="username"]', { timeout: 30000 });
 
   // Fill credentials
   await page.locator('input[name="username"]').fill(username);

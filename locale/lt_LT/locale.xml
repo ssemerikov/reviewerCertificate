@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Padėkos laiško tema</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Padėkos laiško tekstas</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Laiškas, siunčiamas recenzentui iš puslapio „Mano sertifikatai", su pridėtu PDF sertifikatu. Palaiko tuos pačius šablono kintamuosius kaip sertifikato tekstas ir {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Sertifikato PDF nepavyko pridėti prie šio laiško (jis gali viršyti pašto serverio dydžio limitą). Sertifikatą galite atsisiųsti čia:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 
