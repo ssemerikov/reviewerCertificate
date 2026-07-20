@@ -322,6 +322,9 @@ msgstr "Isi email ucapan terima kasih"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Surat yang dikirim ke reviewer dari halaman Sertifikat Saya, dengan PDF sertifikat terlampir. Mendukung variabel templat yang sama dengan teks sertifikat, ditambah {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "PDF sertifikat tidak dapat dilampirkan ke email ini (mungkin melebihi batas ukuran server email). Anda dapat mengunduh sertifikat Anda di sini:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

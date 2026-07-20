@@ -322,6 +322,9 @@ msgstr "Acknowledgement email body"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Letter sent to the reviewer from the My Certificates page, with the certificate PDF attached. Supports the same template variables as the certificate body, plus {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "The certificate PDF could not be attached to this email (it may exceed the mail server's size limit). You can download your certificate here:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

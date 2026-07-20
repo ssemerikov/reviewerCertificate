@@ -148,6 +148,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Asunto del correo de agradecimiento</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Cuerpo del correo de agradecimiento</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Carta enviada al revisor desde la página «Mis certificados», con el certificado PDF adjunto. Admite las mismas variables de plantilla que el texto del certificado, además de {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">No se pudo adjuntar el PDF del certificado a este correo (puede que supere el límite de tamaño del servidor de correo). Puede descargar su certificado aquí:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

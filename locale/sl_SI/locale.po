@@ -322,6 +322,9 @@ msgstr "Besedilo zahvalnega sporočila"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Pismo, poslano recenzentu s strani Moja potrdila, s priloženim potrdilom v PDF. Podpira iste spremenljivke predloge kot besedilo potrdila ter {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "PDF-ja potrdila ni bilo mogoče priložiti temu e-sporočilu (morda presega omejitev velikosti poštnega strežnika). Potrdilo lahko prenesete tukaj:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

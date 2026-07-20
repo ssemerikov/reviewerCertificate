@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Köszönőlevél tárgya</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Köszönőlevél szövege</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">A Tanúsítványaim oldalról a lektornak küldött levél, csatolt PDF-tanúsítvánnyal. A tanúsítvány szövegével azonos sablonváltozókat támogatja, valamint a {{$editorName}} változót.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">A tanúsítvány PDF-jét nem sikerült csatolni ehhez az e-mailhez (valószínűleg meghaladja a levelezőszerver méretkorlátját). A tanúsítványt itt töltheti le:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

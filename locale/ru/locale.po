@@ -322,6 +322,9 @@ msgstr "Текст благодарственного письма"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Письмо, отправляемое рецензенту со страницы «Мои сертификаты» с вложенным PDF-сертификатом. Поддерживает те же переменные шаблона, что и текст сертификата, а также {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Не удалось вложить PDF-файл сертификата в это письмо (возможно, он превышает ограничение размера почтового сервера). Вы можете скачать свой сертификат здесь:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

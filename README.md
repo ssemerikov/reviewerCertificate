@@ -7,7 +7,7 @@
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
 **Latest Release (v1.8.1)**:
-- **Improved**: Croatian translation professionally proofread by a native speaker — contributed by Željko Filajdić (*Diacovensia*, Catholic Faculty of Theology in Đakovo) (#72)
+- **Improved**: Croatian translation revised by a native speaker — translated and proofread by Željko Filajdić (*Diacovensia*, Catholic Faculty of Theology in Đakovo) (#72)
 - **Fixed**: Page-orientation settings strings were untranslated (English) in all 30 non-English languages
 - **Fixed**: The English (`en`) locale was missing 2 error-message keys on OJS 3.4+/3.5; `en` is now kept in sync automatically
 - All 177 PHP + 96 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
@@ -20,13 +20,13 @@ Email: semerikov@gmail.com
 
 ## Development
 
-This plugin was developed with the assistance of **Claude Code (Opus 4.6)**, an AI-powered coding assistant by Anthropic. Claude Code was used throughout the development process for:
+This plugin was developed with the assistance of **Claude Code (Sonnet 5)**, an AI-powered coding assistant by Anthropic. Claude Code was used throughout the development process for:
 
 - **Code Architecture**: Designing the plugin structure and component organization
 - **Implementation**: Writing PHP classes, controllers, and data access objects
 - **OJS Integration**: Ensuring compatibility with OJS 3.3.x, 3.4.x, and 3.5.x APIs
 - **Database Design**: Creating the migration system and schema with automatic fallback for legacy versions
-- **Testing & Debugging**: Comprehensive test suite with 158 PHP tests + 87 E2E tests across all OJS versions
+- **Testing & Debugging**: Comprehensive test suite with 177 PHP tests + 96 E2E tests across all OJS versions
 - **Documentation**: Creating comprehensive user and technical documentation
 
 The iterative development approach with Claude Code enabled rapid prototyping, thorough testing across OJS versions, and production-ready code quality.
@@ -42,9 +42,9 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 32 languages with complete coverage (103 message keys each)
+  - 31 languages with complete coverage (103 message keys each)
   - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
-  - Dual format support: `.xml` (OJS 3.3/3.4) and `.po` (OJS 3.5) locale files
+  - Dual format: `.xml` (source of truth) and `.po` (required at runtime by all OJS versions) locale files
   - Automatic language detection from OJS settings
   - All translations validated with comprehensive test suite
 - **Batch Generation**: Generate certificates for multiple reviewers at once
@@ -57,7 +57,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
   - GD or Imagick (for image processing)
   - mbstring
   - zip
-- **TCPDF Library**: ✅ Bundled with plugin (v6.10.0) - no additional installation required!
+- **TCPDF Library**: ✅ Bundled with plugin (v6.11.2) - no additional installation required!
 - **Memory**: 128MB minimum PHP memory limit (256MB recommended for large background images)
 
 ### Version Compatibility
@@ -189,14 +189,13 @@ We deeply appreciate your expertise and dedication to advancing scholarly commun
 
 ## Language Support
 
-The Reviewer Certificate Plugin is fully internationalized and available in 32 languages.
+The Reviewer Certificate Plugin is fully internationalized and available in 31 languages.
 
 ### Supported Languages
 
 | Language | Locale Code | Native Name | Status |
 |----------|-------------|-------------|--------|
 | English (US) | `en_US` | English | ✅ Complete |
-| English | `en` | English | ✅ Complete |
 | Ukrainian | `uk_UA` | Українська | ✅ Complete |
 | Russian | `ru_RU` | Русский | ✅ Complete |
 | Spanish | `es_ES` | Español | ✅ Complete |
@@ -333,7 +332,7 @@ The plugin creates these tables:
 | 3.4.x | 7.4 - 8.2 | ✅ Fully tested |
 | 3.5.x | 8.0 - 8.2 | ✅ Fully tested |
 
-**Test Coverage**: 158 PHP unit tests + 87 E2E tests = 245 total tests
+**Test Coverage**: 177 PHP unit tests + 96 E2E tests = 273 total tests
 
 ## Support
 
@@ -372,6 +371,8 @@ We extend our sincere gratitude to the following contributors who helped improve
 
 - **Pedro Felipe Rocha** — For Brazilian Portuguese translation and feedback on OJS 3.5 locale requirements.
 
+- **Željko Filajdić** (Diacovensia – Teološki prilozi, Catholic Faculty of Theology in Đakovo, Croatia) — For reporting the short locale-code issue (#72) and contributing a native-speaker Croatian translation, translated and proofread by the journal's editorial staff, shipped in v1.8.1.
+
 - **Dr. Pavlo Nechypurenko** — For reporting the font size configuration issue fixed in v1.0.3.
 
 Thank you to everyone in the PKP Community Forum who provided feedback and helped test the plugin!
@@ -383,7 +384,7 @@ Thank you to everyone in the PKP Community Forum who provided feedback and helpe
 
 Developed for the Open Journal Systems community to support and recognize peer reviewers' contributions to scholarly publishing.
 
-**Development Tools**: Built with Claude Code (Opus 4.6) by Anthropic
+**Development Tools**: Built with Claude Code (Sonnet 5) by Anthropic
 
 ## Additional Resources
 

@@ -322,6 +322,9 @@ msgstr "Tekst zahvalne poruke"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Pismo koje se recenzentu šalje sa stranice »Moje potvrde«, s priloženom potvrdom u PDF-u. Podržava iste varijable predloška kao i tekst potvrde, uz {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "PDF certifikata nije bilo moguće priložiti ovoj e-poruci (možda premašuje ograničenje veličine poslužitelja e-pošte). Certifikat možete preuzeti ovdje:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Zahvala za recenziju za časopis {{$journalName}}"
 

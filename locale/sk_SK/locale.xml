@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Predmet ďakovného e-mailu</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Text ďakovného e-mailu</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">List zasielaný recenzentovi zo stránky Moje certifikáty s priloženým PDF certifikátom. Podporuje rovnaké premenné šablóny ako text certifikátu a navyše {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF certifikátu sa nepodarilo priložiť k tomuto e-mailu (môže prekračovať limit veľkosti poštového servera). Certifikát si môžete stiahnuť tu:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

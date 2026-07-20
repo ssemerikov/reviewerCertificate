@@ -322,6 +322,9 @@ msgstr "متن ایمیل قدردانی"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "نامه‌ای که از صفحهٔ گواهی‌های من برای داور ارسال می‌شود و فایل PDF گواهی به آن پیوست است. از همان متغیرهای قالبِ متن گواهی و همچنین {{$editorName}} پشتیبانی می‌کند."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "امکان پیوست کردن فایل PDF گواهی به این ایمیل وجود نداشت (ممکن است از محدودیت اندازه سرور ایمیل فراتر رود). می‌توانید گواهی خود را از اینجا دانلود کنید:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

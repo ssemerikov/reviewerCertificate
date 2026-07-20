@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">موضوع رسالة الشكر</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">نص رسالة الشكر</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">رسالة تُرسل إلى المحكّم من صفحة شهاداتي مع إرفاق الشهادة بصيغة PDF. تدعم نفس متغيرات القالب المستخدمة في نص الشهادة، إضافة إلى {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">تعذر إرفاق ملف PDF للشهادة بهذه الرسالة (قد يتجاوز حد الحجم لخادم البريد). يمكنك تنزيل شهادتك من هنا:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

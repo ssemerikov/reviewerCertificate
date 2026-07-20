@@ -322,6 +322,9 @@ msgstr "致谢邮件正文"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "从\"我的证书\"页面发送给审稿人的信函,并附上证书 PDF。支持与证书正文相同的模板变量,以及 {{$editorName}}。"
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "无法将证书 PDF 附加到此邮件（可能超过了邮件服务器的大小限制）。您可以在此处下载您的证书："
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

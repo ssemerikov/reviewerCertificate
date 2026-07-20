@@ -322,6 +322,9 @@ msgstr "Takkebrevets tekst"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Brev som sendes til fagfellen fra siden Mine sertifikater, med sertifikatet vedlagt som PDF. Støtter de samme malvariablene som sertifikatteksten, i tillegg til {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "PDF-en med sertifikatet kunne ikke legges ved denne e-posten (den kan overskride e-postserverens størrelsesgrense). Du kan laste ned sertifikatet ditt her:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

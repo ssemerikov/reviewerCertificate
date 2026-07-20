@@ -149,6 +149,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Predmet zahvalne poruke</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Tekst zahvalne poruke</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Pismo koje se recenzentu šalje sa stranice »Moje potvrde«, s priloženom potvrdom u PDF-u. Podržava iste varijable predloška kao i tekst potvrde, uz {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF certifikata nije bilo moguće priložiti ovoj e-poruci (možda premašuje ograničenje veličine poslužitelja e-pošte). Certifikat možete preuzeti ovdje:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Zahvala za recenziju za časopis {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Poštovani/a {{$reviewerName}},
 
