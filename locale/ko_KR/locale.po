@@ -322,6 +322,9 @@ msgstr "감사 이메일 본문"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "내 인증서 페이지에서 심사자에게 발송되는 서신으로, 인증서 PDF가 첨부됩니다. 인증서 본문과 동일한 템플릿 변수와 {{$editorName}}을(를) 지원합니다."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "인증서 PDF를 이 이메일에 첨부할 수 없었습니다(메일 서버의 크기 제한을 초과했을 수 있습니다). 인증서는 여기에서 다운로드할 수 있습니다:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

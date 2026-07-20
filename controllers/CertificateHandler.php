@@ -334,12 +334,8 @@ class CertificateHandler extends Handler {
         $body = $generator->renderText($bodyTemplate);
         $fileName = 'reviewer_certificate_' . $certificate->getCertificateId() . '.pdf';
 
-        try {
-            $sent = $this->sendAcknowledgementEmail($user, $context, $subject, $body, $pdfContent, $fileName, $request);
-        } catch (\Throwable $e) {
-            error_log('ReviewerCertificate: acknowledgement email failed: ' . $e->getMessage());
-            $sent = false;
-        }
+        $downloadUrl = $request->url(null, 'certificate', 'download', array($reviewId));
+        $sent = $this->sendAcknowledgementWithFallback($user, $context, $subject, $body, $pdfContent, $fileName, $request, $downloadUrl);
 
         $request->redirect(
             null, 'certificate', 'myCertificates', null,
@@ -348,13 +344,51 @@ class CertificateHandler extends Handler {
     }
 
     /**
-     * Send the acknowledgement letter (version-branched mail APIs).
+     * Send the acknowledgement letter, falling back to a link-only letter
+     * when the transport rejects the attached one (e.g. SMTP 552 size limit
+     * — SendPulse rejected iitlt's certificate PDFs this way while pkp-lib
+     * swallowed the error).
      * @param $user User Recipient (the reviewer)
      * @param $context Context
      * @param $subject string Rendered subject
      * @param $body string Rendered plain-text body
      * @param $pdfContent string PDF bytes to attach
      * @param $fileName string Attachment file name
+     * @param $request Request
+     * @param $downloadUrl string Absolute URL of the certificate download
+     * @return bool True when either the attached or the link-only letter was sent
+     */
+    private function sendAcknowledgementWithFallback($user, $context, $subject, $body, $pdfContent, $fileName, $request, $downloadUrl) {
+        $sent = false;
+        try {
+            $sent = $this->sendAcknowledgementEmail($user, $context, $subject, $body, $pdfContent, $fileName, $request);
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: acknowledgement email failed: ' . $e->getMessage());
+        }
+        if ($sent) {
+            return true;
+        }
+
+        error_log('ReviewerCertificate: attached acknowledgement email failed; retrying without the PDF attachment');
+        $fallbackBody = $body . "\n\n"
+            . __('plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback') . "\n"
+            . $downloadUrl;
+        try {
+            return $this->sendAcknowledgementEmail($user, $context, $subject, $fallbackBody, null, null, $request);
+        } catch (\Throwable $e) {
+            error_log('ReviewerCertificate: link-only acknowledgement email failed: ' . $e->getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Send the acknowledgement letter (version-branched mail APIs).
+     * @param $user User Recipient (the reviewer)
+     * @param $context Context
+     * @param $subject string Rendered subject
+     * @param $body string Rendered plain-text body
+     * @param $pdfContent string|null PDF bytes to attach, or null for no attachment
+     * @param $fileName string|null Attachment file name (null with $pdfContent)
      * @param $request Request
      * @return bool
      */
@@ -400,10 +434,36 @@ class CertificateHandler extends Handler {
             $mailable
                 ->to($user->getEmail(), $user->getFullName())
                 ->subject($subject)
-                ->body(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')))
-                ->attachData($pdfContent, $fileName, array('mime' => 'application/pdf'));
+                ->body(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')));
+            if ($pdfContent !== null) {
+                $mailable->attachData($pdfContent, $fileName, array('mime' => 'application/pdf'));
+            }
+
+            // pkp-lib's Mailer::sendSymfonyMessage() swallows TransportException
+            // (it only error_log()s, e.g. SMTP 552 "message too large"), so
+            // Mail::send() alone cannot report failure. Laravel dispatches
+            // MessageSent only when the transport actually accepted the
+            // message — observe it to get the real result.
+            $accepted = null;
+            try {
+                if (class_exists('Illuminate\Support\Facades\Event')
+                        && class_exists('Illuminate\Mail\Events\MessageSent')) {
+                    $accepted = false;
+                    \Illuminate\Support\Facades\Event::listen(
+                        \Illuminate\Mail\Events\MessageSent::class,
+                        function () use (&$accepted) {
+                            $accepted = true;
+                        }
+                    );
+                }
+            } catch (\Throwable $e) {
+                $accepted = null;
+            }
             \Illuminate\Support\Facades\Mail::send($mailable);
-            return true;
+            if ($accepted === false) {
+                error_log('ReviewerCertificate: acknowledgement email was not accepted by the mail transport (see preceding mailer error)');
+            }
+            return $accepted === null ? true : $accepted;
         }
 
         // OJS 3.3 — legacy Mail class with a temp file attachment
@@ -422,6 +482,10 @@ class CertificateHandler extends Handler {
         $mail->addRecipient($user->getEmail(), $user->getFullName());
         $mail->setSubject($subject);
         $mail->setBody(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')));
+
+        if ($pdfContent === null) {
+            return (bool) $mail->send();
+        }
 
         $tmpFile = tempnam(sys_get_temp_dir(), 'rc_cert_');
         file_put_contents($tmpFile, $pdfContent);

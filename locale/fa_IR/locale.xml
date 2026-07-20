@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">موضوع ایمیل قدردانی</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">متن ایمیل قدردانی</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">نامه‌ای که از صفحهٔ گواهی‌های من برای داور ارسال می‌شود و فایل PDF گواهی به آن پیوست است. از همان متغیرهای قالبِ متن گواهی و همچنین {{$editorName}} پشتیبانی می‌کند.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">امکان پیوست کردن فایل PDF گواهی به این ایمیل وجود نداشت (ممکن است از محدودیت اندازه سرور ایمیل فراتر رود). می‌توانید گواهی خود را از اینجا دانلود کنید:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

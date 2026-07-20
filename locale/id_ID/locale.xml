@@ -148,6 +148,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Subjek email ucapan terima kasih</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Isi email ucapan terima kasih</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Surat yang dikirim ke reviewer dari halaman Sertifikat Saya, dengan PDF sertifikat terlampir. Mendukung variabel templat yang sama dengan teks sertifikat, ditambah {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF sertifikat tidak dapat dilampirkan ke email ini (mungkin melebihi batas ukuran server email). Anda dapat mengunduh sertifikat Anda di sini:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

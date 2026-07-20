@@ -604,8 +604,76 @@ class OJSMockLoader
                     protected static ?string $name = null;
                     protected static ?string $description = null;
                     protected static ?string $emailTemplateKey = null;
+                    public $mockFrom = null;
+                    public $mockTo = [];
+                    public $mockSubject = null;
+                    public $mockBody = null;
+                    public $mockAttachments = [];
                     public function __construct($variables = []) {}
                     public static function getEmailTemplateKey() { return static::$emailTemplateKey; }
+                    public function from($address, $name = null) { $this->mockFrom = [$address, $name]; return $this; }
+                    public function to($address, $name = null) { $this->mockTo[] = [$address, $name]; return $this; }
+                    public function subject($subject) { $this->mockSubject = $subject; return $this; }
+                    public function body($body) { $this->mockBody = $body; return $this; }
+                    public function attachData($data, $name, $options = []) { $this->mockAttachments[] = [$name, strlen($data), $options]; return $this; }
+                }
+            ');
+        }
+
+        // Create Illuminate mail-layer mocks modelling pkp-lib 3.4+ behavior:
+        // Mailer::sendSymfonyMessage() swallows TransportException, so the
+        // ONLY observable success signal is the MessageSent event — it fires
+        // when the transport accepted the message and stays silent otherwise.
+        // eval() is safe here: test-only code defining classes from static
+        // strings, conditionally (see file header).
+        if (!class_exists('Illuminate\Mail\Events\MessageSent')) {
+            eval('
+                namespace Illuminate\Mail\Events;
+                class MessageSent {}
+            ');
+        }
+        if (!class_exists('Illuminate\Support\Facades\Event')) {
+            eval('
+                namespace Illuminate\Support\Facades;
+                class Event {
+                    public static $listeners = [];
+                    public static function listen($event, $callback) {
+                        self::$listeners[$event][] = $callback;
+                    }
+                    public static function mockFire($event) {
+                        foreach (self::$listeners[$event] ?? [] as $callback) {
+                            $callback(new $event());
+                        }
+                    }
+                    public static function mockReset() {
+                        self::$listeners = [];
+                    }
+                }
+            ');
+        }
+        if (!class_exists('Illuminate\Support\Facades\Mail')) {
+            eval('
+                namespace Illuminate\Support\Facades;
+                class Mail {
+                    /** Transport accepts every message */
+                    public static $transportAccepts = true;
+                    /** Transport rejects messages carrying attachments (552-style size limit) */
+                    public static $rejectWithAttachments = false;
+                    public static $sent = [];
+                    public static function send($mailable) {
+                        self::$sent[] = $mailable;
+                        $hasAttachments = !empty($mailable->mockAttachments);
+                        if (self::$transportAccepts && !(self::$rejectWithAttachments && $hasAttachments)) {
+                            Event::mockFire(\'Illuminate\\\\Mail\\\\Events\\\\MessageSent\');
+                        }
+                        // Rejected: pkp-lib swallows the TransportException —
+                        // nothing observable happens.
+                    }
+                    public static function mockReset() {
+                        self::$transportAccepts = true;
+                        self::$rejectWithAttachments = false;
+                        self::$sent = [];
+                    }
                 }
             ');
         }

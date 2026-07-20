@@ -75,7 +75,7 @@ ReviewerCertificatePlugin.php  (entry point — thin wrapper)
 - `compat_autoloader.php` — Namespace compatibility layer (OJS 3.3 ↔ 3.4+)
 - `classes/ReviewerCertificatePluginCore.php` — Actual implementation. Hooks: `LoadHandler`, `TemplateManager::display`, `reviewassignmentdao::_updateobject`, plus `Mailer::Mailables` on OJS 3.4+ (registers the acknowledgement-letter mailable)
 - `controllers/CertificateHandler.php` — HTTP handler: `download()` (reviewer role), `verify()` (public), `myCertificates()` (reviewer), `emailCertificate()` (reviewer, POST+CSRF only — emails the acknowledgement letter with the certificate PDF attached), `generateBatch()` (manager role)
-- `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`vendor/tecnickcom/tcpdf/`)
+- `classes/CertificateGenerator.php` — PDF generation using bundled TCPDF (`vendor/tecnickcom/tcpdf/`). Oversized background images are downscaled/re-encoded before embedding (`downscaleBackgroundIfNeeded`, cap 2200 px / JPEG q82, cached beside the original) so certificate PDFs stay small enough to email — SMTP relays reject multi-MB messages (SendPulse 552, iitlt)
 - `templates/myCertificates.tpl` — "My Certificates" page listing all certificates for a reviewer
 
 ### OJS Version Compatibility Patterns
@@ -202,6 +202,19 @@ public function verify($args, $request) {
 }
 ```
 
+**Pattern 12: Observe MessageSent to detect mail-transport failure on OJS 3.4+**
+pkp-lib 3.4/3.5 `Mailer::sendSymfonyMessage()` catches `TransportException` and only `error_log()`s it — `Mail::send()` gives the caller NO failure signal (e.g. SMTP 552 "message too large"; iitlt saw a false success banner). Laravel dispatches `Illuminate\Mail\Events\MessageSent` only when the transport actually accepted the message, so listen for it:
+```php
+$accepted = false;
+\Illuminate\Support\Facades\Event::listen(
+    \Illuminate\Mail\Events\MessageSent::class,
+    function () use (&$accepted) { $accepted = true; }
+);
+\Illuminate\Support\Facades\Mail::send($mailable);
+return $accepted;  // false → transport rejected, show the error banner
+```
+The OJS 3.3 legacy `Mail::send()` returns a real bool and needs no workaround.
+
 ### OJS 3.5 Breaking Changes
 
 These removals affect this plugin and require fallback code:
@@ -277,7 +290,7 @@ E2E test files:
 - `certificate-cyrillic.spec.ts` — Cyrillic/Unicode PDF rendering tests (English + Ukrainian locales)
 - `batch-generation.spec.ts` — Batch certificate generation for managers
 - `my-certificates.spec.ts` — "My Certificates" page functionality
-- `my-certificates-email.spec.ts` — Email-certificate action (delivery + PDF attachment asserted via Mailpit)
+- `my-certificates-email.spec.ts` — Email-certificate action (delivery + PDF attachment asserted via Mailpit). Includes the oversized-background regression test (SendPulse 552, iitlt): needs the untracked fixture `ojs-test/cert-assets/cert_bg_big.png` (regenerate with `python3 tests/e2e/helpers/make-big-bg.py`) and a writable cert-assets dir (`chmod 777`). Direct DB writes to `plugin_settings` are invisible to OJS until `cache/fc-pluginSettings-*` is removed in the container.
 - `locale-smoke.spec.ts` — Locale translation tests (English + Ukrainian, no `##key##` patterns)
 
 ## Release Process
@@ -307,7 +320,7 @@ Upload to GitHub Releases with tags `v{VERSION}-3.3`, `v{VERSION}-3.4`, `v{VERSI
 
 ## Localization
 
-31 languages in `locale/` (61 directories total: 31 long-form + 30 short-form; README's "32 languages" counts `en` and `en_US` separately) with dual format support:
+31 languages in `locale/` (61 directories total: 31 long-form + 30 short-form — `pt_BR` is the only long-form dir with no short form) with dual format support:
 - `.xml` files — source of truth for all translations
 - `.po` files — **required by all OJS versions** (OJS 3.3.0-22 uses `Gettext\Translations::fromPoFile()` in `LocaleFile::load()`)
 
@@ -324,7 +337,7 @@ php temp/convert_xml_to_po.php
 - `en_US → en` is in the converter's map like every other locale; `pt_BR` is the only long-form dir with no short form (same code in all OJS versions).
 - When adding a language, create the `xx_XX` directory, add the mapping entry in both files, and re-run the converter.
 
-Current key count: 103 per language. Total tests: 177 PHP + 96 E2E = 273 tests.
+Current key count: 104 per language. Total tests: 188 PHP + 99 E2E = 287 tests.
 
 Validate translations: `vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
 

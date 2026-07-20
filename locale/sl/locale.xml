@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Zadeva zahvalnega sporočila</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Besedilo zahvalnega sporočila</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Pismo, poslano recenzentu s strani Moja potrdila, s priloženim potrdilom v PDF. Podpira iste spremenljivke predloge kot besedilo potrdila ter {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF-ja potrdila ni bilo mogoče priložiti temu e-sporočilu (morda presega omejitev velikosti poštnega strežnika). Potrdilo lahko prenesete tukaj:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

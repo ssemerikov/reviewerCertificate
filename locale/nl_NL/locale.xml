@@ -149,6 +149,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Onderwerp van de bedankmail</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Tekst van de bedankmail</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Brief die vanaf de pagina Mijn certificaten naar de reviewer wordt gestuurd, met het certificaat-PDF als bijlage. Ondersteunt dezelfde sjabloonvariabelen als de certificaattekst, plus {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">De certificaat-PDF kon niet aan deze e-mail worden toegevoegd (mogelijk overschrijdt deze de groottelimiet van de mailserver). U kunt uw certificaat hier downloaden:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

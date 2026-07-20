@@ -22,6 +22,9 @@ run-tests.sh
 # Local OJS test environments
 /ojs-test/
 
+# Production bug reports and admin correspondence (local only)
+/issues/
+
 # Node.js / Playwright E2E tests
 node_modules/
 package-lock.json

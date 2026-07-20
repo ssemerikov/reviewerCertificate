@@ -322,6 +322,9 @@ msgstr "Treść wiadomości z podziękowaniem"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "List wysyłany do recenzenta ze strony „Moje certyfikaty\" z załączonym certyfikatem PDF. Obsługuje te same zmienne szablonu co treść certyfikatu oraz {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Nie udało się załączyć pliku PDF certyfikatu do tej wiadomości (może przekraczać limit rozmiaru serwera pocztowego). Certyfikat można pobrać tutaj:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

@@ -151,6 +151,7 @@ ală</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Subiectul e-mailului de mulțumire</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Textul e-mailului de mulțumire</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Scrisoare trimisă recenzentului din pagina Certificatele mele, cu certificatul PDF atașat. Acceptă aceleași variabile de șablon ca textul certificatului, plus {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF-ul certificatului nu a putut fi atașat la acest e-mail (este posibil să depășească limita de dimensiune a serverului de e-mail). Puteți descărca certificatul dvs. aici:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

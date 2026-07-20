@@ -322,6 +322,9 @@ msgstr "Corpo dell'e-mail di ringraziamento"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Lettera inviata al revisore dalla pagina «I miei certificati», con il certificato PDF allegato. Supporta le stesse variabili del modello del testo del certificato, oltre a {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Non è stato possibile allegare il PDF del certificato a questa email (potrebbe superare il limite di dimensione del server di posta). Puoi scaricare il tuo certificato qui:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

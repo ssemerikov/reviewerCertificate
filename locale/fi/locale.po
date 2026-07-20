@@ -322,6 +322,9 @@ msgstr "Kiitosviestin teksti"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Kirje, joka lähetetään arvioijalle Omat todistukset -sivulta, todistus-PDF liitteenä. Tukee samoja mallimuuttujia kuin todistuksen teksti sekä muuttujaa {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Todistuksen PDF-tiedostoa ei voitu liittää tähän sähköpostiin (se saattaa ylittää postipalvelimen kokorajan). Voit ladata todistuksesi täältä:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

@@ -111,6 +111,142 @@ class CertificateGenerator {
         return self::getFilesDir() . '/journals/' . (int) $contextId . '/reviewerCertificate';
     }
 
+    /** Longest side an embedded background may have (~190 DPI on A4 landscape) */
+    const BG_MAX_SIDE_PX = 2200;
+
+    /** Source images above this size are re-encoded even when dimensions fit */
+    const BG_MAX_BYTES = 614400;
+
+    /** JPEG quality for re-encoded backgrounds */
+    const BG_JPEG_QUALITY = 82;
+
+    /**
+     * Downscale/re-encode an oversized background image before embedding.
+     *
+     * Full-resolution backgrounds produce multi-MB certificate PDFs that mail
+     * relays reject (iitlt: SendPulse SMTP 552 "Message exceeds fixed maximum
+     * message size"). A certificate page needs at most ~200 DPI, so anything
+     * larger is capped at BG_MAX_SIDE_PX and re-encoded (JPEG, or PNG when the
+     * source has an alpha channel). The scaled copy is cached next to the
+     * original, keyed by the source's mtime+size; stale copies are pruned.
+     *
+     * Fails open: whenever GD is unavailable or anything goes wrong, the
+     * original path is returned unchanged.
+     *
+     * @param $path string Absolute path to the stored background image
+     * @return string Path to embed (scaled copy, or the original)
+     */
+    public static function downscaleBackgroundIfNeeded($path) {
+        $realPath = realpath($path);
+        if ($realPath === false || !is_file($realPath)) {
+            return $path;
+        }
+
+        $info = @getimagesize($realPath);
+        if (!$info || empty($info[0]) || empty($info[1])) {
+            return $path;
+        }
+        $width = $info[0];
+        $height = $info[1];
+        $type = $info[2];
+
+        clearstatcache();
+        $sourceBytes = (int) @filesize($realPath);
+        $maxSide = max($width, $height);
+        if ($maxSide <= self::BG_MAX_SIDE_PX && $sourceBytes <= self::BG_MAX_BYTES) {
+            return $path;
+        }
+
+        if (!function_exists('imagecreatetruecolor')
+                || !in_array($type, array(IMAGETYPE_JPEG, IMAGETYPE_PNG, IMAGETYPE_GIF))) {
+            return $path;
+        }
+
+        // PNG colour types 0 (grey) and 2 (RGB) have no alpha channel and can
+        // be flattened to JPEG; anything else keeps PNG to preserve
+        // transparency (GIF transparency is flattened onto white).
+        $keepPng = false;
+        if ($type == IMAGETYPE_PNG) {
+            $header = @file_get_contents($realPath, false, null, 0, 26);
+            $colorType = ($header !== false && strlen($header) > 25) ? ord($header[25]) : 6;
+            $keepPng = !in_array($colorType, array(0, 2));
+        }
+        $ext = $keepPng ? 'png' : 'jpg';
+
+        $baseName = pathinfo($realPath, PATHINFO_FILENAME);
+        $cacheKey = substr(md5($realPath . '|' . @filemtime($realPath) . '|' . $sourceBytes), 0, 12);
+        $cachePath = dirname($realPath) . '/' . $baseName . '.rcscaled-' . $cacheKey . '.' . $ext;
+        if (is_file($cachePath)) {
+            return $cachePath;
+        }
+
+        $src = null;
+        try {
+            switch ($type) {
+                case IMAGETYPE_JPEG:
+                    $src = @imagecreatefromjpeg($realPath);
+                    break;
+                case IMAGETYPE_PNG:
+                    $src = @imagecreatefrompng($realPath);
+                    break;
+                case IMAGETYPE_GIF:
+                    $src = @imagecreatefromgif($realPath);
+                    break;
+            }
+        } catch (\Throwable $e) {
+            $src = null;
+        }
+        if (!$src) {
+            return $path;
+        }
+
+        $scale = min(1.0, self::BG_MAX_SIDE_PX / $maxSide);
+        $newWidth = max(1, (int) round($width * $scale));
+        $newHeight = max(1, (int) round($height * $scale));
+
+        $dst = imagecreatetruecolor($newWidth, $newHeight);
+        if ($keepPng) {
+            imagealphablending($dst, false);
+            imagesavealpha($dst, true);
+            imagefill($dst, 0, 0, imagecolorallocatealpha($dst, 0, 0, 0, 127));
+        } else {
+            imagefill($dst, 0, 0, imagecolorallocate($dst, 255, 255, 255));
+        }
+        imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
+        imagedestroy($src);
+
+        $tmpPath = $cachePath . '.tmp' . getmypid();
+        $written = $keepPng
+            ? @imagepng($dst, $tmpPath, 8)
+            : @imagejpeg($dst, $tmpPath, self::BG_JPEG_QUALITY);
+        imagedestroy($dst);
+        if (!$written || !is_file($tmpPath)) {
+            @unlink($tmpPath);
+            return $path;
+        }
+
+        // A re-encode that did not shrink anything is useless — keep the
+        // original (only possible when the byte threshold alone triggered).
+        if (filesize($tmpPath) >= $sourceBytes && $scale >= 1.0) {
+            @unlink($tmpPath);
+            return $path;
+        }
+
+        if (!@rename($tmpPath, $cachePath)) {
+            @unlink($tmpPath);
+            return $path;
+        }
+
+        // Prune scaled copies from previous versions of this background
+        foreach (glob(dirname($realPath) . '/' . $baseName . '.rcscaled-*') ?: array() as $stale) {
+            if ($stale !== $cachePath) {
+                @unlink($stale);
+            }
+        }
+
+        return $cachePath;
+    }
+
     /**
      * Path traversal protection for stored background image paths.
      *
@@ -349,13 +485,17 @@ class CertificateGenerator {
         $realPath = realpath($backgroundImage);
 
         if (file_exists($realPath)) {
+            // Cap resolution/weight so certificate PDFs stay small enough to
+            // email (SMTP relays reject multi-MB messages — see iitlt 552)
+            $embedPath = self::downscaleBackgroundIfNeeded($realPath);
+
             // Get page dimensions
             $pageWidth = $pdf->getPageWidth();
             $pageHeight = $pdf->getPageHeight();
 
             // Add background image
             try {
-                $pdf->Image($realPath, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 150, '', false, false, 0);
+                $pdf->Image($embedPath, 0, 0, $pageWidth, $pageHeight, '', '', '', false, 150, '', false, false, 0);
             } catch (\Throwable $e) {
                 error_log("ReviewerCertificate: Error adding background image: " . $e->getMessage());
             }

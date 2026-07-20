@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">謝辞メールの件名</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">謝辞メールの本文</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">マイ証明書ページから査読者に送信されるレター。証明書のPDFが添付されます。証明書本文と同じテンプレート変数に加えて {{$editorName}} が使用できます。</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">証明書のPDFをこのメールに添付できませんでした（メールサーバーのサイズ制限を超えている可能性があります）。証明書は以下からダウンロードできます:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

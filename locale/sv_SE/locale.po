@@ -322,6 +322,9 @@ msgstr "Tackbrevets text"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Brev som skickas till granskaren från sidan Mina certifikat, med certifikatet som PDF-bilaga. Stöder samma mallvariabler som certifikattexten samt {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Certifikatets PDF kunde inte bifogas detta e-postmeddelande (den kan överskrida e-postserverns storleksgräns). Du kan ladda ner ditt certifikat här:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 
