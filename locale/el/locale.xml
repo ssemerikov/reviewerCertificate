@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Θέμα ευχαριστήριου email</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Κείμενο ευχαριστήριου email</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Επιστολή που αποστέλλεται στον κριτή από τη σελίδα «Τα πιστοποιητικά μου», με συνημμένο το πιστοποιητικό PDF. Υποστηρίζει τις ίδιες μεταβλητές προτύπου με το κείμενο του πιστοποιητικού, καθώς και {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Δεν ήταν δυνατή η επισύναψη του PDF του πιστοποιητικού σε αυτό το μήνυμα (ενδέχεται να υπερβαίνει το όριο μεγέθους του διακομιστή αλληλογραφίας). Μπορείτε να κατεβάσετε το πιστοποιητικό σας εδώ:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

@@ -322,6 +322,9 @@ msgstr "نص رسالة الشكر"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "رسالة تُرسل إلى المحكّم من صفحة شهاداتي مع إرفاق الشهادة بصيغة PDF. تدعم نفس متغيرات القالب المستخدمة في نص الشهادة، إضافة إلى {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "تعذر إرفاق ملف PDF للشهادة بهذه الرسالة (قد يتجاوز حد الحجم لخادم البريد). يمكنك تنزيل شهادتك من هنا:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

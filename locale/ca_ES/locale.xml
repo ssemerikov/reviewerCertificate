@@ -150,6 +150,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Assumpte del correu d'agraïment</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Cos del correu d'agraïment</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Carta enviada al revisor des de la pàgina «Els meus certificats», amb el certificat PDF adjunt. Admet les mateixes variables de plantilla que el text del certificat, a més de {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">No s'ha pogut adjuntar el PDF del certificat a aquest correu (potser supera el límit de mida del servidor de correu). Podeu descarregar el vostre certificat aquí:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

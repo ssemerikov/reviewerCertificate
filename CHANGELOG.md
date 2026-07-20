@@ -5,6 +5,20 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.2] - 2026-07-20
+
+### Fixed
+
+- **Certificate emails silently lost when the SMTP relay enforces a message-size limit** (production report from an OJS 3.4.0-8 journal relaying through SendPulse, which rejected the messages with 552 "Message exceeds fixed maximum message size"). Three-part fix:
+  - **Oversized background images are downscaled before embedding** — a full-resolution background (the reported journal used a multi-MB image) used to be embedded as-is, producing certificate PDFs far larger than common relay limits. Backgrounds larger than 2200 px on the longest side or 600 KB are now downscaled/re-encoded (JPEG quality 82; PNGs with an alpha channel stay PNG to preserve transparency) with the scaled copy cached beside the original. A certificate page needs ~200 DPI at most, so print quality is unaffected — and every certificate download gets smaller and faster too. Fails open: without GD, or on any error, the original image is used as before.
+  - **False "email sent" confirmation on OJS 3.4/3.5** — pkp-lib's `Mailer::sendSymfonyMessage()` catches the transport exception and only writes it to the error log, so the plugin reported success and showed the reviewer the green "certificate sent" banner even though the relay had rejected the message. The plugin now observes Laravel's `MessageSent` event (dispatched only when the transport actually accepts the message) and shows the error banner when the send failed. OJS 3.3's legacy mail API already returned a real result and was unaffected.
+  - **Link-only fallback letter** — when the letter with the PDF attached is still rejected, the plugin now automatically re-sends it without the attachment, appending a direct certificate download link, so the reviewer always receives the acknowledgement. New locale key `emailCertificate.attachmentFallback` translated in all 31 languages (now 104 keys per language).
+- **Acknowledgement letter's default subject and body were untranslated in Ukrainian** — reviewers of Ukrainian journals received the letter in English unless the journal had customized it in the plugin settings. Both strings are now properly translated in `uk_UA`/`uk`.
+
+### Changed
+
+- E2E test infrastructure: new regression test asserts via the Mailpit API that a certificate email generated with an oversized (>1 MB) background arrives with an attachment under 1 MB, on OJS 3.3, 3.4 and 3.5; new unit suites cover the send-result detection, the link-only fallback and the background downscaler (the GD-dependent tests run inside the OJS Docker containers). Total: 188 PHP + 99 E2E tests.
+
 ## [1.8.1] - 2026-07-06
 
 ### Changed

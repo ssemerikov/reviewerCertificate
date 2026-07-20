@@ -322,6 +322,9 @@ msgstr "Tekst van de bedankmail"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Brief die vanaf de pagina Mijn certificaten naar de reviewer wordt gestuurd, met het certificaat-PDF als bijlage. Ondersteunt dezelfde sjabloonvariabelen als de certificaattekst, plus {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "De certificaat-PDF kon niet aan deze e-mail worden toegevoegd (mogelijk overschrijdt deze de groottelimiet van de mailserver). U kunt uw certificaat hier downloaden:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

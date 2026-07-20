@@ -147,6 +147,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Acknowledgement email subject</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Acknowledgement email body</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Letter sent to the reviewer from the My Certificates page, with the certificate PDF attached. Supports the same template variables as the certificate body, plus {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">The certificate PDF could not be attached to this email (it may exceed the mail server's size limit). You can download your certificate here:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

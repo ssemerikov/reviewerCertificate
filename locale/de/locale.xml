@@ -148,6 +148,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Betreff der Dankes-E-Mail</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Text der Dankes-E-Mail</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Brief, der Gutachter/innen von der Seite „Meine Zertifikate" gesendet wird, mit dem Zertifikat-PDF im Anhang. Unterstützt dieselben Vorlagenvariablen wie der Zertifikattext sowie {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Das Zertifikat-PDF konnte dieser E-Mail nicht angehängt werden (es überschreitet möglicherweise die Größenbeschränkung des Mailservers). Sie können Ihr Zertifikat hier herunterladen:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

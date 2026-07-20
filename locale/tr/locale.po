@@ -322,6 +322,9 @@ msgstr "Teşekkür e-postası metni"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "Sertifikalarım sayfasından hakeme gönderilen, sertifika PDF'inin eklendiği mektup. Sertifika metniyle aynı şablon değişkenlerini ve ayrıca {{$editorName}} değişkenini destekler."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Sertifika PDF'i bu e-postaya eklenemedi (posta sunucusunun boyut sınırını aşıyor olabilir). Sertifikanızı buradan indirebilirsiniz:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 

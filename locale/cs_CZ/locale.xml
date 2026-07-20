@@ -149,6 +149,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Předmět děkovného e-mailu</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Text děkovného e-mailu</message>
 	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Dopis zasílaný recenzentovi ze stránky Moje certifikáty s přiloženým PDF certifikátem. Podporuje stejné proměnné šablony jako text certifikátu a navíc {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">PDF certifikátu se nepodařilo přiložit k tomuto e-mailu (může překračovat limit velikosti poštovního serveru). Certifikát si můžete stáhnout zde:</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Acknowledgement of your review for {{$journalName}}</message>
 	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Dear {{$reviewerName}},
 

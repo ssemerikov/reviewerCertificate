@@ -322,6 +322,9 @@ msgstr "גוף מכתב התודה"
 msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
 msgstr "מכתב הנשלח לסוקר מעמוד התעודות שלי, עם קובץ ה-PDF של התעודה כקובץ מצורף. תומך באותם משתני תבנית כמו טקסט התעודה, וכן {{$editorName}}."
 
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "לא ניתן היה לצרף את קובץ ה-PDF של התעודה להודעה זו (ייתכן שהוא חורג ממגבלת הגודל של שרת הדואר). ניתן להוריד את התעודה כאן:"
+
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
 msgstr "Acknowledgement of your review for {{$journalName}}"
 
