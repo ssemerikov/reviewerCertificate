@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">صورة الخلفية</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">رفع صورة خلفية للشهادة (JPG أو PNG، الحجم الموصى به: 2100×2970 بكسل لصفحة A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">صورة الخلفية الحالية</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">نص العنوان</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">نص التذييل</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">نص اختياري يُعرض في أسفل الشهادة</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">متغيرات القالب المتاحة</message>

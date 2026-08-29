@@ -35,10 +35,11 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Фонове зображення</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Завантажте фонове зображення для сертифіката (JPG або PNG, рекомендований розмір: 2100x2970 пікселів для A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Поточне фонове зображення</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Видалити фонове зображення</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Текст заголовка</message>
-	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Основний заголовок, що відображається у верхній частині сертифіката</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Необов’язковий заголовок, що відображається вгорі сертифіката. Залиште поле порожнім, щоб сертифікат був без заголовка.</message>
 	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Текст заголовка є обов'язковим</message>
 
 	<!-- Body Template -->
@@ -49,6 +50,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Текст нижнього колонтитула</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Необов'язковий текст, що відображається у нижній частині сертифіката</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Відступ зверху для основного тексту (мм)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Додатковий порожній простір у міліметрах над основним текстом. Використовуйте його, щоб опустити текст нижче на сторінці; порожні рядки на початку шаблону основного тексту видаляються під час збереження форми.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Доступні змінні шаблону</message>

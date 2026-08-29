@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">背景图片</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">上传证书的背景图片（JPG或PNG格式，A4尺寸建议：2100x2970像素）</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">当前背景图片</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">标题文本</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">页脚文本</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">显示在证书底部的可选文本</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">可用模板变量</message>

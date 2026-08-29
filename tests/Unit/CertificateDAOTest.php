@@ -461,4 +461,119 @@ class CertificateDAOTest extends TestCase
         $existing = $this->dbMock->select('reviewer_certificates', ['review_id' => $reviewId]);
         $this->assertNotEmpty($existing, 'Review should already have a certificate');
     }
+
+    /**
+     * insertObject() must actually round-trip through the DAO — not just the
+     * DatabaseMock. The original testInsertCertificate() above exercises only
+     * the mock, which is why the getInsertId() infinite recursion (OJS 3.4)
+     * shipped without a single failing test.
+     */
+    public function testInsertObjectReturnsInsertIdAndStampsTheObject(): void
+    {
+        $certificate = $this->makeCertificate('INSERTOBJ0000001');
+
+        $certificateId = $this->dao->insertObject($certificate);
+
+        $this->assertSame(
+            OJSMockLoader::MOCK_INSERT_ID,
+            $certificateId,
+            'insertObject() should return the ID reported by the DB layer'
+        );
+        $this->assertSame(
+            OJSMockLoader::MOCK_INSERT_ID,
+            $certificate->getCertificateId(),
+            'insertObject() should stamp the ID onto the Certificate it inserted'
+        );
+    }
+
+    /**
+     * Some drivers cannot report a last insert ID (notably PostgreSQL, where
+     * lastInsertId() without a sequence name is unreliable). certificate_code is
+     * uniquely indexed, so the DAO re-reads the row it just wrote rather than
+     * leaving the object with ID 0.
+     */
+    public function testInsertObjectRecoversIdWhenDriverReportsNone(): void
+    {
+        $recovered = $this->makeCertificate('RECOVERED0000001');
+        $recovered->setCertificateId(4321);
+
+        /** @var CertificateDAO $dao */
+        $dao = $this->getMockBuilder(CertificateDAO::class)
+            ->onlyMethods(['getByCertificateCode'])
+            ->getMock();
+        $dao->expects($this->once())
+            ->method('getByCertificateCode')
+            ->with('RECOVERED0000001')
+            ->willReturn($recovered);
+
+        $certificate = $this->makeCertificate('RECOVERED0000001');
+        $certificateId = $this->withoutReportedInsertId(function () use ($dao, $certificate) {
+            return $dao->insertObject($certificate);
+        });
+
+        $this->assertSame(4321, $certificateId);
+        $this->assertSame(4321, $certificate->getCertificateId());
+    }
+
+    /**
+     * When the driver reports nothing AND the row cannot be found, the DAO
+     * returns 0 rather than throwing — the row is written either way, so
+     * callers stay responsible for handling a missing ID.
+     */
+    public function testInsertObjectReturnsZeroWhenIdCannotBeDetermined(): void
+    {
+        /** @var CertificateDAO $dao */
+        $dao = $this->getMockBuilder(CertificateDAO::class)
+            ->onlyMethods(['getByCertificateCode'])
+            ->getMock();
+        $dao->method('getByCertificateCode')->willReturn(null);
+
+        $certificate = $this->makeCertificate('UNKNOWNID0000001');
+        $certificateId = $this->withoutReportedInsertId(function () use ($dao, $certificate) {
+            return $dao->insertObject($certificate);
+        });
+
+        $this->assertSame(0, $certificateId);
+    }
+
+    /**
+     * Run $callback with every insert-ID source reporting nothing.
+     *
+     * Which source is live depends on the OJS version — the Laravel facade on
+     * 3.4/3.5, core's _getInsertId() on 3.3 — so silence both and the test reads
+     * the same on all three.
+     */
+    private function withoutReportedInsertId(callable $callback)
+    {
+        $facadeId = \Illuminate\Support\Facades\DB::$mockLastInsertId;
+        $daoId = \PKP\db\DAO::$mockInsertId;
+
+        \Illuminate\Support\Facades\DB::$mockLastInsertId = 0;
+        \PKP\db\DAO::$mockInsertId = 0;
+
+        try {
+            return $callback();
+        } finally {
+            \Illuminate\Support\Facades\DB::$mockLastInsertId = $facadeId;
+            \PKP\db\DAO::$mockInsertId = $daoId;
+        }
+    }
+
+    /**
+     * Build a minimally valid Certificate for insert tests.
+     */
+    private function makeCertificate(string $code): Certificate
+    {
+        $certificate = new Certificate();
+        $certificate->setReviewerId(1);
+        $certificate->setSubmissionId(100);
+        $certificate->setReviewId(50);
+        $certificate->setContextId(1);
+        $certificate->setTemplateId(1);
+        $certificate->setDateIssued('2026-01-15 10:00:00');
+        $certificate->setCertificateCode($code);
+        $certificate->setDownloadCount(0);
+
+        return $certificate;
+    }
 }

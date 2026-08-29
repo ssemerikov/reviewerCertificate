@@ -35,6 +35,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Фоновое изображение</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Загрузите фоновое изображение для сертификата (JPG или PNG, рекомендуемый размер: 2100x2970 пикселей для A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Текущее фоновое изображение</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Текст заголовка</message>
@@ -49,6 +50,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Текст нижнего колонтитула</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Необязательный текст, отображаемый в нижней части сертификата</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Доступные переменные шаблона</message>
