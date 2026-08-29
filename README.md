@@ -1,16 +1,17 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.8.1** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.9.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.8.1)**:
-- **Improved**: Croatian translation revised by a native speaker — translated and proofread by Željko Filajdić (*Diacovensia*, Catholic Faculty of Theology in Đakovo) (#72)
-- **Fixed**: Page-orientation settings strings were untranslated (English) in all 30 non-English languages
-- **Fixed**: The English (`en`) locale was missing 2 error-message keys on OJS 3.4+/3.5; `en` is now kept in sync automatically
-- All 177 PHP + 96 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Latest Release (v1.9.0)**:
+- **Fixed**: Every reviewer's *first* certificate download returned HTTP 500 on OJS 3.4 — `CertificateDAO::getInsertId()` recursed into pkp-lib 3.4's deprecated `_getInsertId()` shim until the process died. The same crash also broke batch generation and the email-certificate action.
+- **Fixed**: The background image could not be removed once set — there is now a "Remove the background image" checkbox, and removing or replacing one deletes the orphaned file (#73)
+- **Fixed**: Header text is now optional, so clearing it no longer reserves space and the body moves up (#74)
+- **Added**: **Body Top Spacing (mm)** setting — the supported way to move the body down the page, replacing the blank lines OJS strips on save (#74)
+- All 206 PHP + 123 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
 
 ## Author
 
@@ -26,7 +27,7 @@ This plugin was developed with the assistance of **Claude Code (Sonnet 5)**, an 
 - **Implementation**: Writing PHP classes, controllers, and data access objects
 - **OJS Integration**: Ensuring compatibility with OJS 3.3.x, 3.4.x, and 3.5.x APIs
 - **Database Design**: Creating the migration system and schema with automatic fallback for legacy versions
-- **Testing & Debugging**: Comprehensive test suite with 177 PHP tests + 96 E2E tests across all OJS versions
+- **Testing & Debugging**: Comprehensive test suite with 206 PHP tests + 123 E2E tests across all OJS versions
 - **Documentation**: Creating comprehensive user and technical documentation
 
 The iterative development approach with Claude Code enabled rapid prototyping, thorough testing across OJS versions, and production-ready code quality.
@@ -42,7 +43,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 31 languages with complete coverage (103 message keys each)
+  - 31 languages with complete coverage (107 message keys each)
   - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
   - Dual format: `.xml` (source of truth) and `.po` (required at runtime by all OJS versions) locale files
   - Automatic language detection from OJS settings
@@ -132,8 +133,8 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 
 #### Template Settings
 
-- **Background Image**: Upload a custom background image (2100x2970 px recommended)
-- **Header Text**: The main heading (e.g., "Certificate of Recognition")
+- **Background Image**: Upload a custom background image (2100x2970 px recommended). Once one is set, a **Remove the background image** checkbox appears — tick it and save to clear the background without having to upload a replacement.
+- **Header Text**: Optional heading (e.g., "Certificate of Recognition"). Leave it empty for a certificate with no heading; the body then starts at the top margin instead of 45 mm down the page.
 - **Body Template**: The main certificate content with template variables
 - **Footer Text**: Optional footer text
 
@@ -143,6 +144,8 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
   - ⚠️ **Note**: Helvetica, Times, and Courier only support Latin scripts. If your certificate contains Cyrillic, CJK, Arabic, or other non-Latin characters, the plugin will automatically switch to DejaVu Sans.
 - **Font Size**: Set the base font size (default: 12pt)
 - **Text Color**: Set RGB values for text color (0-255 for each component)
+- **Body Top Spacing (mm)**: Extra blank space above the body text, 0-100 mm (default: 0). Use this rather than typing blank lines at the start of the body template — OJS trims leading whitespace when the form is saved, so blank lines never reach the PDF.
+- **Page Orientation**: Portrait or landscape
 
 #### Eligibility Criteria
 
@@ -332,7 +335,7 @@ The plugin creates these tables:
 | 3.4.x | 7.4 - 8.2 | ✅ Fully tested |
 | 3.5.x | 8.0 - 8.2 | ✅ Fully tested |
 
-**Test Coverage**: 177 PHP unit tests + 96 E2E tests = 273 total tests
+**Test Coverage**: 206 PHP unit tests + 123 E2E tests = 329 total tests
 
 ## Support
 
