@@ -314,7 +314,7 @@ class CertificateSettingsForm extends Form {
              WHERE s.context_id = ?
                    AND ra.date_completed IS NOT NULL
              GROUP BY ra.reviewer_id
-             HAVING missing_certificates > 0
+             HAVING SUM(CASE WHEN rc.certificate_id IS NULL THEN 1 ELSE 0 END) > 0
              ORDER BY completed_reviews DESC
              LIMIT 100',
             array((int) $this->contextId)
