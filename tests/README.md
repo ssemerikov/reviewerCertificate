@@ -1,9 +1,9 @@
 # Reviewer Certificate Plugin - Test Suite
 
-**Version**: 1.8.1
+**Version**: 1.9.0
 **OJS Compatibility**: 3.3.x, 3.4.x, 3.5.x
-**Last Updated**: July 6, 2026
-**Coverage**: 177 PHP tests + 96 Playwright E2E tests
+**Last Updated**: August 29, 2026
+**Coverage**: 206 PHP tests + 123 Playwright E2E tests
 
 ---
 
