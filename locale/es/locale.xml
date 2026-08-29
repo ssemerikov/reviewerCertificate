@@ -35,6 +35,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Imagen de Fondo</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Suba una imagen de fondo para el certificado (JPG o PNG, tamaño recomendado: 2100x2970 píxeles para A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Imagen de fondo actual</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Texto del Encabezado</message>
@@ -49,6 +50,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Texto del Pie de Página</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Texto opcional que se muestra en la parte inferior del certificado</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Variables de Plantilla Disponibles</message>

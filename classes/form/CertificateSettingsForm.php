@@ -47,7 +47,8 @@ class CertificateSettingsForm extends Form {
         if (class_exists('PKP\form\validation\FormValidatorPost')) {
             $this->addCheck(new FormValidatorPost($this));
             $this->addCheck(new FormValidatorCSRF($this));
-            $this->addCheck(new FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
+            // No 'required' check on headerText: a journal may want a certificate with
+            // no heading at all, exactly like footerText (Issue #74).
             $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
             $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
                 return is_numeric($value) && $value >= 1;
@@ -59,7 +60,6 @@ class CertificateSettingsForm extends Form {
             import('lib.pkp.classes.form.validation.FormValidatorCustom');
             $this->addCheck(new \FormValidatorPost($this));
             $this->addCheck(new \FormValidatorCSRF($this));
-            $this->addCheck(new \FormValidator($this, 'headerText', 'required', 'plugins.generic.reviewerCertificate.settings.headerTextRequired'));
             $this->addCheck(new \FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
             $this->addCheck(new \FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
                 return is_numeric($value) && $value >= 1;
@@ -81,6 +81,7 @@ class CertificateSettingsForm extends Form {
             $this->setData('textColorG', $this->plugin->getSetting($this->contextId, 'textColorG') ?? 0);
             $this->setData('textColorB', $this->plugin->getSetting($this->contextId, 'textColorB') ?? 0);
             $this->setData('minimumReviews', $this->plugin->getSetting($this->contextId, 'minimumReviews') ?? 1);
+            $this->setData('bodyTopOffset', $this->plugin->getSetting($this->contextId, 'bodyTopOffset') ?? 0);
             $this->setData('includeQRCode', $this->plugin->getSetting($this->contextId, 'includeQRCode') ?? false);
             $this->setData('pageOrientation', $this->plugin->getSetting($this->contextId, 'pageOrientation') ?? 'P');
             $this->setData('backgroundImage', $this->plugin->getSetting($this->contextId, 'backgroundImage') ?? '');
@@ -102,6 +103,7 @@ class CertificateSettingsForm extends Form {
             $this->setData('textColorG', 0);
             $this->setData('textColorB', 0);
             $this->setData('minimumReviews', 1);
+            $this->setData('bodyTopOffset', 0);
             $this->setData('includeQRCode', false);
             $this->setData('pageOrientation', 'P');
             $this->setData('backgroundImage', '');
@@ -122,20 +124,27 @@ class CertificateSettingsForm extends Form {
             'textColorG',
             'textColorB',
             'minimumReviews',
+            'bodyTopOffset',
             'includeQRCode',
             'pageOrientation',
+            'removeBackgroundImage',
             'ackEmailSubject',
             'ackEmailBody'
         ));
 
-        // Preserve existing background image if no new upload
+        // Carry the stored background image forward, since the file input is empty on
+        // every render. Unless the journal ticked "remove" — before Issue #73 this
+        // restore was unconditional, so the setting could only ever be overwritten by
+        // another upload and never cleared.
         $existingBackgroundImage = $this->plugin->getSetting($this->contextId, 'backgroundImage');
+        $removeBackgroundImage = (bool) $this->getData('removeBackgroundImage');
 
-        if ($existingBackgroundImage) {
-            $this->setData('backgroundImage', $existingBackgroundImage);
-        }
+        $this->setData(
+            'backgroundImage',
+            ($existingBackgroundImage && !$removeBackgroundImage) ? $existingBackgroundImage : ''
+        );
 
-        // Handle file upload for background image (will override existing if new file uploaded)
+        // A new upload wins over both the stored value and the remove checkbox.
         if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
             $this->handleBackgroundImageUpload();
         }
@@ -363,6 +372,9 @@ class CertificateSettingsForm extends Form {
 
             // Clamp numeric values to valid ranges
             $this->plugin->updateSetting($this->contextId, 'fontSize', max(6, min(72, (int) $this->getData('fontSize'))), 'int');
+            // Millimetres of extra space above the body text (Issue #74). Non-negative:
+            // a negative offset would push the text up into the page margin.
+            $this->plugin->updateSetting($this->contextId, 'bodyTopOffset', max(0, min(100, (int) $this->getData('bodyTopOffset'))), 'int');
             $this->plugin->updateSetting($this->contextId, 'textColorR', max(0, min(255, (int) $this->getData('textColorR'))), 'int');
             $this->plugin->updateSetting($this->contextId, 'textColorG', max(0, min(255, (int) $this->getData('textColorG'))), 'int');
             $this->plugin->updateSetting($this->contextId, 'textColorB', max(0, min(255, (int) $this->getData('textColorB'))), 'int');
@@ -376,9 +388,19 @@ class CertificateSettingsForm extends Form {
             }
             $this->plugin->updateSetting($this->contextId, 'pageOrientation', $orientation, 'string');
 
-            // Always save background image setting (preserves existing or saves new upload)
-            $backgroundImage = $this->getData('backgroundImage');
-            $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage ? $backgroundImage : '', 'string');
+            // Save the background image, and delete the file it replaces so removed and
+            // superseded uploads do not pile up in the journal's files directory.
+            $backgroundImage = (string) $this->getData('backgroundImage');
+            $previousBackgroundImage = (string) $this->plugin->getSetting($this->contextId, 'backgroundImage');
+
+            $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage, 'string');
+
+            // Only once the new value is safely stored: if the save had failed, the
+            // setting would still point at a file we had already deleted.
+            if ($previousBackgroundImage !== '' && $previousBackgroundImage !== $backgroundImage) {
+                require_once(dirname(__FILE__, 2) . '/CertificateGenerator.php');
+                \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::deleteBackgroundImage($previousBackgroundImage);
+            }
 
             // Acknowledgement email templates
             $this->plugin->updateSetting($this->contextId, 'ackEmailSubject', (string) $this->getData('ackEmailSubject'), 'string');

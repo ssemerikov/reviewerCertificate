@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Slika Ozadja</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Naložite sliko ozadja za potrdilo (JPG ali PNG, priporočena velikost: 2100x2970 pikslov za A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Trenutna slika ozadja</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Besedilo Glave</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Besedilo Noge</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Neobvezno besedilo, prikazano na dnu potrdila</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Razpoložljive Spremenljivke Predloge</message>

@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">배경 이미지</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">인증서 배경 이미지 업로드 (JPG 또는 PNG, A4 권장 크기: 2100x2970 픽셀)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">현재 배경 이미지</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">헤더 텍스트</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">푸터 텍스트</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">인증서 하단에 표시되는 선택적 텍스트</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">사용 가능한 템플릿 변수</message>

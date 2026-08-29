@@ -38,6 +38,7 @@ ală</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Imagine de Fundal</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Încărcați o imagine de fundal pentru certificat (JPG sau PNG, dimensiune recomandată: 2100x2970 pixeli pentru A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Imaginea de fundal curentă</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Text Antet</message>
@@ -52,6 +53,10 @@ ală</message>
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Text Subsol</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Text opțional afișat în partea de jos a certificatului</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Variabile Șablon Disponibile</message>

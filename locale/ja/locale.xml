@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">背景画像</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">証明書の背景画像をアップロード（JPGまたはPNG、A4サイズ推奨：2100×2970ピクセル）</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">現在の背景画像</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">ヘッダーテキスト</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">フッターテキスト</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">証明書の下部に表示されるオプションのテキスト</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">利用可能なテンプレート変数</message>

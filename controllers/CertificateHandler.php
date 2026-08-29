@@ -976,7 +976,8 @@ class CertificateHandler extends Handler {
             'textColorB',
             'includeQRCode',
             'minimumReviews',
-            'pageOrientation'
+            'pageOrientation',
+            'bodyTopOffset'
         );
 
         foreach ($settingNames as $name) {

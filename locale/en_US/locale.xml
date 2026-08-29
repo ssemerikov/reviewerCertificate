@@ -34,10 +34,11 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Background Image</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Upload a background image for the certificate (JPG or PNG, recommended size: 2100x2970 pixels for A4 portrait, 2970x2100 for landscape)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Current background image</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Header Text</message>
-	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">The main heading displayed at the top of the certificate</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Optional heading displayed at the top of the certificate. Leave empty for a certificate with no heading.</message>
 	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Header text is required</message>
 
 	<!-- Body Template -->
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Footer Text</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Optional text displayed at the bottom of the certificate</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Available Template Variables</message>

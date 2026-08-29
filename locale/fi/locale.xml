@@ -37,6 +37,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Taustakuva</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Lataa taustakuva todistukselle (JPG tai PNG, suositeltu koko: 2100x2970 pikseliä A4:lle)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Nykyinen taustakuva</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Otsikkoteksti</message>
@@ -51,6 +52,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Alatunnisteteksti</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Valinnainen teksti, joka näytetään todistuksen alaosassa</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Käytettävissä Olevat Pohjamuuttujat</message>

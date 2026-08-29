@@ -58,7 +58,7 @@ msgid "plugins.generic.reviewerCertificate.settings.headerText"
 msgstr "Текст заголовка"
 
 msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
-msgstr "Основний заголовок, що відображається у верхній частині сертифіката"
+msgstr "Необов’язковий заголовок, що відображається вгорі сертифіката. Залиште поле порожнім, щоб сертифікат був без заголовка."
 
 msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
 msgstr "Текст заголовка є обов'язковим"
@@ -279,6 +279,15 @@ msgstr "Середня кількість завантажень на серти
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Налаштування сертифікатів"
+
+msgid "plugins.generic.reviewerCertificate.settings.removeBackgroundImage"
+msgstr "Видалити фонове зображення"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTopOffset"
+msgstr "Відступ зверху для основного тексту (мм)"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription"
+msgstr "Додатковий порожній простір у міліметрах над основним текстом. Використовуйте його, щоб опустити текст нижче на сторінці; порожні рядки на початку шаблону основного тексту видаляються під час збереження форми."
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.title"
 msgstr "Мої сертифікати"
