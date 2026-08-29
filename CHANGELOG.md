@@ -28,6 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Test mocks now model the real pkp-lib class shape per OJS version.** The infinite recursion was invisible to the test suite because the mocked base DAO gave *every* version a harmless `_getInsertId()`. The mock now mirrors core exactly — OJS 3.3's real implementation, OJS 3.4's recursive deprecation shim, and OJS 3.5 with the method removed — with a depth guard so a regression fails as a clean assertion instead of exhausting the stack. `insertObject()` is now genuinely exercised; the previous "insert" test only touched the in-memory database mock.
 - New E2E coverage on OJS 3.3, 3.4 and 3.5: the certificate table is emptied to force the create path (an existing row hid the bug entirely), then the download is asserted to return a real PDF with a non-zero `certificate_id` and no fatal error in the container log. Certificate layout is verified by extracting text and coordinates from the generated PDF. Total: 206 PHP + 123 E2E tests (41 specs across three OJS versions).
 - E2E helper fix: on OJS 3.5, plugin settings are cached through Laravel's `Cache::remember()` in `cache/opcache`, not the `cache/fc-pluginSettings-*` files used by 3.3/3.4. Settings written directly to the database were silently ignored until that store was cleared.
+- **Development tools**: Updated from Claude Code (Sonnet 5) to Claude Code (Opus 5)
 
 ## [1.8.2] - 2026-07-20
 
