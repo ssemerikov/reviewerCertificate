@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">תמונת רקע</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">העלה תמונת רקע לתעודה (JPG או PNG, גודל מומלץ: 2100x2970 פיקסלים עבור A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">תמונת רקע נוכחית</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">טקסט כותרת</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">טקסט תחתית</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">טקסט אופציונלי המוצג בתחתית התעודה</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">משתני תבנית זמינים</message>

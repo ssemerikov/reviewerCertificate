@@ -58,7 +58,7 @@ msgid "plugins.generic.reviewerCertificate.settings.headerText"
 msgstr "Header Text"
 
 msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
-msgstr "The main heading displayed at the top of the certificate"
+msgstr "Optional heading displayed at the top of the certificate. Leave empty for a certificate with no heading."
 
 msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
 msgstr "Header text is required"
@@ -279,6 +279,15 @@ msgstr "Average Downloads per Certificate"
 
 msgid "plugins.generic.reviewerCertificate.settings"
 msgstr "Certificate Settings"
+
+msgid "plugins.generic.reviewerCertificate.settings.removeBackgroundImage"
+msgstr "Remove the background image"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTopOffset"
+msgstr "Body Top Spacing (mm)"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription"
+msgstr "Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved."
 
 msgid "plugins.generic.reviewerCertificate.myCertificates.title"
 msgstr "My Certificates"

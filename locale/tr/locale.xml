@@ -36,6 +36,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Arka Plan Resmi</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Sertifika için bir arka plan resmi yükleyin (JPG veya PNG, önerilen boyut: A4 için 2100x2970 piksel)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Mevcut arka plan resmi</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Başlık Metni</message>
@@ -50,6 +51,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Alt Bilgi Metni</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Sertifikanın alt kısmında görüntülenen isteğe bağlı metin</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Kullanılabilir Şablon Değişkenleri</message>

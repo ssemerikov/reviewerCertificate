@@ -20,6 +20,9 @@ require_once(dirname(__FILE__) . '/Certificate.php');
 
 class CertificateDAO extends DAO {
 
+    /** @var bool guards getLastInsertId() against re-entrancy; see that method */
+    private $inGetLastInsertId = false;
+
     /**
      * Retrieve a certificate by certificate ID
      * @param $certificateId int
@@ -173,8 +176,19 @@ class CertificateDAO extends DAO {
             )
         );
 
-        $certificate->setCertificateId($this->getInsertId());
-        return $certificate->getCertificateId();
+        // certificate_code is uniquely indexed, so re-reading the row is a reliable
+        // last resort when the driver cannot report the insert ID (notably
+        // PostgreSQL, where lastInsertId() without a sequence name is unreliable).
+        $certificateId = $this->getLastInsertId();
+        if (!$certificateId) {
+            $inserted = $this->getByCertificateCode($certificate->getCertificateCode());
+            if ($inserted) {
+                $certificateId = (int) $inserted->getCertificateId();
+            }
+        }
+
+        $certificate->setCertificateId($certificateId);
+        return $certificateId;
     }
 
     /**
@@ -349,28 +363,62 @@ class CertificateDAO extends DAO {
     }
 
     /**
-     * Get the insert ID for the last inserted certificate
-     * @return int
+     * Retrieve the ID of the row just inserted.
+     *
+     * Deliberately NOT named getInsertId(). pkp-lib 3.4 declares
+     * DAO::_getInsertId() as a deprecated shim whose entire body is
+     * `return $this->getInsertId();` — so a subclass that overrides
+     * getInsertId() and calls _getInsertId() ping-pongs between the two until
+     * the stack is exhausted. That crashed every reviewer's first certificate
+     * download on OJS 3.4.0.10 with ~47,000 recursive frames.
+     *
+     * Keeping this method off core's dispatch path makes the recursion
+     * structurally impossible rather than merely avoided.
+     *
+     * Order matters — Laravel first, so OJS 3.4/3.5 never touch the shim:
+     *   OJS 3.4 / 3.5  DB::getPdo()->lastInsertId(), the same mechanism core uses
+     *   OJS 3.3        the facade exists but is not bootstrapped and throws, so we
+     *                  fall through to core's own working _getInsertId()
+     *
+     * @return int the inserted ID, or 0 if it could not be determined
      */
-    public function getInsertId(): int {
-        // OJS 3.5 removed _getInsertId() from base DAO class
-        // Use method_exists check with fallback to Laravel/PDO
-        if (method_exists($this, '_getInsertId')) {
-            return $this->_getInsertId('reviewer_certificates', 'certificate_id');
+    protected function getLastInsertId(): int {
+        // Defence in depth: this method is off the recursion path by design, but
+        // core's insert-ID API has already changed shape twice across 3.3/3.4/3.5.
+        // If a future version ever routes back into us, fail fast and quietly
+        // instead of flooding the error log with tens of thousands of frames.
+        if ($this->inGetLastInsertId) {
+            error_log('ReviewerCertificate: re-entrant getLastInsertId() call; aborting');
+            return 0;
         }
-        // Fallback for OJS 3.5+: use Illuminate DB facade
-        // Wrap in try/catch to handle OJS 3.3.0-20+ where Laravel exists but DB isn't bootstrapped
-        if (class_exists('Illuminate\Support\Facades\DB')) {
-            try {
-                $pdo = \Illuminate\Support\Facades\DB::getPdo();
-                if ($pdo !== null) {
-                    return (int) $pdo->lastInsertId();
+        $this->inGetLastInsertId = true;
+
+        try {
+            // OJS 3.4+/3.5: Laravel is bootstrapped
+            if (class_exists('Illuminate\Support\Facades\DB')) {
+                try {
+                    $pdo = \Illuminate\Support\Facades\DB::getPdo();
+                    if ($pdo !== null) {
+                        return (int) $pdo->lastInsertId();
+                    }
+                } catch (\Throwable $e) {
+                    // OJS 3.3.0-20+: classes present, DB not bootstrapped. Fall through.
                 }
-            } catch (\Throwable $e) {
-                // Laravel DB not bootstrapped (OJS 3.3.0-20+), fall through
-                error_log('ReviewerCertificate: getInsertId() Laravel fallback failed: ' . $e->getMessage());
             }
+
+            // OJS 3.3: core's own implementation. Takes no arguments — the old
+            // ADOdb-era ($table, $idField) signature has not existed since 3.3.
+            if (method_exists($this, '_getInsertId')) {
+                try {
+                    return (int) $this->_getInsertId();
+                } catch (\Throwable $e) {
+                    error_log('ReviewerCertificate: _getInsertId() failed: ' . $e->getMessage());
+                }
+            }
+
+            return 0;
+        } finally {
+            $this->inGetLastInsertId = false;
         }
-        return 0;
     }
 }

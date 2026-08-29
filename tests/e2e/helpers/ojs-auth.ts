@@ -42,6 +42,28 @@ export async function loginAsReviewer(page: Page) {
   await login(page, 'testreviewer');
 }
 
+/**
+ * loginAsReviewer with retries.
+ *
+ * OJS's own login page occasionally returns an error status when the containers
+ * are under sustained load, and page.goto() rejects outright on a non-2xx
+ * navigation. Retrying keeps an overloaded container from being reported as a
+ * plugin regression.
+ */
+export async function loginAsReviewerWithRetry(page: Page, attempts: number = 3) {
+  let lastError: unknown;
+  for (let attempt = 0; attempt < attempts; attempt++) {
+    try {
+      await loginAsReviewer(page);
+      return;
+    } catch (error) {
+      lastError = error;
+      await page.waitForTimeout(3000);
+    }
+  }
+  throw lastError;
+}
+
 export async function loginAsEditor(page: Page) {
   await login(page, 'testeditor');
 }

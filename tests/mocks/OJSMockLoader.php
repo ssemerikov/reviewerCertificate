@@ -8,6 +8,12 @@
 
 class OJSMockLoader
 {
+    /** Insert ID handed back by the mocked base DAO. */
+    public const MOCK_INSERT_ID = 424242;
+
+    /** Nesting depth at which the mocked OJS 3.4 shim gives up and reports recursion. */
+    public const MAX_INSERT_ID_DEPTH = 200;
+
     /** @var string Current OJS version */
     private static $version;
 
@@ -142,20 +148,10 @@ class OJSMockLoader
             ');
         }
 
-        // Create namespaced DAO for OJS 3.4+/3.5
+        // Create namespaced DAO base class for OJS 3.4+/3.5.
+        // Modelled on the REAL pkp-lib class shape per version -- see defineBaseDAO().
         if (!class_exists('PKP\db\DAO')) {
-            eval('
-                namespace PKP\db;
-                class DAO {
-                    protected function _getInsertId($tableName = null, $idField = null) {
-                        return rand(1, 999999);
-                    }
-
-                    public function retrieve($sql, $params = []) {
-                        return new \ArrayIterator([]);
-                    }
-                }
-            ');
+            self::defineBaseDAO();
         }
 
         // Create namespaced DAOResultFactory for OJS 3.4+/3.5
@@ -288,12 +284,30 @@ class OJSMockLoader
                         return $this->_data[$key] ?? null;
                     }
 
+                    /**
+                     * Values readUserVars() should hand back, keyed by field name.
+                     * Stands in for the request in tests.
+                     */
+                    public static $mockUserVars = [];
+
                     public function readInputData() {}
-                    public function readUserVars($vars) {}
+
+                    public function readUserVars($vars) {
+                        foreach ($vars as $name) {
+                            $value = self::$mockUserVars[$name] ?? null;
+                            // OJS pipes every user var through Core::cleanVar(), which
+                            // trims. That trim is why leading blank lines in the body
+                            // template never survive a save (Issue #74).
+                            $this->setData($name, is_string($value) ? trim($value) : $value);
+                        }
+                    }
                     public function validate() { return true; }
                     public function execute() { return true; }
                     public function fetch($request, $template = null, $display = false) { return ""; }
                     public function addCheck($check) { $this->_checks[] = $check; }
+
+                    /** Registered validators, so tests can assert which fields are required. */
+                    public function getMockChecks() { return $this->_checks; }
                     public function addError($field, $message) {}
                 }
             ');
@@ -305,8 +319,19 @@ class OJSMockLoader
                 namespace PKP\form\validation;
                 class FormValidatorPost { public function __construct($form) {} }
                 class FormValidatorCSRF { public function __construct($form) {} }
-                class FormValidator { public function __construct($form, $field = "", $type = "", $msg = "") {} }
-                class FormValidatorCustom { public function __construct($form, $field = "", $type = "", $msg = "", $callback = null) {} }
+                class FormValidator {
+                    public $mockField;
+                    public $mockType;
+                    public function __construct($form, $field = "", $type = "", $msg = "") {
+                        $this->mockField = $field;
+                        $this->mockType = $type;
+                    }
+                }
+                class FormValidatorCustom extends FormValidator {
+                    public function __construct($form, $field = "", $type = "", $msg = "", $callback = null) {
+                        parent::__construct($form, $field, $type, $msg);
+                    }
+                }
             ');
         }
 
@@ -758,6 +783,168 @@ class OJSMockLoader
     /**
      * Load version-specific mocks based on OJS version
      */
+    /**
+     * Define the PKP\db\DAO base class, mirroring the real pkp-lib class shape
+     * for the OJS version under test.
+     *
+     * This fidelity matters. pkp-lib 3.4 ships a deprecated _getInsertId() that
+     * simply forwards to getInsertId(), so any subclass overriding getInsertId()
+     * recurses until the stack is exhausted. A benign catch-all mock hides that
+     * failure mode completely -- which is exactly how it reached production.
+     *
+     *   OJS 3.3 (classes/db/DAO.inc.php:164)
+     *       protected function _getInsertId()            <- real implementation, no args
+     *
+     *   OJS 3.4 (classes/db/DAO.php:201,211)
+     *       protected function getInsertId(): int        <- real implementation
+     *       public function _getInsertId(): int          <- deprecated shim, calls getInsertId()
+     *
+     *   OJS 3.5 (classes/db/DAO.php:179)
+     *       protected function getInsertId(): int        <- _getInsertId() removed entirely
+     *
+     * The 3.4 shim carries a re-entrancy depth guard so a regression surfaces as a
+     * clean assertion failure rather than exhausting PHP's stack and killing the
+     * whole test run.
+     */
+    /**
+     * Define the Laravel DB facade the way each OJS version presents it.
+     *
+     * OJS 3.4 / 3.5 -- bootstrapped; DB::getPdo()->lastInsertId() is the real
+     *                  mechanism core itself uses.
+     * OJS 3.3       -- pkp-lib 3.3.0-20+ ships the Laravel classes, but the DB is
+     *                  NOT bootstrapped, so getPdo() throws. Code must fall through
+     *                  to the base DAO instead of assuming the facade works.
+     *
+     * Tests can steer this via the public statics, then call mockReset().
+     */
+    private static function defineDbFacade(): void
+    {
+        if (!class_exists('ReviewerCertificateMockPdo')) {
+            eval('
+                class ReviewerCertificateMockPdo {
+                    public function lastInsertId($name = null) {
+                        return \Illuminate\Support\Facades\DB::$mockLastInsertId;
+                    }
+                }
+            ');
+        }
+
+        if (!class_exists('Illuminate\Support\Facades\DB')) {
+            eval('
+                namespace Illuminate\Support\Facades;
+                class DB {
+                    /** @var bool false models OJS 3.3: classes present, DB not bootstrapped */
+                    public static $mockBootstrapped = true;
+
+                    /** @var int|string value handed back by lastInsertId() */
+                    public static $mockLastInsertId = ' . self::MOCK_INSERT_ID . ';
+
+                    public static function getPdo() {
+                        if (!self::$mockBootstrapped) {
+                            throw new \RuntimeException("A facade root has not been set.");
+                        }
+                        return new \ReviewerCertificateMockPdo();
+                    }
+
+                    public static function mockReset() {
+                        self::$mockLastInsertId = ' . self::MOCK_INSERT_ID . ';
+                    }
+                }
+            ');
+        }
+
+        // OJS 3.3 has the classes but no bootstrapped connection behind them.
+        \Illuminate\Support\Facades\DB::$mockBootstrapped = version_compare(self::$version, '3.4', '>=');
+    }
+
+    private static function defineBaseDAO(): void
+    {
+        self::defineDbFacade();
+
+        // Shared members every version needs. Single-quoted below, so the $vars
+        // inside are literal source text rather than interpolated here.
+        $common = '
+            public function retrieve($sql, $params = []) {
+                return new \ArrayIterator([]);
+            }
+
+            public function update($sql, $params = []) {
+                return true;
+            }
+        ';
+
+        if (version_compare(self::$version, '3.4', '<')) {
+            // OJS 3.3 -- real _getInsertId(), and no getInsertId() to override
+            eval('
+                namespace PKP\db;
+                class DAO {
+                    /** Tests set this to 0 to model a driver that reports no insert ID. */
+                    public static $mockInsertId = ' . self::MOCK_INSERT_ID . ';
+
+                    protected function _getInsertId() {
+                        return self::$mockInsertId;
+                    }
+                    ' . $common . '
+                }
+            ');
+            return;
+        }
+
+        if (version_compare(self::$version, '3.5', '>=')) {
+            // OJS 3.5 -- _getInsertId() was removed
+            eval('
+                namespace PKP\db;
+                class DAO {
+                    /** Tests set this to 0 to model a driver that reports no insert ID. */
+                    public static $mockInsertId = ' . self::MOCK_INSERT_ID . ';
+
+                    protected function getInsertId(): int {
+                        return self::$mockInsertId;
+                    }
+                    ' . $common . '
+                }
+            ');
+            return;
+        }
+
+        // OJS 3.4 -- the deprecated shim forwards straight back into getInsertId().
+        //
+        // The depth guard lives in _getInsertId(), not getInsertId(): a subclass that
+        // overrides getInsertId() means the parent's body never runs, so a counter
+        // there would never see the loop. The shim is the one frame guaranteed to be
+        // on the cycle.
+        eval('
+            namespace PKP\db;
+            class DAO {
+                public static $insertIdDepth = 0;
+
+                /** Tests set this to 0 to model a driver that reports no insert ID. */
+                public static $mockInsertId = ' . self::MOCK_INSERT_ID . ';
+
+                protected function getInsertId(): int {
+                    return self::$mockInsertId;
+                }
+
+                public function _getInsertId(): int {
+                    self::$insertIdDepth++;
+                    try {
+                        if (self::$insertIdDepth > ' . self::MAX_INSERT_ID_DEPTH . ') {
+                            throw new \RuntimeException(
+                                "Infinite recursion between the deprecated _getInsertId() shim "
+                                . "and an overridden getInsertId() (nesting depth exceeded "
+                                . ' . self::MAX_INSERT_ID_DEPTH . ' . ")"
+                            );
+                        }
+                        return $this->getInsertId();
+                    } finally {
+                        self::$insertIdDepth--;
+                    }
+                }
+                ' . $common . '
+            }
+        ');
+    }
+
     private static function loadVersionSpecificMocks(): void
     {
         $version = self::$version;
