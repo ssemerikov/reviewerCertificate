@@ -281,6 +281,45 @@ class CertificateGenerator {
         return false;
     }
 
+    /**
+     * Delete a stored background image along with any downscaled copies cached
+     * beside it by downscaleBackgroundIfNeeded().
+     *
+     * Called when a journal removes its background (Issue #73) or replaces it with
+     * a new upload — previously the old file was simply orphaned, so every replace
+     * left another multi-megabyte image behind in the journal's files directory.
+     *
+     * The path is checked with isBackgroundPathAllowed() first, so a tampered
+     * setting can never be used to unlink a file outside the journal files dir.
+     *
+     * @param $path string Stored background image path
+     * @return bool true if nothing is left on disk for this background
+     */
+    public static function deleteBackgroundImage($path) {
+        if (!$path) {
+            return false;
+        }
+
+        $realPath = realpath($path);
+        if ($realPath === false) {
+            // Already gone (or never existed) — nothing to do.
+            return true;
+        }
+
+        if (!self::isBackgroundPathAllowed($path)) {
+            error_log('ReviewerCertificate: refusing to delete background image outside the journal files directory: ' . $path);
+            return false;
+        }
+
+        // Scaled copies live next to the original as {name}.rcscaled-{key}.{ext}
+        $baseName = pathinfo($realPath, PATHINFO_FILENAME);
+        foreach (glob(dirname($realPath) . '/' . $baseName . '.rcscaled-*') ?: array() as $scaled) {
+            @unlink($scaled);
+        }
+
+        return @unlink($realPath);
+    }
+
     /** @var ReviewAssignment */
     private $reviewAssignment;
 
@@ -562,9 +601,30 @@ class CertificateGenerator {
             $variables
         );
 
-        $pdf->SetFont($this->effectiveFont, 'B', $headerSize);
-        $pdf->Cell(0, 20, $headerText, 0, 1, 'C');
-        $pdf->Ln(10);
+        // Skip the header block entirely when the journal has cleared it, mirroring
+        // the footer below. This used to be emitted unconditionally, so an empty
+        // header still reserved 20 mm of cell plus a 10 mm gap and the first body
+        // line was pinned at 45 mm no matter what (Issue #74).
+        if ($headerText) {
+            $pdf->SetFont($this->effectiveFont, 'B', $headerSize);
+            // Kept as Cell deliberately. MultiCell would let a long heading wrap, but
+            // every variant tested changed existing certificates: default vertical
+            // alignment lifts the heading ~4.7 mm, and constraining it with maxh
+            // silently clips the overflow instead. Long-header handling needs its own
+            // design (auto-shrink, or a body that flows after a variable-height
+            // header) and is out of scope for Issue #74.
+            $pdf->Cell(0, 20, $headerText, 0, 1, 'C');
+            $pdf->Ln(10);
+        }
+
+        // Optional extra space above the body. OJS strips leading newlines from the
+        // body template when the form is saved (Core::cleanVar() trims), so blank
+        // lines cannot be used to nudge the text down — this is the explicit,
+        // visible equivalent (Issue #74).
+        $bodyTopOffset = (float) $this->getTemplateSetting('bodyTopOffset', 0);
+        if ($bodyTopOffset > 0) {
+            $pdf->Ln($bodyTopOffset);
+        }
 
         // Body text
         $bodyTemplate = $this->replaceVariables(

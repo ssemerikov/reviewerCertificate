@@ -34,6 +34,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Fono Paveikslėlis</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Įkelkite fono paveikslėlį sertifikatui (JPG arba PNG, rekomenduojamas dydis: 2100x2970 pikselių A4 formatui)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Dabartinis fono paveikslėlis</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Antraštės Tekstas</message>
@@ -48,6 +49,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Poraštės Tekstas</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Neprivalomas tekstas, rodomas sertifikato apačioje</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Galimi Šablono Kintamieji</message>

@@ -15,7 +15,7 @@ The `main` branch contains a single codebase compatible with all OJS versions. F
 
 ## Version
 
-Source of truth: `version.xml` (currently 1.8.1). The `release` field uses 4-part format `X.Y.Z.0`.
+Source of truth: `version.xml` (currently 1.9.0). The `release` field uses 4-part format `X.Y.Z.0`.
 
 ## Development Commands
 
@@ -215,6 +215,24 @@ return $accepted;  // false → transport rejected, show the error banner
 ```
 The OJS 3.3 legacy `Mail::send()` returns a real bool and needs no workaround.
 
+**Pattern 13: Never override `getInsertId()` — use the plugin's own name**
+pkp-lib 3.4 declares `DAO::_getInsertId()` as a deprecated shim whose whole body is `return $this->getInsertId();`. A DAO subclass that overrides `getInsertId()` and calls `_getInsertId()` from it recurses until the process dies (~47,000 frames; HTTP 500 on every first certificate download, OJS 3.4.0.10). Core's shape differs per version — 3.3 has a real `_getInsertId()` and no `getInsertId()`; 3.4 has both; 3.5 dropped `_getInsertId()` — so probe in this order, under a name core never calls:
+```php
+protected function getLastInsertId(): int {
+    if (class_exists('Illuminate\Support\Facades\DB')) {      // OJS 3.4/3.5
+        try {
+            $pdo = \Illuminate\Support\Facades\DB::getPdo();
+            if ($pdo !== null) return (int) $pdo->lastInsertId();
+        } catch (\Throwable $e) { /* 3.3: present but not bootstrapped */ }
+    }
+    if (method_exists($this, '_getInsertId')) {                  // OJS 3.3, takes NO args
+        return (int) $this->_getInsertId();
+    }
+    return 0;
+}
+```
+Test mocks must model each version's real class shape (`OJSMockLoader::defineBaseDAO()`) or this class of bug stays invisible.
+
 ### OJS 3.5 Breaking Changes
 
 These removals affect this plugin and require fallback code:
@@ -290,8 +308,12 @@ E2E test files:
 - `certificate-cyrillic.spec.ts` — Cyrillic/Unicode PDF rendering tests (English + Ukrainian locales)
 - `batch-generation.spec.ts` — Batch certificate generation for managers
 - `my-certificates.spec.ts` — "My Certificates" page functionality
-- `my-certificates-email.spec.ts` — Email-certificate action (delivery + PDF attachment asserted via Mailpit). Includes the oversized-background regression test (SendPulse 552, iitlt): needs the untracked fixture `ojs-test/cert-assets/cert_bg_big.png` (regenerate with `python3 tests/e2e/helpers/make-big-bg.py`) and a writable cert-assets dir (`chmod 777`). Direct DB writes to `plugin_settings` are invisible to OJS until `cache/fc-pluginSettings-*` is removed in the container.
+- `my-certificates-email.spec.ts` — Email-certificate action (delivery + PDF attachment asserted via Mailpit). Includes the oversized-background regression test (SendPulse 552, iitlt): needs the untracked fixture `ojs-test/cert-assets/cert_bg_big.png` (regenerate with `python3 tests/e2e/helpers/make-big-bg.py`) and a writable cert-assets dir (`chmod 777`). Direct DB writes to `plugin_settings` are invisible to OJS until its settings cache is cleared in the container — `cache/fc-pluginSettings-*.php` on OJS 3.3/3.4, and `cache/opcache/` on OJS 3.5, where `PluginSettingsDAO::getSetting()` wraps the query in Laravel's `Cache::remember()`. `tests/e2e/helpers/ojs-db.ts` (`clearSettingsCache`) handles all of them. The same helper's `runSql()` passes `--default-character-set=utf8mb4`; without it the mysql client negotiates latin1 and any Cyrillic seeded into a setting is double-encoded, rendering as mojibake in the PDF.
+- `certificate-insert-recursion.spec.ts` — Regression for the OJS 3.4 `getInsertId()` infinite recursion. Empties `reviewer_certificates` first so the download takes the CREATE path; an existing row hides the bug entirely (see Pattern 13).
+- `certificate-layout.spec.ts` — Issue #74: asserts header/body placement by extracting text and word coordinates from the generated PDF with `pdftotext -bbox`.
+- `background-image-remove.spec.ts` — Issue #73: uploads a background through the real settings form, then removes it via the checkbox and asserts the setting is cleared and the file deleted. Opening the settings modal requires expanding the grid row first (`a.show_extras`) — the collapsed row's own "Settings" link is the expander, not the plugin action.
 - `locale-smoke.spec.ts` — Locale translation tests (English + Ukrainian, no `##key##` patterns)
+- `certificate-samples.spec.ts` — **Not a test**: writes one PDF per configuration to `certificate-samples/<project>/` for eyeballing. Opt-in, since it rewrites the journal's plugin settings: `GENERATE_SAMPLES=1 npx playwright test certificate-samples --project=ojs34`.
 
 ## Release Process
 
@@ -337,7 +359,7 @@ php temp/convert_xml_to_po.php
 - `en_US → en` is in the converter's map like every other locale; `pt_BR` is the only long-form dir with no short form (same code in all OJS versions).
 - When adding a language, create the `xx_XX` directory, add the mapping entry in both files, and re-run the converter.
 
-Current key count: 104 per language. Total tests: 188 PHP + 99 E2E = 287 tests.
+Current key count: 107 per language. Total tests: 206 PHP + 123 E2E (41 specs x 3 OJS versions) = 329 tests.
 
 Validate translations: `vendor/bin/phpunit tests/Locale/LocaleValidationTest.php`
 

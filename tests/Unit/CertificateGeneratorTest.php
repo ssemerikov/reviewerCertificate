@@ -860,4 +860,88 @@ class CertificateGeneratorTest extends TestCase
             }
         }
     }
+
+    /**
+     * Read a template setting the way the generator does internally.
+     */
+    private function templateSetting(array $settings, string $key, $default = null)
+    {
+        $this->generator->setTemplateSettings($settings);
+
+        $method = new \ReflectionMethod(CertificateGenerator::class, 'getTemplateSetting');
+        $method->setAccessible(true);
+
+        return $method->invoke($this->generator, $key, $default);
+    }
+
+    /**
+     * Issue #74 hinges on this distinction:
+     *   header never configured -> keep the historic default (existing journals
+     *                              must not suddenly lose their heading)
+     *   header explicitly empty -> render no heading at all
+     */
+    public function testUnsetHeaderTextFallsBackToTheDefault(): void
+    {
+        $settings = $this->testSettings;
+        unset($settings['headerText']);
+
+        $this->assertSame(
+            'Certificate of Recognition',
+            $this->templateSetting($settings, 'headerText', 'Certificate of Recognition')
+        );
+    }
+
+    public function testExplicitlyEmptyHeaderTextIsNotReplacedByTheDefault(): void
+    {
+        $settings = $this->testSettings;
+        $settings['headerText'] = '';
+
+        $this->assertSame(
+            '',
+            $this->templateSetting($settings, 'headerText', 'Certificate of Recognition'),
+            'An explicitly cleared header must reach the PDF as empty, or the header '
+            . 'block is drawn anyway and the body stays pinned 30 mm down (Issue #74)'
+        );
+    }
+
+    /**
+     * The body offset defaults to 0, so certificates from journals that never touch
+     * the setting lay out exactly as they did before.
+     */
+    public function testBodyTopOffsetDefaultsToZero(): void
+    {
+        $settings = $this->testSettings;
+        unset($settings['bodyTopOffset']);
+
+        $this->assertSame(0, $this->templateSetting($settings, 'bodyTopOffset', 0));
+    }
+
+    public function testBodyTopOffsetIsReadFromSettings(): void
+    {
+        $settings = $this->testSettings;
+        $settings['bodyTopOffset'] = 25;
+
+        $this->assertSame(25, $this->templateSetting($settings, 'bodyTopOffset', 0));
+    }
+
+    /**
+     * The preview verb builds its own settings array in ReviewerCertificatePluginCore.
+     * It must use ?? (null-coalescing) for headerText, not ?: — with ?: an explicitly
+     * empty header is silently replaced by the default, so the preview shows a heading
+     * that the downloaded certificate does not have.
+     *
+     * Guarded at source level because the divergence is otherwise invisible: both
+     * paths "work", they just disagree.
+     */
+    public function testPreviewDoesNotCoerceEmptyHeaderToTheDefault(): void
+    {
+        $core = file_get_contents(BASE_SYS_DIR . '/classes/ReviewerCertificatePluginCore.php');
+
+        $this->assertStringNotContainsString(
+            "'headerText') ?:",
+            $core,
+            'Preview must use ?? for headerText so an empty header is preserved (Issue #74)'
+        );
+        $this->assertStringContainsString("'headerText') ??", $core);
+    }
 }

@@ -255,4 +255,93 @@ class OJS34CompatibilityTest extends TestCase
             $this->assertFileIsReadable($tcpdfPath);
         }
     }
+
+    /**
+     * Regression: inserting a certificate must not recurse through pkp-lib 3.4's
+     * deprecated DAO::_getInsertId() shim.
+     *
+     * pkp-lib 3.4 (classes/db/DAO.php:211) declares:
+     *
+     *     public function _getInsertId(): int { return $this->getInsertId(); }
+     *
+     * The plugin used to override getInsertId() and call _getInsertId() from it,
+     * so the two called each other until PHP's stack was exhausted — roughly
+     * 47,000 frames. Every reviewer's FIRST certificate download died with an
+     * HTTP 500 on OJS 3.4.0.10; downloads for reviewers who already had a row
+     * worked, because that path never inserts.
+     *
+     * @see https://forum.pkp.sfu.ca/t/reviewer-certificate-plugin-for-ojs-3-4/97350
+     */
+    public function testInsertObjectDoesNotRecurseThroughDeprecatedShim(): void
+    {
+        $this->requireOJSVersion('3.4');
+        $this->requireOJSVersionBelow('3.5');
+
+        // Guard the premise: if core ever drops the shim, this test stops being
+        // meaningful and should be revisited rather than silently passing.
+        $this->assertTrue(
+            method_exists('PKP\db\DAO', '_getInsertId'),
+            'OJS 3.4 base DAO is expected to expose the deprecated _getInsertId() shim'
+        );
+
+        $certificate = $this->makeCertificate('RECURSION0000001');
+
+        // With the bug present the mocked shim aborts at MAX_INSERT_ID_DEPTH and
+        // throws; without it, this simply returns an ID.
+        $certificateId = (new CertificateDAO())->insertObject($certificate);
+
+        $this->assertGreaterThan(
+            0,
+            $certificateId,
+            'insertObject() should return a real insert ID on OJS 3.4'
+        );
+        $this->assertSame($certificateId, $certificate->getCertificateId());
+    }
+
+    /**
+     * The plugin must never declare a method named getInsertId(): that is the
+     * exact name pkp-lib 3.4's _getInsertId() shim calls, so overriding it
+     * re-creates the infinite recursion above.
+     */
+    public function testCertificateDAODoesNotOverrideGetInsertId(): void
+    {
+        $this->requireOJSVersion('3.4');
+
+        $reflection = new \ReflectionClass(CertificateDAO::class);
+
+        $declaredHere = array();
+        foreach ($reflection->getMethods() as $method) {
+            if ($method->getDeclaringClass()->getName() === CertificateDAO::class) {
+                $declaredHere[] = $method->getName();
+            }
+        }
+
+        $this->assertNotContains(
+            'getInsertId',
+            $declaredHere,
+            'CertificateDAO must not override getInsertId() — pkp-lib 3.4 routes '
+            . '_getInsertId() into it, which causes infinite recursion. '
+            . 'Use getLastInsertId() instead.'
+        );
+    }
+
+    /**
+     * Build a minimally valid Certificate for insert tests.
+     */
+    private function makeCertificate(string $code)
+    {
+        require_once BASE_SYS_DIR . '/classes/Certificate.php';
+
+        $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
+        $certificate->setReviewerId(1);
+        $certificate->setSubmissionId(100);
+        $certificate->setReviewId(50);
+        $certificate->setContextId(1);
+        $certificate->setTemplateId(1);
+        $certificate->setDateIssued('2026-01-15 10:00:00');
+        $certificate->setCertificateCode($code);
+        $certificate->setDownloadCount(0);
+
+        return $certificate;
+    }
 }

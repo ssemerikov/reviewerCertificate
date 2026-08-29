@@ -41,3 +41,9 @@ OJS_3.5_REVIEWER_DASHBOARD_INVESTIGATION.md
 RELEASE_NOTES*.md
 REVIEWER_WORKFLOW.md
 .github-release-notes.md
+
+# Local-only Playwright config (pins an on-disk browser build); never commit
+playwright.local.config.ts
+
+# Generated certificate sample PDFs (see tests/e2e/certificate-samples.spec.ts)
+certificate-samples/

@@ -5,6 +5,30 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.9.0] - 2026-08-29
+
+### Fixed
+
+- **Every reviewer's first certificate download crashed with a fatal error on OJS 3.4** (reported on the PKP forum against OJS 3.4.0.10). `CertificateDAO::getInsertId()` overrode the base DAO method of the same name and then called `_getInsertId()` from inside it. In pkp-lib 3.4 that method is a deprecated shim whose entire body is `return $this->getInsertId();`, so the two called each other until the process died — around 47,000 recursive frames per attempt. Only the insert path was affected, which is why the *first* download for a review returned HTTP 500 while every later one worked: the row was already written, so the retry took the update path. The plugin no longer overrides a core method at all — the insert ID is fetched in `getLastInsertId()`, which asks Laravel's `DB::getPdo()->lastInsertId()` first (OJS 3.4/3.5) and falls back to core's own `_getInsertId()` only on OJS 3.3, where it is a real implementation. A re-entrancy guard makes the recursion structurally impossible even if core changes shape again.
+  - The same crash also broke **batch certificate generation** for journal managers (every reviewer failed silently, reporting `generated: 0`) and the **email-certificate** action, neither of which was in the original report.
+  - How it surfaced depended on the PHP version: PHP 8.3+ reports `Maximum call stack size ... reached. Infinite recursion?`, while older builds simply exhaust the memory limit first. Both produced an HTTP 500 and a very large log entry.
+  - `insertObject()` now also recovers the ID by re-reading the row via its unique `certificate_code` when the driver reports nothing, which additionally hardens PostgreSQL installations where `lastInsertId()` without a sequence name is unreliable.
+- **Background image could not be removed once set** (Issue #73). `readInputData()` restored the stored path unconditionally, so the setting could only ever be overwritten by another upload and never cleared. A "Remove the background image" checkbox now appears in the plugin settings whenever a background is set. Despite the issue title this affected every OJS version, not just 3.5.
+  - Removing or replacing a background now also deletes the old file and its cached downscaled copies, guarded by the existing path check. Previously each replacement left another multi-megabyte image orphaned in the journal's files directory.
+- **The certificate body was pinned to a fixed position and the header could not be omitted** (Issue #74). The header was drawn into a fixed 20 mm cell followed by a fixed 10 mm gap regardless of its content, so the first body line always started 45 mm down the page, and blank lines typed at the top of the body template could not move it — OJS trims those on save. Header text is now optional (matching footer text): when it is cleared, no space is reserved and the body moves up. When a header *is* set, the certificate renders exactly as before — verified by comparing header and body coordinates in the generated PDF.
+  - Preview and download previously disagreed about an empty header — the preview substituted the default heading while the real certificate did not. Both now treat an *unset* header as "use the default" and an explicitly *empty* one as "no heading", so existing journals are unaffected.
+
+### Added
+
+- **Body top spacing setting** (millimetres, default 0) — the supported way to move the body text down the page, replacing the blank lines that OJS strips on save (Issue #74). Clamped to 0–100 mm alongside the other numeric settings.
+- Three new locale keys (`settings.removeBackgroundImage`, `settings.bodyTopOffset`, `settings.bodyTopOffsetDescription`), now 107 per language. English text ships for all languages, with Ukrainian translated; the remaining 29 languages fall back to English until translations arrive.
+
+### Changed
+
+- **Test mocks now model the real pkp-lib class shape per OJS version.** The infinite recursion was invisible to the test suite because the mocked base DAO gave *every* version a harmless `_getInsertId()`. The mock now mirrors core exactly — OJS 3.3's real implementation, OJS 3.4's recursive deprecation shim, and OJS 3.5 with the method removed — with a depth guard so a regression fails as a clean assertion instead of exhausting the stack. `insertObject()` is now genuinely exercised; the previous "insert" test only touched the in-memory database mock.
+- New E2E coverage on OJS 3.3, 3.4 and 3.5: the certificate table is emptied to force the create path (an existing row hid the bug entirely), then the download is asserted to return a real PDF with a non-zero `certificate_id` and no fatal error in the container log. Certificate layout is verified by extracting text and coordinates from the generated PDF. Total: 206 PHP + 123 E2E tests (41 specs across three OJS versions).
+- E2E helper fix: on OJS 3.5, plugin settings are cached through Laravel's `Cache::remember()` in `cache/opcache`, not the `cache/fc-pluginSettings-*` files used by 3.3/3.4. Settings written directly to the database were silently ignored until that store was cleared.
+
 ## [1.8.2] - 2026-07-20
 
 ### Fixed

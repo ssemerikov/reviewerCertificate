@@ -139,12 +139,14 @@
 		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.backgroundImage" description="plugins.generic.reviewerCertificate.settings.backgroundImageDescription"}
 			<input type="file" id="backgroundImage" name="backgroundImage" accept="image/*" class="pkp_form_file" />
 			{if $backgroundImage}
-				<p class="description">{translate key="plugins.generic.reviewerCertificate.settings.currentImage"}: {$backgroundImageName}</p>
+				<p class="description">{translate key="plugins.generic.reviewerCertificate.settings.currentImage"}: {$backgroundImageName|escape}</p>
+				{* Ticking this clears the setting without needing a replacement upload (Issue #73) *}
+				{fbvElement type="checkbox" id="removeBackgroundImage" value="1" label="plugins.generic.reviewerCertificate.settings.removeBackgroundImage"}
 			{/if}
 		{/fbvFormSection}
 
 		{* Header Text *}
-		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.headerText" description="plugins.generic.reviewerCertificate.settings.headerTextDescription" required=true}
+		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.headerText" description="plugins.generic.reviewerCertificate.settings.headerTextDescription"}
 			{fbvElement type="text" id="headerText" value=$headerText maxlength="255" size=$fbvStyles.size.LARGE}
 		{/fbvFormSection}
 
@@ -192,6 +194,11 @@
 		{* Font Size *}
 		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.fontSize"}
 			{fbvElement type="text" id="fontSize" value=$fontSize|default:12 size=$fbvStyles.size.SMALL}
+		{/fbvFormSection}
+
+		{* Body Top Offset *}
+		{fbvFormSection title="plugins.generic.reviewerCertificate.settings.bodyTopOffset" description="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription"}
+			{fbvElement type="text" id="bodyTopOffset" value=$bodyTopOffset|default:0 size=$fbvStyles.size.SMALL}
 		{/fbvFormSection}
 
 		{* Page Orientation *}

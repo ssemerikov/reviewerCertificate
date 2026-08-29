@@ -36,6 +36,7 @@
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Bakgrunnsbilde</message>
 	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Last opp et bakgrunnsbilde for sertifikatet (JPG eller PNG, anbefalt størrelse: 2100x2970 piksler for A4)</message>
 	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Gjeldende bakgrunnsbilde</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Remove the background image</message>
 
 	<!-- Header Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.headerText">Overskriftstekst</message>
@@ -50,6 +51,10 @@
 	<!-- Footer Text -->
 	<message key="plugins.generic.reviewerCertificate.settings.footerText">Bunntekst</message>
 	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Valgfri tekst som vises nederst på sertifikatet</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Body Top Spacing (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Extra blank space in millimetres above the body text. Use this to move the body down the page; blank lines typed at the start of the body template are removed when the form is saved.</message>
 
 	<!-- Available Variables -->
 	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Tilgjengelige Malvariabler</message>

@@ -235,7 +235,9 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                 // Get current settings
                 $templateSettings = array(
                     'backgroundImage' => $this->getSetting($context->getId(), 'backgroundImage'),
-                    'headerText' => $this->getSetting($context->getId(), 'headerText') ?: 'Certificate of Recognition',
+                    // ?? not ?: — an explicitly empty header means "no header" and must
+                    // survive to the generator, or preview and download disagree (Issue #74).
+                    'headerText' => $this->getSetting($context->getId(), 'headerText') ?? 'Certificate of Recognition',
                     'bodyTemplate' => $this->getSetting($context->getId(), 'bodyTemplate') ?: \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::getDefaultBodyTemplate(),
                     'footerText' => $this->getSetting($context->getId(), 'footerText') ?: '',
                     'fontFamily' => $this->getSetting($context->getId(), 'fontFamily') ?: 'helvetica',
@@ -245,6 +247,7 @@ class ReviewerCertificatePlugin extends GenericPlugin {
                     'textColorB' => $this->getSetting($context->getId(), 'textColorB') ?: 0,
                     'includeQRCode' => $this->getSetting($context->getId(), 'includeQRCode') ?: false,
                     'pageOrientation' => $this->getSetting($context->getId(), 'pageOrientation') ?: 'P',
+                    'bodyTopOffset' => $this->getSetting($context->getId(), 'bodyTopOffset') ?: 0,
                 );
 
                 $generator->setContext($context);
