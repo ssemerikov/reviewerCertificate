@@ -4,13 +4,14 @@
  */
 
 require_once dirname(__FILE__) . '/../bootstrap.php';
-require_once BASE_SYS_DIR . '/classes/ReviewerCertificateMailable.php';
 
 use APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable;
 
 class ReviewerCertificateMailableTest extends TestCase
 {
+    /** @requires PHP >= 7.4 */
     public function testAvailabilityMailableAcceptsJournalContactSender(): void {
+        require_once BASE_SYS_DIR . '/classes/ReviewerCertificateMailable.php';
         $mail = new ReviewerCertificateMailable();
         $mail->from('journal@example.com', 'Journal contact');
         $this->assertSame(['journal@example.com', 'Journal contact'], $mail->mockFrom);

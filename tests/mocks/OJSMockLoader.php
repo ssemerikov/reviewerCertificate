@@ -628,7 +628,7 @@ class OJSMockLoader
             ');
         }
         if (!class_exists('PKP\mail\Mailable')) {
-            eval('
+            $mailableClass = '
                 namespace PKP\mail;
                 class Mailable {
                     protected static ?string $name = null;
@@ -650,7 +650,13 @@ class OJSMockLoader
                     public function body($body) { $this->mockBody = $body; return $this; }
                     public function attachData($data, $name, $options = []) { $this->mockAttachments[] = [$name, strlen($data), $options]; return $this; }
                 }
-            ');
+            ';
+            // PHP 7.3 can exercise the adapter with an untyped test double;
+            // the real typed metadata class belongs to the newer OJS runtime.
+            if (PHP_VERSION_ID < 70400) {
+                $mailableClass = str_replace('static ?string ', 'static ', $mailableClass);
+            }
+            eval($mailableClass);
         }
 
         // Create Illuminate mail-layer mocks modelling pkp-lib 3.4+ behavior:

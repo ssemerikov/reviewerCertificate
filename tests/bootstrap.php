@@ -106,11 +106,12 @@ function cleanupTestEnvironment() {
 // Register shutdown function
 register_shutdown_function('cleanupTestEnvironment');
 
-echo "\n";
-echo "========================================\n";
-echo "Reviewer Certificate Plugin Test Suite\n";
-echo "========================================\n";
-echo "OJS Version: " . OJS_VERSION . "\n";
-echo "PHP Version: " . PHP_VERSION . "\n";
-echo "Test Mode: " . (getenv('TEST_MODE') ?: 'standard') . "\n";
-echo "========================================\n\n";
+// Keep CLI diagnostics off the HTTP output stream. Newer PHP releases reject
+// status/header mutations after stdout output, including the bootstrap banner.
+fwrite(STDERR, "\n========================================\n"
+    . "Reviewer Certificate Plugin Test Suite\n"
+    . "========================================\n"
+    . "OJS Version: " . OJS_VERSION . "\n"
+    . "PHP Version: " . PHP_VERSION . "\n"
+    . "Test Mode: " . (getenv('TEST_MODE') ?: 'standard') . "\n"
+    . "========================================\n\n");
