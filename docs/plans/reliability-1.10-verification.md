@@ -1,7 +1,7 @@
 # Reviewer certificate 1.10 verification
 
-Local verification completed 2026-09-12. These results cover the uncommitted
-`fix/comprehensive-plugin-reliability` work, not a published release or remote CI run.
+Local verification completed 2026-09-12; the implementation is integrated into
+`main`. This record distinguishes local coverage from remote CI and its limits.
 
 ## Automated checks
 
@@ -50,6 +50,20 @@ that only superseded schema/email callbacks are retired.
 
 ## Review and limitations
 
+The remote PHP matrix passed all 12 supported PHP/OJS combinations, including
+PHP 7.3, with GD and coverage enabled, plus the code-quality job
+([CI run](https://github.com/ssemerikov/reviewerCertificate/actions/runs/34685051037)).
+Initial CI failures identified two test-harness assumptions: newer mail metadata
+must not be parsed by PHP 7.3, and CLI diagnostics must not send HTTP output before
+status assertions. Both are corrected; the matrix no longer cancels other targets
+when one fails.
+
+Clean OJS integration also exposed root-owned locale caches under `umask=0027`.
+The fixture runner now uses each image's web account, with a regression that
+resolves the plugin label through core caches. The release gate requires the
+clean database/browser/package workflow as well as the PHP matrix; current runs
+are available in [GitHub Actions](https://github.com/ssemerikov/reviewerCertificate/actions).
+
 Independent read-only review found no blocking production issue in the versioned
 upgrade callback. Its integration fixture represents the old plugin object with
 a stand-in rather than loading the entire old core class. Fresh schema creation
@@ -58,12 +72,13 @@ scratch by that warm-upgrade fixture. Actual uploaded archive extraction and
 replacement are not tested against the read-only plugin mount.
 
 PostgreSQL tests use real OJS framework/DAO code with core-shaped parent tables,
-not a complete PostgreSQL OJS installation. The broader legacy browser suites and
-the remote PHP-version CI matrix have not been run as part of this final gate.
+not a complete PostgreSQL OJS installation. The broader legacy browser suites
+were not run as part of this final gate.
 
 Three local 1.10.0 release candidates were rebuilt at approximately 2.1 MB each.
 Production dependency resolution reported no security advisories. Packages exclude
 `AGENTS.md`, `CLAUDE.md`, development tests and obsolete SQL/XML schema installers.
-PR #75 was closed with a thank-you explaining the equivalent incorporation into
-the unpublished release candidates. No feature push, replies to issues #76/#77
-or release publication has occurred yet.
+PR #75 was closed with a thank-you explaining its equivalent incorporation.
+Published packages and their validation links belong in the
+[version-specific releases](https://github.com/ssemerikov/reviewerCertificate/releases);
+GitHub's automatic source archives do not contain bundled dependencies.
