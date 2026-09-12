@@ -22,4 +22,3 @@ msgstr "Jūsų Sertifikatas Paruoštas!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nDėkojame už šios recenzijos užbaigimą. Dabar galite atsisiųsti savo pripažinimo sertifikatą.\n\nAtsisiųsti Sertifikatą: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

@@ -22,4 +22,3 @@ msgstr "Tanúsítványa Elkészült!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nKöszönjük, hogy befejezte ezt a bírálatot. Most letöltheti elismerő tanúsítványát.\n\nTanúsítvány Letöltése: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

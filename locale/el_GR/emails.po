@@ -22,4 +22,3 @@ msgstr "Το Πιστοποιητικό σας είναι Έτοιμο!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nΣας ευχαριστούμε για την ολοκλήρωση αυτής της κριτικής. Μπορείτε τώρα να κατεβάσετε το πιστοποιητικό αναγνώρισής σας.\n\nΛήψη Πιστοποιητικού: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

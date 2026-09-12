@@ -22,4 +22,3 @@ msgstr "Vaše Potrdilo je Pripravljeno!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nZahvaljujemo se vam za dokončanje te recenzije. Zdaj lahko prenesete svoje potrdilo priznanja.\n\nPrenesi Potrdilo: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

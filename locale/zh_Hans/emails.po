@@ -22,4 +22,3 @@ msgstr "您的证书已准备就绪！"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\n感谢您完成本次审稿。您现在可以下载您的荣誉证书。\n\n下载证书: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

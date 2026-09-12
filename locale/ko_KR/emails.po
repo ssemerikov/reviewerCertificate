@@ -22,4 +22,3 @@ msgstr "인증서가 준비되었습니다!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\n심사를 완료해 주셔서 감사합니다. 이제 인증서를 다운로드할 수 있습니다.\n\n인증서 다운로드: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

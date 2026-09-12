@@ -22,4 +22,3 @@ msgstr "Sertifikat Anda sudah siap!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nTerima kasih telah menyelesaikan tinjauan ini. Anda sekarang dapat mengunduh sertifikat penghargaan Anda.\n\nUnduh Sertifikat: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

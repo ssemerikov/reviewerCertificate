@@ -22,4 +22,3 @@ msgstr "התעודה שלך מוכנה!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nתודה על השלמת הביקורת. כעת תוכל להוריד את תעודת ההוקרה שלך.\n\nהורד תעודה: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

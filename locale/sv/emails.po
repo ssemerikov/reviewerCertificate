@@ -22,4 +22,3 @@ msgstr "Ditt certifikat är klart!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nTack för att du slutförde denna granskning. Du kan nu ladda ner ditt certifikat för erkännande.\n\nLadda ner Certifikat: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

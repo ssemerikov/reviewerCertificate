@@ -22,4 +22,3 @@ msgstr "شهادتك جاهزة!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nشكراً لإتمامك هذا التحكيم. يمكنك الآن تنزيل شهادة التقدير الخاصة بك.\n\nتنزيل الشهادة: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-

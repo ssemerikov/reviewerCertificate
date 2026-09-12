@@ -119,7 +119,7 @@ foreach ($dirs as $xmlPath) {
         $emails .= 'msgid "' . escapePoString($key) . '"' . "\n"
             . 'msgstr "' . escapePoString($messages[$key]) . '"' . "\n\n";
     }
-    file_put_contents(dirname($xmlPath) . '/emails.po', $emails);
+    file_put_contents(dirname($xmlPath) . '/emails.po', rtrim($emails, "\r\n") . "\n");
     echo "  $locale: " . count($messages) . " keys written to locale.po\n";
     $count++;
 }

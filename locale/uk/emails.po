@@ -22,4 +22,3 @@ msgstr "Ваш сертифікат готовий!"
 
 msgid "plugins.generic.reviewerCertificate.email.body"
 msgstr "{{$reviewerName}},\n\nДякуємо за завершення рецензування. Тепер ви можете завантажити свій сертифікат визнання.\n\nЗавантажити сертифікат: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
-
