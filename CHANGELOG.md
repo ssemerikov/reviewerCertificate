@@ -5,7 +5,7 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.10.0] - Unreleased
+## [1.10.0] - 2026-09-12
 
 ### Fixed
 
@@ -28,6 +28,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Release packaging installs production dependencies in temporary staging without replacing development dependencies.
+- PKP review follow-ups (#76/#77): migrations use OJS's configured database connection and native schema builder; foreign keys are installed where legacy data permits without deleting issued certificates. Uploads use randomized names and core file permissions.
+- Version-specific packages ship only the target locales, valid email manifests and production TCPDF assets, with dependency resolution against each OJS release's PHP floor.
 - Availability fallback messages reuse localized certificate text; new management controls have English fallbacks awaiting translation.
 
 ## [1.9.0] - 2026-08-29
