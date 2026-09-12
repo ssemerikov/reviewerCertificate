@@ -37,8 +37,10 @@ jobs:
             docker compose -f tests/environment/docker-compose.yml exec -T "$project" apk add --no-cache php82-pdo_pgsql
           done
           for project in ojs33 ojs34 ojs35; do
-            docker compose -f tests/environment/docker-compose.yml exec -T -e OJS_TEST_DATABASE=rc_postgres_test "$project" php plugins/generic/reviewerCertificate/tests/environment/check-postgres.php
-            docker compose -f tests/environment/docker-compose.yml exec -T -e OJS_TEST_DATABASE=rc_mysql_test "$project" php plugins/generic/reviewerCertificate/tests/environment/check-postgres.php
+            web_user=apache
+            if [ "$project" = ojs35 ]; then web_user=www-data; fi
+            docker compose -f tests/environment/docker-compose.yml exec -T --user "$web_user" -e OJS_TEST_DATABASE=rc_postgres_test "$project" php plugins/generic/reviewerCertificate/tests/environment/check-postgres.php
+            docker compose -f tests/environment/docker-compose.yml exec -T --user "$web_user" -e OJS_TEST_DATABASE=rc_mysql_test "$project" php plugins/generic/reviewerCertificate/tests/environment/check-postgres.php
           done
       - name: Browser security, historical mail, and file permissions
         run: npx playwright test tests/e2e/batch-generation.spec.ts --retries=0

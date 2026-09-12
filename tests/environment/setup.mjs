@@ -55,14 +55,17 @@ file = 'docker-compose.yml';
 console.log(compose('up', '-d'));
 console.log(execFileSync('bash', ['seed-test-data.sh'], { cwd, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 }));
 for (const project of ['ojs33', 'ojs34', 'ojs35']) {
-  console.log(compose('exec', '-T', '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
+  const webUser = project === 'ojs35' ? 'www-data' : 'apache';
+  console.log(compose('exec', '-T', '--user', webUser, '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
     'plugins/generic/reviewerCertificate/tests/environment/configure-fixtures.php'));
-  console.log(compose('exec', '-T', '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
+  console.log(compose('exec', '-T', '--user', webUser, '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
     'plugins/generic/reviewerCertificate/tests/environment/check-database.php'));
-  console.log(compose('exec', '-T', '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
+  console.log(compose('exec', '-T', '--user', webUser, '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
     'plugins/generic/reviewerCertificate/tests/environment/check-email-install.php'));
-  for (const check of ['check-picker.php', 'check-notification-transaction.php', 'check-warm-upgrade.php']) {
-    console.log(compose('exec', '-T', '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
+  // Core locale caches honor files.umask; root-owned 0640 files would hide
+  // translations from Apache on a fresh installation.
+  for (const check of ['check-picker.php', 'check-notification-transaction.php', 'check-warm-upgrade.php', 'check-plugin-locales.php']) {
+    console.log(compose('exec', '-T', '--user', webUser, '-e', `OJS_TEST_DATABASE=${project}`, project, 'php',
       `plugins/generic/reviewerCertificate/tests/environment/${check}`));
   }
   compose('exec', '-T', project, 'php', '-r',
