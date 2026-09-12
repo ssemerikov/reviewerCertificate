@@ -1,31 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE email_texts SYSTEM "../../../lib/pkp/dtd/emailTemplateData.dtd">
-
-<!--
-  * plugins/generic/reviewerCertificate/emailTemplates.xml
-  *
-  * Copyright (c) 2024
-  * Distributed under the GNU GPL v3.
-  *
-  * Email templates for the Reviewer Certificate plugin
-  -->
-
-<email_texts locale="en_US">
-	<email_text key="REVIEWER_CERTIFICATE_AVAILABLE">
-		<subject>Your Review Certificate is Ready</subject>
-		<body>Dear {$reviewerName},
-
-Thank you for completing your peer review. As a token of our appreciation, a certificate of recognition is now available for you to download.
-
-You can download your certificate by visiting the following link:
-{$certificateUrl}
-
-This certificate acknowledges your valuable contribution to the peer review process and can be added to your professional portfolio.
-
-Thank you again for your time and expertise.
-
-Best regards,
-{$journalName}
-{$journalUrl}</body>
-	</email_text>
-</email_texts>
+<!DOCTYPE emails SYSTEM "../../../lib/pkp/dtd/emailTemplates.dtd">
+<emails>
+    <email key="REVIEWER_CERTIFICATE_AVAILABLE"
+        name="plugins.generic.reviewerCertificate.displayName"
+        subject="plugins.generic.reviewerCertificate.email.subject"
+        body="plugins.generic.reviewerCertificate.email.body"/>
+</emails>

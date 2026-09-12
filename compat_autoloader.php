@@ -41,6 +41,7 @@ if (!defined('REVIEWER_CERTIFICATE_COMPAT_AUTOLOADER')) {
             'PKP\\core\\DataObject' => ['DataObject', 'lib.pkp.classes.core.DataObject'],
             'PKP\\plugins\\PluginRegistry' => ['PluginRegistry', 'lib.pkp.classes.plugins.PluginRegistry'],
             'PKP\\form\\Form' => ['Form', 'lib.pkp.classes.form.Form'],
+            'PKP\\file\\FileManager' => ['FileManager', 'lib.pkp.classes.file.FileManager'],
             'PKP\\form\\validation\\FormValidator' => ['FormValidator', 'lib.pkp.classes.form.validation.FormValidator'],
             'PKP\\form\\validation\\FormValidatorPost' => ['FormValidatorPost', 'lib.pkp.classes.form.validation.FormValidatorPost'],
             'PKP\\form\\validation\\FormValidatorCSRF' => ['FormValidatorCSRF', 'lib.pkp.classes.form.validation.FormValidatorCSRF'],

@@ -2,7 +2,7 @@ name: PHPUnit Tests
 
 on:
   push:
-    branches: [ main, develop, 'claude/**' ]
+    branches: [ main, develop, 'claude/**', 'fix/**' ]
   pull_request:
     branches: [ main, develop ]
 
@@ -13,14 +13,22 @@ jobs:
 
     strategy:
       matrix:
-        php: ['7.3', '7.4', '8.0', '8.1', '8.2']
+        php: ['7.3', '7.4', '8.0', '8.1', '8.2', '8.3']
         ojs: ['3.3', '3.4', '3.5']
         exclude:
-          # OJS 3.5 may require PHP 8.0+
+          # Match the PHP floors declared by the supported OJS releases.
+          - ojs: '3.4'
+            php: '7.3'
+          - ojs: '3.4'
+            php: '7.4'
           - ojs: '3.5'
             php: '7.3'
           - ojs: '3.5'
             php: '7.4'
+          - ojs: '3.5'
+            php: '8.0'
+          - ojs: '3.5'
+            php: '8.1'
 
     steps:
       - name: Checkout code

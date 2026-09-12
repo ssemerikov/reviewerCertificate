@@ -1,10 +1,11 @@
 import { execFileSync } from 'child_process';
 import * as path from 'path';
 
-const COMPOSE_FILE = path.resolve(__dirname, '../../../ojs-test/docker-compose.yml');
+const COMPOSE_FILE = process.env.OJS_TEST_COMPOSE || path.resolve(__dirname, '../../environment/docker-compose.yml');
 
 /** Playwright project name -> MySQL database name (they happen to match). */
 export function dbName(project: string): string {
+  if (!['ojs33', 'ojs34', 'ojs35'].includes(project)) throw new Error('Unknown disposable test database');
   return project;
 }
 
@@ -47,7 +48,7 @@ export function queryValue(project: string, sql: string): string {
  * database that already holds a row hides the bug completely.
  */
 export function truncateCertificates(project: string): void {
-  runSql(project, 'DELETE FROM reviewer_certificates;');
+  runSql(project, 'DELETE FROM reviewer_certificate_notifications; DELETE FROM reviewer_certificates;');
 }
 
 /** A review the seeded testreviewer has completed, so a certificate is allowed. */
@@ -113,10 +114,11 @@ export function clearSettingsCache(project: string): void {
 }
 
 export function getPluginSetting(project: string, name: string): string {
+  const contextId = queryValue(project, "SELECT journal_id FROM journals WHERE path='testjournal' LIMIT 1;");
   return queryValue(
     project,
     `SELECT setting_value FROM plugin_settings
-     WHERE plugin_name='reviewercertificateplugin' AND setting_name='${name}' LIMIT 1;`,
+     WHERE plugin_name='reviewercertificateplugin' AND context_id=${contextId} AND setting_name='${name}' LIMIT 1;`,
   );
 }
 
@@ -129,6 +131,10 @@ export function fileExistsInContainer(project: string, filePath: string): boolea
   } catch {
     return false;
   }
+}
+
+export function fileModeInContainer(project: string, filePath: string): string {
+  return compose(['exec', '-T', serviceName(project), 'stat', '-c', '%a', filePath]).trim();
 }
 
 /** List files in a directory inside the instance's container. */

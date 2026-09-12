@@ -1,17 +1,19 @@
 # Reviewer Certificate Plugin for OJS
 
-**Version 1.9.0** | [Changelog](CHANGELOG.md) | OJS 3.3+ / 3.4+ / 3.5+
+**Version 1.10.0 (development)** | [Changelog](CHANGELOG.md) | OJS 3.3 / 3.4 / 3.5
 
 ## Overview
 
 The Reviewer Certificate Plugin enables reviewers to generate and download personalized PDF certificates of recognition after completing peer reviews. This plugin helps journals acknowledge and incentivize quality peer review work.
 
-**Latest Release (v1.9.0)**:
-- **Fixed**: Every reviewer's *first* certificate download returned HTTP 500 on OJS 3.4 — `CertificateDAO::getInsertId()` recursed into pkp-lib 3.4's deprecated `_getInsertId()` shim until the process died. The same crash also broke batch generation and the email-certificate action.
-- **Fixed**: The background image could not be removed once set — there is now a "Remove the background image" checkbox, and removing or replacing one deletes the orphaned file (#73)
-- **Fixed**: Header text is now optional, so clearing it no longer reserves space and the body moves up (#74)
-- **Added**: **Body Top Spacing (mm)** setting — the supported way to move the body down the page, replacing the blank lines OJS strips on save (#74)
-- All 206 PHP + 123 E2E tests pass across OJS 3.3, 3.4, and 3.5. See [CHANGELOG.md](CHANGELOG.md) for details.
+**Development changes (v1.10.0)**:
+
+- Shared journal-local eligibility, guarded batch actions and resumable pagination.
+- Durable automatic notifications and a separate historical-notification action.
+- Transactional settings uploads, safer verification input and Unicode template rendering.
+- Additive, repeatable database migration; existing certificate codes are preserved.
+
+See [integration testing](tests/environment/README.md) for reproducible checks and current verification limits.
 
 ## Author
 
@@ -43,7 +45,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 31 languages with complete coverage (107 message keys each)
+  - 31 languages; new management controls currently include English fallback text
   - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
   - Dual format: `.xml` (source of truth) and `.po` (required at runtime by all OJS versions) locale files
   - Automatic language detection from OJS settings
@@ -65,7 +67,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 
 | OJS Version | Support Status | Notes |
 |-------------|----------------|-------|
-| 3.3.x | ✅ Fully Supported | Automatic migration with SQL fallback |
+| 3.3.x | ✅ Supported | Migration through the OJS database connection |
 | 3.4.x | ✅ Fully Supported | Modern Laravel migration |
 | 3.5.x | ✅ Fully Supported | Latest features, PHP 8+ optimized |
 

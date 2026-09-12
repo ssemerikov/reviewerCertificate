@@ -5,6 +5,31 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.10.0] - Unreleased
+
+### Fixed
+
+- Download, email, completion hooks and batches share journal-local eligibility. Existing certificates retain their eligibility after a threshold increase, but ownership and review completion are still checked.
+- Both batch routes require POST, CSRF and manager/site-admin access. Stable cursor pages remove the former 500-review cutoff and preserve partial failure counts without exposing database errors.
+- Availability emails build download links through the page router even when invoked from component-based settings actions.
+- Verification URL parsing rejects malformed arrays; Unicode font detection includes literal rendered template text.
+- Settings validate uploads before moving files, persist transactionally, refresh caches after rollback and remove old backgrounds only after successful saves within their journal directory.
+- Uploaded upgrades use a versioned entry point so already-loaded legacy classes cannot break the migration or reinstall an obsolete email manifest.
+- Concurrent issuance and notification initialization recover through transaction savepoints and current reads on MySQL/PostgreSQL. Mail acceptance survives later observer errors; ambiguous transport errors require explicit retry, and ambient transactions defer delivery.
+- PostgreSQL reviewer selection no longer relies on SELECT aliases in HAVING (PR #75, contributed by @MrRob100). The updated query uses aggregate expressions while preserving journal eligibility and historical notification selection; regression coverage executes it on both database engines.
+
+### Added
+
+- Post-completion notification hook and durable delivery records. Automatic sends skip known deliveries; uncertain attempts need an explicit retry.
+- Separate historical notification action, limited to ten emails per request. Ordinary generation sends no mail. Historical certificates without tracking are never announced automatically.
+- Repeatable additive migration and upgrade manifest preserving issued certificates.
+- Isolated OJS/MySQL/Mailpit provisioning, database and real-route regression checks; locale validation in the default suite.
+
+### Changed
+
+- Release packaging installs production dependencies in temporary staging without replacing development dependencies.
+- Availability fallback messages reuse localized certificate text; new management controls have English fallbacks awaiting translation.
+
 ## [1.9.0] - 2026-08-29
 
 ### Fixed

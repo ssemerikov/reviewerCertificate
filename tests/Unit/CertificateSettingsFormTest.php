@@ -22,11 +22,14 @@ class FakeSettingsPlugin
 {
     /** @var array */
     public $settings = array();
+    public $failOn;
 
     public function getTemplateResource($template)
     {
         return $template;
     }
+
+    public function getName() { return 'reviewercertificateplugin'; }
 
     public function getSetting($contextId, $name)
     {
@@ -35,6 +38,7 @@ class FakeSettingsPlugin
 
     public function updateSetting($contextId, $name, $value, $type = null)
     {
+        if ($this->failOn === $name) { throw new \RuntimeException('Injected persistence failure'); }
         $this->settings[$name] = $value;
     }
 }
@@ -52,7 +56,7 @@ class CertificateSettingsFormTest extends TestCase
         parent::setUp();
 
         $this->plugin = new FakeSettingsPlugin();
-        \PKP\form\Form::$mockUserVars = array();
+        \PKP\form\Form::$mockUserVars = array('bodyTemplate' => 'Body', 'minimumReviews' => '1');
         unset($_FILES['backgroundImage']);
 
         $this->uploadDir = sys_get_temp_dir() . '/rc-settings-form-test-' . getmypid();
@@ -76,7 +80,50 @@ class CertificateSettingsFormTest extends TestCase
 
     private function makeForm(): CertificateSettingsForm
     {
-        return new CertificateSettingsForm($this->plugin, 1);
+        return new class($this->plugin, 1) extends CertificateSettingsForm {
+            private $testPlugin;
+            public function __construct($plugin, $contextId) { parent::__construct($plugin, $contextId); $this->testPlugin = $plugin; }
+            protected function getConnection() {
+                return new class($this->testPlugin) {
+                    private $plugin;
+                    public function __construct($plugin) { $this->plugin = $plugin; }
+                    public function transaction($callback) {
+                        $before = $this->plugin->settings;
+                        try { return $callback(); }
+                        catch (\Throwable $e) { $this->plugin->settings = $before; throw $e; }
+                    }
+                };
+            }
+        };
+    }
+
+    public function testPhpUploadErrorRejectsWholeSettingsSave(): void {
+        $_FILES['backgroundImage'] = ['error' => UPLOAD_ERR_INI_SIZE, 'tmp_name' => '', 'size' => 0];
+        $form = $this->makeForm();
+        $form->readInputData();
+        $this->assertFalse($form->validate());
+        $this->assertSame([], $this->plugin->settings);
+    }
+
+    public function testPersistenceFailureRollsBackAllSettingsAndKeepsPreviousImage(): void {
+        $this->plugin->settings = ['headerText' => 'Old', 'backgroundImage' => '/old/image.png'];
+        $this->plugin->failOn = 'fontSize';
+        \PKP\form\Form::$mockUserVars['headerText'] = 'New';
+        \PKP\form\Form::$mockUserVars['removeBackgroundImage'] = '1';
+        $form = $this->makeForm(); $form->readInputData();
+        try { $form->execute(); $this->fail('Save failure swallowed'); }
+        catch (\RuntimeException $e) {
+            $this->assertSame(['headerText' => 'Old', 'backgroundImage' => '/old/image.png'], $this->plugin->settings);
+            $this->assertSame('/old/image.png', $form->getData('backgroundImage'));
+        }
+    }
+
+    public function testReadInputDoesNotInspectOrMoveAnUpload(): void {
+        $_FILES['backgroundImage'] = ['error' => UPLOAD_ERR_OK, 'tmp_name' => '/missing/upload.png', 'size' => 10];
+        $form = $this->makeForm();
+        $form->readInputData();
+        $this->assertSame('', $form->getData('backgroundImage'));
+        $this->assertFalse($form->validate());
     }
 
     // ---------------------------------------------------------------- Issue #73

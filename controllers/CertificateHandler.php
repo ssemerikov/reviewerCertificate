@@ -189,99 +189,28 @@ class CertificateHandler extends Handler {
     private function loadAuthorizedReviewAssignment($reviewId, $request, $opLabel) {
         $user = $request->getUser();
         $context = $request->getContext();
-
-        if (!$reviewId || !$user) {
-            error_log('Certificate ' . $opLabel . ' failed: Missing review ID or user');
-            http_response_code(404);
-            throw new Exception('Not found', 404);
-        }
-
-        // Get review assignment using direct SQL for OJS 3.5 compatibility
-        $certificateDao = DAORegistry::getDAO('CertificateDAO');
-        if (!$certificateDao) {
-            error_log('Certificate ' . $opLabel . ' failed: CertificateDAO not available');
-            http_response_code(500);
-            throw new Exception('Internal error', 500);
-        }
-        $result = $certificateDao->retrieve(
-            'SELECT ra.* FROM review_assignments ra
-             INNER JOIN submissions s ON ra.submission_id = s.submission_id
-             WHERE ra.review_id = ? AND s.context_id = ?',
-            array((int) $reviewId, (int) $context->getId())
-        );
-
-        $reviewAssignment = null;
-        if ($result) {
-            $row = $result->current();
-            if ($row) {
-                $reviewAssignment = $certificateDao->reviewAssignmentFromRow($row);
-            }
-        }
-
-        if (!$reviewAssignment) {
-            error_log('Certificate ' . $opLabel . ' failed: Review assignment not found');
-            http_response_code(404);
-            throw new Exception('Review assignment not found', 404);
-        }
-
-        // Validate access - user must be the reviewer
-        if ((int)$reviewAssignment->getReviewerId() !== (int)$user->getId()) {
-            error_log('Certificate ' . $opLabel . ' failed: Access denied for user ' . $user->getId() . ', review belongs to reviewer ' . $reviewAssignment->getReviewerId());
+        if (!$user || !$context) {
             http_response_code(403);
-            throw new Exception(__('plugins.generic.reviewerCertificate.error.accessDenied'), 403);
+            throw new Exception('Forbidden', 403);
         }
-
-        // Check if review is completed
-        if (!$reviewAssignment->getDateCompleted()) {
-            error_log('Certificate ' . $opLabel . ' failed: Review not completed');
-            http_response_code(400);
-            throw new Exception(__('plugins.generic.reviewerCertificate.error.reviewNotCompleted'), 400);
+        try {
+            $row = $this->getPlugin()->getCertificateService($context->getId())->loadReview($reviewId, $user->getId());
+            return DAORegistry::getDAO('CertificateDAO')->reviewAssignmentFromRow($row);
+        } catch (\DomainException $e) {
+            http_response_code($e->getCode());
+            throw $e;
         }
-
-        return $reviewAssignment;
     }
 
-    /**
-     * Get the certificate record for a review, creating it on first access.
-     * @param $reviewId int
-     * @param $reviewAssignment object
-     * @param $context Context
-     * @return \APP\plugins\generic\reviewerCertificate\classes\Certificate
-     */
     private function getOrCreateCertificate($reviewId, $reviewAssignment, $context) {
-        $certificateDao = DAORegistry::getDAO('CertificateDAO');
-        if (!$certificateDao) {
-            error_log('Certificate lookup failed: CertificateDAO not available');
-            http_response_code(500);
-            throw new Exception('Internal error', 500);
+        try {
+            $result = $this->getPlugin()->getCertificateService($context->getId())->issue(
+                $reviewId, $reviewAssignment->getReviewerId());
+            return $result['certificate'];
+        } catch (\DomainException $e) {
+            http_response_code($e->getCode());
+            throw $e;
         }
-        $certificate = $certificateDao->getByReviewIdAndContext($reviewId, $context->getId());
-
-        if (!$certificate) {
-            // Create certificate if it doesn't exist — use try-catch for duplicate key race condition
-            require_once(dirname(__FILE__) . '/../classes/Certificate.php');
-            $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
-            $certificate->setReviewerId($reviewAssignment->getReviewerId());
-            $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
-            $certificate->setReviewId($reviewId);
-            $certificate->setContextId($context->getId());
-            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-            $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
-            $certificate->setDownloadCount(0);
-
-            try {
-                $certificateDao->insertObject($certificate);
-            } catch (\Throwable $e) {
-                // MySQL says "Duplicate entry", PostgreSQL "duplicate key" — match case-insensitively
-                if (stripos($e->getMessage(), 'duplicate') !== false) {
-                    $certificate = $certificateDao->getByReviewId($reviewId);
-                } else {
-                    throw $e;
-                }
-            }
-        }
-
-        return $certificate;
     }
 
     /**
@@ -297,7 +226,7 @@ class CertificateHandler extends Handler {
             http_response_code(405);
             throw new Exception('Method not allowed', 405);
         }
-        if (method_exists($request, 'checkCSRF') && !$request->checkCSRF()) {
+        if (!method_exists($request, 'checkCSRF') || !$request->checkCSRF()) {
             error_log('Certificate email failed: CSRF check failed');
             http_response_code(403);
             throw new Exception('Forbidden', 403);
@@ -393,109 +322,10 @@ class CertificateHandler extends Handler {
      * @return bool
      */
     private function sendAcknowledgementEmail($user, $context, $subject, $body, $pdfContent, $fileName, $request) {
-        $contactEmail = $this->getContextSettingCompat($context, 'contactEmail');
-        $contactName = $this->getContextSettingCompat($context, 'contactName');
-
-        // Fallback chain — mailers reject messages without a From header:
-        // journal contact → site contact → noreply@<host>
-        if (!$contactEmail) {
-            try {
-                $site = method_exists($request, 'getSite') ? $request->getSite() : null;
-                if ($site) {
-                    $contactEmail = $this->getContextSettingCompat($site, 'contactEmail');
-                    if (!$contactName) {
-                        $contactName = $this->getContextSettingCompat($site, 'contactName');
-                    }
-                }
-            } catch (\Throwable $e) {
-                // ignore
-            }
-        }
-        if (!$contactEmail) {
-            $host = parse_url($request->getBaseUrl(), PHP_URL_HOST);
-            $contactEmail = 'noreply@' . ($host ?: 'localhost');
-        }
-        if (!$contactName) {
-            $contactName = method_exists($context, 'getLocalizedName')
-                ? (string) $context->getLocalizedName()
-                : '';
-        }
-
-        // OJS 3.4/3.5 — Laravel Mailable system. Uses the dedicated Ack
-        // mailable: ReviewerCertificateMailable carries the Sender trait for
-        // the notification email, and that trait forbids the ->from() call
-        // needed here to write from the journal contact address.
-        if (class_exists('PKP\mail\Mailable')) {
-            require_once(dirname(__FILE__) . '/../classes/ReviewerCertificateAckMailable.php');
-            $mailable = new \APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateAckMailable();
-            if ($contactEmail) {
-                $mailable->from($contactEmail, $contactName ?: null);
-            }
-            $mailable
-                ->to($user->getEmail(), $user->getFullName())
-                ->subject($subject)
-                ->body(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')));
-            if ($pdfContent !== null) {
-                $mailable->attachData($pdfContent, $fileName, array('mime' => 'application/pdf'));
-            }
-
-            // pkp-lib's Mailer::sendSymfonyMessage() swallows TransportException
-            // (it only error_log()s, e.g. SMTP 552 "message too large"), so
-            // Mail::send() alone cannot report failure. Laravel dispatches
-            // MessageSent only when the transport actually accepted the
-            // message — observe it to get the real result.
-            $accepted = null;
-            try {
-                if (class_exists('Illuminate\Support\Facades\Event')
-                        && class_exists('Illuminate\Mail\Events\MessageSent')) {
-                    $accepted = false;
-                    \Illuminate\Support\Facades\Event::listen(
-                        \Illuminate\Mail\Events\MessageSent::class,
-                        function () use (&$accepted) {
-                            $accepted = true;
-                        }
-                    );
-                }
-            } catch (\Throwable $e) {
-                $accepted = null;
-            }
-            \Illuminate\Support\Facades\Mail::send($mailable);
-            if ($accepted === false) {
-                error_log('ReviewerCertificate: acknowledgement email was not accepted by the mail transport (see preceding mailer error)');
-            }
-            return $accepted === null ? true : $accepted;
-        }
-
-        // OJS 3.3 — legacy Mail class with a temp file attachment
-        if (function_exists('import')) {
-            import('lib.pkp.classes.mail.Mail');
-        }
-        if (!class_exists('Mail')) {
-            error_log('ReviewerCertificate: no mail API available');
-            return false;
-        }
-        $mail = new \Mail();
-        if ($contactEmail) {
-            $mail->setFrom($contactEmail, $contactName ?: '');
-            $mail->setReplyTo($contactEmail, $contactName ?: '');
-        }
-        $mail->addRecipient($user->getEmail(), $user->getFullName());
-        $mail->setSubject($subject);
-        $mail->setBody(nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')));
-
-        if ($pdfContent === null) {
-            return (bool) $mail->send();
-        }
-
-        $tmpFile = tempnam(sys_get_temp_dir(), 'rc_cert_');
-        file_put_contents($tmpFile, $pdfContent);
-        $mail->addAttachment($tmpFile, $fileName, 'application/pdf');
-        try {
-            $sent = $mail->send();
-        } finally {
-            @unlink($tmpFile);
-        }
-        return (bool) $sent;
+        require_once dirname(__DIR__) . '/classes/CertificateMailAdapter.php';
+        $adapter = new \APP\plugins\generic\reviewerCertificate\classes\CertificateMailAdapter();
+        return $adapter->send($user, $context, $subject, nl2br(htmlspecialchars($body, ENT_QUOTES, 'UTF-8')),
+            $pdfContent, $fileName, $request);
     }
 
     /**
@@ -540,38 +370,27 @@ class CertificateHandler extends Handler {
      * @param $args array
      * @param $request Request
      */
+    protected static function parseVerificationCode($args, $request) {
+        $code = $args[0] ?? $request->getUserVar('code');
+        // Reject malformed explicit input; never let a URI fallback mask it.
+        if ($code !== null && !is_string($code)) { return null; }
+        if ($code === null || $code === '') {
+            $uri = $_SERVER['REQUEST_URI'] ?? '';
+            if (is_string($uri) && preg_match('~/certificate/verify/([A-Fa-f0-9]{8,32})(?:[/?#]|$)~', $uri, $matches)) {
+                $code = $matches[1];
+            } elseif (isset($_GET['code']) && is_string($_GET['code'])) {
+                $code = $_GET['code'];
+            }
+        }
+        return is_string($code) && preg_match('/^[A-Fa-f0-9]{8,32}$/D', trim($code))
+            ? strtoupper(trim($code)) : null;
+    }
+
     public function verify($args, $request) {
         // OJS 3.3 compatibility: ensure plugin locale is loaded for public pages
         $this->ensurePluginLocaleLoaded();
 
-        // Get certificate code from URL path or query parameter.
-        // Priority: $args[0] (path-based) → getUserVar('code') (query string) → URL path fallback.
-        // The URL path fallback handles OJS configurations where $args is not populated
-        // correctly (e.g., certain mod_rewrite setups on OJS 3.4).
-        $certificateCode = isset($args[0]) ? $args[0] : $request->getUserVar('code');
-
-        // Fallback: parse code from the request URI directly.
-        // Some OJS 3.4 configurations with non-standard PATH_INFO don't populate $args.
-        if (!$certificateCode) {
-            $requestUri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
-            if (preg_match('#/certificate/verify/([A-Fa-f0-9]{8,32})(?:[/?#]|$)#', $requestUri, $matches)) {
-                $certificateCode = $matches[1];
-            }
-        }
-
-        // Also check $_GET and $_REQUEST as final fallback for query-string 'code' parameter
-        if (!$certificateCode && !empty($_GET['code'])) {
-            $certificateCode = $_GET['code'];
-        }
-
-        // Sanitize: certificate codes are uppercase hex characters (8-32 chars).
-        // Older plugin versions generated 12-char codes; current version generates 16.
-        if ($certificateCode) {
-            $certificateCode = strtoupper(trim($certificateCode));
-            if (!preg_match('/^[A-F0-9]{8,32}$/', $certificateCode)) {
-                $certificateCode = null;
-            }
-        }
+        $certificateCode = self::parseVerificationCode($args, $request);
 
         $templateMgr = TemplateManager::getManager($request);
         $templateMgr->assign('certificateCode', $certificateCode);
@@ -993,66 +812,8 @@ class CertificateHandler extends Handler {
      * @param $request Request
      */
     public function generateBatch($args, $request) {
-        $context = $request->getContext();
-        $reviewerIds = $request->getUserVar('reviewerIds');
-
-        if (!is_array($reviewerIds) || empty($reviewerIds)) {
-            return $this->getPlugin()->createJSONMessage(false, __('plugins.generic.reviewerCertificate.error.noReviewersSelected'));
-        }
-
-        $generated = 0;
-        $errors = array();
-
-        $certificateDao = DAORegistry::getDAO('CertificateDAO');
-        if (!$certificateDao) {
-            return $this->getPlugin()->createJSONMessage(false, 'Internal error: database not available');
-        }
-
-        foreach ($reviewerIds as $reviewerId) {
-            try {
-                // Get completed reviews for this reviewer, scoped to current context
-                $result = $certificateDao->retrieve(
-                    'SELECT ra.* FROM review_assignments ra
-                     INNER JOIN submissions s ON ra.submission_id = s.submission_id
-                     LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
-                     WHERE ra.reviewer_id = ? AND s.context_id = ?
-                     AND ra.date_completed IS NOT NULL AND rc.certificate_id IS NULL
-                     LIMIT 500',
-                    array((int) $reviewerId, (int) $context->getId())
-                );
-
-                if ($result) {
-                    foreach ($result as $row) {
-                        $reviewAssignment = $certificateDao->reviewAssignmentFromRow($row);
-
-                        // Create certificate (SQL already excludes reviews with existing certificates)
-                        require_once(dirname(__FILE__) . '/../classes/Certificate.php');
-                        $certificate = new \APP\plugins\generic\reviewerCertificate\classes\Certificate();
-                        $certificate->setReviewerId($reviewerId);
-                        $certificate->setSubmissionId($reviewAssignment->getSubmissionId());
-                        $certificate->setReviewId($reviewAssignment->getId());
-                        $certificate->setContextId($context->getId());
-                        // OJS 3.3 compatibility
-                        if (class_exists('PKP\core\Core')) {
-                            $certificate->setDateIssued(\PKP\core\Core::getCurrentDate());
-                        } else {
-                            $certificate->setDateIssued(\Core::getCurrentDate());
-                        }
-                        $certificate->setCertificateCode(\APP\plugins\generic\reviewerCertificate\classes\Certificate::generateCode());
-
-                        $certificateDao->insertObject($certificate);
-                        $generated++;
-                    }
-                }
-            } catch (\Throwable $e) {
-                $errors[] = "Reviewer ID $reviewerId: " . $e->getMessage();
-            }
-        }
-
-        return $this->getPlugin()->createJSONMessage(true, array(
-            'generated' => $generated,
-            'errors' => $errors
-        ));
+        require_once dirname(__DIR__) . '/classes/BatchAction.php';
+        return \APP\plugins\generic\reviewerCertificate\classes\BatchAction::run($this->getPlugin(), $request);
     }
 
 }

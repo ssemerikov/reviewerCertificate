@@ -75,6 +75,8 @@ class LocaleValidationTest extends PHPUnitTestCase {
      * Keys required by the Email Certificate feature (must exist in every language).
      */
     const ACK_EMAIL_KEYS = [
+        'plugins.generic.reviewerCertificate.email.subject',
+        'plugins.generic.reviewerCertificate.email.body',
         'plugins.generic.reviewerCertificate.myCertificates.emailAction',
         'plugins.generic.reviewerCertificate.myCertificates.emailSent',
         'plugins.generic.reviewerCertificate.myCertificates.emailError',

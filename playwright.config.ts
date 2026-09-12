@@ -4,8 +4,11 @@ export default defineConfig({
   testDir: './tests/e2e',
   timeout: 60000,
   retries: 1,
+  workers: 1,
   use: {
     headless: true,
+    launchOptions: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE
+      ? { executablePath: process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE } : undefined,
     ignoreHTTPSErrors: true,
     screenshot: 'only-on-failure',
     trace: 'retain-on-failure',

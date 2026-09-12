@@ -112,6 +112,14 @@ foreach ($dirs as $xmlPath) {
     }
 
     file_put_contents($poPath, $po);
+    // Core's plugin installer explicitly discovers emails.po on every OJS target.
+    $emails = 'msgid ""' . "\n" . 'msgstr ""' . "\n" . $header . "\n";
+    foreach (['displayName', 'certificateAvailableDescription', 'email.subject', 'email.body'] as $suffix) {
+        $key = 'plugins.generic.reviewerCertificate.' . $suffix;
+        $emails .= 'msgid "' . escapePoString($key) . '"' . "\n"
+            . 'msgstr "' . escapePoString($messages[$key]) . '"' . "\n\n";
+    }
+    file_put_contents(dirname($xmlPath) . '/emails.po', rtrim($emails, "\r\n") . "\n");
     echo "  $locale: " . count($messages) . " keys written to locale.po\n";
     $count++;
 }
@@ -155,7 +163,7 @@ foreach ($shortLocaleMap as $long => $short) {
         mkdir($shortDir, 0755, true);
     }
 
-    foreach (['locale.xml', 'locale.po'] as $file) {
+    foreach (['locale.xml', 'locale.po', 'emails.po'] as $file) {
         if (file_exists($longDir . '/' . $file)) {
             copy($longDir . '/' . $file, $shortDir . '/' . $file);
         }

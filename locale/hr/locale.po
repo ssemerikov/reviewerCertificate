@@ -159,6 +159,9 @@ msgstr "Učitavanje datoteke nije uspjelo. Pokušajte ponovno."
 msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
 msgstr "Napomena: Helvetica, Times New Roman i Courier podržavaju samo osnovni latinični skup znakova. Za ispravan prikaz dijakritičkih znakova (č, ć, đ, š, ž) odaberite font DejaVu Sans."
 
+msgid "plugins.generic.reviewerCertificate.settings.invalidValue"
+msgstr "Enter a valid value."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Ova recenzija još nije dovršena. Potvrde su dostupne samo za dovršene recenzije."
@@ -180,6 +183,13 @@ msgstr "Kontekst časopisa nije dostupan. Stranici pristupite iz važećeg časo
 
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Pristup bazi podataka trenutačno nije dostupan. Obratite se administratoru sustava."
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.subject"
+msgstr "Vaša je potvrda spremna!"
+
+msgid "plugins.generic.reviewerCertificate.email.body"
+msgstr "{{$reviewerName}},\n\nHvala vam na izrađenoj recenziji. Potvrdu o recenziranju sada možete preuzeti.\n\nPreuzmi potvrdu: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
 
 # Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
@@ -251,6 +261,15 @@ msgstr "Pri generiranju potvrda došlo je do pogreške. Pokušajte ponovno."
 
 msgid "plugins.generic.reviewerCertificate.batch.generated"
 msgstr "Uspješno generirano potvrda: {$count}"
+
+msgid "plugins.generic.reviewerCertificate.batch.generatedCountLabel"
+msgstr "Generated"
+
+msgid "plugins.generic.reviewerCertificate.batch.skipped"
+msgstr "Skipped"
+
+msgid "plugins.generic.reviewerCertificate.batch.failed"
+msgstr "Failed"
 
 # Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.title"
@@ -339,4 +358,25 @@ msgstr "Zahvala za recenziju za časopis {{$journalName}}"
 
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultBody"
 msgstr "Poštovani/a {{$reviewerName}},\n\nod srca zahvaljujemo na trudu i vremenu koje ste uložili u recenziju rada »{{$submissionTitle}}« za časopis {{$journalName}}. Vaša stručna prosudba neprocjenjiv je doprinos kvaliteti časopisa.\n\nU prilogu Vam dostavljamo potvrdu o obavljenoj recenziji.\n\nSa zahvalnošću,\n{{$editorName}}\nUredništvo časopisa {{$journalName}}"
+
+msgid "plugins.generic.reviewerCertificate.notifications.title"
+msgstr "Historical certificate notifications"
+
+msgid "plugins.generic.reviewerCertificate.notifications.description"
+msgstr "Explicitly send one availability email per certificate to the selected reviewers. Missing eligible certificates will be created. Certificates issued before notification tracking have unknown delivery history and may already have been announced. Ordinary batch generation does not send email."
+
+msgid "plugins.generic.reviewerCertificate.notifications.retry"
+msgstr "Retry failed or uncertain deliveries"
+
+msgid "plugins.generic.reviewerCertificate.notifications.retryWarning"
+msgstr "A delivery interrupted for more than ten minutes is uncertain: the recipient may have received it. Retry uncertain deliveries only after checking your mail logs."
+
+msgid "plugins.generic.reviewerCertificate.notifications.send"
+msgstr "Send certificate notifications"
+
+msgid "plugins.generic.reviewerCertificate.notifications.sent"
+msgstr "Sent"
+
+msgid "plugins.generic.reviewerCertificate.settings.saveFailed"
+msgstr "Certificate settings could not be saved. Check the fields and image (JPEG or PNG, up to 5 MB), then try again."
 

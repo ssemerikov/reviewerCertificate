@@ -35,6 +35,8 @@ test-results/
 ojs33-login-debug.png
 
 # Development documentation
+AGENTS.md
+CLAUDE.md
 CODE_ANALYSIS_REPORT.md
 OJS_3.4_COMPATIBILITY.md
 OJS_3.5_REVIEWER_DASHBOARD_INVESTIGATION.md

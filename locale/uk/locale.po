@@ -159,6 +159,9 @@ msgstr "Помилка завантаження файлу. Будь ласка,
 msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
 msgstr "Примітка: шрифти Helvetica, Times New Roman та Courier підтримують лише латинські символи. Якщо ваш журнал використовує кириличні, арабські, китайські або інші нелатинські символи, плагін автоматично використає шрифт DejaVu Sans для цих текстових елементів."
 
+msgid "plugins.generic.reviewerCertificate.settings.invalidValue"
+msgstr "Enter a valid value."
+
 # Error messages
 msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
 msgstr "Це рецензування ще не завершено. Сертифікати доступні лише для завершених рецензій."
@@ -180,6 +183,13 @@ msgstr "Контекст журналу недоступний. Перекона
 
 msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
 msgstr "Доступ до бази даних наразі недоступний. Зверніться до системного адміністратора."
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.subject"
+msgstr "Ваш сертифікат готовий!"
+
+msgid "plugins.generic.reviewerCertificate.email.body"
+msgstr "{{$reviewerName}},\n\nДякуємо за завершення рецензування. Тепер ви можете завантажити свій сертифікат визнання.\n\nЗавантажити сертифікат: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
 
 # Verification
 msgid "plugins.generic.reviewerCertificate.verify.title"
@@ -251,6 +261,15 @@ msgstr "Виникла помилка під час генерування се�
 
 msgid "plugins.generic.reviewerCertificate.batch.generated"
 msgstr "{$count} сертифікат(и/ів) успішно згенеровано"
+
+msgid "plugins.generic.reviewerCertificate.batch.generatedCountLabel"
+msgstr "Generated"
+
+msgid "plugins.generic.reviewerCertificate.batch.skipped"
+msgstr "Skipped"
+
+msgid "plugins.generic.reviewerCertificate.batch.failed"
+msgstr "Failed"
 
 # Statistics
 msgid "plugins.generic.reviewerCertificate.statistics.title"
@@ -339,4 +358,25 @@ msgstr "Подяка за рецензування для журналу {{$jour
 
 msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultBody"
 msgstr "Шановний(-а) {{$reviewerName}}!\n\nМи щиро вдячні за Ваші зусилля та час, присвячені рецензуванню рукопису «{{$submissionTitle}}», поданого до журналу {{$journalName}}. Ваша ретельна та глибока оцінка надала цінні зауваження, які допомогли авторам удосконалити роботу та просунутися в їхніх дослідженнях.\n\nМи високо цінуємо Ваш внесок у підтримання якості статей, що публікуються в нашому журналі. Ми розуміємо, що рецензування рукописів є вимогливою працею, і відзначаємо зусилля, докладені Вами до ґрунтовного аналізу подання та надання конструктивних зауважень авторам.\n\nНа знак вдячності за Вашу працю люб'язно просимо переслати цей лист на адресу reviews@webofscience.com. Зауважимо, що відповідно до нашої редакційної політики зміст рецензії залишиться конфіденційним і не відображатиметься на Web of Science.\n\nСертифікат рецензента додано до цього листа.\n\nЩе раз висловлюємо вдячність за Вашу відданість розвитку досліджень у Вашій галузі. Сподіваємося на подальшу співпрацю.\n\nЗ повагою,\n\n{{$editorName}}\n{{$journalName}}"
+
+msgid "plugins.generic.reviewerCertificate.notifications.title"
+msgstr "Historical certificate notifications"
+
+msgid "plugins.generic.reviewerCertificate.notifications.description"
+msgstr "Explicitly send one availability email per certificate to the selected reviewers. Missing eligible certificates will be created. Certificates issued before notification tracking have unknown delivery history and may already have been announced. Ordinary batch generation does not send email."
+
+msgid "plugins.generic.reviewerCertificate.notifications.retry"
+msgstr "Retry failed or uncertain deliveries"
+
+msgid "plugins.generic.reviewerCertificate.notifications.retryWarning"
+msgstr "A delivery interrupted for more than ten minutes is uncertain: the recipient may have received it. Retry uncertain deliveries only after checking your mail logs."
+
+msgid "plugins.generic.reviewerCertificate.notifications.send"
+msgstr "Send certificate notifications"
+
+msgid "plugins.generic.reviewerCertificate.notifications.sent"
+msgstr "Sent"
+
+msgid "plugins.generic.reviewerCertificate.settings.saveFailed"
+msgstr "Certificate settings could not be saved. Check the fields and image (JPEG or PNG, up to 5 MB), then try again."
 
