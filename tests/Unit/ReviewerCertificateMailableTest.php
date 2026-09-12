@@ -10,26 +10,10 @@ use APP\plugins\generic\reviewerCertificate\classes\ReviewerCertificateMailable;
 
 class ReviewerCertificateMailableTest extends TestCase
 {
-    /**
-     * sendCertificateNotification() calls $mailable->sender($user). On OJS 3.4
-     * PKP\mail\Mailable does NOT provide sender() itself — a Mailable must mix
-     * in the PKP\mail\traits\Sender trait or the call is a fatal undefined-
-     * method Error inside the review-completion hook.
-     */
-    public function testMailableUsesSenderTrait(): void
-    {
-        $traits = class_uses(ReviewerCertificateMailable::class) ?: [];
-        $this->assertContains(
-            'PKP\mail\traits\Sender',
-            array_keys($traits),
-            'ReviewerCertificateMailable must use the Sender trait — core calls ->sender() on it'
-        );
-
-        $mailable = new ReviewerCertificateMailable();
-        $this->assertTrue(
-            method_exists($mailable, 'sender'),
-            'sender() must be callable on the mailable'
-        );
+    public function testAvailabilityMailableAcceptsJournalContactSender(): void {
+        $mail = new ReviewerCertificateMailable();
+        $mail->from('journal@example.com', 'Journal contact');
+        $this->assertSame(['journal@example.com', 'Journal contact'], $mail->mockFrom);
     }
 
     /**

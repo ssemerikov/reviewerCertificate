@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Croatian\n"
+"Language: hr_HR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Dodatak za potvrde recenzentima"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Hvala vam na izrađenoj recenziji. Potvrdu o recenziranju sada možete preuzeti."
+
+msgid "plugins.generic.reviewerCertificate.email.subject"
+msgstr "Vaša je potvrda spremna!"
+
+msgid "plugins.generic.reviewerCertificate.email.body"
+msgstr "{{$reviewerName}},\n\nHvala vam na izrađenoj recenziji. Potvrdu o recenziranju sada možete preuzeti.\n\nPreuzmi potvrdu: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
+

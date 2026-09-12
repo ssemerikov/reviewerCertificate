@@ -44,6 +44,11 @@ class OJSMockLoader
 
         // Load version-specific mocks
         self::loadVersionSpecificMocks();
+        require_once __DIR__ . '/FileManagerMock.php';
+
+        if (!class_exists('APP\\template\\TemplateManager')) {
+            class_alias('TemplateManager', 'APP\\template\\TemplateManager');
+        }
 
         self::$initialized = true;
     }
@@ -634,6 +639,9 @@ class OJSMockLoader
                     public $mockSubject = null;
                     public $mockBody = null;
                     public $mockAttachments = [];
+                    public $viewData = [];
+                    public function addData($data) { $this->viewData = array_merge($this->viewData, $data); return $this; }
+                    public function replyTo($email, $name = null) { return $this; }
                     public function __construct($variables = []) {}
                     public static function getEmailTemplateKey() { return static::$emailTemplateKey; }
                     public function from($address, $name = null) { $this->mockFrom = [$address, $name]; return $this; }
@@ -654,7 +662,7 @@ class OJSMockLoader
         if (!class_exists('Illuminate\Mail\Events\MessageSent')) {
             eval('
                 namespace Illuminate\Mail\Events;
-                class MessageSent {}
+                class MessageSent { public $data = []; }
             ');
         }
         if (!class_exists('Illuminate\Support\Facades\Event')) {
@@ -662,16 +670,18 @@ class OJSMockLoader
                 namespace Illuminate\Support\Facades;
                 class Event {
                     public static $listeners = [];
+                    private static $root;
+                    public static function getFacadeRoot() { if (!self::$root) { self::$root = new self(); } return self::$root; }
                     public static function listen($event, $callback) {
                         self::$listeners[$event][] = $callback;
                     }
-                    public static function mockFire($event) {
+                    public static function mockFire($event, $data = []) {
                         foreach (self::$listeners[$event] ?? [] as $callback) {
-                            $callback(new $event());
+                            $message = new $event(); $message->data = $data; $callback($message);
                         }
                     }
                     public static function mockReset() {
-                        self::$listeners = [];
+                        self::$listeners = []; self::$root = null;
                     }
                 }
             ');
@@ -689,7 +699,7 @@ class OJSMockLoader
                         self::$sent[] = $mailable;
                         $hasAttachments = !empty($mailable->mockAttachments);
                         if (self::$transportAccepts && !(self::$rejectWithAttachments && $hasAttachments)) {
-                            Event::mockFire(\'Illuminate\\\\Mail\\\\Events\\\\MessageSent\');
+                            Event::mockFire(\'Illuminate\\\\Mail\\\\Events\\\\MessageSent\', $mailable->viewData);
                         }
                         // Rejected: pkp-lib swallows the TransportException —
                         // nothing observable happens.
@@ -736,12 +746,13 @@ class OJSMockLoader
         if (!class_exists('Application')) {
             eval('
                 class Application {
+                    public static $mockRequest;
                     public static function get() {
                         return new self();
                     }
 
                     public function getRequest() {
-                        return new PKPRequest();
+                        return self::$mockRequest ?: new PKPRequest();
                     }
                 }
             ');

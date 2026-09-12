@@ -264,33 +264,11 @@ class OJS33CompatibilityTest extends TestCase
     /**
      * Test that migration uses raw SQL fallback in OJS 3.3
      */
-    public function testMigrationUsesRawSQLFallback(): void
-    {
+    public function testMigrationFailsExplicitlyWithoutConfiguredConnection(): void {
         $this->requireOJSVersion('3.3');
-
-        // Verify that class_exists check for Schema facade returns false
-        $this->assertFalse(
-            class_exists('Illuminate\Support\Facades\Schema'),
-            'Schema facade should not exist in OJS 3.3'
-        );
-
-        // The migration should detect this and use raw SQL fallback
-        // We can't test the actual SQL execution without a database,
-        // but we can verify the detection logic works
         require_once BASE_SYS_DIR . '/classes/migration/ReviewerCertificateInstallMigration.php';
-
-        $reflection = new \ReflectionClass('APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration');
-
-        // Verify the upWithRawSQL method exists
-        $this->assertTrue(
-            $reflection->hasMethod('upWithRawSQL'),
-            'Migration should have upWithRawSQL fallback method'
-        );
-
-        // Verify the downWithRawSQL method exists
-        $this->assertTrue(
-            $reflection->hasMethod('downWithRawSQL'),
-            'Migration should have downWithRawSQL fallback method'
-        );
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('OJS database connection unavailable');
+        \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration::upgrade();
     }
 }

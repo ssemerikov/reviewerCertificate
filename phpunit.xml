@@ -20,6 +20,9 @@
         <testsuite name="Security Tests">
             <directory>tests/Security</directory>
         </testsuite>
+        <testsuite name="Locale Tests">
+            <directory>tests/Locale</directory>
+        </testsuite>
     </testsuites>
 
     <coverage processUncoveredFiles="false">

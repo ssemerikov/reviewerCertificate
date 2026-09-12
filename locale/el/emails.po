@@ -1,0 +1,25 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2025-01-04 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Greek\n"
+"Language: el_GR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Πρόσθετο Πιστοποιητικού Κριτή"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Σας ευχαριστούμε για την ολοκλήρωση αυτής της κριτικής. Μπορείτε τώρα να κατεβάσετε το πιστοποιητικό αναγνώρισής σας."
+
+msgid "plugins.generic.reviewerCertificate.email.subject"
+msgstr "Το Πιστοποιητικό σας είναι Έτοιμο!"
+
+msgid "plugins.generic.reviewerCertificate.email.body"
+msgstr "{{$reviewerName}},\n\nΣας ευχαριστούμε για την ολοκλήρωση αυτής της κριτικής. Μπορείτε τώρα να κατεβάσετε το πιστοποιητικό αναγνώρισής σας.\n\nΛήψη Πιστοποιητικού: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
+

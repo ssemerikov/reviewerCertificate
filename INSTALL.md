@@ -1,145 +1,39 @@
-# Reviewer Certificate Plugin - Installation Guide
+# Reviewer Certificate Plugin — Installation Guide
 
-## Quick Install via OJS Admin (Recommended)
+## Install or upgrade through OJS
 
-The easiest way to install the plugin - no command line needed!
+Back up the database and journal files first. Download the asset matching your OJS version from [GitHub Releases](https://github.com/ssemerikov/reviewerCertificate/releases):
 
-1. **Download** the package matching your OJS version from [GitHub Releases](https://github.com/ssemerikov/reviewerCertificate/releases):
-   - `reviewerCertificate-{VERSION}-3_3.tar.gz` for OJS 3.3.x
-   - `reviewerCertificate-{VERSION}-3_4.tar.gz` for OJS 3.4.x
-   - `reviewerCertificate-{VERSION}-3_5.tar.gz` for OJS 3.5.x
+- `reviewerCertificate-{VERSION}-3_3.tar.gz`: OJS 3.3, PHP 7.3 or newer.
+- `reviewerCertificate-{VERSION}-3_4.tar.gz`: OJS 3.4, PHP 8.0.2 or newer.
+- `reviewerCertificate-{VERSION}-3_5.tar.gz`: OJS 3.5, PHP 8.2 or newer.
 
-   > ⚠️ **Do NOT download the auto-generated "Source code (zip/tar.gz)" archives** on the release page. They do not contain the bundled TCPDF library (certificate generation will fail with "TCPDF library not found") and they include development files not meant for production installs. Always use one of the three `reviewerCertificate-...-3_X.tar.gz` assets listed above.
+Use the named asset, not GitHub's automatic source archive: release assets include TCPDF and the correct runtime locales. Follow your OJS release's own PHP requirements as well.
 
-2. **Log in** to OJS as Administrator
+As an administrator, open **Settings → Website → Plugins**, upload the package through OJS's plugin installation/upgrade workflow, then enable the plugin. Open **Settings** and preview a certificate before routine use. SMTP must already be configured in OJS for email delivery.
 
-3. **Navigate to** Settings → Website → Plugins
+## Upgrading to 1.10
 
-4. **Click** "Upload A New Plugin" button
+Copying files alone does not apply database changes. The OJS upgrade workflow runs `upgrade.xml` and an additive Laravel migration. It creates the notification ledger and adds compatible foreign keys without replacing existing certificates or verification codes. Repeated upgrades are safe; automatic schema downgrade is unsupported.
 
-5. **Select** the downloaded `reviewerCertificate-{VERSION}-3_X.tar.gz` file
+The versioned upgrade entry point handles old plugin classes still loaded during an uploaded upgrade, installs the version-appropriate email manifest and retires only this plugin's superseded schema/email callbacks.
 
-6. **Click** "Save" to upload and install
+Older rows with missing parent records are preserved. The PHP error log reports each deferred foreign key and its orphan count. Reconcile those records after a backup, then rerun the upgrade to install the deferred constraints. Deleting a review, submission, reviewer, or journal cascades to its certificates and notification history. Deleting a certificate template preserves certificates and clears their optional template reference.
 
-7. **Enable** the "Reviewer Certificate Plugin"
+New certificates require the configured number of completed, nondeclined, noncancelled reviews in the same journal. Existing certificates remain available after a threshold increase, subject to ownership and completion checks.
 
-8. **Click** "Settings" to customize certificate templates
+Ordinary batch generation does not send mail. Use **Historical certificate notifications** to explicitly announce older certificates. Pre-upgrade delivery history is unknown, so this may duplicate announcements sent before tracking existed. Interrupted deliveries become **uncertain** after ten minutes; check SMTP logs before explicitly retrying. Transport acceptance is not proof of inbox delivery.
 
-**That's it!** The database tables will be created automatically.
+If a completion hook runs inside an open database transaction, notification delivery is deferred to avoid emailing about uncommitted certificates. After that transaction commits, use historical notifications to send it; no automatic after-commit job is scheduled. A thrown transport exception is also treated as uncertain, not proof that no message was sent.
 
----
+## Source installations and development
 
-## Alternative: Git Clone Installation
+Clone into `plugins/generic/reviewerCertificate`, then run `composer install --no-dev` with the server's supported PHP version. Development installations use `composer install` to include PHPUnit. Register/install the plugin through OJS; enabling copied source is not a substitute for applying its migration. See [the test environment guide](tests/environment/README.md) for disposable development instances.
 
-For developers or if the tar.gz method doesn't work:
-
-1. **Upload the plugin:**
-   ```bash
-   cd /path/to/ojs/plugins/generic/
-   git clone https://github.com/ssemerikov/reviewerCertificate.git
-   cd reviewerCertificate
-   composer install
-   ```
-
-   > ⚠️ `composer install` is **required** for git installs — the repository does not include the TCPDF library that the release packages bundle. Without it, certificate generation fails with "TCPDF library not found".
-
-2. **Set permissions:**
-   ```bash
-   chmod -R 755 reviewerCertificate/
-   chown -R www-data:www-data reviewerCertificate/  # Adjust user as needed
-   ```
-
-3. **Enable the plugin:**
-   - Log in to OJS as Administrator
-   - Go to **Settings → Website → Plugins**
-   - Find "Reviewer Certificate Plugin"
-   - Click **Enable**
-   - The database tables will be created automatically
-
-4. **Configure:**
-   - Click **Settings** to customize certificate templates
-   - Click **Preview Certificate** to test your design
-
----
-
-## Manual Installation (If Automatic Fails)
-
-If you encounter errors like "Table 'reviewer_certificates' doesn't exist" or migration failures, follow these steps:
-
-### Step 1: Install Plugin Files
-
-```bash
-cd /path/to/ojs/plugins/generic/
-git clone https://github.com/ssemerikov/reviewerCertificate.git
-cd reviewerCertificate && composer install && cd ..
-chmod -R 755 reviewerCertificate/
-```
-
-### Step 2: Create Database Tables Manually
-
-**Option A: Using MySQL Command Line**
-
-```bash
-cd /path/to/ojs/plugins/generic/reviewerCertificate/
-mysql -u [username] -p [database_name] < install.sql
-```
-
-**Option B: Using phpMyAdmin**
-
-1. Open phpMyAdmin
-2. Select your OJS database
-3. Go to the **SQL** tab
-4. Copy and paste the contents of `install.sql`
-5. Click **Go**
-
-### Step 3: Verify Installation
-
-Check that tables were created:
-
-```sql
-SHOW TABLES LIKE 'reviewer_certificate%';
-```
-
-You should see:
-- `reviewer_certificate_templates`
-- `reviewer_certificates`
-- `reviewer_certificate_settings`
-
-### Step 4: Enable Plugin in OJS
-
-1. Log in to OJS as Administrator
-2. Go to **Settings → Website → Plugins**
-3. Find "Reviewer Certificate Plugin"
-4. Click **Enable**
-5. Click **Settings** to configure
-
----
+Keep source files readable by the web server and the configured OJS `files_dir` writable. Uploaded backgrounds and cached derivatives honor `files.umask`; avoid blanket world-writable permissions. Release builds use `./release.sh <version>` and preserve development dependencies.
 
 ## Troubleshooting
 
-### Error: "Table 'reviewer_certificates' doesn't exist"
+For missing-table, migration, or invalid-JSON errors, inspect the OJS/PHP logs and confirm that the correct package was installed through OJS. The plugin uses OJS's configured database connection, including its port, socket, and TLS options. Legacy MySQL-only installation/uninstallation scripts are no longer provided; do not import old SQL as a migration workaround.
 
-**Cause:** Database migration failed to run automatically.
-
-**Solution:** Install tables manually using `install.sql`.
-
-### Error: "Failed Ajax request or invalid JSON returned"
-
-**Cause:** Database tables are missing.
-
-**Solution:**
-1. Run the manual SQL installation (see above)
-2. Refresh the page
-3. Try enabling the plugin again
-
-### Error: "Call to a member function connection() on null"
-
-**Cause:** OJS 3.3 migration system issue.
-
-**Solution:** Use manual SQL installation instead of command-line migration.
-
----
-
-## Support
-
-Report issues at: https://github.com/ssemerikov/reviewerCertificate/issues
+Report the OJS/PHP/database versions and sanitized error details in [GitHub Issues](https://github.com/ssemerikov/reviewerCertificate/issues). Never include credentials or private review content.

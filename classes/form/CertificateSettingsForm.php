@@ -22,6 +22,7 @@ use PKP\db\DAORegistry;
 use PKP\core\Core;
 use APP\core\Application;
 use APP\template\TemplateManager;
+use PKP\file\FileManager;
 use Exception;
 
 class CertificateSettingsForm extends Form {
@@ -31,6 +32,9 @@ class CertificateSettingsForm extends Form {
 
     /** @var int */
     private $contextId;
+    private $validated = false;
+    private $uploadExtension;
+    private $stagedImage;
 
     /**
      * Constructor
@@ -43,28 +47,13 @@ class CertificateSettingsForm extends Form {
         $this->plugin = $plugin;
         $this->contextId = $contextId;
 
-        // Add form validators - OJS 3.4+/3.3 compatibility
-        if (class_exists('PKP\form\validation\FormValidatorPost')) {
-            $this->addCheck(new FormValidatorPost($this));
-            $this->addCheck(new FormValidatorCSRF($this));
-            // No 'required' check on headerText: a journal may want a certificate with
-            // no heading at all, exactly like footerText (Issue #74).
-            $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
-            $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
-                return is_numeric($value) && $value >= 1;
-            }));
-        } elseif (function_exists('import')) {
-            import('lib.pkp.classes.form.validation.FormValidatorPost');
-            import('lib.pkp.classes.form.validation.FormValidatorCSRF');
-            import('lib.pkp.classes.form.validation.FormValidator');
-            import('lib.pkp.classes.form.validation.FormValidatorCustom');
-            $this->addCheck(new \FormValidatorPost($this));
-            $this->addCheck(new \FormValidatorCSRF($this));
-            $this->addCheck(new \FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
-            $this->addCheck(new \FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
-                return is_numeric($value) && $value >= 1;
-            }));
-        }
+        $this->addCheck(new FormValidatorPost($this));
+        $this->addCheck(new FormValidatorCSRF($this));
+        // Header and footer may intentionally be empty (Issue #74).
+        $this->addCheck(new FormValidator($this, 'bodyTemplate', 'required', 'plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
+        $this->addCheck(new FormValidatorCustom($this, 'minimumReviews', 'required', 'plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid', function($value) {
+            return is_numeric($value) && $value >= 1;
+        }));
     }
 
     /**
@@ -144,73 +133,76 @@ class CertificateSettingsForm extends Form {
             ($existingBackgroundImage && !$removeBackgroundImage) ? $existingBackgroundImage : ''
         );
 
-        // A new upload wins over both the stored value and the remove checkbox.
-        if (isset($_FILES['backgroundImage']) && $_FILES['backgroundImage']['error'] == UPLOAD_ERR_OK) {
-            $this->handleBackgroundImageUpload();
-        }
+        $this->validated = false;
     }
 
-    /**
-     * Handle background image upload
-     */
-    private function handleBackgroundImageUpload() {
-        $request = Application::get()->getRequest();
-        $context = $request->getContext();
-
-        $tmpFile = $_FILES['backgroundImage']['tmp_name'];
-
-        // Validate actual file size via filesystem (not client-reported $_FILES['size'])
-        $actualSize = filesize($tmpFile);
-        if ($actualSize === false || $actualSize > 5 * 1024 * 1024) {
-            $this->addError('backgroundImage', 'File size must be less than 5MB');
-            return;
-        }
-
-        // Validate image content using getimagesize() instead of client-reported MIME
-        $imageInfo = @getimagesize($tmpFile);
-        if ($imageInfo === false) {
-            $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.invalidImageType'));
-            return;
-        }
-
-        // Whitelist: only JPEG and PNG (drop GIF — TCPDF has inconsistent GIF support)
-        $mimeToExt = array(
-            'image/jpeg' => 'jpg',
-            'image/png' => 'png',
-        );
-
-        $detectedMime = $imageInfo['mime'];
-        if (!isset($mimeToExt[$detectedMime])) {
-            $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.invalidImageType'));
-            return;
-        }
-
-        // Derive extension from detected MIME type, not from user filename
-        $extension = $mimeToExt[$detectedMime];
-
-        // Upload under the configured files_dir, not a hardcoded {base}/files
-        // (Issues #69/#71 — files_dir usually lives outside the web root)
-        require_once(dirname(__FILE__, 2) . '/CertificateGenerator.php');
-        $uploadDir = \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::getBackgroundUploadDir($context->getId());
-
-        if (!file_exists($uploadDir)) {
-            if (!@mkdir($uploadDir, 0755, true)) {
-                error_log('ReviewerCertificate: Could not create upload directory ' . $uploadDir);
-                $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.uploadFailed'));
-                return;
+    public function validate($callHooks = true) {
+        $valid = parent::validate($callHooks);
+        foreach (['headerText', 'bodyTemplate', 'footerText', 'fontFamily', 'fontSize',
+            'minimumReviews', 'bodyTopOffset', 'textColorR', 'textColorG', 'textColorB',
+            'includeQRCode', 'pageOrientation', 'removeBackgroundImage', 'ackEmailSubject', 'ackEmailBody'] as $field) {
+            $value = $this->getData($field);
+            if ($value !== null && !is_scalar($value)) {
+                $this->addError($field, __('plugins.generic.reviewerCertificate.settings.invalidValue'));
+                $valid = false;
             }
         }
-
-        // Generate unique filename using safe extension
-        $filename = 'background_' . time() . '.' . $extension;
-        $targetPath = $uploadDir . '/' . $filename;
-
-        // Move uploaded file
-        if (move_uploaded_file($tmpFile, $targetPath)) {
-            $this->setData('backgroundImage', $targetPath);
-        } else {
-            error_log('ReviewerCertificate: File upload failed');
+        if (!is_string($this->getData('bodyTemplate')) || trim($this->getData('bodyTemplate')) === '') {
+            $this->addError('bodyTemplate', __('plugins.generic.reviewerCertificate.settings.bodyTemplateRequired'));
+            $valid = false;
+        }
+        $minimum = $this->getData('minimumReviews');
+        if ((!is_string($minimum) && !is_int($minimum)) || filter_var($minimum, FILTER_VALIDATE_INT) === false || (int) $minimum < 1) {
+            $this->addError('minimumReviews', __('plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid'));
+            $valid = false;
+        }
+        $this->uploadExtension = null;
+        $file = $_FILES['backgroundImage'] ?? null;
+        if ($file !== null && (!is_array($file) || !isset($file['error']) || !is_int($file['error']))) {
+            $valid = false;
             $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.uploadFailed'));
+        } elseif ($file && $file['error'] !== UPLOAD_ERR_NO_FILE) {
+            $tmp = $file['tmp_name'] ?? null;
+            if ($file['error'] !== UPLOAD_ERR_OK || !is_string($tmp) || !is_uploaded_file($tmp) ||
+                    !is_file($tmp) || filesize($tmp) === false || filesize($tmp) > 5 * 1024 * 1024) {
+                $valid = false;
+                $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.uploadFailed'));
+            } else {
+                $info = @getimagesize($tmp);
+                $extensions = ['image/png' => 'png', 'image/jpeg' => 'jpg'];
+                if (!$info || !isset($extensions[$info['mime']]) || $info[0] * $info[1] > 50000000) {
+                    $valid = false;
+                    $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.invalidImageType'));
+                } else { $this->uploadExtension = $extensions[$info['mime']]; }
+            }
+        }
+        $this->validated = (bool) $valid;
+        return $this->validated;
+    }
+
+    protected function getConnection() {
+        require_once dirname(__DIR__) . '/DatabaseConnection.php';
+        return \APP\plugins\generic\reviewerCertificate\classes\DatabaseConnection::get();
+    }
+
+    private function stageUpload() {
+        if (!$this->uploadExtension) { return; }
+        require_once dirname(__DIR__) . '/CertificateGenerator.php';
+        $directory = \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::getBackgroundUploadDir($this->contextId);
+        $path = $directory . '/background_' . bin2hex(random_bytes(16)) . '.' . $this->uploadExtension;
+        // Core creates directories and applies [files].umask. Record the path
+        // before uploadFile: a permission failure may occur after the move.
+        $this->stagedImage = $path;
+        if (!(new FileManager())->uploadFile('backgroundImage', $path)) {
+            throw new \RuntimeException('Unable to store uploaded image');
+        }
+        $this->setData('backgroundImage', $path);
+    }
+
+    private function refreshSettingsCache() {
+        $dao = DAORegistry::getDAO('PluginSettingsDAO');
+        if ($dao && method_exists($dao, 'getPluginSettings')) {
+            $dao->getPluginSettings($this->contextId, $this->plugin->getName());
         }
     }
 
@@ -285,6 +277,7 @@ class CertificateSettingsForm extends Form {
         // Eligible reviewers for batch generation
         $eligibleReviewers = $this->getEligibleReviewers();
         $templateMgr->assign('eligibleReviewers', $eligibleReviewers);
+        $templateMgr->assign('notificationReviewers', $this->getEligibleReviewers(true));
 
         return parent::fetch($request, $template, $display);
     }
@@ -293,7 +286,7 @@ class CertificateSettingsForm extends Form {
      * Get eligible reviewers for batch certificate generation
      * @return array
      */
-    private function getEligibleReviewers() {
+    private function getEligibleReviewers($includeIssued = false) {
         $certificateDao = DAORegistry::getDAO('CertificateDAO');
 
         // Check if DAO is available
@@ -313,11 +306,12 @@ class CertificateSettingsForm extends Form {
              LEFT JOIN reviewer_certificates rc ON ra.review_id = rc.review_id
              WHERE s.context_id = ?
                    AND ra.date_completed IS NOT NULL
+                   AND COALESCE(ra.declined, 0) = 0 AND COALESCE(ra.cancelled, 0) = 0
              GROUP BY ra.reviewer_id
-             HAVING missing_certificates > 0
+             HAVING (COUNT(*) >= ?' . ($includeIssued ? ' OR COUNT(rc.certificate_id) > 0' : '') . ')
              ORDER BY completed_reviews DESC
              LIMIT 100',
-            array((int) $this->contextId)
+            array((int) $this->contextId, max(1, (int) $this->plugin->getSetting($this->contextId, 'minimumReviews')))
         );
 
         $reviewers = array();
@@ -357,59 +351,48 @@ class CertificateSettingsForm extends Form {
      * @copydoc Form::execute()
      */
     public function execute(...$functionArgs) {
-        try {
-            $this->plugin->updateSetting($this->contextId, 'headerText', $this->getData('headerText'), 'string');
-            $this->plugin->updateSetting($this->contextId, 'bodyTemplate', $this->getData('bodyTemplate'), 'string');
-            $this->plugin->updateSetting($this->contextId, 'footerText', $this->getData('footerText'), 'string');
-
-            // Validate fontFamily against whitelist
-            $allowedFonts = array('helvetica', 'times', 'courier', 'dejavusans');
-            $fontFamily = $this->getData('fontFamily');
-            if (!in_array($fontFamily, $allowedFonts)) {
-                $fontFamily = 'dejavusans';
-            }
-            $this->plugin->updateSetting($this->contextId, 'fontFamily', $fontFamily, 'string');
-
-            // Clamp numeric values to valid ranges
-            $this->plugin->updateSetting($this->contextId, 'fontSize', max(6, min(72, (int) $this->getData('fontSize'))), 'int');
-            // Millimetres of extra space above the body text (Issue #74). Non-negative:
-            // a negative offset would push the text up into the page margin.
-            $this->plugin->updateSetting($this->contextId, 'bodyTopOffset', max(0, min(100, (int) $this->getData('bodyTopOffset'))), 'int');
-            $this->plugin->updateSetting($this->contextId, 'textColorR', max(0, min(255, (int) $this->getData('textColorR'))), 'int');
-            $this->plugin->updateSetting($this->contextId, 'textColorG', max(0, min(255, (int) $this->getData('textColorG'))), 'int');
-            $this->plugin->updateSetting($this->contextId, 'textColorB', max(0, min(255, (int) $this->getData('textColorB'))), 'int');
-            $this->plugin->updateSetting($this->contextId, 'minimumReviews', max(1, (int) $this->getData('minimumReviews')), 'int');
-            $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
-
-            // Validate pageOrientation against whitelist
-            $orientation = $this->getData('pageOrientation');
-            if (!in_array($orientation, array('P', 'L'))) {
-                $orientation = 'P';
-            }
-            $this->plugin->updateSetting($this->contextId, 'pageOrientation', $orientation, 'string');
-
-            // Save the background image, and delete the file it replaces so removed and
-            // superseded uploads do not pile up in the journal's files directory.
-            $backgroundImage = (string) $this->getData('backgroundImage');
-            $previousBackgroundImage = (string) $this->plugin->getSetting($this->contextId, 'backgroundImage');
-
-            $this->plugin->updateSetting($this->contextId, 'backgroundImage', $backgroundImage, 'string');
-
-            // Only once the new value is safely stored: if the save had failed, the
-            // setting would still point at a file we had already deleted.
-            if ($previousBackgroundImage !== '' && $previousBackgroundImage !== $backgroundImage) {
-                require_once(dirname(__FILE__, 2) . '/CertificateGenerator.php');
-                \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::deleteBackgroundImage($previousBackgroundImage);
-            }
-
-            // Acknowledgement email templates
-            $this->plugin->updateSetting($this->contextId, 'ackEmailSubject', (string) $this->getData('ackEmailSubject'), 'string');
-            $this->plugin->updateSetting($this->contextId, 'ackEmailBody', (string) $this->getData('ackEmailBody'), 'string');
-        } catch (\Exception $e) {
-            // Log error but don't fail - settings may already exist from previous install
-            error_log('ReviewerCertificate: Error saving settings (may be duplicate key on reinstall): ' . $e->getMessage());
+        if (!$this->validated && !$this->validate()) {
+            throw new \RuntimeException('Settings validation failed');
         }
-
-        parent::execute(...$functionArgs);
+        $previous = (string) $this->plugin->getSetting($this->contextId, 'backgroundImage');
+        $committed = false;
+        try {
+            $this->stageUpload();
+            $this->getConnection()->transaction(function () use ($functionArgs) {
+                foreach (['headerText', 'bodyTemplate', 'footerText', 'ackEmailSubject', 'ackEmailBody', 'backgroundImage'] as $field) {
+                    $this->plugin->updateSetting($this->contextId, $field, (string) $this->getData($field), 'string');
+                }
+                $font = $this->getData('fontFamily');
+                $this->plugin->updateSetting($this->contextId, 'fontFamily',
+                    in_array($font, ['helvetica', 'times', 'courier', 'dejavusans'], true) ? $font : 'dejavusans', 'string');
+                $orientation = $this->getData('pageOrientation');
+                $this->plugin->updateSetting($this->contextId, 'pageOrientation', $orientation === 'L' ? 'L' : 'P', 'string');
+                foreach (['fontSize' => [6, 72], 'bodyTopOffset' => [0, 100], 'textColorR' => [0, 255],
+                    'textColorG' => [0, 255], 'textColorB' => [0, 255], 'minimumReviews' => [1, PHP_INT_MAX]] as $field => $range) {
+                    $this->plugin->updateSetting($this->contextId, $field, max($range[0], min($range[1], (int) $this->getData($field))), 'int');
+                }
+                $this->plugin->updateSetting($this->contextId, 'includeQRCode', (bool) $this->getData('includeQRCode'), 'bool');
+                parent::execute(...$functionArgs);
+            });
+            $committed = true;
+        } catch (\Throwable $e) {
+            if (!$committed && $this->stagedImage && is_file($this->stagedImage)) {
+                (new FileManager())->deleteByPath($this->stagedImage);
+            }
+            $this->setData('backgroundImage', $previous);
+            $this->addError('backgroundImage', __('plugins.generic.reviewerCertificate.settings.saveFailed'));
+            throw $e;
+        } finally {
+            $this->validated = false;
+            try { $this->refreshSettingsCache(); }
+            catch (\Throwable $e) { error_log('ReviewerCertificate: settings cache refresh failed'); }
+        }
+        $background = (string) $this->getData('backgroundImage');
+        if ($previous !== '' && $previous !== $background) {
+            require_once dirname(__DIR__) . '/CertificateGenerator.php';
+            \APP\plugins\generic\reviewerCertificate\classes\CertificateGenerator::deleteBackgroundImage($previous, $this->contextId);
+        }
+        $this->stagedImage = null;
+        return true;
     }
 }

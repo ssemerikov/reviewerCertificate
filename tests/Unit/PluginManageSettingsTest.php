@@ -16,6 +16,7 @@ use APP\plugins\generic\reviewerCertificate\ReviewerCertificatePlugin;
 class SettingsRedirectCalled extends \Exception {}
 
 class FakeSettingsRequest {
+    public function checkCSRF() { return true; }
     /** @var array|null Arguments redirect() was called with */
     public $redirectArgs = null;
 
@@ -50,11 +51,13 @@ class PluginManageSettingsTest extends TestCase
 {
     protected function setUp(): void {
         parent::setUp();
+        $_SERVER['REQUEST_METHOD'] = 'POST';
         unset($_FILES['backgroundImage']);
         unset($_SERVER['HTTP_X_REQUESTED_WITH']);
     }
 
     protected function tearDown(): void {
+        unset($_SERVER['REQUEST_METHOD']);
         unset($_FILES['backgroundImage']);
         unset($_SERVER['HTTP_X_REQUESTED_WITH']);
         parent::tearDown();

@@ -215,32 +215,33 @@ class CertificateGenerator {
         imagecopyresampled($dst, $src, 0, 0, 0, 0, $newWidth, $newHeight, $width, $height);
         imagedestroy($src);
 
-        $tmpPath = $cachePath . '.tmp' . getmypid();
+        $fileManager = new \PKP\file\FileManager();
+        $tmpPath = $cachePath . '.tmp' . bin2hex(random_bytes(8));
         $written = $keepPng
             ? @imagepng($dst, $tmpPath, 8)
             : @imagejpeg($dst, $tmpPath, self::BG_JPEG_QUALITY);
         imagedestroy($dst);
         if (!$written || !is_file($tmpPath)) {
-            @unlink($tmpPath);
+            $fileManager->deleteByPath($tmpPath);
             return $path;
         }
 
         // A re-encode that did not shrink anything is useless — keep the
         // original (only possible when the byte threshold alone triggered).
         if (filesize($tmpPath) >= $sourceBytes && $scale >= 1.0) {
-            @unlink($tmpPath);
+            $fileManager->deleteByPath($tmpPath);
             return $path;
         }
 
-        if (!@rename($tmpPath, $cachePath)) {
-            @unlink($tmpPath);
+        if (!$fileManager->setMode($tmpPath, 0666) || !@rename($tmpPath, $cachePath)) {
+            $fileManager->deleteByPath($tmpPath);
             return $path;
         }
 
         // Prune scaled copies from previous versions of this background
         foreach (glob(dirname($realPath) . '/' . $baseName . '.rcscaled-*') ?: array() as $stale) {
             if ($stale !== $cachePath) {
-                @unlink($stale);
+                $fileManager->deleteByPath($stale);
             }
         }
 
@@ -295,7 +296,7 @@ class CertificateGenerator {
      * @param $path string Stored background image path
      * @return bool true if nothing is left on disk for this background
      */
-    public static function deleteBackgroundImage($path) {
+    public static function deleteBackgroundImage($path, $contextId = null) {
         if (!$path) {
             return false;
         }
@@ -306,6 +307,15 @@ class CertificateGenerator {
             return true;
         }
 
+        // Settings replacement must never delete another journal's assets or a
+        // legacy shared background. Such files remain available for manual cleanup.
+        if ($contextId !== null) {
+            $directory = realpath(self::getBackgroundUploadDir($contextId));
+            if (!$directory || strpos($realPath, rtrim($directory, '/') . '/') !== 0 || is_link($path)) {
+                return false;
+            }
+        }
+
         if (!self::isBackgroundPathAllowed($path)) {
             error_log('ReviewerCertificate: refusing to delete background image outside the journal files directory: ' . $path);
             return false;
@@ -313,11 +323,12 @@ class CertificateGenerator {
 
         // Scaled copies live next to the original as {name}.rcscaled-{key}.{ext}
         $baseName = pathinfo($realPath, PATHINFO_FILENAME);
+        $fileManager = new \PKP\file\FileManager();
         foreach (glob(dirname($realPath) . '/' . $baseName . '.rcscaled-*') ?: array() as $scaled) {
-            @unlink($scaled);
+            $fileManager->deleteByPath($scaled);
         }
 
-        return @unlink($realPath);
+        return (bool) $fileManager->deleteByPath($realPath);
     }
 
     /** @var ReviewAssignment */
@@ -570,12 +581,28 @@ class CertificateGenerator {
         // Get template variables
         $variables = $this->getTemplateVariables();
 
+        $headerText = $this->replaceVariables(
+            $this->getTemplateSetting('headerText', 'Certificate of Recognition'),
+            $variables
+        );
+
+        $bodyTemplate = $this->replaceVariables(
+            $this->getTemplateSetting('bodyTemplate', $this->getDefaultBodyTemplate()),
+            $variables
+        );
+
+        $footerText = $this->replaceVariables(
+            $this->getTemplateSetting('footerText', ''),
+            $variables
+        );
+
+
         // Auto-detect non-Latin characters (Cyrillic, CJK, Arabic, etc.) in template
         // variables. TCPDF core fonts (helvetica, times, courier) only support
         // Windows-1252 and render non-Latin chars as "??????". DejaVu Sans is the
         // only bundled Unicode font.
         $needsUnicodeFont = false;
-        foreach ($variables as $value) {
+        foreach (array_merge(array_values($variables), [$headerText, $bodyTemplate, $footerText]) as $value) {
             if ($this->containsNonLatin((string) $value)) {
                 $needsUnicodeFont = true;
                 break;
@@ -596,10 +623,6 @@ class CertificateGenerator {
         $codeSize = round($baseFontSize * 0.667);      // 0.667x base (default: 8)
 
         // Header text
-        $headerText = $this->replaceVariables(
-            $this->getTemplateSetting('headerText', 'Certificate of Recognition'),
-            $variables
-        );
 
         // Skip the header block entirely when the journal has cleared it, mirroring
         // the footer below. This used to be emitted unconditionally, so an empty
@@ -627,20 +650,12 @@ class CertificateGenerator {
         }
 
         // Body text
-        $bodyTemplate = $this->replaceVariables(
-            $this->getTemplateSetting('bodyTemplate', $this->getDefaultBodyTemplate()),
-            $variables
-        );
 
         $pdf->SetFont($this->effectiveFont, '', $bodySize);
         $pdf->MultiCell(0, 10, $bodyTemplate, 0, 'C', 0, 1);
         $pdf->Ln(10);
 
         // Footer text
-        $footerText = $this->replaceVariables(
-            $this->getTemplateSetting('footerText', ''),
-            $variables
-        );
 
         if ($footerText) {
             $pdf->SetFont($this->effectiveFont, 'I', $footerSize);

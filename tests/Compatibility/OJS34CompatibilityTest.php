@@ -248,12 +248,13 @@ class OJS34CompatibilityTest extends TestCase
     {
         $this->requireOJSVersion('3.4');
 
-        $tcpdfPath = BASE_SYS_DIR . '/lib/tcpdf/tcpdf.php';
+        $tcpdfPath = BASE_SYS_DIR . '/vendor/tecnickcom/tcpdf/tcpdf.php';
 
-        if (file_exists($tcpdfPath)) {
-            $this->assertFileExists($tcpdfPath);
-            $this->assertFileIsReadable($tcpdfPath);
-        }
+        require_once $tcpdfPath;
+        $pdf = new \TCPDF();
+        $pdf->AddPage();
+        $pdf->Cell(20, 10, 'Certificate');
+        $this->assertStringStartsWith('%PDF-', $pdf->Output('', 'S'));
     }
 
     /**

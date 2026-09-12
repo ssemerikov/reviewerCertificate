@@ -1,0 +1,61 @@
+name: OJS integration and release packages
+on:
+  pull_request:
+    branches: [main, develop]
+  push:
+    branches: ['fix/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  integration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          extensions: mbstring, gd, zip
+          tools: composer
+      - name: Install test dependencies
+        run: |
+          composer install --no-interaction --prefer-dist
+          npm install
+          npx playwright install --with-deps chromium
+      - name: Provision disposable OJS and check MySQL migrations and mail templates
+        run: node tests/environment/setup.mjs
+      - name: PostgreSQL migration and transaction regressions
+        run: |
+          docker compose -f tests/environment/docker-compose.yml -f tests/environment/docker-compose.postgres.yml up -d --wait postgres
+          for project in ojs33 ojs34; do
+            docker compose -f tests/environment/docker-compose.yml exec -T "$project" apk add --no-cache php82-pdo_pgsql
+          done
+          for project in ojs33 ojs34 ojs35; do
+            docker compose -f tests/environment/docker-compose.yml exec -T -e OJS_TEST_DATABASE=rc_postgres_test "$project" php plugins/generic/reviewerCertificate/tests/environment/check-postgres.php
+            docker compose -f tests/environment/docker-compose.yml exec -T -e OJS_TEST_DATABASE=rc_mysql_test "$project" php plugins/generic/reviewerCertificate/tests/environment/check-postgres.php
+          done
+      - name: Browser security, historical mail, and file permissions
+        run: npx playwright test tests/e2e/batch-generation.spec.ts --retries=0
+      - name: JavaScript regression
+        run: node tests/javascript/certificate.test.cjs
+      - name: Build and verify target-specific release packages
+        run: |
+          bash release.sh 1.10.0
+          php tests/check-release.php
+          for target in 3_3 3_4 3_5; do
+            php tests/environment/check-release-pdf.php "reviewerCertificate-1.10.0-$target.tar.gz"
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: integration-results
+          path: |
+            test-results/
+            reviewerCertificate-*.tar.gz
+          retention-days: 14

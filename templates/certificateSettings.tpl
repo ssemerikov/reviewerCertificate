@@ -318,119 +318,68 @@
 	<div id="batchResult" style="margin-top: 20px; display: none;"></div>
 </div>
 
+<div class="section" style="margin-top: 30px;">
+    <h2>{translate key="plugins.generic.reviewerCertificate.notifications.title"}</h2>
+    <p>{translate key="plugins.generic.reviewerCertificate.notifications.description"}</p>
+    <label for="notificationReviewers">{translate key="plugins.generic.reviewerCertificate.batch.selectReviewers"}</label>
+    <select id="notificationReviewers" multiple size="8" style="width:100%">
+        {foreach from=$notificationReviewers item=reviewer}
+            <option value="{$reviewer.id|escape}">{$reviewer.name|escape}</option>
+        {/foreach}
+    </select>
+    <label><input type="checkbox" id="retryNotifications" /> {translate key="plugins.generic.reviewerCertificate.notifications.retry"}</label>
+    <p>{translate key="plugins.generic.reviewerCertificate.notifications.retryWarning"}</p>
+    <button type="button" id="notifyBatchBtn" class="pkp_button">{translate key="plugins.generic.reviewerCertificate.notifications.send"}</button>
+    <div id="notificationResult" role="status"></div>
+</div>
 <script>
-$(document).ready(function() {ldelim}
-	// Debug: Log that script is loaded
-	if (console && console.log) {ldelim}
-		console.log('ReviewerCertificate: Batch generation script loaded');
-	{rdelim}
-
-	$('#generateBatchBtn').on('click', function() {ldelim}
-		if (console && console.log) {ldelim}
-			console.log('ReviewerCertificate: Generate batch button clicked');
-		{rdelim}
-
-		var selectedReviewers = $('#batchReviewers').val();
-		if (!selectedReviewers || selectedReviewers.length === 0) {ldelim}
-			alert('{translate key="plugins.generic.reviewerCertificate.batch.noSelection" escape="js"}');
-			return;
-		{rdelim}
-
-		// Show progress
-		$('#batchProgress').show();
-		$('#generateBatchBtn').prop('disabled', true);
-
-		// Get CSRF token from the main form
-		var csrfToken = $('#certificateSettingsForm input[name="csrfToken"]').val();
-
-		// Build the URL
-		var ajaxUrl = '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="generateBatch" escape=false}';
-
-		// Debug logging
-		if (console && console.log) {ldelim}
-			console.log('ReviewerCertificate: Batch certificate generation started');
-			console.log('ReviewerCertificate: Selected reviewers:', selectedReviewers);
-			console.log('ReviewerCertificate: CSRF token present:', !!csrfToken);
-			console.log('ReviewerCertificate: AJAX URL:', ajaxUrl);
-		{rdelim}
-
-		$.ajax({ldelim}
-			url: ajaxUrl,
-			type: 'POST',
-			data: {ldelim}
-				reviewerIds: selectedReviewers,
-				csrfToken: csrfToken
-			{rdelim},
-			success: function(response) {ldelim}
-				$('#batchProgress').hide();
-				$('#generateBatchBtn').prop('disabled', false);
-
-				// Debug logging
-				if (console && console.log) {ldelim}
-					console.log('Batch generation response:', response);
-				{rdelim}
-
-				try {ldelim}
-					var data = typeof response === 'string' ? JSON.parse(response) : response;
-					if (data.status) {ldelim}
-						var generatedCount = data.content && data.content.generated ? data.content.generated : 0;
-
-						// Show success message
-						if (generatedCount > 0) {ldelim}
-							$('#batchResult').html(
-								'<div style="padding: 15px; background: #d4edda; border: 1px solid #c3e6cb; border-radius: 5px; color: #155724; margin-bottom: 15px;">' +
-								'<strong>✓ Success!</strong> Generated ' + generatedCount + ' certificate(s). Reviewers can now download their certificates.' +
-								'</div>'
-							).show();
-						{rdelim} else {ldelim}
-							$('#batchResult').html(
-								'<div style="padding: 15px; background: #fff3cd; border: 1px solid #ffeeba; border-radius: 5px; color: #856404; margin-bottom: 15px;">' +
-								'<strong>⚠ No certificates generated.</strong> Selected reviewers either already have certificates or don\'t have completed reviews.' +
-								'</div>'
-							).show();
-						{rdelim}
-
-						// Clear the selection
-						$('#batchReviewers').val(null).trigger('change');
-
-						// Don't reload page - let user continue working
-						// Statistics will update on next settings open
-					{rdelim} else {ldelim}
-						$('#batchResult').html(
-							'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
-							'<strong>✗ Error:</strong> ' + (data.content || 'Failed to generate certificates') +
-							'</div>'
-						).show();
-					{rdelim}
-				{rdelim} catch (e) {ldelim}
-					if (console && console.error) {ldelim}
-						console.error('Failed to parse response:', e);
-					{rdelim}
-					$('#batchResult').html(
-						'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
-						'<strong>Error:</strong> Invalid response format' +
-						'</div>'
-					).show();
-				{rdelim}
-			{rdelim},
-			error: function(xhr, status, error) {ldelim}
-				$('#batchProgress').hide();
-				$('#generateBatchBtn').prop('disabled', false);
-
-				// Debug logging
-				if (console && console.error) {ldelim}
-					console.error('Batch generation failed:', status, error);
-					console.error('Response:', xhr.responseText);
-				{rdelim}
-
-				$('#batchResult').html(
-					'<div style="padding: 15px; background: #f8d7da; border: 1px solid #f5c6cb; border-radius: 5px; color: #721c24;">' +
-					'<strong>Error:</strong> {translate key="plugins.generic.reviewerCertificate.batch.error" escape="js"}' +
-					'</div>'
-				).show();
-			{rdelim}
-		{rdelim});
-	{rdelim});
+$(function() {ldelim}
+    $('#generateBatchBtn, #notifyBatchBtn').on('click', function() {ldelim}
+        var notify = this.id === 'notifyBatchBtn';
+        var resultBox = notify ? '#notificationResult' : '#batchResult';
+        var reviewers = $(notify ? '#notificationReviewers' : '#batchReviewers').val();
+        if (!reviewers || !reviewers.length) {ldelim}
+            alert('{translate key="plugins.generic.reviewerCertificate.batch.noSelection" escape="js"}');
+            return;
+        {rdelim}
+        var totals = {ldelim}generated: 0, skipped: 0, failed: 0, sent: 0{rdelim};
+        var button = $(this).prop('disabled', true);
+        $('#batchProgress').show();
+        function finish() {ldelim} button.prop('disabled', false); $('#batchProgress').hide(); {rdelim}
+        function page(cursor) {ldelim}
+            $.ajax({ldelim}
+                url: notify
+                    ? '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="notifyBatch" escape=false}'
+                    : '{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="generateBatch" escape=false}',
+                type: 'POST', dataType: 'json',
+                data: {ldelim}reviewerIds: reviewers, cursor: cursor,
+                    retry: $('#retryNotifications').is(':checked') ? '1' : '0',
+                    csrfToken: $('#certificateSettingsForm input[name="csrfToken"]').val(){rdelim}
+            {rdelim}).done(function(response) {ldelim}
+                var result = response.content;
+                if (!result || typeof result.generated !== 'number') {ldelim}
+                    $(resultBox).text('{translate key="plugins.generic.reviewerCertificate.batch.error" escape="js"}').show();
+                    finish(); return;
+                {rdelim}
+                totals.generated += result.generated;
+                totals.skipped += result.skipped;
+                totals.failed += result.failed;
+                totals.sent += result.sent || 0;
+                $(resultBox).text(
+                    '{translate key="plugins.generic.reviewerCertificate.batch.generatedCountLabel" escape="js"}: ' + totals.generated +
+                    ' / {translate key="plugins.generic.reviewerCertificate.batch.skipped" escape="js"}: ' + totals.skipped +
+                    ' / {translate key="plugins.generic.reviewerCertificate.batch.failed" escape="js"}: ' + totals.failed +
+                    (notify ? ' / {translate key="plugins.generic.reviewerCertificate.notifications.sent" escape="js"}: ' + totals.sent : '')
+                ).show().attr('role', 'status');
+                if (result.continuation !== null) {ldelim} page(result.continuation); {rdelim}
+                else {ldelim} finish(); {rdelim}
+            {rdelim}).fail(function() {ldelim}
+                $(resultBox).append(document.createTextNode(' {translate key="plugins.generic.reviewerCertificate.batch.error" escape="js"}')).show();
+                finish();
+            {rdelim});
+        {rdelim}
+        page(0);
+    {rdelim});
 {rdelim});
 </script>
 

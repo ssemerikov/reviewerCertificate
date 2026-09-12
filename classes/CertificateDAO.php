@@ -20,6 +20,12 @@ require_once(dirname(__FILE__) . '/Certificate.php');
 
 class CertificateDAO extends DAO {
 
+    /** Isolate a recoverable write with a transaction or nested savepoint. */
+    public function transaction(callable $operation) {
+        require_once __DIR__ . '/DatabaseConnection.php';
+        return DatabaseConnection::get()->transaction($operation);
+    }
+
     /** @var bool guards getLastInsertId() against re-entrancy; see that method */
     private $inGetLastInsertId = false;
 
@@ -65,6 +71,16 @@ class CertificateDAO extends DAO {
             array((int) $reviewId, (int) $contextId)
         );
 
+        $row = $result->current();
+        return $row ? $this->_fromRow((array) $row) : null;
+    }
+
+    /** Read a concurrent winner beyond an enclosing MySQL snapshot. */
+    public function getConcurrentCertificate($reviewId, $contextId) {
+        $result = $this->retrieve(
+            'SELECT * FROM reviewer_certificates WHERE review_id = ? AND context_id = ? FOR UPDATE',
+            [(int) $reviewId, (int) $contextId]
+        );
         $row = $result->current();
         return $row ? $this->_fromRow((array) $row) : null;
     }
@@ -169,7 +185,7 @@ class CertificateDAO extends DAO {
                 (int) $certificate->getSubmissionId(),
                 (int) $certificate->getReviewId(),
                 (int) $certificate->getContextId(),
-                (int) $certificate->getTemplateId(),
+                $certificate->getTemplateId() ? (int) $certificate->getTemplateId() : null,
                 $certificate->getDateIssued(),
                 $certificate->getCertificateCode(),
                 (int) $certificate->getDownloadCount()
@@ -214,7 +230,7 @@ class CertificateDAO extends DAO {
                 (int) $certificate->getSubmissionId(),
                 (int) $certificate->getReviewId(),
                 (int) $certificate->getContextId(),
-                (int) $certificate->getTemplateId(),
+                $certificate->getTemplateId() ? (int) $certificate->getTemplateId() : null,
                 $certificate->getDateIssued(),
                 $certificate->getCertificateCode(),
                 (int) $certificate->getDownloadCount(),

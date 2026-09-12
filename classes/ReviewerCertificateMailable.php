@@ -18,16 +18,11 @@ namespace APP\plugins\generic\reviewerCertificate\classes;
 
 use PKP\mail\Mailable;
 use PKP\mail\traits\Configurable;
-use PKP\mail\traits\Sender;
 
 class ReviewerCertificateMailable extends Mailable {
     use Configurable;
-    // Sender is required: sendCertificateNotification() calls ->sender($user),
-    // which PKP\mail\Mailable only provides through this trait — without it
-    // the review-completion hook fatals on OJS 3.4 (undefined method)
-    use Sender;
 
-    protected static ?string $name = 'plugins.generic.reviewerCertificate.email.name';
-    protected static ?string $description = 'plugins.generic.reviewerCertificate.email.description';
+    protected static ?string $name = 'plugins.generic.reviewerCertificate.displayName';
+    protected static ?string $description = 'plugins.generic.reviewerCertificate.certificateAvailableDescription';
     protected static ?string $emailTemplateKey = 'REVIEWER_CERTIFICATE_AVAILABLE';
 }

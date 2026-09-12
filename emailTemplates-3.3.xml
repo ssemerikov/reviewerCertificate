@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE emails SYSTEM "../../../lib/pkp/dtd/emailTemplates.dtd">
+<emails>
+    <email key="REVIEWER_CERTIFICATE_AVAILABLE" can_edit="1" can_disable="0"
+        from_role_id="16" to_role_id="4096" stage_id="3"
+        description="plugins.generic.reviewerCertificate.certificateAvailableDescription"
+        subject="plugins.generic.reviewerCertificate.email.subject"
+        body="plugins.generic.reviewerCertificate.email.body"/>
+</emails>

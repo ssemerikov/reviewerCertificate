@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE install SYSTEM "../../../lib/pkp/dtd/install.dtd">
+<install version="1.10.0.0">
+    <code file="plugins/generic/reviewerCertificate/classes/migration/Upgrade110.php"
+        class="APP\plugins\generic\reviewerCertificate\classes\migration\Upgrade110"
+        function="upgrade" />
+</install>

@@ -250,12 +250,10 @@ class OJS35CompatibilityTest extends TestCase
     {
         $this->requireOJSVersion('3.5');
 
-        $migrationFile = BASE_SYS_DIR . '/classes/migration/install/ReviewerCertificateInstallMigration.php';
-
-        if (file_exists($migrationFile)) {
-            $this->assertFileExists($migrationFile);
-            $this->assertFileIsReadable($migrationFile);
-        }
+        require_once BASE_SYS_DIR . '/classes/migration/ReviewerCertificateInstallMigration.php';
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('downgrade is not supported');
+        (new \APP\plugins\generic\reviewerCertificate\classes\migration\ReviewerCertificateInstallMigration())->down();
     }
 
     /**
@@ -265,12 +263,13 @@ class OJS35CompatibilityTest extends TestCase
     {
         $this->requireOJSVersion('3.5');
 
-        $tcpdfPath = BASE_SYS_DIR . '/lib/tcpdf/tcpdf.php';
+        $tcpdfPath = BASE_SYS_DIR . '/vendor/tecnickcom/tcpdf/tcpdf.php';
 
-        if (file_exists($tcpdfPath)) {
-            $this->assertFileExists($tcpdfPath);
-            $this->assertFileIsReadable($tcpdfPath);
-        }
+        require_once $tcpdfPath;
+        $pdf = new \TCPDF();
+        $pdf->AddPage();
+        $pdf->Cell(20, 10, 'Certificate');
+        $this->assertStringStartsWith('%PDF-', $pdf->Output('', 'S'));
     }
 
     /**

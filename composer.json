@@ -34,12 +34,14 @@
         "test:integration": "phpunit --testsuite 'Integration Tests'",
         "test:compatibility": "phpunit --testsuite 'Compatibility Tests'",
         "test:security": "phpunit --testsuite 'Security Tests'",
+        "test:locale": "phpunit --testsuite 'Locale Tests'",
         "test:coverage": "phpunit --coverage-html tests/coverage/html --coverage-text",
         "test:all": [
             "@test:unit",
             "@test:integration",
             "@test:compatibility",
-            "@test:security"
+            "@test:security",
+            "@test:locale"
         ]
     },
     "config": {

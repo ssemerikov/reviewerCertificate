@@ -172,4 +172,26 @@ Best regards,
 
 {{$editorName}}
 {{$journalName}}</message>
+
+    <!-- English fallback for new reliability controls; translation contributions welcome. -->
+    <message key="plugins.generic.reviewerCertificate.batch.generatedCountLabel">Generated</message>
+    <message key="plugins.generic.reviewerCertificate.batch.skipped">Skipped</message>
+    <message key="plugins.generic.reviewerCertificate.batch.failed">Failed</message>
+    <message key="plugins.generic.reviewerCertificate.notifications.title">Historical certificate notifications</message>
+    <message key="plugins.generic.reviewerCertificate.notifications.description">Explicitly send one availability email per certificate to the selected reviewers. Missing eligible certificates will be created. Certificates issued before notification tracking have unknown delivery history and may already have been announced. Ordinary batch generation does not send email.</message>
+    <message key="plugins.generic.reviewerCertificate.notifications.retry">Retry failed or uncertain deliveries</message>
+    <message key="plugins.generic.reviewerCertificate.notifications.retryWarning">A delivery interrupted for more than ten minutes is uncertain: the recipient may have received it. Retry uncertain deliveries only after checking your mail logs.</message>
+    <message key="plugins.generic.reviewerCertificate.notifications.send">Send certificate notifications</message>
+    <message key="plugins.generic.reviewerCertificate.notifications.sent">Sent</message>
+    <message key="plugins.generic.reviewerCertificate.settings.invalidValue">Enter a valid value.</message>
+    <message key="plugins.generic.reviewerCertificate.settings.saveFailed">Certificate settings could not be saved. Check the fields and image (JPEG or PNG, up to 5 MB), then try again.</message>
+    <message key="plugins.generic.reviewerCertificate.email.subject">Sertifikatet ditt er klart!</message>
+    <message key="plugins.generic.reviewerCertificate.email.body">{{$reviewerName}},
+
+Takk for at du fullførte denne vurderingen. Du kan nå laste ned sertifikatet ditt for anerkjennelse.
+
+Last ned Sertifikat: {{$certificateUrl}}
+
+{{$journalName}}
+{{$journalUrl}}</message>
 </locale>
