@@ -45,7 +45,7 @@ The iterative development approach with Claude Code enabled rapid prototyping, t
 - **QR Code Verification**: Include QR codes for certificate authenticity verification
 - **Download Tracking**: Track certificate downloads and usage statistics
 - **Multi-language Support**: Full internationalization with professional native translations
-  - 31 languages; new management controls currently include English fallback text
+  - 32 languages; new management controls currently include English fallback text
   - Includes RTL support (Arabic, Persian, Hebrew), CJK languages (Chinese, Japanese, Korean), and Cyrillic scripts
   - Dual format: `.xml` (source of truth) and `.po` (required at runtime by all OJS versions) locale files
   - Automatic language detection from OJS settings
@@ -194,7 +194,7 @@ We deeply appreciate your expertise and dedication to advancing scholarly commun
 
 ## Language Support
 
-The Reviewer Certificate Plugin is fully internationalized and available in 31 languages.
+The Reviewer Certificate Plugin is fully internationalized and available in 32 languages.
 
 ### Supported Languages
 
@@ -231,6 +231,7 @@ The Reviewer Certificate Plugin is fully internationalized and available in 31 l
 | Slovak | `sk_SK` | Slovenčina | ✅ Complete |
 | Slovenian | `sl_SI` | Slovenščina | ✅ Complete |
 | Bulgarian | `bg_BG` | Български | ✅ Complete |
+| Vietnamese | `vi_VN` | Tiếng Việt | ✅ Complete |
 
 ### Language Features
 

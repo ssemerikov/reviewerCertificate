@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE locale SYSTEM "../../../../../lib/pkp/dtd/locale.dtd">
+
+<!--
+  * plugins/generic/reviewerCertificate/locale/vi_VN/locale.xml
+  *
+  * Copyright (c) 2024
+  * Distributed under the GNU GPL v3.
+  *
+  * Localization strings - Vietnamese
+  -->
+
+<locale name="vi_VN" full_name="Tiếng Việt">
+	<!-- Plugin metadata -->
+	<message key="plugins.generic.reviewerCertificate.displayName">Plugin Giấy chứng nhận phản biện</message>
+	<message key="plugins.generic.reviewerCertificate.description">Cho phép người phản biện tạo và tải xuống giấy chứng nhận PDF cá nhân hóa sau khi hoàn thành phản biện.</message>
+
+	<!-- Certificate titles -->
+	<message key="plugins.generic.reviewerCertificate.certificateTitle">Giấy chứng nhận phản biện</message>
+	<message key="plugins.generic.reviewerCertificate.certificateSubject">Giấy chứng nhận phản biện khoa học</message>
+
+	<!-- Dashboard messages -->
+	<message key="plugins.generic.reviewerCertificate.certificateAvailable">Giấy chứng nhận của bạn đã sẵn sàng!</message>
+	<message key="plugins.generic.reviewerCertificate.certificateAvailableDescription">Cảm ơn bạn đã hoàn thành phản biện này. Bạn có thể tải xuống giấy chứng nhận ghi nhận đóng góp của mình.</message>
+	<message key="plugins.generic.reviewerCertificate.certificateWillBeGenerated">Giấy chứng nhận sẽ được tạo tự động khi bạn nhấn nút tải xuống.</message>
+	<message key="plugins.generic.reviewerCertificate.downloadCertificate">Tải xuống giấy chứng nhận</message>
+
+	<!-- Settings form -->
+	<message key="plugins.generic.reviewerCertificate.settings">Cài đặt giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.settings.description">Cấu hình mẫu giấy chứng nhận và tiêu chí đủ điều kiện cho người phản biện.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.templateSettings">Cài đặt mẫu giấy chứng nhận</message>
+
+	<!-- Background Image -->
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImage">Ảnh nền</message>
+	<message key="plugins.generic.reviewerCertificate.settings.backgroundImageDescription">Tải lên ảnh nền cho giấy chứng nhận (JPG hoặc PNG, kích thước khuyến nghị: 2100x2970 pixel cho A4 khổ dọc, 2970x2100 cho khổ ngang)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.currentImage">Ảnh nền hiện tại</message>
+	<message key="plugins.generic.reviewerCertificate.settings.removeBackgroundImage">Xóa ảnh nền</message>
+
+	<!-- Header Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.headerText">Tiêu đề</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextDescription">Tiêu đề tùy chọn hiển thị ở đầu giấy chứng nhận. Để trống nếu không muốn có tiêu đề.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.headerTextRequired">Tiêu đề là bắt buộc</message>
+
+	<!-- Body Template -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplate">Mẫu nội dung giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateDescription">Nội dung chính của giấy chứng nhận. Sử dụng các biến mẫu để chèn nội dung động.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTemplateRequired">Mẫu nội dung giấy chứng nhận là bắt buộc</message>
+
+	<!-- Footer Text -->
+	<message key="plugins.generic.reviewerCertificate.settings.footerText">Chân trang</message>
+	<message key="plugins.generic.reviewerCertificate.settings.footerTextDescription">Văn bản tùy chọn hiển thị ở cuối giấy chứng nhận</message>
+
+	<!-- Body Top Offset -->
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffset">Khoảng cách phía trên nội dung (mm)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription">Khoảng trống bổ sung (tính bằng milimét) phía trên phần nội dung. Dùng tùy chọn này để dịch nội dung xuống dưới trang; các dòng trống ở đầu mẫu nội dung sẽ bị loại bỏ khi lưu biểu mẫu.</message>
+
+	<!-- Available Variables -->
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariables">Các biến mẫu có sẵn</message>
+	<message key="plugins.generic.reviewerCertificate.settings.availableVariablesDescription">Sử dụng các biến sau trong mẫu để chèn nội dung động:</message>
+	<message key="plugins.generic.reviewerCertificate.settings.defaultTemplate">Mẫu mặc định</message>
+	<message key="plugins.generic.reviewerCertificate.settings.useDefaultTemplate">Dùng mẫu mặc định</message>
+
+	<!-- Appearance settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.appearance">Cài đặt giao diện</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontFamily">Phông chữ</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.helvetica">Helvetica</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.times">Times New Roman</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.courier">Courier</message>
+	<message key="plugins.generic.reviewerCertificate.settings.font.dejavusans">DejaVu Sans</message>
+	<message key="plugins.generic.reviewerCertificate.settings.fontSize">Cỡ chữ</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientation">Hướng trang</message>
+	<message key="plugins.generic.reviewerCertificate.settings.pageOrientationDescription">Chọn bố cục khổ dọc hoặc khổ ngang cho giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.portrait">Khổ dọc</message>
+	<message key="plugins.generic.reviewerCertificate.settings.orientation.landscape">Khổ ngang</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColor">Màu chữ (RGB)</message>
+	<message key="plugins.generic.reviewerCertificate.settings.textColorDescription">Chỉ định màu chữ bằng giá trị RGB (0-255 cho mỗi thành phần)</message>
+
+	<!-- Eligibility settings -->
+	<message key="plugins.generic.reviewerCertificate.settings.eligibility">Tiêu chí đủ điều kiện</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviews">Số phản biện hoàn thành tối thiểu</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsDescription">Số lượng phản biện đã hoàn thành tối thiểu để người phản biện được nhận giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid">Số phản biện tối thiểu phải là một số lớn hơn hoặc bằng 1</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.settings.verification">Tùy chọn xác minh</message>
+	<message key="plugins.generic.reviewerCertificate.settings.includeQRCode">Thêm mã QR để xác minh giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.settings.previewCertificate">Xem trước giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidImageType">Định dạng ảnh không hợp lệ. Vui lòng tải lên tệp JPG hoặc PNG.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.uploadFailed">Tải tệp lên thất bại. Vui lòng thử lại.</message>
+
+	<!-- Error messages -->
+	<message key="plugins.generic.reviewerCertificate.error.reviewNotCompleted">Phản biện này chưa hoàn thành. Giấy chứng nhận chỉ được cấp cho các phản biện đã hoàn thành.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noCertificateCode">Chưa cung cấp mã giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.error.invalidCertificate">Mã giấy chứng nhận không hợp lệ. Không thể xác minh giấy chứng nhận này.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noReviewersSelected">Chưa chọn người phản biện nào để tạo giấy chứng nhận hàng loạt</message>
+	<message key="plugins.generic.reviewerCertificate.error.accessDenied">Truy cập bị từ chối. Bạn không có quyền tải xuống giấy chứng nhận này.</message>
+	<message key="plugins.generic.reviewerCertificate.error.noContext">Không xác định được tạp chí. Vui lòng đảm bảo bạn truy cập từ một tạp chí hợp lệ.</message>
+	<message key="plugins.generic.reviewerCertificate.error.daoNotAvailable">Hiện không thể truy cập cơ sở dữ liệu. Vui lòng liên hệ quản trị viên hệ thống.</message>
+
+	<!-- Verification -->
+	<message key="plugins.generic.reviewerCertificate.verify.title">Xác minh giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.verify.description">Nhập mã giấy chứng nhận để xác minh tính xác thực</message>
+	<message key="plugins.generic.reviewerCertificate.verify.code">Mã giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.verify.button">Xác minh giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.verify.valid">Giấy chứng nhận hợp lệ</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalid">Giấy chứng nhận không hợp lệ</message>
+	<message key="plugins.generic.reviewerCertificate.verify.invalidDescription">Mã giấy chứng nhận bạn nhập không hợp lệ hoặc không tồn tại trong hệ thống.</message>
+	<message key="plugins.generic.reviewerCertificate.verify.certificateCode">Mã giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.verify.reviewerName">Tên người phản biện</message>
+	<message key="plugins.generic.reviewerCertificate.verify.journalName">Tên tạp chí</message>
+	<message key="plugins.generic.reviewerCertificate.verify.dateIssued">Ngày cấp</message>
+
+	<!-- Batch generation -->
+	<message key="plugins.generic.reviewerCertificate.batch.title">Tạo giấy chứng nhận hàng loạt</message>
+	<message key="plugins.generic.reviewerCertificate.batch.description">Tạo giấy chứng nhận cho nhiều người phản biện cùng lúc. Chọn từ danh sách dưới đây những người phản biện đã hoàn thành phản biện nhưng chưa có giấy chứng nhận.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectReviewers">Chọn người phản biện</message>
+	<message key="plugins.generic.reviewerCertificate.batch.completedReviews">phản biện đã hoàn thành</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noEligibleReviewers">Không có người phản biện nào đủ điều kiện. Tất cả người phản biện đều đã có giấy chứng nhận cho các phản biện đã hoàn thành.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.selectMultipleHint">Giữ Ctrl (Windows/Linux) hoặc Cmd (Mac) để chọn nhiều người phản biện</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generate">Tạo giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generating">Đang tạo giấy chứng nhận...</message>
+	<message key="plugins.generic.reviewerCertificate.batch.noSelection">Vui lòng chọn ít nhất một người phản biện</message>
+	<message key="plugins.generic.reviewerCertificate.batch.certificatesGenerated">giấy chứng nhận đã được tạo thành công</message>
+	<message key="plugins.generic.reviewerCertificate.batch.error">Đã xảy ra lỗi khi tạo giấy chứng nhận. Vui lòng thử lại.</message>
+	<message key="plugins.generic.reviewerCertificate.batch.generated">Đã tạo thành công {$count} giấy chứng nhận</message>
+
+	<!-- Statistics -->
+	<message key="plugins.generic.reviewerCertificate.statistics.title">Thống kê giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.description">Tổng quan về việc tạo và sử dụng giấy chứng nhận trong tạp chí của bạn</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalCertificates">Tổng số giấy chứng nhận đã cấp</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.totalDownloads">Tổng số lượt tải xuống</message>
+	<message key="plugins.generic.reviewerCertificate.statistics.uniqueReviewers">Số người phản biện có giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalIssued">Tổng số giấy chứng nhận đã cấp</message>
+	<message key="plugins.generic.reviewerCertificate.stats.totalDownloads">Tổng số lượt tải xuống</message>
+	<message key="plugins.generic.reviewerCertificate.stats.averageDownloads">Số lượt tải xuống trung bình mỗi giấy chứng nhận</message>
+
+	<!-- Font warning -->
+	<message key="plugins.generic.reviewerCertificate.settings.fontUnicodeWarning">Lưu ý: Helvetica, Times New Roman và Courier chỉ hỗ trợ ký tự Latin cơ bản, không hiển thị được dấu tiếng Việt (ă, â, đ, ê, ô, ơ, ư và các dấu thanh). Nếu văn bản có chứa tiếng Việt có dấu hoặc các ký tự ngoài bảng chữ cái Latin cơ bản, plugin sẽ tự động dùng phông DejaVu Sans cho các phần văn bản đó.</message>
+
+	<!-- My Certificates page -->
+	<message key="plugins.generic.reviewerCertificate.myCertificates.title">Giấy chứng nhận của tôi</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.description">Dưới đây là danh sách tất cả giấy chứng nhận phản biện của bạn tại tạp chí này.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.dateIssued">Ngày cấp</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.submissionTitle">Tiêu đề bản thảo</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.certificateCode">Mã giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.actions">Thao tác</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.noCertificates">Bạn chưa có giấy chứng nhận nào. Giấy chứng nhận được tạo sau khi bạn hoàn thành một phản biện.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.viewAll">Xem tất cả giấy chứng nhận của tôi</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.emailAction">Gửi giấy chứng nhận qua email cho tôi</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.emailSent">Giấy chứng nhận đã được gửi đến địa chỉ email của bạn.</message>
+	<message key="plugins.generic.reviewerCertificate.myCertificates.emailError">Không thể gửi email. Vui lòng thử lại sau hoặc liên hệ với tạp chí.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.ackEmailSubject">Tiêu đề email cảm ơn</message>
+	<message key="plugins.generic.reviewerCertificate.settings.ackEmailBody">Nội dung email cảm ơn</message>
+	<message key="plugins.generic.reviewerCertificate.settings.ackEmailDescription">Thư gửi cho người phản biện từ trang Giấy chứng nhận của tôi, kèm theo tệp PDF giấy chứng nhận. Hỗ trợ các biến mẫu giống như nội dung giấy chứng nhận, cùng với {{$editorName}}.</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback">Không thể đính kèm tệp PDF giấy chứng nhận vào email này (có thể tệp vượt quá giới hạn dung lượng của máy chủ thư). Bạn có thể tải xuống giấy chứng nhận tại đây:</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultSubject">Thư cảm ơn về việc phản biện cho {{$journalName}}</message>
+	<message key="plugins.generic.reviewerCertificate.emailCertificate.defaultBody">Kính gửi {{$reviewerName}},
+
+Chúng tôi xin chân thành cảm ơn Quý vị đã dành thời gian và công sức phản biện bản thảo "{{$submissionTitle}}" gửi đến {{$journalName}}. Những nhận xét kỹ lưỡng và sâu sắc của Quý vị đã mang lại những góp ý quý báu, giúp các tác giả hoàn thiện công trình và phát triển hơn nữa hướng nghiên cứu của mình.
+
+Chúng tôi đánh giá rất cao đóng góp của Quý vị trong việc duy trì chất lượng các bài báo đăng trên tạp chí. Chúng tôi hiểu rằng phản biện bản thảo là một công việc đòi hỏi nhiều công sức, và chúng tôi ghi nhận sự tận tâm của Quý vị trong việc phân tích kỹ lưỡng bản thảo và đưa ra những góp ý mang tính xây dựng cho các tác giả.
+
+Để ghi nhận đóng góp của Quý vị, chúng tôi trân trọng đề nghị Quý vị chuyển tiếp thư này đến reviews@webofscience.com. Xin lưu ý rằng, theo chính sách biên tập của chúng tôi, nội dung phản biện sẽ được giữ bảo mật và không được hiển thị trên Web of Science.
+
+Giấy chứng nhận phản biện của Quý vị được đính kèm theo thư này.
+
+Một lần nữa, chúng tôi xin cảm ơn sự đóng góp của Quý vị cho sự phát triển nghiên cứu trong lĩnh vực của mình. Chúng tôi rất mong tiếp tục được hợp tác cùng Quý vị trong thời gian tới.
+
+Trân trọng,
+
+{{$editorName}}
+{{$journalName}}</message>
+
+	<!-- Reliability controls -->
+	<message key="plugins.generic.reviewerCertificate.batch.generatedCountLabel">Đã tạo</message>
+	<message key="plugins.generic.reviewerCertificate.batch.skipped">Đã bỏ qua</message>
+	<message key="plugins.generic.reviewerCertificate.batch.failed">Thất bại</message>
+	<message key="plugins.generic.reviewerCertificate.notifications.title">Thông báo giấy chứng nhận đã cấp trước đây</message>
+	<message key="plugins.generic.reviewerCertificate.notifications.description">Gửi chủ động một email thông báo cho mỗi giấy chứng nhận đến những người phản biện được chọn. Các giấy chứng nhận đủ điều kiện nhưng chưa được tạo sẽ được tạo mới. Các giấy chứng nhận được cấp trước khi có tính năng theo dõi thông báo không có lịch sử gửi và có thể đã được thông báo trước đó. Việc tạo giấy chứng nhận hàng loạt thông thường không gửi email.</message>
+	<message key="plugins.generic.reviewerCertificate.notifications.retry">Gửi lại các thông báo thất bại hoặc chưa xác định</message>
+	<message key="plugins.generic.reviewerCertificate.notifications.retryWarning">Một lần gửi bị gián đoạn quá mười phút được coi là chưa xác định: người nhận có thể đã nhận được email. Chỉ gửi lại các thông báo chưa xác định sau khi đã kiểm tra nhật ký máy chủ thư.</message>
+	<message key="plugins.generic.reviewerCertificate.notifications.send">Gửi thông báo giấy chứng nhận</message>
+	<message key="plugins.generic.reviewerCertificate.notifications.sent">Đã gửi</message>
+	<message key="plugins.generic.reviewerCertificate.settings.invalidValue">Vui lòng nhập giá trị hợp lệ.</message>
+	<message key="plugins.generic.reviewerCertificate.settings.saveFailed">Không thể lưu cài đặt giấy chứng nhận. Vui lòng kiểm tra các trường và ảnh (JPEG hoặc PNG, tối đa 5 MB), sau đó thử lại.</message>
+	<message key="plugins.generic.reviewerCertificate.email.subject">Giấy chứng nhận của bạn đã sẵn sàng!</message>
+	<message key="plugins.generic.reviewerCertificate.email.body">{{$reviewerName}},
+
+Cảm ơn bạn đã hoàn thành phản biện này. Bạn có thể tải xuống giấy chứng nhận ghi nhận đóng góp của mình.
+
+Tải xuống giấy chứng nhận: {{$certificateUrl}}
+
+{{$journalName}}
+{{$journalUrl}}</message>
+</locale>

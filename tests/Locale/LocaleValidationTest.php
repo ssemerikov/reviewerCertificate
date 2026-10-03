@@ -16,7 +16,7 @@ class LocaleValidationTest extends PHPUnitTestCase {
     private $baseDir;
     private $localeDir;
     private $referenceLocale = 'en_US';
-    private $supportedLocales = ['en_US', 'uk_UA', 'ru_RU', 'es_ES', 'pt_BR', 'fr_FR', 'de_DE', 'it_IT', 'tr_TR', 'pl_PL', 'id_ID', 'nl_NL', 'cs_CZ', 'ca_ES', 'nb_NO', 'sv_SE', 'hr_HR', 'fi_FI', 'ro_RO'];
+    private $supportedLocales = ['en_US', 'uk_UA', 'ru_RU', 'es_ES', 'pt_BR', 'fr_FR', 'de_DE', 'it_IT', 'tr_TR', 'pl_PL', 'id_ID', 'nl_NL', 'cs_CZ', 'ca_ES', 'nb_NO', 'sv_SE', 'hr_HR', 'fi_FI', 'ro_RO', 'vi_VN'];
 
     /**
      * OJS 3.3 long locale codes → OJS 3.4+/3.5 short codes (Issue #72).
@@ -30,7 +30,7 @@ class LocaleValidationTest extends PHPUnitTestCase {
         'ko_KR' => 'ko', 'lt_LT' => 'lt', 'nb_NO' => 'nb', 'nl_NL' => 'nl',
         'pl_PL' => 'pl', 'ro_RO' => 'ro', 'ru_RU' => 'ru', 'sk_SK' => 'sk',
         'sl_SI' => 'sl', 'sv_SE' => 'sv', 'tr_TR' => 'tr', 'uk_UA' => 'uk',
-        'zh_CN' => 'zh_Hans',
+        'vi_VN' => 'vi', 'zh_CN' => 'zh_Hans',
     ];
 
     protected function setUp(): void {

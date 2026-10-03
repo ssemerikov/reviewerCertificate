@@ -5,6 +5,12 @@ All notable changes to the Reviewer Certificate Plugin will be documented in thi
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- **Vietnamese translation** (`vi_VN` for OJS 3.3, `vi` for OJS 3.4+/3.5) covering all 120 keys, including the default acknowledgement letter and availability email. Vietnamese diacritics render through the automatic DejaVu Sans fallback.
+
 ## [1.10.0] - 2026-09-12
 
 ### Fixed

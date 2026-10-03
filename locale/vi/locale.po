@@ -1,0 +1,383 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: reviewerCertificate\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 00:00+0000\n"
+"PO-Revision-Date: 2026-10-03 00:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Vietnamese\n"
+"Language: vi_VN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+# Plugin metadata
+msgid "plugins.generic.reviewerCertificate.displayName"
+msgstr "Plugin Giấy chứng nhận phản biện"
+
+msgid "plugins.generic.reviewerCertificate.description"
+msgstr "Cho phép người phản biện tạo và tải xuống giấy chứng nhận PDF cá nhân hóa sau khi hoàn thành phản biện."
+
+# Certificate titles
+msgid "plugins.generic.reviewerCertificate.certificateTitle"
+msgstr "Giấy chứng nhận phản biện"
+
+msgid "plugins.generic.reviewerCertificate.certificateSubject"
+msgstr "Giấy chứng nhận phản biện khoa học"
+
+# Dashboard messages
+msgid "plugins.generic.reviewerCertificate.certificateAvailable"
+msgstr "Giấy chứng nhận của bạn đã sẵn sàng!"
+
+msgid "plugins.generic.reviewerCertificate.certificateAvailableDescription"
+msgstr "Cảm ơn bạn đã hoàn thành phản biện này. Bạn có thể tải xuống giấy chứng nhận ghi nhận đóng góp của mình."
+
+msgid "plugins.generic.reviewerCertificate.certificateWillBeGenerated"
+msgstr "Giấy chứng nhận sẽ được tạo tự động khi bạn nhấn nút tải xuống."
+
+msgid "plugins.generic.reviewerCertificate.downloadCertificate"
+msgstr "Tải xuống giấy chứng nhận"
+
+# Settings form
+msgid "plugins.generic.reviewerCertificate.settings.description"
+msgstr "Cấu hình mẫu giấy chứng nhận và tiêu chí đủ điều kiện cho người phản biện."
+
+msgid "plugins.generic.reviewerCertificate.settings.templateSettings"
+msgstr "Cài đặt mẫu giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImage"
+msgstr "Ảnh nền"
+
+msgid "plugins.generic.reviewerCertificate.settings.backgroundImageDescription"
+msgstr "Tải lên ảnh nền cho giấy chứng nhận (JPG hoặc PNG, kích thước khuyến nghị: 2100x2970 pixel cho A4 khổ dọc, 2970x2100 cho khổ ngang)"
+
+msgid "plugins.generic.reviewerCertificate.settings.currentImage"
+msgstr "Ảnh nền hiện tại"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerText"
+msgstr "Tiêu đề"
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextDescription"
+msgstr "Tiêu đề tùy chọn hiển thị ở đầu giấy chứng nhận. Để trống nếu không muốn có tiêu đề."
+
+msgid "plugins.generic.reviewerCertificate.settings.headerTextRequired"
+msgstr "Tiêu đề là bắt buộc"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplate"
+msgstr "Mẫu nội dung giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateDescription"
+msgstr "Nội dung chính của giấy chứng nhận. Sử dụng các biến mẫu để chèn nội dung động."
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTemplateRequired"
+msgstr "Mẫu nội dung giấy chứng nhận là bắt buộc"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerText"
+msgstr "Chân trang"
+
+msgid "plugins.generic.reviewerCertificate.settings.footerTextDescription"
+msgstr "Văn bản tùy chọn hiển thị ở cuối giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariables"
+msgstr "Các biến mẫu có sẵn"
+
+msgid "plugins.generic.reviewerCertificate.settings.availableVariablesDescription"
+msgstr "Sử dụng các biến sau trong mẫu để chèn nội dung động:"
+
+msgid "plugins.generic.reviewerCertificate.settings.defaultTemplate"
+msgstr "Mẫu mặc định"
+
+msgid "plugins.generic.reviewerCertificate.settings.useDefaultTemplate"
+msgstr "Dùng mẫu mặc định"
+
+msgid "plugins.generic.reviewerCertificate.settings.appearance"
+msgstr "Cài đặt giao diện"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontFamily"
+msgstr "Phông chữ"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.helvetica"
+msgstr "Helvetica"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.times"
+msgstr "Times New Roman"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.courier"
+msgstr "Courier"
+
+msgid "plugins.generic.reviewerCertificate.settings.font.dejavusans"
+msgstr "DejaVu Sans"
+
+msgid "plugins.generic.reviewerCertificate.settings.fontSize"
+msgstr "Cỡ chữ"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientation"
+msgstr "Hướng trang"
+
+msgid "plugins.generic.reviewerCertificate.settings.pageOrientationDescription"
+msgstr "Chọn bố cục khổ dọc hoặc khổ ngang cho giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.portrait"
+msgstr "Khổ dọc"
+
+msgid "plugins.generic.reviewerCertificate.settings.orientation.landscape"
+msgstr "Khổ ngang"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColor"
+msgstr "Màu chữ (RGB)"
+
+msgid "plugins.generic.reviewerCertificate.settings.textColorDescription"
+msgstr "Chỉ định màu chữ bằng giá trị RGB (0-255 cho mỗi thành phần)"
+
+msgid "plugins.generic.reviewerCertificate.settings.eligibility"
+msgstr "Tiêu chí đủ điều kiện"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviews"
+msgstr "Số phản biện hoàn thành tối thiểu"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsDescription"
+msgstr "Số lượng phản biện đã hoàn thành tối thiểu để người phản biện được nhận giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.minimumReviewsInvalid"
+msgstr "Số phản biện tối thiểu phải là một số lớn hơn hoặc bằng 1"
+
+msgid "plugins.generic.reviewerCertificate.settings.verification"
+msgstr "Tùy chọn xác minh"
+
+msgid "plugins.generic.reviewerCertificate.settings.includeQRCode"
+msgstr "Thêm mã QR để xác minh giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.previewCertificate"
+msgstr "Xem trước giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidImageType"
+msgstr "Định dạng ảnh không hợp lệ. Vui lòng tải lên tệp JPG hoặc PNG."
+
+msgid "plugins.generic.reviewerCertificate.settings.uploadFailed"
+msgstr "Tải tệp lên thất bại. Vui lòng thử lại."
+
+msgid "plugins.generic.reviewerCertificate.settings.fontUnicodeWarning"
+msgstr "Lưu ý: Helvetica, Times New Roman và Courier chỉ hỗ trợ ký tự Latin cơ bản, không hiển thị được dấu tiếng Việt (ă, â, đ, ê, ô, ơ, ư và các dấu thanh). Nếu văn bản có chứa tiếng Việt có dấu hoặc các ký tự ngoài bảng chữ cái Latin cơ bản, plugin sẽ tự động dùng phông DejaVu Sans cho các phần văn bản đó."
+
+msgid "plugins.generic.reviewerCertificate.settings.invalidValue"
+msgstr "Vui lòng nhập giá trị hợp lệ."
+
+# Error messages
+msgid "plugins.generic.reviewerCertificate.error.reviewNotCompleted"
+msgstr "Phản biện này chưa hoàn thành. Giấy chứng nhận chỉ được cấp cho các phản biện đã hoàn thành."
+
+msgid "plugins.generic.reviewerCertificate.error.noCertificateCode"
+msgstr "Chưa cung cấp mã giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.error.invalidCertificate"
+msgstr "Mã giấy chứng nhận không hợp lệ. Không thể xác minh giấy chứng nhận này."
+
+msgid "plugins.generic.reviewerCertificate.error.noReviewersSelected"
+msgstr "Chưa chọn người phản biện nào để tạo giấy chứng nhận hàng loạt"
+
+msgid "plugins.generic.reviewerCertificate.error.accessDenied"
+msgstr "Truy cập bị từ chối. Bạn không có quyền tải xuống giấy chứng nhận này."
+
+msgid "plugins.generic.reviewerCertificate.error.noContext"
+msgstr "Không xác định được tạp chí. Vui lòng đảm bảo bạn truy cập từ một tạp chí hợp lệ."
+
+msgid "plugins.generic.reviewerCertificate.error.daoNotAvailable"
+msgstr "Hiện không thể truy cập cơ sở dữ liệu. Vui lòng liên hệ quản trị viên hệ thống."
+
+# Email templates
+msgid "plugins.generic.reviewerCertificate.email.subject"
+msgstr "Giấy chứng nhận của bạn đã sẵn sàng!"
+
+msgid "plugins.generic.reviewerCertificate.email.body"
+msgstr "{{$reviewerName}},\n\nCảm ơn bạn đã hoàn thành phản biện này. Bạn có thể tải xuống giấy chứng nhận ghi nhận đóng góp của mình.\n\nTải xuống giấy chứng nhận: {{$certificateUrl}}\n\n{{$journalName}}\n{{$journalUrl}}"
+
+# Verification
+msgid "plugins.generic.reviewerCertificate.verify.title"
+msgstr "Xác minh giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.verify.description"
+msgstr "Nhập mã giấy chứng nhận để xác minh tính xác thực"
+
+msgid "plugins.generic.reviewerCertificate.verify.code"
+msgstr "Mã giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.verify.button"
+msgstr "Xác minh giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.verify.valid"
+msgstr "Giấy chứng nhận hợp lệ"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalid"
+msgstr "Giấy chứng nhận không hợp lệ"
+
+msgid "plugins.generic.reviewerCertificate.verify.invalidDescription"
+msgstr "Mã giấy chứng nhận bạn nhập không hợp lệ hoặc không tồn tại trong hệ thống."
+
+msgid "plugins.generic.reviewerCertificate.verify.certificateCode"
+msgstr "Mã giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.verify.reviewerName"
+msgstr "Tên người phản biện"
+
+msgid "plugins.generic.reviewerCertificate.verify.journalName"
+msgstr "Tên tạp chí"
+
+msgid "plugins.generic.reviewerCertificate.verify.dateIssued"
+msgstr "Ngày cấp"
+
+# Batch generation
+msgid "plugins.generic.reviewerCertificate.batch.title"
+msgstr "Tạo giấy chứng nhận hàng loạt"
+
+msgid "plugins.generic.reviewerCertificate.batch.description"
+msgstr "Tạo giấy chứng nhận cho nhiều người phản biện cùng lúc. Chọn từ danh sách dưới đây những người phản biện đã hoàn thành phản biện nhưng chưa có giấy chứng nhận."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectReviewers"
+msgstr "Chọn người phản biện"
+
+msgid "plugins.generic.reviewerCertificate.batch.completedReviews"
+msgstr "phản biện đã hoàn thành"
+
+msgid "plugins.generic.reviewerCertificate.batch.noEligibleReviewers"
+msgstr "Không có người phản biện nào đủ điều kiện. Tất cả người phản biện đều đã có giấy chứng nhận cho các phản biện đã hoàn thành."
+
+msgid "plugins.generic.reviewerCertificate.batch.selectMultipleHint"
+msgstr "Giữ Ctrl (Windows/Linux) hoặc Cmd (Mac) để chọn nhiều người phản biện"
+
+msgid "plugins.generic.reviewerCertificate.batch.generate"
+msgstr "Tạo giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.batch.generating"
+msgstr "Đang tạo giấy chứng nhận..."
+
+msgid "plugins.generic.reviewerCertificate.batch.noSelection"
+msgstr "Vui lòng chọn ít nhất một người phản biện"
+
+msgid "plugins.generic.reviewerCertificate.batch.certificatesGenerated"
+msgstr "giấy chứng nhận đã được tạo thành công"
+
+msgid "plugins.generic.reviewerCertificate.batch.error"
+msgstr "Đã xảy ra lỗi khi tạo giấy chứng nhận. Vui lòng thử lại."
+
+msgid "plugins.generic.reviewerCertificate.batch.generated"
+msgstr "Đã tạo thành công {$count} giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.batch.generatedCountLabel"
+msgstr "Đã tạo"
+
+msgid "plugins.generic.reviewerCertificate.batch.skipped"
+msgstr "Đã bỏ qua"
+
+msgid "plugins.generic.reviewerCertificate.batch.failed"
+msgstr "Thất bại"
+
+# Statistics
+msgid "plugins.generic.reviewerCertificate.statistics.title"
+msgstr "Thống kê giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.statistics.description"
+msgstr "Tổng quan về việc tạo và sử dụng giấy chứng nhận trong tạp chí của bạn"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalCertificates"
+msgstr "Tổng số giấy chứng nhận đã cấp"
+
+msgid "plugins.generic.reviewerCertificate.statistics.totalDownloads"
+msgstr "Tổng số lượt tải xuống"
+
+msgid "plugins.generic.reviewerCertificate.statistics.uniqueReviewers"
+msgstr "Số người phản biện có giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalIssued"
+msgstr "Tổng số giấy chứng nhận đã cấp"
+
+msgid "plugins.generic.reviewerCertificate.stats.totalDownloads"
+msgstr "Tổng số lượt tải xuống"
+
+msgid "plugins.generic.reviewerCertificate.stats.averageDownloads"
+msgstr "Số lượt tải xuống trung bình mỗi giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings"
+msgstr "Cài đặt giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.settings.removeBackgroundImage"
+msgstr "Xóa ảnh nền"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTopOffset"
+msgstr "Khoảng cách phía trên nội dung (mm)"
+
+msgid "plugins.generic.reviewerCertificate.settings.bodyTopOffsetDescription"
+msgstr "Khoảng trống bổ sung (tính bằng milimét) phía trên phần nội dung. Dùng tùy chọn này để dịch nội dung xuống dưới trang; các dòng trống ở đầu mẫu nội dung sẽ bị loại bỏ khi lưu biểu mẫu."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.title"
+msgstr "Giấy chứng nhận của tôi"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.description"
+msgstr "Dưới đây là danh sách tất cả giấy chứng nhận phản biện của bạn tại tạp chí này."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.dateIssued"
+msgstr "Ngày cấp"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.submissionTitle"
+msgstr "Tiêu đề bản thảo"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.certificateCode"
+msgstr "Mã giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.actions"
+msgstr "Thao tác"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.noCertificates"
+msgstr "Bạn chưa có giấy chứng nhận nào. Giấy chứng nhận được tạo sau khi bạn hoàn thành một phản biện."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.viewAll"
+msgstr "Xem tất cả giấy chứng nhận của tôi"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.emailAction"
+msgstr "Gửi giấy chứng nhận qua email cho tôi"
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.emailSent"
+msgstr "Giấy chứng nhận đã được gửi đến địa chỉ email của bạn."
+
+msgid "plugins.generic.reviewerCertificate.myCertificates.emailError"
+msgstr "Không thể gửi email. Vui lòng thử lại sau hoặc liên hệ với tạp chí."
+
+msgid "plugins.generic.reviewerCertificate.settings.ackEmailSubject"
+msgstr "Tiêu đề email cảm ơn"
+
+msgid "plugins.generic.reviewerCertificate.settings.ackEmailBody"
+msgstr "Nội dung email cảm ơn"
+
+msgid "plugins.generic.reviewerCertificate.settings.ackEmailDescription"
+msgstr "Thư gửi cho người phản biện từ trang Giấy chứng nhận của tôi, kèm theo tệp PDF giấy chứng nhận. Hỗ trợ các biến mẫu giống như nội dung giấy chứng nhận, cùng với {{$editorName}}."
+
+msgid "plugins.generic.reviewerCertificate.emailCertificate.attachmentFallback"
+msgstr "Không thể đính kèm tệp PDF giấy chứng nhận vào email này (có thể tệp vượt quá giới hạn dung lượng của máy chủ thư). Bạn có thể tải xuống giấy chứng nhận tại đây:"
+
+msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultSubject"
+msgstr "Thư cảm ơn về việc phản biện cho {{$journalName}}"
+
+msgid "plugins.generic.reviewerCertificate.emailCertificate.defaultBody"
+msgstr "Kính gửi {{$reviewerName}},\n\nChúng tôi xin chân thành cảm ơn Quý vị đã dành thời gian và công sức phản biện bản thảo \"{{$submissionTitle}}\" gửi đến {{$journalName}}. Những nhận xét kỹ lưỡng và sâu sắc của Quý vị đã mang lại những góp ý quý báu, giúp các tác giả hoàn thiện công trình và phát triển hơn nữa hướng nghiên cứu của mình.\n\nChúng tôi đánh giá rất cao đóng góp của Quý vị trong việc duy trì chất lượng các bài báo đăng trên tạp chí. Chúng tôi hiểu rằng phản biện bản thảo là một công việc đòi hỏi nhiều công sức, và chúng tôi ghi nhận sự tận tâm của Quý vị trong việc phân tích kỹ lưỡng bản thảo và đưa ra những góp ý mang tính xây dựng cho các tác giả.\n\nĐể ghi nhận đóng góp của Quý vị, chúng tôi trân trọng đề nghị Quý vị chuyển tiếp thư này đến reviews@webofscience.com. Xin lưu ý rằng, theo chính sách biên tập của chúng tôi, nội dung phản biện sẽ được giữ bảo mật và không được hiển thị trên Web of Science.\n\nGiấy chứng nhận phản biện của Quý vị được đính kèm theo thư này.\n\nMột lần nữa, chúng tôi xin cảm ơn sự đóng góp của Quý vị cho sự phát triển nghiên cứu trong lĩnh vực của mình. Chúng tôi rất mong tiếp tục được hợp tác cùng Quý vị trong thời gian tới.\n\nTrân trọng,\n\n{{$editorName}}\n{{$journalName}}"
+
+msgid "plugins.generic.reviewerCertificate.notifications.title"
+msgstr "Thông báo giấy chứng nhận đã cấp trước đây"
+
+msgid "plugins.generic.reviewerCertificate.notifications.description"
+msgstr "Gửi chủ động một email thông báo cho mỗi giấy chứng nhận đến những người phản biện được chọn. Các giấy chứng nhận đủ điều kiện nhưng chưa được tạo sẽ được tạo mới. Các giấy chứng nhận được cấp trước khi có tính năng theo dõi thông báo không có lịch sử gửi và có thể đã được thông báo trước đó. Việc tạo giấy chứng nhận hàng loạt thông thường không gửi email."
+
+msgid "plugins.generic.reviewerCertificate.notifications.retry"
+msgstr "Gửi lại các thông báo thất bại hoặc chưa xác định"
+
+msgid "plugins.generic.reviewerCertificate.notifications.retryWarning"
+msgstr "Một lần gửi bị gián đoạn quá mười phút được coi là chưa xác định: người nhận có thể đã nhận được email. Chỉ gửi lại các thông báo chưa xác định sau khi đã kiểm tra nhật ký máy chủ thư."
+
+msgid "plugins.generic.reviewerCertificate.notifications.send"
+msgstr "Gửi thông báo giấy chứng nhận"
+
+msgid "plugins.generic.reviewerCertificate.notifications.sent"
+msgstr "Đã gửi"
+
+msgid "plugins.generic.reviewerCertificate.settings.saveFailed"
+msgstr "Không thể lưu cài đặt giấy chứng nhận. Vui lòng kiểm tra các trường và ảnh (JPEG hoặc PNG, tối đa 5 MB), sau đó thử lại."
+

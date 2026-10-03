@@ -142,7 +142,7 @@ $shortLocaleMap = [
     'ko_KR' => 'ko', 'lt_LT' => 'lt', 'nb_NO' => 'nb', 'nl_NL' => 'nl',
     'pl_PL' => 'pl', 'ro_RO' => 'ro', 'ru_RU' => 'ru', 'sk_SK' => 'sk',
     'sl_SI' => 'sl', 'sv_SE' => 'sv', 'tr_TR' => 'tr', 'uk_UA' => 'uk',
-    'zh_CN' => 'zh_Hans',
+    'vi_VN' => 'vi', 'zh_CN' => 'zh_Hans',
 ];
 
 $synced = 0;
